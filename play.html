@@ -11,7 +11,7 @@
     --red:#7c2128; --red2:#9c3b2e; --gold:#b8860b; --gold2:#d8a72a;
     --sea:#274b5c; --sea2:#3d6b7e; --green:#4a6b3a; --line:#c8b48a;
     --grain:#d9b44a; --hops:#6b8e3d; --slate:#6b6256;
-    /* the four house colours (designer-ruled 2026-08-23) — the venture feet, pawns and owner
+    /* the four house colours (designer-ruled 2026-08-23) — the pawns, the dice and the owner
        rings read these; the JS COLORS roster mirrors them in seat order red·blue·green·yellow */
     --house-red:#7c2128; --house-blue:#274b5c; --house-green:#4a6b3a; --house-yellow:#b8860b;
   }
@@ -162,8 +162,6 @@
   .lanego{cursor:pointer;outline:3px dashed rgba(184,134,11,.75);outline-offset:2px}
   .lanego:hover{outline-style:solid;outline-color:var(--gold2)}
   .floor.lanego{outline-offset:0}
-  .mtile.agepool{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--green);color:#fff;border-radius:10px;font-weight:bold;width:120px;height:96px}
-  .mtile.agepool .ic,.mtile.agepool svg{width:26px;height:26px}
   #shoppop{position:fixed;z-index:70;width:380px;background:var(--parch);border:2px solid var(--gold);border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.45);padding:12px}
   #shoppop .popbox{position:relative;height:280px}
   #shoppop .poptxt{font-size:.85rem;color:var(--ink2);margin-top:10px;line-height:1.4}
@@ -213,53 +211,6 @@
   .semp .sid{font-size:1.05rem}
   .semp .sdep{opacity:.8}
   .semp .sdep .ic,.semp .sdep svg{width:22px;height:22px}
-  .ptile{position:absolute;inset:0;border-radius:8px;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:7cqmin;text-shadow:0 1px 1.5px rgba(0,0,0,.5);box-shadow:0 2px 6px rgba(0,0,0,.3)}
-  .ptile .ic,.ptile svg{stroke-width:2}
-  .ptile .pg{color:#ffe08a}.ptile .ph{color:#c4e69c}
-  .pcask{background:var(--tc,#777)}
-  .ptile .pq{position:absolute;top:4.5cqmin;left:6cqmin;display:flex;align-items:center;gap:1.5cqmin;font-weight:900;font-size:26cqmin;line-height:1}
-  .ptile .pq .ic,.ptile .pq svg{width:15cqmin;height:15cqmin}
-  .ptile .pown{position:absolute;top:5cqmin;right:5cqmin;width:15cqmin;height:15cqmin;border-radius:50%;border:2px solid rgba(255,255,255,.85);box-shadow:0 0 0 1.5px rgba(0,0,0,.3)}
-  .ptile .pnm{position:absolute;top:34cqmin;left:7cqmin;right:6cqmin;text-align:left;font-variant:small-caps;font-weight:bold;font-size:12.5cqmin;line-height:1.02}
-  .ptile .pact{font-size:8cqmin;line-height:1.1;background:rgba(0,0,0,.26);border-radius:3cqmin;padding:2cqmin 3cqmin;margin-bottom:2.5cqmin;display:flex;align-items:center;gap:2.5cqmin}
-  .ptile .pact .pac{display:inline-flex;align-items:center;justify-content:center;width:17cqmin;height:17cqmin;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}
-  .ptile .pact .pac .ic,.ptile .pact .pac svg{width:10cqmin;height:10cqmin;color:#23201c}
-  .ptile .pact .ptxt{min-width:0;overflow:hidden;text-overflow:ellipsis}
-  .ptile .pcost{display:flex;align-items:center;gap:3cqmin;font-weight:bold;font-size:10cqmin}
-  .ptile .pgc{display:inline-flex;align-items:center;gap:1.5cqmin}
-  .ptile .pgc .ic,.ptile .pgc svg{width:12cqmin;height:12cqmin}
-  .ptile .pperk{margin-left:auto;display:inline-flex;align-items:center;gap:1cqmin;font-weight:900;font-size:11cqmin}
-  .ptile .pperk .ic,.ptile .pperk svg{width:12cqmin;height:12cqmin}
-  /* ship */
-  .pship{background:#6f6253;justify-content:space-between}
-  .pship .phead{display:flex;align-items:center;gap:3cqmin;font-variant:small-caps;font-weight:bold;font-size:11.5cqmin}
-  .pship .phead .ic,.pship .phead svg{width:18cqmin;height:18cqmin}
-  .pship .pcomm{position:absolute;top:5cqmin;right:6cqmin;font-weight:bold;font-size:9cqmin;display:inline-flex;align-items:center;gap:1cqmin}
-  .pship .pcomm .ic,.pship .pcomm svg{width:10cqmin;height:10cqmin}
-  .pship .pdest{align-self:center;display:inline-flex;align-items:center;gap:2cqmin;font-variant:small-caps;font-weight:bold;font-size:10.5cqmin;border-radius:3cqmin;padding:2cqmin 5cqmin}
-  .pship .pdest .ic,.pship .pdest svg{width:12cqmin;height:12cqmin}
-  .pship .pberths{display:flex;align-items:center;justify-content:center;gap:3cqmin;flex-wrap:wrap}
-  .pship .pgate{font-weight:900;font-size:12cqmin;display:inline-flex;align-items:center;gap:1cqmin;margin-right:1cqmin}
-  .pship .pgate .ic,.pship .pgate svg{width:13cqmin;height:13cqmin}
-  .pship .pbn{width:17cqmin;height:17cqmin;border:1.5px solid rgba(255,255,255,.9);border-radius:3cqmin;display:flex;align-items:center;justify-content:center;font-size:9.5cqmin;font-weight:900;background:rgba(0,0,0,.22);text-shadow:none}
-  /* building */
-  .pbld{justify-content:flex-start}
-  .pbld.value{background:#2e7bab}   /* PRIVILEGES = bright BLUE (owner-only value tiles) */
-  .pbld.transform{background:#3f5c30}   /* WORKS = GREEN (public transform tiles) */
-  .pbld .pbown{position:absolute;top:4cqmin;right:4cqmin;width:13cqmin;height:13cqmin;border-radius:50%;border:1.5px solid rgba(255,255,255,.8)}
-  .pbld .pbtop{display:flex;align-items:center;gap:3cqmin}
-  .pbld .pbtop .ic,.pbld .pbtop svg{width:20cqmin;height:20cqmin}
-  .pbld .pverb{margin-left:auto;margin-right:15cqmin;font-size:6.5cqmin;font-variant:small-caps;font-weight:bold;letter-spacing:.3px;background:rgba(255,255,255,.24);border-radius:2.5cqmin;padding:1cqmin 3cqmin}
-  .pbld .pbnm{font-variant:small-caps;font-weight:bold;font-size:11cqmin;margin-top:3cqmin;line-height:1.02}
-  .pbld .pbeff{font-size:8cqmin;line-height:1.15;margin-top:2.5cqmin;flex:1;overflow:hidden}
-  .pbld .pbfoot{display:flex;align-items:center;gap:3cqmin;margin-top:2cqmin}
-  .pbld .pbtgt{width:18cqmin;height:18cqmin;border-radius:50%;background:rgba(255,255,255,.92);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
-  .pbld .pbtgt .ic,.pbld .pbtgt svg{width:11cqmin;height:11cqmin;color:#23201c}
-  .pbld .pbfoot .pgc{margin-left:auto;font-size:10cqmin}
-  /* a cask/ship occupant docked ON a building — a token over the lower edge */
-  .slot .pocc{position:absolute;left:3cqmin;right:3cqmin;bottom:3cqmin;z-index:3;display:flex;align-items:center;justify-content:center;gap:2cqmin;font-size:8.5cqmin;font-weight:bold;font-variant:small-caps;color:#fff;padding:2cqmin 3cqmin;border-radius:5cqmin;box-shadow:0 1px 3px rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;max-width:calc(100% - 6cqmin)}
-  .slot .pocc.ship{background:var(--sea2)}
-  .slot .pocc .ic,.slot .pocc svg{width:11cqmin;height:11cqmin}
   /* ===== the slots seat the PRINT KIT'S CARDS (components.js) — fitCards() scales inches → the box.
      Composition mirrors the table: building (owner ring) holds the slot · ship beside · casks tucked under. ===== */
   .pfit{position:absolute;inset:0;overflow:visible}   /* an invisible fitting box — the TILE carries its own edge */
@@ -299,15 +250,13 @@
   .bmk .bt-foot{padding-right:.5in}   /* reserve the die's corner so the action text never hides under it */
   .bmdie .die{width:.4in;height:.4in;gap:.02in;padding:.03in;border-radius:.07in;border-width:.06in}   /* the owner's colour IS the ring — read it across the table */   /* the tally die on the tile's printed seat (scales with the tile) */
   .slot.pfilled{overflow:visible;z-index:2}   /* protruding tucks/ships paint OVER neighbouring cells */
-  /* ===== demand DIE — pips show the ★ a cask banks from the value building it shipped through ===== */
+  /* ===== the QUALITY DIE — a cask's, a post's, a building's face ===== */
   .die{display:inline-grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:1cqmin;position:relative;
     background:#f4ead0;border:3px solid #8a6a2a;border-radius:3cqmin;padding:2cqmin;box-shadow:0 1px 2px rgba(0,0,0,.45);box-sizing:border-box}
   .die .pip{display:flex;align-items:center;justify-content:center}
   .die .pip.on::after{content:"";width:66%;height:66%;border-radius:50%;background:#2a1d08}
   .die.pdie{border-color:rgba(0,0,0,.4)}   /* the PLAYER'S die — solid colour body, white pips (matches the physical component) */
   .die.pdie .pip.on::after{background:#fff;box-shadow:0 0 1px rgba(0,0,0,.5)}
-  .ptile .die.dcask{position:absolute;bottom:5cqmin;right:5cqmin;width:27cqmin;height:27cqmin;z-index:5}
-  .pship .die.dberth{width:18cqmin;height:18cqmin}
   /* ===== tiles shown in the Market & the brew-pile display (a sized container = the cq context) ===== */
   .mtile{position:relative;width:90px;height:90px;flex:0 0 auto;container-type:size}
   /* display boxes take the REFIT tiles' own aspects (no letterboxing) */
@@ -328,7 +277,6 @@
   .shopcell button{font-size:.72rem;padding:2px 5px}
   .shopcell .note{text-align:center}
   .pilerow{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
-  .pbld.imp{background:#5b3a8e}   /* SPECIALISTS = PURPLE (private brewery tiles) — the three-type palette: blue PRIVILEGE (owner-only) / green BUILDING (serves everyone) / purple SPECIALIST (private) */
   .ppile{justify-content:flex-end;background:var(--tc,#777)}
   .ppbeers{font-size:7cqmin;font-weight:normal;font-variant:small-caps;opacity:.95;line-height:1.05;white-space:normal}
   /* ===== THE PLAYER BOARD, LITERAL — the print component (7.65×3.85in) rendered live,
@@ -361,10 +309,6 @@
   /* DESTINATIONS */
   .kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}   /* the four Kontor cards FILL the panel */
   @media(max-width:600px){.kgrid{grid-template-columns:1fr 1fr}}
-  .bb-nm{flex:0 0 84px;display:inline-flex;align-items:center;gap:4px;font-size:.8rem;min-width:0;overflow:hidden}
-  .bb-cell{width:26px;height:19px;flex:none;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:4px;font-size:.72rem;opacity:.4}
-  .bb-cell.on{background:#2b2018;color:#f4ead0;font-weight:bold;opacity:1}
-  @media(max-width:480px){.bb-nm{flex-basis:60px;font-size:.74rem}.bb-cell{width:22px;height:17px}}
   /* THE SEA BOARD — the map as a component: water-tile legs, the Kontor caps end the lanes */
   .seamap{display:grid;grid-template-columns:26px minmax(88px,1.1fr) minmax(88px,1.1fr) minmax(96px,1fr);grid-auto-rows:minmax(54px,auto);gap:7px;max-width:880px;margin:0 auto;background:linear-gradient(rgba(24,32,36,.55),rgba(24,32,36,.55)),url('art/seamap.png') center/cover;border-radius:10px;padding:8px}
   .sea-wharf{grid-row:1/5;grid-column:1;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;gap:5px;background:var(--parch2);border:2px solid var(--line);border-radius:8px;font-variant:small-caps;font-weight:bold;letter-spacing:1.5px;color:var(--ink2);font-size:.8rem}
@@ -436,14 +380,8 @@
   .shop{display:flex;flex-direction:column;gap:5px;max-height:600px;overflow:auto}
   .item{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--parch);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.82rem}
   .cost{font-size:.78rem;color:var(--ink2);white-space:nowrap}
-  /* VOYAGE */
+  /* THE CLOCK */
   .voybox{background:var(--parch);border:1px solid var(--line);border-radius:6px;padding:8px;text-align:center}
-  .track{display:flex;gap:3px;justify-content:center;flex-wrap:wrap;margin-top:6px}
-  .sp{width:15px;height:15px;border-radius:3px;background:rgba(0,0,0,.12);font-size:.6rem;display:flex;align-items:center;justify-content:center}
-  .sp.on{background:var(--sea2);color:#fff}
-  .spw{display:flex;flex-direction:column;align-items:center;gap:1px}
-  .spf{font-size:.6rem;opacity:.6;line-height:1}
-  .spf.cur{font-weight:bold;opacity:1;color:var(--red)}
   /* TABLEAUS */
   .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
   .tab{padding:5px 12px;border-radius:6px 6px 0 0;cursor:pointer;font-variant:small-caps;font-weight:bold;border:1px solid var(--line);border-bottom:none;background:var(--parch)}
@@ -506,20 +444,6 @@
   #log .me{color:var(--red)}
   /* MODAL */
   .modal{position:fixed;inset:0;background:rgba(20,12,8,.82);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
-  .hbshelf{border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:rgba(0,0,0,.16)}
-  .hbhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-  .hbnm{font-variant:small-caps;font-weight:bold;font-size:1.15rem}
-  .hbgate{font-weight:900;font-size:1rem}.hbgate .ic,.hbgate svg{width:1em;height:1em;vertical-align:-2px}
-  .hbcoins{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .hbcoin{position:relative;border:1.5px dashed rgba(255,255,255,.45);border-radius:8px;padding:8px 9px;display:flex;flex-direction:column;gap:4px;min-height:64px}
-  .hbcoin.taken{border-style:solid;opacity:.55}
-  .hbch{font-weight:bold;font-size:.78rem;letter-spacing:.5px;display:inline-flex;gap:4px;align-items:center}
-  .hbch .ic,.hbch svg{width:14px;height:14px}
-  .hbtx{font-size:.85rem;line-height:1.25}
-  .hbstar{color:#ffd76a;font-size:1.05rem}
-  .hbcube{position:absolute;top:6px;right:6px;width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(255,255,255,.8);box-shadow:0 1px 3px rgba(0,0,0,.5)}
-  .hbcube.sm{position:static;display:inline-block;width:13px;height:13px;vertical-align:-2px;margin-right:3px}
-  .hblaunch{margin-top:7px;font-size:.85rem}
   .modal .mcard{position:relative;background:var(--parch);border:3px solid var(--gold);border-radius:14px;padding:24px;max-width:600px;width:100%;max-height:90vh;overflow:auto}
   .modal h2{font-variant:small-caps;color:var(--red);margin:0 0 10px;padding-right:32px}
   /* modal close (X) */
@@ -591,22 +515,11 @@
   .qpd{display:inline-flex;gap:1.5px;align-items:center;vertical-align:-1px}
   .qpd .tpip{width:6px;height:6px;border-radius:50%;display:inline-block;background:rgba(0,0,0,.14);box-shadow:none}
   .qpd .tpip.on{background:var(--gold)}
-  .rgate .tpip{width:6px;height:6px;border-radius:50%;display:inline-block;background:rgba(255,255,255,.30)}
-  .rgate .tpip.on{background:#fff;box-shadow:0 0 2px rgba(0,0,0,.4)}
-  .qpd b,.rgate b{margin-left:3px}
+  .qpd b{margin-left:3px}
   /* brewery recipe cards */
   .rcard{display:inline-flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:4px 9px;background:var(--parch);margin:3px 5px 0 0;font-size:.74rem;box-shadow:0 1px 3px rgba(0,0,0,.12);vertical-align:top}
   .rcard .rcn{font-weight:bold;font-variant:small-caps;white-space:nowrap}
   /* destinations: data row + delivery squares */
-  /* the Hall SHELF BOARD — four quality-gated shelves; a space = an icon (open) or a claim cube */
-  .hallshelves{display:flex;flex-direction:column;gap:2px;margin-top:4px}
-  .hshelf{display:flex;align-items:center;gap:3px;font-size:.62rem;background:rgba(0,0,0,.10);border:1px solid var(--line);border-radius:4px;padding:1px 4px}
-  .hshelf .hq{font-weight:bold;min-width:20px;opacity:.9}
-  .hshelf .hstar{font-weight:bold;color:var(--gold);min-width:22px}
-  .hsp{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border:1px dashed rgba(255,255,255,.45);border-radius:3px;font-size:.6rem}
-  .hsp .ic,.hsp svg{width:10px;height:10px}
-  .hsp.taken{border-style:solid;border-color:rgba(0,0,0,.4)}
-  .hsp.off{opacity:.25;border-style:dotted}
   .rmaj{font-weight:bold;font-size:.95rem;letter-spacing:.5px}
   .route .ric .ic,.route .ric svg{width:1.25em;height:1.25em}
   .route .ric img.ai{width:1.7em;height:1.7em}   /* the Kontor's OWN crest — the art earns the room (2026-08-09) */
@@ -887,14 +800,14 @@ function recipeFeeFor(p,st){return (p&&ownsPriv(p,'B'))?{}:(RECIPE_FEE[st]||{});
 // bonus), never bought, never two of a kind. Ten singles ⚙, display of 4, 2 seats per house.
 const IMPROVEMENTS={
   braumeister:{name:'Braumeister', desc:'Turn start: age one of your casks +1'},
-  shipmaster :{name:'Shipmaster',  desc:'Work the Harbor: one docked Ship carrying your cask sails unfull'},
+  shipmaster :{name:'Shipmaster',  desc:'Work the Harbor: one docked Ship carrying your cask sails unfull (a wild one: you name its port)'},
   cellar     :{name:'Cellarman',   desc:'Brew: your dice start +1 (never past Ready)'},
   crane      :{name:'Stevedore',   desc:'Load: up to 2 casks'},
   agent      :{name:'Agent',       desc:'A rival lands where you hold a building: that die +1 more'},
   lodesman   :{name:'Lodesman',    desc:'Your quality count reads +1'},
   carter     :{name:'Carter',      desc:'Your CART carries 2 casks · the yard’s goods prizes pay +1'},
   gmaster    :{name:'Guildmaster', desc:'Each present of yours at the hall: +2★'},
-  chronicler :{name:'Chronicler',  desc:'Each cask you land: +1★'},
+  chronicler :{name:'Chronicler',  desc:'Each cask you land — a far Kontor, the yard or the hall: +1★'},
   alderman   :{name:'Alderman',    desc:'End: +2★ per Kontor with 3+ dice of yours parked'},
 };
 const IMPROVEMENT_KEYS=Object.keys(IMPROVEMENTS);
@@ -1826,7 +1739,7 @@ function wildSailPick(k){const W=UI.wild;if(!W||!W.sail)return;const t=S.slots[W
 // yard (its track's zone prize; Gruit's only door) or the hall (an ⚜ and a Q2+ cask:
 // cask die + the hall die). The cask's bonus fires as it is carted.
 //==================================================================
-function cartN(p){return 1+(ownsPrivTier(p,'A',2)?1:0)+(hasUpgrade(p,'carter')?1:0);}   // the Kaufhaus and the Carter cart 2
+function cartN(p){return (ownsPrivTier(p,'A',2)||hasUpgrade(p,'carter'))?2:1;}   // the Kaufhaus or the Carter: the cart carries 2 (each face prints 2 — they do not stack)
 function cartCasks(p){return readyInVessels(p).filter(o=>canShipQ(p,o.c.q,null));}
 function hallNext(){return (S.hall.places||[]).findIndex(x=>!x);}
 function canHall(p,c){return p.invites>0&&c.q>=HALL_MIN_Q&&hallNext()>=0;}
@@ -1979,8 +1892,8 @@ function sailShip(slot,creditId){const t=S.slots[slot];if(!t||t.type!=='ship'||!
   log('★ the '+LU('sailboat')+' <b>'+shipName(t)+'</b> SAILS for <b>'+DEST[dest].name+'</b> with '+t.load.length+' '+LU('beer')+' cask'+(t.load.length===1?'':'s')+'.');
   {const dk=bKeyAt(slot);   // THE TIDE — the Public Work departs with the Ship, BOXED (nothing refills)
    if(dk){
-     if(dk==='bonded'){const paid={};t.load.forEach(L=>{if(!paid[L.owner]){paid[L.owner]=1;gain(S.players[L.owner],1,1);}});
-       log('↳ the '+LU('warehouse')+' <b>Bonded Store</b> breaks bulk as it goes — every player with a cask aboard gains 2 goods.');}
+     if(dk==='bonded'){const paid={};t.load.forEach(L=>{if(!paid[L.owner]){paid[L.owner]=1;(UI.pendingGoods=UI.pendingGoods||[]).push({pid:L.owner,n:2,why:'the Bonded Store'});}});
+       log('↳ the '+LU('warehouse')+' <b>Bonded Store</b> breaks bulk as it goes — every player with a cask aboard takes 2 goods, any mix.');}
      S.buildings[slot]=null;
      log('↳ the tide takes the '+LU(BUILDINGS[dk].icon)+' <b>'+bName(dk)+'</b> — it departs with the Ship (boxed, gone for good).');}}
   // THE POSTS CLIMB: every post on every segment of the lane turns +1 (cap 6), whoever loaded
@@ -2864,7 +2777,8 @@ function renderAid(){
       +row('user-round','MOVE to an adjacent station','orthogonal only; never stay; turn one places anywhere')
       +row('layers','Work its whole counter','any order, all optional except the Harbor’s must: its PRIMARY · its ALTERNATE · a LOAD at each flanking slot · your own private building there')+'</div>'
     +'<div class="asec"><b>The cask</b><div class="alife">'
-      +stp('flask-conical','Brew')+ARR+stp('hourglass','Age')+ARR+stp('check','Ready')+ARR+stp('package-plus','Board: Q2+ · under your count · the lane open')+ARR+stp('sail','Full = sails')+ARR+stp('landmark','Land = cask die + your building die')+'</div></div>'
+      +stp('flask-conical','Brew')+ARR+stp('hourglass','Age')+ARR+stp('check','Ready')+ARR+stp('package-plus','Board: Q2+ · under your count · the lane open')+ARR+stp('sail','Full = sails')+ARR+stp('landmark','Land = cask die + your building die')+'</div>'
+      +row('beer','The eight cask bonuses — the tile fires once, as its cask boards or is carted','Gain 2 goods · Age +2 · Load 1 more · Brew 1 · Gain 1 recipe at its fee · Gain 1 specialist · BUILD · POST · a Q2+ Brew searches the stack and picks the tile; Gruit takes the top tile (every one Gain 2 goods)')+'</div>'
     +'<div class="asec"><b>The sea — the quality count</b>'
       +row('post','A POST is a die of yours on a segment','it grows from Hamburg (the lowest segment of the lane you do not hold) · +1 each time a Ship sails through · a lane is open once every segment holds anyone’s post')
       +row('kontorhaus','A Kontor building: your tile + a supply die, where your posts reach','the die is the delivery modifier · +1 on any landing there · its line fires on your landings · one per player per Kontor')
@@ -2877,6 +2791,8 @@ function renderAid(){
       +row('flask-conical','Brewhouse','P: Brew — a supply die, search the stack · A: BUILD on the wharf ('+costStr(T1_FEE)+' · FLIP '+costStr(FLIP_FEE)+' · over a Work +'+costStr(REPLACE_EXTRA)+')')
       +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: CART 1 Ready cask to Bruges — the yard or the hall')
       +row('ship','Harbor','P: COMMISSION (a must when it can: '+commFeeStr()+') then POST on that lane, then the maiden load · A: BUILD at a Kontor, or RAISE')+'</div>'
+      +row('building-2','Public Works — the tide','shared, passive on their slot’s traffic: Malt Kiln die +1 · Customs House count +1 · Ropewalk a second Ship · Cooperage +1 berth · Bonded Store die +1, on sail 2 goods to every shipper · Victualling Yard the bonus ×2 · each departs with the Ship that sails from its slot; nothing refills')
+      +row('hammer','Private buildings — your engine','a hand of 4, one per station, on a slot flanking it: fires when YOU work that station · tier 1 '+costStr(T1_FEE)+' (over a Work +'+costStr(REPLACE_EXTRA)+') · the FLIP to tier 2 '+costStr(FLIP_FEE)+' · prints 2★ / 4★ · the Kaufhaus or the Carter carts 2')
       +row('truck','Bruges by cart','THE YARD: park on the track — BEST: a recipe fee waived or 2 goods · GOOD: a recipe at its fee or 1 good · OK: 1 good; Gruit’s only door · THE HALL: 1 ⚜ + a Q2+ cask — cask die + the hall die, then the hall die climbs')
       +row('mail','Invitations','1 ⚜ per cask of yours landed at a far Kontor (a Kontorhaus pays a second) · the only sink is the hall')+'</div>'
     +'<div class="asec"><b>End &amp; score</b>'

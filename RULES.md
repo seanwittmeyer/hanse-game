@@ -106,7 +106,7 @@ traffic it is; the filler roster until the roster pass ⚙):
 - **Cooperage**: the Ship here has **+1 berth** (it sails full only when that berth is also
   full).
 - **Bonded Store**: *On load here:* the boarding die **+1** (cap quality + 1) · *On sail from
-  this slot:* every player with a cask aboard gains 2 goods.
+  this slot:* every player with a cask aboard gains 2 goods, any mix.
 - **Victualling Yard**: *On load here:* the boarding cask's bonus fires **×2**.
 
 **The tide: every Public Work departs with the Ship that sails from its slot** (boxed, gone for
@@ -250,7 +250,7 @@ When your cask **LANDS** at a far Kontor, in boarding order:
 
 ## 10. Bruges — the cart, the yard, the hall, invitations
 
-**THE CART** (the Cellar's ALTERNATE; the Kaufhaus and the Carter cart 2) sends one Ready cask
+**THE CART** (the Cellar's ALTERNATE; with a Kaufhaus or the Carter it carries 2 — they do not stack) sends one Ready cask
 of yours to Bruges, count permitting (a Gruit needs 1). No Ship, no lane, no ⚜ earned. **Its
 cask bonus fires as it is carted.** It resolves at once at one of two doors:
 
@@ -320,7 +320,7 @@ never bought; never two of a kind. The roster of ten singles ⚙:
 - **Lodesman** — your quality count reads +1.
 - **Carter** — your CART carries 2 casks; the yard's goods prizes pay you +1.
 - **Guildmaster** — each present of yours at the hall: +2★.
-- **Chronicler** — each cask you land: +1★.
+- **Chronicler** — each cask you land — at a far Kontor, the yard or the hall: +1★.
 - **Alderman** — game end: +2★ per Kontor with 3+ dice of yours parked (Bruges: hall places).
 
 ## 14. End of the game — the dice clock

@@ -284,10 +284,10 @@ t('the hall: 1 ⚜ spent, cask die + the hall die, the die parks, the place\\'s 
   eq(parkedAt(p,'bruges'),1,'Bruges weighs hall places');eq(fieldAt(p,'bruges'),0);
   S.hall.die=6;p.invites=1;p.vessels[1]=mkCask('hopped',2);UI.cart={returnTo:'end',n:1,count:0,vi:1};UI.sub='cart';cartPickCask(1);cartDoor('hall');eq(S.hall.die,6,'cap 6');
   var a=majorityAwards('bruges');eq(a[0],DEST.bruges.pair[0],'the Bruges pair');});
-t('the yard carries no majority weight; the Kaufhaus and the Carter cart 2; no ⚜ from Bruges',function(){fresh(2);var p=cur();
+t('the yard carries no majority weight; the Kaufhaus or the Carter carts 2; no ⚜ from Bruges',function(){fresh(2);var p=cur();
   S.yard.push({pid:0,style:'gruit',q:1,face:1});p.delivered.push({style:'gruit',q:1,dest:'bruges',val:0,face:1,yard:1});
   eq(parkedAt(p,'bruges'),0);eq(majorityAwards('bruges')[0],undefined,'no share from the yard');
-  eq(cartN(p),1);p.upgrades=['carter'];eq(cartN(p),2);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),3);
+  eq(cartN(p),1);p.upgrades=['carter'];eq(cartN(p),2);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),2,'they do not stack');
   eq(p.invites,0,'no ⚜ from the yard');});
 
 // ---------- 9 · invitations ----------
@@ -346,6 +346,13 @@ t('the private stop fires for its OWNER only: Granary 1G1H · Cold Store Age +2 
   clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};visit(p,'B');eq(UI.stops.filter(function(x){return x.kind==='cell'&&x.cell==='B'&&!x.alt;}).length,2,'the Guildhall\\'s second brew');
   ok(S.exports.every(function(st){return hasRecipe(p,st);}),'every dealt recipe');eq(recipeGainable(p).length,0,'nothing to gain');
   S.buildings.s2={p:'B',tier:1,owner:0};ok(!pactKind(privAt('s2')),'the Scriptorium is passive');});
+t('the cart carries 2 with a Kaufhaus OR the Carter — they do not stack',function(){fresh(2);var p=cur();
+  eq(cartN(p),1);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),2,'the Kaufhaus');
+  p.upgrades=['carter'];eq(cartN(p),2,'both: still 2');S.buildings.s1=null;eq(cartN(p),2,'the Carter alone');});
+t('the Bonded Store pays every shipper 2 goods, any mix, at the sail (a goods prompt for the active seat)',function(){fresh(2);var p=S.players[0],q=S.players[1];
+  clearSlot('s1');S.buildings.s1={b:'bonded'};putShip('s1','cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
+  UI={sub:'move'};sailShip('s1',0);
+  eq((UI.pendingGoods||[]).map(function(x){return x.pid+':'+x.n;}),['0:2','1:2'],'two goods to each shipper');ok(!bKeyAt('s1'),'the tide took the Store');});
 t('the private tiles score their printed ★ (2 / 4) while they stand; the tide never takes them',function(){fresh(2);var p=S.players[0];
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};
   eq(wharfPts(p),6);eq(scorePlayer(p).wharf,6);
