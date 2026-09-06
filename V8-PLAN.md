@@ -747,8 +747,14 @@ assistant did, five times over, in §5 and §7.
     and in its building slots — ties the merchant to a destination, three ports need three
     investments. Batch 1's chain (eligibility per Kontor) and batch 2's sentence (one count)
     fit either. The re-cut needs one.
+    **✔ Ruled 2026-09-06: GLOBAL.** "The quality count is from all dice for the whole board.
+    Otherwise you would never reach 4 or 5 before running out of dice." One number, every
+    port, and it governs Bruges too.
 12. **Does the starter (eleventh) die count** toward the quality count? If yes, Hopped (Q2)
     needs one more die at sea from the first turn; if no, nothing sails before the first INVEST.
+    **✔ Ruled 2026-09-06: it counts.** "This is why you can deliver to Bruges with a gruit.
+    Consistency is a great thing!" The count is 1 from setup, so a Q1 Gruit may go to Bruges on
+    turn one; a Hopped needs a second die at sea; Bock needs five.
 13. **The hall's payout.** "As simple as adding two dice": the cask die + the place's printed
     bonus, or the cask die + a second die of some kind? And what an "easy benefit" is in
     numbers, so the hall really competes with a Kontor majority.
@@ -841,3 +847,10 @@ re-read against "as simple as adding two dice".
 
 **What batch 2 closes from §12.4:** q6 (the wild ships follow the quality count), most of q7
 (an ⚜ is per Kontor delivery, never from Bruges). **What it opens:** q11–q15.
+
+**Addendum, same day (the designer, on q11 and q12):** the quality count is GLOBAL — every die
+of yours on posts and Kontor buildings anywhere on the sea board, one number for every
+destination, Bruges included; and the starter die counts, so the count opens at 1 and a Gruit
+can be carted to Bruges from the first turn. The reason given for global is the dice budget:
+with eleven dice, a per-lane count could never reach 4 or 5. The rule as it now stands, one
+sentence: *the quality you may deliver anywhere = the number of your dice standing at sea.*
