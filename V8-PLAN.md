@@ -724,6 +724,11 @@ assistant did, five times over, in §5 and §7.
 1. **Lane openness.** Once every segment of a lane holds at least one post (anyone's), may every
    player's Ships sail it, or only players holding a post on each segment? The text reads as
    public once unlocked; confirm.
+   *(2026-09-06, on the chain: "Building slots are opened once all of the leading posts to it
+   are filled with your dice. You need the whole branch of the tree built with posts (dice)
+   before you can build at Kontors." — the BUILDING gate is settled: your OWN die on every
+   segment from Hamburg to that Kontor. Whether SAILING needs your own posts too, or only
+   the segments unlocked by anyone, is still this question.)*
 2. **The post tick.** What turns a post die from 1 toward 6: any Ship sailing its segment (the
    current recommendation), the owner's own landings, or a build action?
 3. **Segments per lane** on the board: the mock has two to London, one to Bergen, one more to
@@ -949,6 +954,14 @@ little of everything for everyone. Private buildings on the slots are strictly b
 build on each other; as the slots fill, a player's engine scales their operation, cuts
 corners and skips ahead. No kettle in it. §13 designs the ladder: each private building
 upgrades the verb of the station it flanks, and the higher tiers require the lower.
+
+**Addendum (the designer, same day) — the chain, exactly.** "Building slots are opened once
+all of the leading posts to it are filled with your dice. You need the whole branch of the
+tree built with posts (dice) before you can build at Kontors." So eligibility to build at a
+Kontor = a die of YOURS on every segment of the branch from Hamburg to it; a rival's posts on
+the way do not count for you, and a Novgorod building needs your dice on every segment of
+the Bergen branch and the Sound beyond it. Posts never block, so two players can each hold
+the whole branch; the building slots are the only exclusivity.
 
 **The instruction.** The review is complete. The plan for building out the rules and
 `play.html` is to be prepared from all three batches, with two independent sub-agents
