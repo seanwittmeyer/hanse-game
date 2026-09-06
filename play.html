@@ -399,6 +399,8 @@
   .yardpl.z-best{border-color:#ffd76a}.yardpl.z-good{border-color:#c4e69c}
   .yardzone{font-size:.62rem;opacity:.85;margin-right:4px;font-variant:small-caps;font-weight:bold}
   .mustgo{outline:3px solid var(--red2);outline-offset:2px}
+  .supdie{display:inline-flex;gap:3px;flex-wrap:wrap;align-items:center}
+  .supdie .die{width:18px;height:18px;gap:1px;padding:2px;border-radius:3px;border-width:2px}
   .sea-leg .lpost{display:inline-flex;align-items:center;gap:1px}
   .sea-leg .lpost .ic,.sea-leg .lpost svg{width:.95em;height:.95em}
   .sea-leg .lships{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-top:auto}
@@ -2632,7 +2634,7 @@ function aiStep(){
         let bs=null,bv=-1e9;
         L.ships.forEach(sid=>{if(!canTake(sid,L.cask))return;const t=S.slots[sid];const c=p.vessels[L.cask];const bd=boardDie(c,sid);
           const dests=(shipDest(t)==='wild')?openLanes(p):[shipDest(t)];let dv=0;dests.forEach(k=>dv=Math.max(dv,bd+bldgDie(p,k)+(aiIsTrader(p)?aiMajSwing(p,k)*0.35:0)));
-          let v=dv+(t.load.length+1>=sailCap(t)?0.5:0);
+          let v=dv+(t.load.length+1>=sailCap(t)?1.5:0)+t.load.length*0.4;
           if(v>bv){bv=v;bs=sid;}});
         if(!bs)return loadSkip();
         return loadOnto(bs);}
@@ -2648,7 +2650,8 @@ function aiStep(){
         const best=readyInVessels(p).filter(o=>o.c.style!=='gruit').sort((a,b)=>b.c.die-a.c.die)[0];
         let bi=-1,bv=-1e9;
         disp.forEach((sn,i)=>{if(!canPay(p,commCostFor(p,sn.ship)))return;
-          let v=SHIP_CAP[sn.ship]*0.4-aiFeeCost(commCostFor(p,sn.ship));
+          const casks=vesselCasks(p).filter(o=>o.c.style!=='gruit').length;
+          let v=(sn.ship==='cog'?1.0:(casks>=2?1.1:0.4))-aiFeeCost(commCostFor(p,sn.ship));   // a Cog fills; a Hulk wants casks to spare
           const pb=aiBestPost(p,lanesOf(sn.dest),true);if(pb.seg)v+=pb.v*0.8;
           if(best&&canShipQ(p,best.c.q,null)&&(sn.dest==='wild'?anyLaneOpen(p):laneOpenFor(p,sn.dest)))v+=2+(best.c.die+bldgDie(p,sn.dest==='wild'?'london':sn.dest))*0.3;
           if(v>bv){bv=v;bi=i;}});
@@ -3146,7 +3149,7 @@ function renderShop(){
 function renderVoyage(){
   let h='<div class="voybox">'+LU('dices')+' <b>The Dice Clock</b>'+(S.ending?' · <b style="color:var(--red)">FINAL ROUND</b>':'')
     +'<div class="note" style="margin-top:3px">the first EMPTY personal supply sets the final round:</div>'
-    +'<div style="margin-top:6px;display:flex;flex-direction:column;gap:4px">'+S.players.map(p=>'<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap"><span style="color:'+p.color+';font-weight:bold;min-width:64px;text-align:left">'+p.name+'</span>'+Array(p.supply).fill(0).map(()=>dieFace(1,'',p.color,p.name+'’s supply die')).join('')+'<span class="note">'+p.supply+'/'+SUPPLY_DICE+'</span></div>').join('')+'</div>'
+    +'<div style="margin-top:6px;display:flex;flex-direction:column;gap:4px">'+S.players.map(p=>'<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap"><span style="color:'+p.color+';font-weight:bold;min-width:64px;text-align:left">'+p.name+'</span>'+'<span class="supdie">'+Array(p.supply).fill(0).map(()=>dieFace(1,'',p.color,p.name+'’s supply die')).join('')+'</span><span class="note">'+p.supply+'/'+SUPPLY_DICE+'</span></div>').join('')+'</div>'
     +'<div class="note" style="font-size:.66rem;margin-top:4px">'+LU('sailboat')+' Ships sailed: '+S.sailed+' · round backstop '+MAX_ROUND+'</div></div>';
   h+='<div class="note" style="margin-top:6px"><b>Export beers this game (3 of 4):</b> '+exportLabel()+'.</div>';
   const brews=flightTypes();
