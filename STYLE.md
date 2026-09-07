@@ -12,8 +12,9 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 |---|---|---|---|---|
 | player | you, the person at a seat | — | players · no | house |
 | the Wharf | the shared core: 4 stations ringed by 8 slots | wharf | — · yes | the board |
-| station | one of the 4 action spaces (Market · Brewhouse · Harbor · Cellar); each prints a primary and an alternate, both open on a visit | station-* | stations · no | space, cell |
+| station | one of the 4 action spaces (Market · Brewhouse · Cellar · Harbor); each prints a primary and an alternate, both open on a visit | station-* | stations · no | space, cell |
 | primary / alternate | a station's two printed actions | — | — · no | alt (the chip label only) |
+| must | the one mandatory stop: the Harbor's Commission, when it can | — | — · no | required, forced |
 | slot | one of the 8 perimeter spaces; seats a building and/or a Ship, never casks; each flanks a station | — | slots · no | — |
 | Hamburg | the home port at the root of the sea board; where the Wharf stands | — | — · yes | — |
 | the sea board | the board printing Hamburg, the cart road, the five segments and the four Kontor panels; side A (2p) / side B (3–4p) | — | — · yes | Destinations board, the map |
@@ -22,6 +23,8 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | player board | 3 vessels · 2 seats · the score seat · the personal supply well · the Flight | — | — · no | — |
 | quality die | THE component: the die that is the cask, the post and the Kontor building marker; its face is a quality, a modifier, pips | quality-die | quality dice · no | tally die, tray die |
 | personal supply | your unspent quality dice; the first empty supply sets the final round | — | supplies · no | tray, pool |
+| the starter post | the die each player stands at face 1 on W1 or E1 at setup; a post in every respect, counted in the quality count | post | — · no | starting marker |
+| the warm Gruit | the Ready Gruit every player starts with in vessel 1: its own die at 1 on it, the top Gruit tile under it | — | — · no | starter cask |
 | cask | a brewed beer on its tile, its quality die riding it | cask, quality-N | casks · no | — |
 | vessel | an aging well on your player board | — | vessels · no | — |
 | Ready | a cask whose die has reached its quality | ready | — · yes (a term) | mature |
@@ -29,6 +32,8 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | berth | one cask space on a Ship | — | berths · no | — |
 | wild Ship | a Ship with no printed Kontor; the first cask loaded names it | — | — · no | — |
 | Kontor chit | the token that names a wild Ship's Kontor, set on the Ship by the first load | — | chits · yes | — |
+| the two wild Cogs | the deck's two wild Cogs, docked on two random slots at setup; the wild Hulk stays in the deck | — | — · no | starting Ships |
+| the maiden load | the free load onto a Ship you have just commissioned, taken after its Post; a Load in every respect | — | — · no | free load |
 | minimum | a far Kontor's printed die floor (London 2 · Bergen 3 · Novgorod 4), read on the die as the cask boards, after the slot's Raise die | die-N | minimums · no | gate |
 | lane | the branch of segments from Hamburg to one Kontor | — | lanes · no | route, leg |
 | segment | one printed step of a lane, with one post seat per colour | — | segments · no | leg |
@@ -54,10 +59,12 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | the tide | every Public Work departs with the Ship that sails from its slot; a private building never | — | — · no | — |
 | private building | the family players build on the wharf: a tile of yours on any vacant slot (never over a Work, never a rival's tile), tier 1 / tier 2, owner-only, no die, printed points 2 / 4; fires On visit | building | private buildings · no | Venture, improvement |
 | tier 1 / tier 2 | a private building tile's two faces; the points print as the star-2 / star-4 glyph alone | star-2, star-4 | — · no | L1 / L2, level |
+| On visit | the private building's trigger: its line fires when its owner works the station its slot flanks — the slot picks the station, not the tile's name | — | — · yes (a trigger) | when you work its station |
 | the Flip | your standing tier 1 turned over in place to its tier 2, at the tier 2 fee | — | flips · yes | upgrade |
 | Granary · Kaufhaus · Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping Office | the eight private building faces | — | — · yes | — |
 | Warehouse · Kontorhaus · Guildhouse | the three Kontor building tiles: the Warehouse vouches (your count reads +1 for a Ship bound there); the Kontorhaus and the Guildhouse fire on your delivery | — | — · yes | — |
 | specialist | a private purple tile: earned free, never bought, never two of a kind; 2 seats per player | specialist | specialists · no | improvement, hire (n) |
+| Braumeister · Shipmaster · Cellarman · Stevedore · Agent · Lodesman · Carter · Guildmaster · Chronicler · Alderman | the ten specialists, one of each | — | — · yes | — |
 | seat | a specialist space on your player board; a post seat on a segment | — | seats · no | — |
 | recipe | a card granting permission to brew a beer; the exports print a fee | recipe | recipes · no | licence |
 | exports | the four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — · no | — |
@@ -98,6 +105,17 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 **Triggers**, one grammar on every face: **On load** · **On sail** · **On visit** · **On your
 delivery here** · **At turn start** · **At end**. *When* for a single moment, *each time* for
 repeats. Banned in player copy: *whenever*, *stop* (n).
+
+**Retired terms — never printed again:** tray · the second kettle · kettle · Mash Tun · Great
+Copper · YOUR MINIMUM · socket · market cell · quality band · market track · price marker · the
+Bourse · shift · the glut · Venture · ledger die · overbuild · theme · L1 / L2 · the open ground
+· lane gate · contract · claim / draw · demand card · demand well · majority ladder · ladder
+marker · private flag · SAIL (as a station verb) · presence placement · Place 1 presence ·
+Manifest · Order · lading · line (the row or column) · warp · Coper · Herald · Shipwright ·
+Guild Scholar · Town Crier · Supercargo · Innkeeper · Assay Loft · Rack House · Staple Rights ·
+Weigh House (until the roster pass) · Skute · the bag · the first-delivery letter · INVEST ·
+OPEN · leg · factor · establishment · bench · Source · lift · land / landing · hull (in player
+copy) · stop (n).
 
 ## §3. Canonical orders (every surface, no exceptions)
 

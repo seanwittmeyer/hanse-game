@@ -193,9 +193,10 @@ Hard-won across v0.9 → v7; they constrain every future change:
   demand cards) were also the *design* failures.
 - **Free goods make goods the only resource** — an efficiency game without a soul. A building
   sells an action at a price; it never hands out goods.
-- **Depth is not dead when a greedy bot says so.** The "cannot keep three vessels full" finding
-  was a bot artifact; at skill the specialist ships as much as anyone and loses on price. Judge
-  a lane only from a lane committed to it.
+- **Depth is not dead when a greedy bot says so.** The "a specialist cannot keep three vessels
+  full" finding was the bot failing, not the game: at skill the specialist shipped as many casks
+  as anyone, and the gap that remained was the market's price, a structure since retired. Judge
+  a lane only from a lane committed to it, at skill.
 
 ---
 
@@ -519,6 +520,9 @@ hall as framed.
   structural findings (one Venture face was the engine; 21 of 30 search-tier 2p games ended on
   the ceiling because deferral read as free). v8's answer is the supply clock and the ladder;
   the table confirms it.
+- **The Public Works roster.** The filler seven (Malt Kiln ×2 · Customs House · Ropewalk ·
+  Cooperage · Bonded Store · Victualling Yard) stand until the roster pass after the core; the
+  Weigh House and the four Staple Houses sit out until then.
 - **The registry audit** — one action, one term — is a standing gate: a new face never prints
   a second name for a standing action.
 - **Legible goals and strategic arcs** — the designer's standing question (*"without legible
@@ -530,7 +534,7 @@ hall as framed.
 ## 11. Glossary
 
 - **The Wharf** — the whole core area: the four stations + the 8 slots. **Station** — one of
-  the four action spaces (Market · Brewhouse · Harbor · Cellar), each printing a primary and
+  the four action spaces (Market · Brewhouse · Cellar · Harbor), each printing a primary and
   an alternate. **Slot** — one of the 8 perimeter spaces; seats a building and/or a Ship,
   never casks; each flanks a station (Market s1·s8 · Brewhouse s2·s3 · Harbor s6·s7 · Cellar
   s4·s5).

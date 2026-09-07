@@ -41,9 +41,10 @@ The designer's lens, always on:
   surface (`STYLE.md` is the registry). A component prints name + trigger + effect, nothing
   else.
 - **In the app, components are BIG and prose is small.** A rendered component fills its
-  container; captions never repeat what the tile prints; every tile family renders through
-  the app's one display pattern (the `shopgrid` cells + the shared ⊞/⊟ toggle), never a
-  one-off layout.
+  container; captions never repeat what the tile prints; fee tables and reminders live on the
+  components and in tooltips, never in paragraph lines beside them; every tile family renders
+  through the app's one display pattern (the `shopgrid` cells + the shared ⊞/⊟ toggle), never
+  a one-off layout.
 - **The goal is fun.** A low barrier to entry, room to explore the theme and refine strategy.
   Player interaction is built into the core (shared Ships, the berth race, contestable slots,
   majorities); protect it.
@@ -63,8 +64,8 @@ Read the canon in full at the top of every session, in this order:
 | `components.js` | the shared card faces, edited here and never per page |
 
 On demand: `plan/` (the program plans; `plan/V8-PLAN.md` is the v8 derivation),
-`rulebook.html` and `print.html` when a ruling touches a printed surface, `AUTOMA.md` when
-the AI does, `art/PROMPTS.md` and `art/ICONS.md` for art work only (art generation runs in
+`rulebook.html` and `print.html` before landing any ruling (every rules change touches them;
+`print.html` is the kit's source of truth), `AUTOMA.md` when the AI does, `art/PROMPTS.md` and `art/ICONS.md` for art work only (art generation runs in
 its own session), and `archive/` for anything before v8.
 
 When surfaces disagree, fix the disagreement itself: decide which is right, then align
@@ -138,8 +139,8 @@ and no rulings.** A comment says what the code does; the story is `DESIGN.md`'s 
 
 *Brewhouses of the Hanse* — a 2–4 player medieval-Hanseatic brewing euro, c. 1350, Hamburg;
 medium weight (*Great Western Trail* / *Distilled*); print-and-play. You run a merchant
-brewing house at **the Wharf**: four stations on a shared 2×2 (Market · Brewhouse · Harbor ·
-Cellar) ringed by eight slots, where the work runs **Gain goods → Brew → Age → Ship**. Goods
+brewing house at **the Wharf**: four stations on a shared 2×2 (Market · Brewhouse · Cellar ·
+Harbor) ringed by eight slots, where the work runs **Gain goods → Brew → Age → Ship**. Goods
 are the only currency. **Twelve dice are the whole game**: a die leaves your personal supply
 as a cask, a post on a sea lane or a Kontor building, and never returns; the first empty
 supply ends the game. **The quality you may deliver = the number of your dice at sea.** A
@@ -159,7 +160,8 @@ Kontore* (Bruges · London · Bergen · Novgorod).
   `S`/`UI` are `let`-declared) and runs the whole in a Node `vm` with a stubbed DOM;
   render/log/save are no-ops. It prints USAGE before VALUE. Env hooks: `TIER=` (apprentice ·
   journeyman · trader · guildmaster · cellarmaster) · `PERSONAS=1` (the committed lanes) ·
-  `MIX=1` · `SUPPLY=` · `SRCN=` · `GUILD_MS` / `CELLAR_MS` / `GM_ROLLS`. A hook overrides
+  `PTIER=` (the lanes at any tier) · `MIX=1` · `SUPPLY=` · `SRCN=` · `GUILD_MS` / `CELLAR_MS` /
+  `GM_ROLLS`. A hook overrides
   only when set; a ruled default is never silently forced off.
 - **The bar:** 0 crashes and 0 deadlocks across 2–4p; the twelve-dice identity at every end;
   pace in the band; the trigger split; the usage counters.
@@ -168,5 +170,5 @@ Kontore* (Bruges · London · Bergen · Novgorod).
   OUT: shards in parallel, analyzers tolerant of partial corpora. The v5-era probe fleet
   lives at `archive/v5/playtests/` and re-derives when called.
 - The greedy tiers are a robustness/pace oracle, not a strategy judge: they under-value long
-  holds and under-pilot deep lines. Lane balance is read from the committed lanes, the MC
+  holds, never race the clock deliberately, and under-pilot deep lines. Lane balance is read from the committed lanes, the MC
   tiers and the human table. Correct friction with a structure lever, not a value lever.
