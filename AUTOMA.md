@@ -75,13 +75,13 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (58 checks in 15 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (59 checks in 15 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · landing = two dice ·
   Bruges · invitations · the prizes · the private ladder · the end and the score · Gruit,
   aging, no kettle · the AI never stalls. Seconds, always.
 - **`playtests/sim.js`** — the robustness/pace gate riding the engine's own `aiStep`: 0 crashes
-  / 0 deadlocks across 2–4p, the eleven-dice identity at every end, the pace band, the trigger
+  / 0 deadlocks across 2–4p, the twelve-dice identity at every end, the pace band, the trigger
   split, and the v8 usage counters (posts, Kontor builds, RAISEs, sails and wild ports,
   landings and the building-die share, ticks, carts by door and zone, the hall die, ⚜,
   private builds and flips, building stops, specialists seated and their share of wins, the

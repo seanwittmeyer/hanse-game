@@ -2,7 +2,7 @@
 
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
-marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80d`),
+marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80e`),
 this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
 (`print.html`) are current.*
 
@@ -19,8 +19,10 @@ Each player starts with (⚙):
 
 - **3 `G` (grain), 2 `H` (hops)** — storage cap **8 of each good**.
 - The **Gruit** and **Hopped** recipe cards. More recipes are earned (§11).
+- **A Ready Gruit in vessel 1** — its own die set at **1** on it (never from the supply), the top Gruit
+  tile under it. It carts like any cask (§10) and its bonus fires then.
 - A **player board**: 3 vessels · 2 specialist seats · the space for the **personal supply**.
-- **11 quality dice: 10 in the personal supply, 1 the starter post** (below). A die leaves the
+- **12 quality dice: 10 in the personal supply, 1 on your Ready Gruit, 1 the starter post** (below). A die leaves the
   supply as a cask (Brew), a post (Post) or a Kontor building (Build) and never returns. The
   first **empty supply sets the final round** (§14).
 - The **hand of 4 private building tiles** ringed in your colour — four designs, tier 1 face

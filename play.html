@@ -647,7 +647,7 @@ const ICONTIP={
   layers:'The Flight — distinct beers landed: 3/4/5 → 3/6/10★.',
   check:'Ready — the die has reached the quality; the cask may board or be carted.',
   'user-round':'Worker — move it to an adjacent station each turn, then work that station: its two printed actions, a load at each flanking slot, your own private building there.',
-  dices:'A quality die — the cask, the post, the building die: eleven per house; the first empty supply sets the final round.',
+  dices:'A quality die — the cask, the post, the building die: twelve per house; the first empty supply sets the final round.',
   post:'Post — a die of yours on a segment; +1 each time a Ship sails through; your dice at sea are the quality you may deliver.',
   kontorhaus:'Kontor building — one of your three tiles in a Kontor slot, marked by a supply die: the delivery modifier, climbing with every landing there.',
   hammer:'Private building — your tile on any vacant slot; fires when you work the station its slot flanks; prints 2★ (tier 1) or 4★ (tier 2).',
@@ -838,7 +838,8 @@ const VSLOTS=3;
 const SSLOTS=2;
 
 // ---- the dials ----
-const SUPPLY_DICE=10;     // ruled: ten in the personal supply; the eleventh stands as the starter post
+const SUPPLY_DICE=10;     // ruled: ten in the personal supply; the eleventh stands as the starter post, the twelfth sits on the warm Gruit
+const WARM_GRUIT=1;       // ⚙ the warm start (ruled 2026-09-07): a Ready Gruit in vessel 1 — the twelfth die set at 1 on it (not from the supply), the top Gruit tile under it
 const MAX_ROUND=18;       // ⚙ the backstop — it must never fire (10–15 turns a seat)
 const CELLAR_POOL=3;      // ⚙ the Cellar's AGE
 let SRC_PRIMARY=2;        // ⚙ the Market's SOURCE — goods must bind (sim hook SRCN)
@@ -867,7 +868,7 @@ let activeTab=0;
 // boot then WAITS for an INIT over postMessage, local save/load are bypassed, and net.js (the
 // bridge script below — fully inert without the flag) drives seats/authority.
 const NET=(typeof location!=='undefined'&&/[?&]net=1(?:&|$)/.test(location.search||''));
-const KEY='hanse-v80d';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
+const KEY='hanse-v80e';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -923,6 +924,8 @@ function freshState(n,names){
   // the cask stacks — one shuffled, face-up stack per beer IN THE GAME (the undealt export's tiles stay in the box)
   {const inGame=['gruit','hopped'].concat(st.exports);
    inGame.forEach(b=>{st.piles[b]=shuffle(caskCensus(b));});}
+  // THE WARM GRUIT: a Ready Gruit in vessel 1 — the twelfth die at 1 on it (the supply untouched), the top Gruit tile under it (its bonus fires when it is carted)
+  if(WARM_GRUIT)st.players.forEach(p=>{const a=st.piles.gruit||[];const act=a.length?a.shift():STYLES.gruit.act;p.vessels[0]={style:'gruit',q:STYLES.gruit.q,die:1,act};});
   st.impDeck=buildImpDeck(n);
   while(st.impDisplay.length<IMP_DISPLAY&&st.impDeck.length)st.impDisplay.push(st.impDeck.shift());
   // the Public Works: deal WORKS_DEAL[n] onto random slots; the rest to the box; nothing refills
@@ -1019,7 +1022,7 @@ function canRaise(p){return raiseTargets(p).length>0;}
 function raiseApply(p,t){if(t.kind==='post'){S.sea.posts[t.seg][p.id]=Math.min(6,S.sea.posts[t.seg][p.id]+1);return S.sea.posts[t.seg][p.id];}
   const b=bldgAt(p,t.k);if(b){b.face=Math.min(6,b.face+1);return b.face;}return 0;}
 function raiseLabel(t){return t.kind==='post'?(LU('post')+' '+SEGMENTS[t.seg].nm+' ('+t.face+')'):(kIcon(t.k)+' '+DEST[t.k].name+' building ('+t.face+')');}
-// the eleven-dice identity: every die of yours is somewhere public
+// the twelve-dice identity: every die of yours is somewhere public
 function diceOnBoard(p){let n=0;p.vessels.forEach(c=>{if(c)n++;});
   SLOTS.forEach(s=>{const t=S.slots[s.id];if(t&&t.type==='ship')(t.load||[]).forEach(L=>{if(L.owner===p.id)n++;});});
   n+=postsOf(p)+bldgsOf(p)+(p.delivered||[]).length;return n;}
@@ -1300,7 +1303,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
-  log('Eleven dice: ten in the personal supply, one the starter post — in reverse turn order each house stands it on W1 or E1. '+LU('building-2')+' Public Works stand on '+(WORKS_DEAL[setupN]||4)+' slots (the tide takes each with its Ship; nothing refills). No Ship is docked: the first Harbor visit must commission.');
+  log('Twelve dice: ten in the personal supply, one on the Ready Gruit in vessel 1, one the starter post — in reverse turn order each house stands it on W1 or E1. '+LU('building-2')+' Public Works stand on '+(WORKS_DEAL[setupN]||4)+' slots (the tide takes each with its Ship; nothing refills). No Ship is docked: the first Harbor visit must commission.');
   save();render();maybeRunAI();
 }
 

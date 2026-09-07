@@ -502,7 +502,7 @@ const PLAYERS=[{nm:'Crimson',c:'#7c2128'},{nm:'Azure',c:'#274b5c'},{nm:'Forest',
 const FAR_K=['london','bergen','novgorod'];
 const INV_TOKENS=16;   // ⚙ the ⚜ invitation tokens in the box
 const MAX_ROUND=18;                  // round ceiling ⚙ — the v8 backstop (the DICE are the one clock)
-const PRES_DICS=11;                  // QUALITY DICE per colour ⚙ — 10 in the personal supply + the starter post; the same dice are casks, posts and Kontor building markers; the first EMPTY supply sets the final round
+const PRES_DICS=12;                  // QUALITY DICE per colour ⚙ — 10 in the personal supply + the starter post + the warm Gruit's die; the same dice are casks, posts and Kontor building markers; the first EMPTY supply sets the final round
 
 //==================================================================
 // GEOMETRY — one coordinate system (inches) drives the HTML layout,
@@ -908,7 +908,7 @@ function supplyBoard(){
   const smpImp=[0,1,2,3].map(i=>improveTile(IMPROVE[i]));
   const market=shelf('Ships — the display of 3 · commission at the Harbor (Cog free · Hulk 1G) · then Post on its lane','sailboat',smpShip.map(s=>dslot('s','sailboat',s)).join(''))
     +shelf('Specialists — the display of 4 · Bergen’s prize or the Gain 1 specialist bonus seats one, free','wrench',smpImp.map(s=>dslot('i','wrench',s)).join(''))
-    +'<div class="mbox supply-note"><h4>'+LU('dices')+'The dice and the bits</h4><div class="b">The quality dice (11 per colour) stay by each player; the hall die stands on the sea board. Goods · ⚜ invitation tokens · the 3 Kontor chits · score discs: a general supply beside this board.</div></div>';
+    +'<div class="mbox supply-note"><h4>'+LU('dices')+'The dice and the bits</h4><div class="b">The quality dice (12 per colour) stay by each player; the hall die stands on the sea board. Goods · ⚜ invitation tokens · the 3 Kontor chits · score discs: a general supply beside this board.</div></div>';
   // THE CASKS & RECIPES column: the six stacks (Gruit · Hopped · the Q3 pair · the Q4 · the Q5 —
   // the 3-of-4 deal leaves one export in the box, so the slots print the TIER) and the four
   // export recipe stacks. Cask slots cut 2.4×1 · recipe slots 1.85×2.55 — true.
@@ -1203,7 +1203,7 @@ function checklist(pages,famPages){
   h+=T('Tokens &amp; bits')
     +R('⚜ Invitation tokens','Earned <b>one per cask of yours landed at a far Kontor</b> (a Kontorhaus pays a second); spent to present at the hall. No cap. A general supply.',INV_TOKENS)
     +R('Kontor chits','<b>One per far Kontor</b> — the first cask loaded onto a wild Ship sets the chit on the hull.',FAR_K.length)
-    +R('Quality dice — 12 mm d6','<b>the component:</b> the cask, the post, the Kontor building marker and the clock in one. <b>11 per colour — 10 in the personal supply, 1 the starter post.</b> (sourced)',PRES_DICS+' ea')
+    +R('Quality dice — 12 mm d6','<b>the component:</b> the cask, the post, the Kontor building marker and the clock in one. <b>12 per colour — 10 in the personal supply, 1 the starter post, 1 on the Ready Gruit in vessel 1.</b> (sourced)',PRES_DICS+' ea')
     +R('The hall die — 12 mm d6, neutral','Stands on the Bruges panel at <b>2</b>; a present scores cask die + this die, then it climbs +1 (cap 6). (sourced)','1')
     +R('Grain cubes','Currency and brew input. <b>A general supply.</b> (sourced)','60')
     +R('Hops cubes','Currency and brew input. <b>A general supply.</b> (sourced)','40')

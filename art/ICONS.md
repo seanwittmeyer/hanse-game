@@ -153,7 +153,9 @@
 > off `star.png` in the standing numeral recipe — the single glyph, no sign, white — the
 > ★-value marks for the v8 kit (a star that reads "N★" outright, the same grammar as
 > `die-1..6` / `quality-1..6`). Keys `star-1`…`star-6` in `ICON_ART`; render validated
-> pixel-identical against the landed `star-plus1.png` before landing.
+> pixel-identical against the landed `star-plus1.png` before landing. *Use landed 2026-09-07
+> (v8.0e): `star-2` / `star-4` are the private building tiles' printed points (tier 1 / tier 2) —
+> the glyph alone replaces the star-and-numeral chip (`components.js` `privateTile`).*
 
 > **Round 15 (designer, 2026-09-06): the CART/LOAD split + the hall mark.** The v8 road-cart
 > candidates collided with the landed cask-on-cart — ruled: the former load art

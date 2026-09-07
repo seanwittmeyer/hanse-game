@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80d). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80e). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -30,16 +30,20 @@ function putShip(id,ship,dest,load,chit){S.slots[id]={type:'ship',ship:ship,dest
 function mkCask(style,die,act){var st=STYLES[style];return {style:style,q:st.q,die:(die!=null?die:st.q),act:act||'source'};}
 function putPost(seg,pid,face){S.sea.posts[seg][pid]=face||1;}
 function putKB(k,pid,face,tile){var i=kOpenSlot(k);S.sea.kontor[k].slots[i]={tile:tile||'warehouse',pid:pid,face:face||1};}
-function eleven(p){return p.supply+diceOnBoard(p);}
+function twelve(p){return p.supply+diceOnBoard(p);}
 function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,cask:null,count:0};UI.sub='load';UI.load.cask=vi;loadOnto(slot);}
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80d',function(){eq(KEY,'hanse-v80d');});
+t('KEY is hanse-v80e',function(){eq(KEY,'hanse-v80e');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
-  S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
+  S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
   eq(S.phase,'starter');eq(S.starterQueue,[2,1,0],'reverse order');eq(S.active,2,'the last seat first');});
+t('the warm Gruit: a Ready Gruit in vessel 1 with the twelfth die at 1 and the top Gruit tile under it; the supply opens at ten; twelve dice stand; it carts on turn one',function(){fresh(3);
+  S.players.forEach(function(p){var c=p.vessels[0];ok(c&&c.style==='gruit'&&c.die===1&&caskReady(c)&&c.act==='source',p.name+'\\'s Ready Gruit, its tile under it');eq(p.vessels[1],null);eq(p.supply,SUPPLY_DICE);eq(twelve(p),SUPPLY_DICE+2,'twelve');});
+  eq(pileList('gruit').length,16-3,'three Gruit tiles taken');var p=cur();eq(cartCasks(p).length,1,'cartable at count 1');
+  UI={sub:'stops',stops:[],usedStops:[]};enterCart('end');eq(UI.sub,'cart');cartPickCask(0);ok(!p.vessels[0],'carted');eq(S.yard.length,1,'to the yard');eq((UI.pendingActs||[]).length+((UI.sub==='source')?1:0)>=1,true,'its bonus fires');});
 t('setup: WORKS_DEAL Public Works dealt, the rest boxed, no bag; no Ship docked',function(){fresh(3);
   var works=0,ships=0;SLOTS.forEach(function(s){var b=S.buildings[s.id];if(b&&!b.p)works++;if(S.slots[s.id])ships++;});
   eq(works,WORKS_DEAL[3],'works standing');eq(ships,0,'no hull docked');
@@ -57,31 +61,31 @@ t('setup: the hall die at 2, places 6 at 2p / 8 at 3p, the yard empty, the sea e
   fresh(3);eq(S.hall.places.length,8);});
 t('setup: no contract/demand/ladder/bourse/flag/venture field on S',function(){fresh(2);
   ['contractDeck','contractDisplay','demandDeck','demand','ladder','bourse','buildDeck','buildDisplay'].forEach(function(k){ok(S[k]===undefined,k+' absent');});});
-t('the starter: the eleventh die stands at face 1 on W1 or E1 and never touches the supply; count 1',function(){
+t('the starter: the eleventh die stands at face 1 on W1 or E1 and never touches the supply (the twelfth sits on the warm Gruit); count 1',function(){
   S=freshState(2,['P1','P2']);UI={sub:'starter'};S.players.forEach(function(p){p.ai=null;});
   var p=cur();eq(p.id,1,'the last seat stands first');
   starterPick('w2');ok(S.phase==='starter'&&S.sea.posts.w2[1]==null,'W2 refused');
   starterPick('w1');eq(S.sea.posts.w1[1],1,'a die at 1');eq(S.players[1].supply,SUPPLY_DICE,'the supply untouched');
   eq(qualityCount(S.players[1]),1,'count 1');
   starterPick('e1');eq(S.phase,'play');eq(S.active,S.first);eq(UI.sub,'move');
-  S.players.forEach(function(q){eq(eleven(q),SUPPLY_DICE+1,'eleven dice');});});
+  S.players.forEach(function(q){eq(twelve(q),SUPPLY_DICE+2,'twelve dice');});});
 t('setup: Gruit is READY at brew and its stack is uniform (no search); the exports print six different bonuses',function(){fresh(2);
   eq(startDieFor(S.players[0],'gruit'),1);eq(STYLES.gruit.q,1);eq(STYLES.gruit.ready,0);
   eq(Object.keys(pileVerbs('gruit')),['source'],'all Gain 2 goods');
-  eq(pileList('gruit').length,16-0,'16 Gruit tiles');
+  eq(pileList('gruit').length,16-S.players.length,'16 Gruit tiles, one under each warm Gruit');
   S.exports.forEach(function(st){eq(Object.keys(pileVerbs(st)).length,6,st+' six different');});
   eq(Object.keys(pileVerbs('hopped')).length,8,'Hopped prints the eight');
   eq(CASK_ACT_POOL.length,8);ok(CASK_ACT_POOL.indexOf('lift')<0,'LIFT left the pool');ok(CASK_ACT_POOL.indexOf('reach')<0,'no presence placement');});
 
 // ---------- 1 · the supply and the end ----------
-t('spendDie: brew, post and Kontor build each spend one; the eleven-dice identity holds after each',function(){fresh(2);var p=cur();
+t('spendDie: brew, post and Kontor build each spend one; the twelve-dice identity holds after each',function(){fresh(2);var p=cur();
   p.grain=9;p.hops=9;p.placed=true;p.cell='B';UI={sub:'stops',stops:[],usedStops:[]};
   enterBrew('end',false);brewPick('gruit');
-  eq(p.supply,9,'the brew spent one');eq(eleven(p),11);
+  eq(p.supply,9,'the brew spent one');eq(twelve(p),12);
   UI.post={segs:['w1'],returnTo:'end',ctx:{pid:0},pid:0};UI.sub='post';postPick('w1');
-  eq(p.supply,8,'the post spent one');eq(eleven(p),11);
+  eq(p.supply,8,'the post spent one');eq(twelve(p),12);
   putPost('e1',0,1);UI.kb={ks:['bergen'],returnTo:'end',pid:0,k:null};UI.sub='kbuild';kbuildPick('bergen','warehouse');
-  eq(p.supply,7,'the Kontor build spent one');eq(eleven(p),11);
+  eq(p.supply,7,'the Kontor build spent one');eq(twelve(p),12);
   eq(p.ktiles.length,2,'the tile left the set');});
 t('checkDiceEnd fires the moment a supply hits 0; endTurn finishes the round; MAX_ROUND 18 backstops',function(){fresh(2);var p=cur();
   p.supply=1;spendDie(p);ok(S.ending,'the empty supply ends it');eq(S.endReason,'dice');
@@ -93,7 +97,7 @@ t('no verb at supply 0: brew · post · kbuild · the post bonus · London\\'s b
   eq(buildMenuOptions(p,true,true).indexOf('post'),-1,'no post arm');});
 t('the identity holds through a whole AI game (3p journeyman)',function(){fresh(3);S.players.forEach(function(p){p.ai={tier:'journeyman'};});
   var g=0;while(!S.over&&g++<200000)aiStep();ok(S.over,'the game ended');
-  S.players.forEach(function(p){eq(eleven(p),SUPPLY_DICE+1,p.name+' eleven');ok(p.supply>=0,'never negative');});});
+  S.players.forEach(function(p){eq(twelve(p),SUPPLY_DICE+2,p.name+' twelve');ok(p.supply>=0,'never negative');});});
 
 // ---------- 2 · the quality count ----------
 t('qualityCount = posts + building dice, GLOBAL; the starter counts; the Lodesman and the Customs House read +1',function(){fresh(2);var p=S.players[0];
@@ -114,7 +118,7 @@ t('canShipQ: Hopped needs 2, Bock 5; the same read at every port and at the cart
   ok(canShipQ(p,1,null),'Gruit at 1');ok(!canShipQ(p,2,null),'Hopped needs 2');
   putPost('w1',0,1);ok(canShipQ(p,2,null));ok(!canShipQ(p,5,null));
   putPost('w2',0,1);putPost('e2',0,1);putKB('london',0,1);eq(qualityCount(p),5);ok(canShipQ(p,5,null),'Bock at 5');
-  eq(cartCasks(p).length,0);p.vessels[0]=mkCask('bock',5);eq(cartCasks(p).length,1,'the cart reads the count');});
+  p.vessels[0]=null;eq(cartCasks(p).length,0);p.vessels[0]=mkCask('bock',5);eq(cartCasks(p).length,1,'the cart reads the count');});
 t('canTake refuses a cask above the count, below Q2, Gruit, or with its lane closed',function(){fresh(2);var p=cur();
   var id='s1';clearSlot(id);putShip(id,'cog','bergen');
   p.vessels[0]=mkCask('hopped',2);ok(!canTake(id,0),'count 1 cannot ship Hopped');
@@ -416,7 +420,7 @@ t('the Chronicler +1★ per cask landed; the Guildmaster +2★ per present; the 
   p.upgrades=['alderman'];for(var i=0;i<3;i++)S.hall.places[i]={pid:0,style:'hopped',q:2,face:2};eq(scorePlayer(p).guild,2,'Bruges by hall places');});
 
 // ---------- 13 · Gruit, aging, no kettle ----------
-t('Gruit: 1G, Ready at brew, the top tile (Gain 2 goods) without a search, never boards, the cart is its road',function(){fresh(2);var p=cur();p.grain=3;
+t('Gruit: 1G, Ready at brew, the top tile (Gain 2 goods) without a search, never boards, the cart is its road',function(){fresh(2);var p=cur();p.grain=3;p.vessels[0]=null;
   UI={sub:'move'};UI.brew={returnTo:'end',free:false};UI.sub='brew';brewPick('gruit');
   eq(UI.sub,'end','no search picker');var c=p.vessels.filter(function(x){return x;})[0];eq(c.style,'gruit');eq(c.die,1);ok(caskReady(c));eq(c.act,'source');eq(p.grain,2);
   clearSlot('s1');putShip('s1','cog','bergen');ok(!canTake('s1',p.vessels.indexOf(c)),'never boards');ok(cartCasks(p).length===1,'carts');});

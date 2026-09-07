@@ -1020,7 +1020,11 @@ direction the same day, ruled "don't change the Gruit casks; change the rest"):*
 hands out goods — the Granary/Kaufhaus *pay 1 `G`: Brew once*, the Bonded Store's sail line *each
 shipper may pay 1 `G`: Post on its lane*, the Warehouse *vouches* (count +1 for a Ship bound
 there); Gruit's tiles, the exports' bonus tiles, the yard, the hall and Source 2 stand. Record:
-`DESIGN.md` §9 (v8.0d).*
+`DESIGN.md` §9 (v8.0d). **v8.0e (2026-09-07):** the warm Gruit returns — a Ready Gruit in vessel 1,
+its own twelfth die at 1 on it, the top Gruit tile under it; the supply keeps its ten and twelve
+dice per player stand (the from-the-ten cut ran 3p at 7–13 rounds in the sim; the twelfth die holds
+the band); the private tiles print their points as the `star-2` / `star-4`
+glyph. Record: `DESIGN.md` §9 (v8.0e).*
 
 ### 13.0 The game in one breath
 

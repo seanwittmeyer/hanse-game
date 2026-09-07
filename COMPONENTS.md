@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v8.0**). Design rationale & history: `DESIGN.md` §9; the v8 program, the designer's review and the implementation plan: `V8-PLAN.md` §12–§13.
-> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80d`) — the source of truth on values and behaviour.
+> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80e`) — the source of truth on values and behaviour.
 > - `print.html` (the v8.0 kit, cut 2026-09-06) and `rulebook.html` (the v8.0 book) are current; the art the new faces still lack is queued in `art/PROMPTS.md` (the v8.0 kit art queue).
 > - **READ §0 FIRST.** §0 states the v8.0 kit truth — what was ADDED, RE-CUT, and RETIRED. §§1–17 below still enumerate the v5.8/v7 body in detail and are superseded where §0 says so; the full section rewrite is the kit pass.
 
@@ -20,7 +20,7 @@
 | **The sea board** | 0 | 1, double-sided (12.6 × 10.7 in) | **NEW** — Hamburg (the Wharf) at the western edge, over the chart · the cart road to Bruges · five segments (W1 the Wadden Coast · W2 the Dover Strait → London; E1 the Skagerrak → Bergen; E1 · E2 the Sound → Novgorod), each printing **one post seat per colour** (side A: 2 seats · side B: 4) · three far Kontor panels (the minimum Q2 · **building slots** 2 on A / 3 on B, the third for 4p · the majority pair · the field · the prize line) · the Bruges panel (**the yard track**: BEST 1–3 · GOOD 4–6 · OK 7+, side A 1–2 / 3–4 / 5+ · **the hall**: 8 places on B / 6 on A, the first three printing 2 · 2 · 1 goods · **the hall die's seat**) |
 | Market & Stores board | 1 | 1 | the Bourse lane struck; displays: Ships 3 · Specialists 4 · recipes; the score ring |
 | Player boards | 4 | 4 | re-printed: 3 vessels · 2 seats · the **personal supply well** (the ten dice) · the Flight; the hand of 4 private tiles and the set of 3 Kontor building tiles lie beside the board (the recipe splay's pattern); no tray graphic |
-| Quality dice | 52 | **44** (11 × 4) | ten in the supply + the starter post; the same dice are casks, posts and Kontor building markers |
+| Quality dice | 52 | **48** (12 × 4) | ten in the supply + the starter post + the warm Gruit's die (v8.0e); the same dice are casks, posts and Kontor building markers |
 | **The hall die** | 0 | 1, neutral | **NEW** — stands on the Bruges panel at 2; +1 per present |
 | Private building tiles | 16 Ventures | **16** (4 designs × 4 colours, tier 1 / tier 2) | re-faced: Granary / Kaufhaus · Scriptorium / Brewers' Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office; **printed points 2 / 4**; the trigger *On visit* (it fires when its owner works the station its slot flanks); **built on any VACANT slot, never over a Public Work** (designer-ruled 2026-09-06); no ledger seat, no die |
 | **Kontor building tiles** | 0 | **12** (3 designs × 4 colours) | **NEW** — Warehouse (your quality count reads +1 for a Ship bound here) · Kontorhaus (+1 ⚜ more on your landing) · Guildhouse (Raise one die of yours at sea +1 on your landing); placed in a Kontor slot, marked with the builder's die |
@@ -41,14 +41,15 @@ tokens, three chits, eight fewer dice, four decks and trackers gone.
 **THE RULINGS THAT TOUCH A PRINTED FACE (the v4.13 law — every one lands here):**
 
 - **The dice are a personal supply** (no tray): the player board prints the supply well and
-  the line *11 dice · 10 in the supply · 1 the starter post*.
+  the line *12 dice · 10 in the supply · 1 on the Gruit · 1 the starter post*.
 - **The sea board prints every home for ownership and every destination**: post seats per
   colour on every segment; building slots with a die seat and a tile seat at every far
   Kontor; the minimum Q2 on every far panel; the yard track's three zones and their prizes;
   the hall's places and the hall die's seat; the cart road; Hamburg.
 - **The Kontor building tiles print name + trigger + effect** (*On your landing here:* …) and
   a die seat for the builder's die (the modifier · the pips).
-- **The private building tiles print their points** (2 on tier 1, 4 on tier 2), the trigger
+- **The private building tiles print their points as the `star-N` glyph** (`star-2` on tier 1,
+  `star-4` on tier 2 — designer-ruled 2026-09-07: the glyph alone, never a star and a numeral), the trigger
   *On visit* and their line; no station name — a tile stands on any vacant slot and fires
   when its owner works the station that slot flanks; the ledger seat is struck.
 - **No building hands out goods** (designer-ruled 2026-09-07, v8.0d — "at cost"): the Granary
@@ -57,6 +58,9 @@ tokens, three chits, eight fewer dice, four decks and trackers gone.
   from Source 2, the cask tiles (Gruit's sixteen *Gain 2 goods* untouched), the yard and the
   hall — a die pays for them. **The at-cost grammar prints cost before effect:** the `G` chip,
   a colon, the verb's icon (`components.js`).
+- **The warm Gruit** (designer-ruled 2026-09-07, v8.0e): every player starts with a Ready Gruit in
+  vessel 1 — its own die, the twelfth, set at 1 on it (the supply keeps its ten), the top Gruit tile
+  under it (16 − n tiles remain in the stack); the kit goes from 44 to **48 dice** (12 × 4).
 - **The Ship tiles print the Kontor or the wild seat**, the berths and the fee; the Kontor
   minimum leaves the hull (it prints on the panel).
 - **The cask tiles print the eight verbs**; LIFT leaves the pool.

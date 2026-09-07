@@ -175,7 +175,7 @@ const PRIVATES=[
   {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical')), txt:'Brew'},
                                t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical'))+VSEP('·')+VBIG(LU('truck')), txt:'Brew · Cart 2'}},
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
-                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},
+                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe'}},
   {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise'},
                                t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise · Post'}},
   {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'private-coldstore.png',     own:VBIG(LU('age-2'))},
@@ -191,7 +191,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
     +'<span class="bt-cost">'+cost(tier===2?2:1,1)+'</span></div>'
   +'<div class="bt-foot vt2"><span class="vt-own" title="the line — fires when its owner works this station">'+(f.own||'')
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
-    +'<span class="vt-pub vt-pts" title="the printed points — scored at the end while the tile stands">'+LU('star','starmark')+'<b>'+f.pts+'</b></span></div>'
+    +'<span class="vt-pub vt-pts" title="the printed points — scored at the end while the tile stands">'+LU('star-'+f.pts,'starmark')+'</span></div>'
   +'</div>';}
 // ---- THE KONTOR BUILDING TILES — each house's set of three, each usable once; placed in a
 // Kontor's slot and marked with a supply die (the delivery modifier); the line fires on each
@@ -340,7 +340,7 @@ function playerBoard(d,live){const L=live||{};
       +'<span class="pbrd-supply"><span class="pbrd-sup" title="the personal supply \u2014 dice unspent">'+LU('dices')+seatBox(L.dice)+'</span>'
         +'<span class="pbrd-sup pbg" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
         +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
-        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 11 dice: 10 in the supply, 1 the starter post \u00b7 goods max 8 each</span></span>'
+        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 12 dice: 10 in the supply, 1 on the Gruit, 1 the starter post \u00b7 goods max 8 each</span></span>'
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
     +'<div class="pbrd-row">'+ssl(1)+ssl(2)
@@ -637,7 +637,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .vt-top{align-items:flex-start}'
 +'.btile .bt-tcol{display:flex;flex-direction:column;gap:.02in;min-width:0;flex:1}'
 +'.btile .bt-trig{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1;opacity:.95}'
-+'.btile .vt2{align-items:center;gap:.05in;padding-right:.8in}'
++'.btile .vt2{align-items:center;gap:.05in;padding-right:.62in}'
 +'.btile .vt2 .vt-own{display:inline-flex;align-items:center;gap:0;min-width:0}'
 +'.btile .vt2 .ac .starmark{width:.5in!important;height:.5in!important;vertical-align:0}'
 +'.btile .vt2 .ac{margin:0;position:relative;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center}'
@@ -751,8 +751,8 @@ var HC_CSS4=''
 +'.flagtok{width:1in;height:1in;box-sizing:border-box;position:relative;border-radius:.12in;background:#f3ecdd;border:.05in solid var(--c,#7c2128);color:var(--c,#7c2128);display:flex;align-items:center;justify-content:center}'
 +'.flagtok svg,.flagtok .ic{width:.46in;height:.46in;stroke-width:2}'
 +'.flagtok .ft-fee{position:absolute;right:.04in;bottom:.03in;font-weight:bold;font-size:.11in;background:rgba(0,0,0,.55);color:#fff;border-radius:.1in;padding:.015in .05in}'
-+'.btile .vt-pts{border-style:solid;align-items:center;justify-content:center;gap:.02in;padding:0;font-weight:900;font-size:.24in;line-height:1;color:#ffd24a}'
-+'.btile .vt-pts .starmark{width:.3in!important;height:.3in!important}'
++'.btile .vt-pub.vt-pts{border-style:solid;width:.6in;height:.6in;right:-.04in;bottom:-.04in;align-items:center;justify-content:center;gap:0;padding:0;font-weight:900;font-size:.24in;line-height:1;color:#ffd24a}'   // v8.0e: the star-N glyph alone — a right-sized box, the foot's text gains the width
++'.btile .vt-pts .starmark{width:.46in!important;height:.46in!important;vertical-align:0!important}'
 +'.btile.kbt .bt-nm{font-size:.15in}.btile.kbt .kb-seat{position:absolute;right:.06in;top:.3in;width:.42in;height:.42in;border:2px dashed rgba(255,255,255,.85);border-radius:.06in;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2)}'
 +'.btile.kbt .kb-seat img.ai,.btile.kbt .kb-seat svg{width:.3in;height:.3in;opacity:.7}'
 +'.stile .st-chit{display:inline-flex;align-items:center;gap:.04in;border:2px dashed rgba(255,255,255,.8);border-radius:.05in;padding:.01in .05in}'

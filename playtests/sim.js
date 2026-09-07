@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80d).
+// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80e).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙
@@ -88,8 +88,8 @@ function __runGame(n,__POFF){
     aiStep();
     if(++guard>250000)return {error:'runaway (guard tripped)',round:S.turn,sub:UI.sub};
   }
-  // the eleven-dice identity at the end
-  var idOK=S.players.every(function(p){return p.supply+diceOnBoard(p)===(SUPPLY_DICE+1)&&p.supply>=0;});
+  // the twelve-dice identity at the end (ten in the supply + the starter post + the warm Gruit's die)
+  var idOK=S.players.every(function(p){return p.supply+diceOnBoard(p)===(SUPPLY_DICE+2)&&p.supply>=0;});
   S.players.forEach(function(p){p.vessels.forEach(function(c){if(c&&caskReady(c))__V.stranded++;});});
   var fr=finalRows();var rows=fr.rows;
   var byDest={london:0,bergen:0,novgorod:0};
@@ -177,7 +177,7 @@ let anyErr=0,anyId=0;
   const trig={};ok.forEach(r=>trig[r.trigger]=(trig[r.trigger]||0)+1);
   const seat={};ok.forEach(r=>seat[r.winSeat]=(seat[r.winSeat]||0)+1);
   const idBad=ok.filter(r=>!r.idOK).length;anyId+=idBad;
-  console.log(`\n== ${n}p · ${ok.length} ok / ${errs.length} err · eleven-dice identity ${idBad?('BROKEN in '+idBad):'holds'} ==`);
+  console.log(`\n== ${n}p · ${ok.length} ok / ${errs.length} err · twelve-dice identity ${idBad?('BROKEN in '+idBad):'holds'} ==`);
   console.log(`rounds avg ${fmt(avg(rounds))} (min ${Math.min(...rounds)} max ${Math.max(...rounds)}) · in 10–18 band ${pct(within,ok.length)}`);
   console.log(`triggers: ${Object.keys(trig).map(k=>k+' '+pct(trig[k],ok.length)).join(' · ')} · Ships sailed ${fmt(avg(ok.map(r=>r.sailed)))} · supply left at end avg ${fmt(avg(ok.map(r=>avg(r.supplyLeft))))}`);
   console.log(`winner total avg ${fmt(avg(ok.map(r=>r.winTotal)))} · margin avg ${fmt(avg(ok.map(r=>r.winTotal-r.secondTotal)))} · seat wins ${Object.keys(seat).map(s=>'P'+(+s+1)+' '+pct(seat[s],ok.length)).join(' ')}`);
@@ -209,5 +209,5 @@ let anyErr=0,anyId=0;
     console.log('  per-lane avg: '+Object.keys(lane).map(k=>`${k} ★${fmt(lane[k].tot/lane[k].n)} (count ${fmt(lane[k].ct/lane[k].n)} · sea ${fmt(lane[k].sea/lane[k].n)} · hall ${fmt(lane[k].hall/lane[k].n)} · maj ${fmt(lane[k].maj/lane[k].n)} · wharf ${fmt(lane[k].wharf/lane[k].n)} · ${fmt(lane[k].ld/lane[k].n)} landed · flight ${fmt(lane[k].fl/lane[k].n)})`).join(' · '));
   }
 });
-console.log('\nGATE: '+(anyErr?('❌ '+anyErr+' errored games'):'0 crashes / 0 deadlocks.')+(anyId?(' ❌ the eleven-dice identity broke in '+anyId+' games'):' · the eleven-dice identity holds.'));
+console.log('\nGATE: '+(anyErr?('❌ '+anyErr+' errored games'):'0 crashes / 0 deadlocks.')+(anyId?(' ❌ the twelve-dice identity broke in '+anyId+' games'):' · the twelve-dice identity holds.'));
 process.exit((anyErr||anyId)?1:0);
