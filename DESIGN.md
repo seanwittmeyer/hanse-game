@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (live build v8.0b “Brewer & Merchant”)
+# Brewhouses of the Hanse — Design (live build v8.0e “Brewer & Merchant”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**,
 > the **change log**, the **balance lessons** and the **open watches**. Operational rules
@@ -195,7 +195,7 @@ Canonical detail in `RULES.md` / `COMPONENTS.md`; the shape:
 
 ## 7. The tooling (how we verify)
 
-- **`playtests/verify-v8.js`** — the v8 rule battery (57 checks in 15 groups). Runs in
+- **`playtests/verify-v8.js`** — the v8 rule battery (59 checks in 15 groups). Runs in
   seconds; **always** after an engine change. The v5/v6 batteries live with their frozen
   builds under `archive/v5/playtests/` and `archive/v6/playtests/`.
 - **`playtests/sim.js [N]`** — drives the *canonical* `play.html` engine headlessly

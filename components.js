@@ -34,11 +34,8 @@ const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/i
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc h">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
-// v3.0-A "SPECIFIC GAINS" — a cask's slot-action is one of NINE concrete acquisitions, printed on the
-// tile and steerable at the kettle (the face-up top of each quality pile). The pool is quality-gated:
-// survey/hire/brew join at Q3+ (v4.12 — brew was Q4+: 'brew is a true throttle'). Convert and the pool Wild are CUT (Convert -> the Grain
-// Exchange work; Wild survives only as the Workshop dock effect + the flipped-tile Floor stops).
-// Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
+// THE CASK BONUSES — the eight-verb pool ⚙ printed on the cask tiles: the printed mix IS the stack a
+// Q2+ brew searches; Gruit is PINNED to Gain 2 goods (no search). Icons/texts mirror play.html CASK_ACT.
 const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or is carted
   {k:'source',  ai:'goods-2',       act:'Gain 2 goods',             q:1},
   {k:'age',     ai:'age-2',         act:'Age 2',                    q:2},
@@ -319,8 +316,8 @@ function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?
 // generator for the print sheet AND the live app. Zones: crest+name · the ★ SCORE seat ·
 // the SUPPLY ledge (dice/grain/hops tally seats) · VESSEL 1-3 wells (2.4×1in — the cask
 // tile sits IN the well at true size) · SPECIALIST seats 1-2 (2×2in) · the printed FLIGHT
-// ladder (beers SHIPPED: 1..5 → 0/0/4/9/16★) · the CONTRACTS pile zone. `live` (app only):
-// {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,contracts,vknote}.
+// ladder (beers LANDED: 3/4/5 → 3/6/10★) · the personal supply well. `live` (app only):
+// {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,supply}.
 function playerBoard(d,live){const L=live||{};
   const seatBox=(v)=>v!=null?'<b class="pbrd-num">'+v+'</b>':'<span class="pbrd-box"></span>';   // live: a bare number · print: the empty well stays
   const vsl=(i)=>'<div class="pbrd-slot pbrd-vsl">'
