@@ -1,8 +1,7 @@
 # Automa / AI Opponents
 
-*The current state of the AI seats in `play.html` and the harnesses that gate them (v8.0
-"Brewer & Merchant"). History and per-version teaching notes live in `DESIGN.md` §9 and git
-history; this doc describes what stands today.*
+*The current state of the AI seats in `play.html` and the harnesses that gate them. The
+history lives in `DESIGN.md`; this doc describes what stands today.*
 
 ## The ladder — five tiers, live in `play.html`
 
@@ -43,7 +42,7 @@ as two loops that need each other:
   count; the tile by the seat's lane (the Kontorhaus for the hall lane or an ⚜-poor seat, the
   Guildhouse once dice stand at sea, else the Warehouse). **RAISE** turns the lowest die,
   building dice first.
-- **The priced lines** (v8.0d): the Granary's brew is priced as a brew minus its grain
+- **The priced lines**: the Granary's brew is priced as a brew minus its grain
   (`aiPactValue`); the Bonded Store's post offer as a post against the same die as a cask,
   minus the fee, under the last-dice rule (`aiBondPost`); the Warehouse is the seat's Kontor building
   when its count trails its recipes (`aiKTile`).
@@ -102,8 +101,8 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Open (AI-only; none gates a rules read)
 
-- The sea tempo: the greedy seats still fill Ships slowly (Hulks of three wait); since v8.0f two
-  wild Cogs stand docked from setup — re-read the fill rate; the load and commission values want
+- The sea tempo: the greedy seats still fill Ships slowly (Hulks of three wait); two wild Cogs
+  stand docked from setup — re-read the fill rate; the load and commission values want
   a read at a human table before any tuning corpus.
 - The GM's rollouts at 4p; sub-Guildmaster MC budget tiers; a blind-AI option — optional ideas.
 - The physical automa deck (a card-driven tabletop bot) waits until the ⚙ numbers settle.

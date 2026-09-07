@@ -11,7 +11,7 @@
     --red:#7c2128; --red2:#9c3b2e; --gold:#b8860b; --gold2:#d8a72a;
     --sea:#274b5c; --sea2:#3d6b7e; --green:#4a6b3a; --line:#c8b48a;
     --grain:#d9b44a; --hops:#6b8e3d; --slate:#6b6256;
-    /* the four house colours (designer-ruled 2026-08-23) — the pawns, the dice and the owner
+    /* the four house colours — the pawns, the dice and the owner
        rings read these; the JS COLORS roster mirrors them in seat order red·blue·green·yellow */
     --house-red:#7c2128; --house-blue:#274b5c; --house-green:#4a6b3a; --house-yellow:#b8860b;
   }
@@ -96,7 +96,7 @@
      boardCross centers the first view on the stations). This override must sit AFTER the base .ag
      rule — same specificity, source order decides. */
   @media(max-width:760px){.agwrap{overflow-x:auto;overflow-y:hidden;justify-content:flex-start;-webkit-overflow-scrolling:touch}
-    .ag{--cw:calc((min(192cqw,700px) - 3*var(--gap))/5.6)}}   /* the board stays BIG on a phone and scrolls sideways — legibility over fit (designer-ruled 2026-08-30) */
+    .ag{--cw:calc((min(192cqw,700px) - 3*var(--gap))/5.6)}}   /* the board stays BIG on a phone and scrolls sideways — legibility over fit */
   /* explicit square rows make every cell a guaranteed square from the GRID — not from each
      item's own aspect-ratio under size-containment (which mobile Safari collapses). */
   .cell,.slot{min-width:0;min-height:0}
@@ -205,7 +205,7 @@
   .s1{grid-area:1/2}.s2{grid-area:1/3}.cA{grid-area:2/2}.cB{grid-area:2/3}
   .s8{grid-area:2/1}.s3{grid-area:2/4}.s7{grid-area:3/1}.s4{grid-area:3/4}
   .cC{grid-area:3/2}.cD{grid-area:3/3}.s6{grid-area:4/2}.s5{grid-area:4/3}
-  /* ===== the REAL printables tiles, rendered in the slots (scaled to the slot via cq units) ===== */
+  /* ===== the REAL kit tiles, rendered in the slots (scaled to the slot via cq units) ===== */
   .semp{position:absolute;inset:0;opacity:.85;color:#f4ead0;text-shadow:0 1px 2px rgba(0,0,0,.5);font-variant:small-caps;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
   .slot.tk-up .semp{top:auto;bottom:0;height:97%}
   .slot.tk-down .semp{bottom:auto;top:0;height:97%}
@@ -525,7 +525,7 @@
   /* destinations: data row + delivery squares */
   .rmaj{font-weight:bold;font-size:.95rem;letter-spacing:.5px}
   .route .ric .ic,.route .ric svg{width:1.25em;height:1.25em}
-  .route .ric img.ai{width:1.7em;height:1.7em}   /* the Kontor's OWN crest — the art earns the room (2026-08-09) */
+  .route .ric img.ai{width:1.7em;height:1.7em}   /* the Kontor's OWN crest — the art earns the room */
   .tag img.ai{width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:2px}
   /* kontor rows: name · gate (right), then ★ = die · + prize (right) */
   .route .rline{margin-top:2px;font-size:.9rem}
@@ -709,9 +709,9 @@ function caskAct(t){return t.act||STYLES[t.style].act;}
 const STATION_ICON={Market:'goods-2',Brewhouse:'flask-conical',Cellar:'age-3',Harbor:'ship'};
 const STATION_ALT_ICON={Market:'package-plus',Brewhouse:'hammer',Cellar:'truck',Harbor:'kontorhaus'};
 
-// ---- THE KONTORE. A delivery = cask die + your building die there; the minimum is the
-// beer's printed quality Q2 at every far Kontor ⚙; Bruges is reached by cart only.
-const KONTOR_MIN={london:2,bergen:3,novgorod:4};   // ⚙ each far Kontor's die floor (ruled 2026-09-07), read on the DIE as the cask boards — after any Raise die at the slot
+// ---- THE KONTORE. A delivery = cask die + your building die there; each far Kontor prints
+// a die floor, read on the cask's die as it boards; Bruges is reached by cart only.
+const KONTOR_MIN={london:2,bergen:3,novgorod:4};   // ⚙ each far Kontor's die floor, read on the DIE as the cask boards — after any Raise die at the slot
 function kMin(k){return KONTOR_MIN[k]||2;}
 const DEST={
   bruges  :{name:'Bruges',  role:'The Hanzehuis — the road: the yard and the hall',      pair:[4,2]},
@@ -727,7 +727,7 @@ const SEGMENTS={w1:{nm:'the Wadden Coast'},w2:{nm:'the Dover Strait'},e1:{nm:'th
 const SEG_KEYS=['w1','w2','e1','e2'];
 const LANES={london:['w1','w2'],bergen:['e1'],novgorod:['e1','e2']};
 const STARTER_SEGS=['w1','e1'];   // the eleventh die stands on the FIRST segment of either lane
-function kontorSlotsN(n){return (n||2)>=3?2:1;}   // ⚙ building slots per far Kontor: 1 on side A (2p) · 2 on side B (3–4p) — ruled 2026-09-07
+function kontorSlotsN(n){return (n||2)>=3?2:1;}   // ⚙ building slots per far Kontor: 1 on side A (2p) · 2 on side B (3–4p)
 // ---- THE KONTOR BUILDING TILES — each player's set of three, each usable once; the tile's
 // line fires on each delivery of yours there; the die on it is the delivery modifier.
 const KBUILDINGS={
@@ -752,7 +752,7 @@ const COMMISSION_COST={cog:{},hulk:{g:1}};   // ⚙
 function commCostFor(p,ship){return ship?(COMMISSION_COST[ship]||{}):{};}
 function commFeeStr(){return 'Cog free · Hulk 1G';}
 const SHIP_DISPLAY=3;          // ⚙ a face-up display of 3
-const SETUP_WILD=2;            // ⚙ the two wild Cogs dock at setup on random slots (ruled 2026-09-07); the wild Hulk stays in the deck
+const SETUP_WILD=2;            // ⚙ the two wild Cogs dock at setup on random slots; the wild Hulk stays in the deck
 const SHIP_DECK_MIX=[          // ⚙ 18 Ships — per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1
   ['cog','london'],['cog','london'],['cog','london'],['hulk','london'],['hulk','london'],
   ['cog','bergen'],['cog','bergen'],['cog','bergen'],['hulk','bergen'],['hulk','bergen'],
@@ -774,7 +774,7 @@ const BUILDINGS={
   victual   :{name:'Victualling Yard', icon:'boxes',       qty:1, desc:'On load: the cask bonus fires twice'},
 };
 const BUILDING_KEYS=Object.keys(BUILDINGS);
-const WORKS_DEAL={2:4,3:4,4:4,5:4};   // ⚙ Public Works dealt onto random slots — four at every count (designer, 2026-09-06: four open slots from the start)
+const WORKS_DEAL={2:4,3:4,4:4,5:4};   // ⚙ Public Works dealt onto random slots — four at every count (four open slots from the start)
 function bName(k){return (BUILDINGS[k]||{name:k}).name;}
 function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
 
@@ -840,18 +840,18 @@ const VSLOTS=3;
 const SSLOTS=2;
 
 // ---- the dials ----
-const SUPPLY_DICE=10;     // ruled: ten in the personal supply; the eleventh stands as the starter post, the twelfth sits on the warm Gruit
-const WARM_GRUIT=1;       // ⚙ the warm start (ruled 2026-09-07): a Ready Gruit in vessel 1 — the twelfth die set at 1 on it (not from the supply), the top Gruit tile under it
+const SUPPLY_DICE=10;     // ten in the personal supply; the eleventh stands as the starter post, the twelfth sits on the warm Gruit
+const WARM_GRUIT=1;       // ⚙ the warm start: a Ready Gruit in vessel 1 — the twelfth die set at 1 on it (not from the supply), the top Gruit tile under it
 const MAX_ROUND=18;       // ⚙ the backstop — it must never fire (10–15 turns a seat)
 const CELLAR_POOL=3;      // ⚙ the Cellar's AGE
-let SRC_PRIMARY=2;        // ⚙ the Market's SOURCE — goods must bind (sim hook SRCN)
+let SRC_PRIMARY=2;        // ⚙ the Market's Gain N goods — goods must bind (sim hook SRCN)
 const CART_STATION='D';   // ⚙ the Cart is the Cellar's alternate and Load 1 the Market's ('A' swaps them)
 const START_INV=0;        // ⚙ invitations come only from deliveries
 const INV_PER_LANDING=1;  // ⚙ per cask of yours delivered at a far Kontor (the Kontorhaus pays a second)
 const HALL_DIE_START=2;   // ⚙ the neutral hall die's opening face; +1 per present, cap 6
 const HALL_PLACES_N={2:6,3:8,4:8,5:8};   // ⚙ hall places by player count (side A / side B)
 const HALL_PRIZES=[2,2,1];               // ⚙ goods printed on the first three hall places
-const HALL_MIN_Q=2;                      // ruled: the hall never admits Gruit
+const HALL_MIN_Q=2;                      // the hall never admits Gruit
 // the yard track's three zones ⚙ by side: [best up to, good up to]; beyond = ok
 const YARD_ZONES={2:[2,4],3:[3,6],4:[3,6],5:[3,6]};
 const YARD_GOODS={best:2,good:1,ok:1};   // ⚙ the goods arm per zone (BEST: or a recipe fee waived · GOOD: or a recipe at its fee)
@@ -1312,11 +1312,8 @@ function startGame(){
 }
 
 //==================================================================
-// TURN MACHINE — MOVE to an ADJACENT station, then WORK THE STATION: its PRIMARY, its
-// ALTERNATE, a LOAD at each of its two flanking slots, and your own private building
-// standing there — in any order, all optional except the Harbor's commission (a must when
-// it can). The game opens with the STARTER PHASE: in reverse turn order each seat stands
-// its eleventh die on W1 or E1.
+// TURN MACHINE — Move to an adjacent station, then work it (RULES.md §2); the game opens
+// with the starter phase (each seat's starter post, in reverse turn order).
 //==================================================================
 const STN_P={A:'source',B:'brew',C:'comm',D:'age'};
 const STN_A={A:(CART_STATION==='A'?'cart':'loadany'),B:'pbuild',C:'kbuild',D:(CART_STATION==='A'?'loadany':'cart')};
@@ -1457,7 +1454,7 @@ function backToStops(){resume('stops');}
 //==================================================================
 // CELL HANDLERS — the Market · the Brewhouse · the Cellar · loading
 //==================================================================
-// ---------- SOURCE ----------
+// ---------- GAIN GOODS — the Market's primary ----------
 function enterSource(n,rt){UI.sub='source';UI.src={n,returnTo:rt};render();}
 function srcTake(g,h){snapshot();const p=cur();gain(p,g,h);
   const src=UI.src||{};const rt=src.returnTo;UI.src=null;resume(rt);}
@@ -1759,9 +1756,7 @@ function wildSailPick(k){const W=UI.wild;if(!W||!W.sail)return;const t=S.slots[W
   snapshot();t.chit=k;UI.wild=null;UI.sailn={opts:[W.slot],returnTo:W.returnTo};sailNowPick(W.slot);}
 
 //==================================================================
-// BRUGES — THE CART: one Ready cask of yours to Bruges by road, count permitting; the
-// yard (its track's zone prize; Gruit's only door) or the hall (an ⚜ and a Q2+ cask:
-// cask die + the hall die). The cask's bonus fires as it is carted.
+// BRUGES — the Cart: the yard or the hall (RULES.md §10)
 //==================================================================
 function cartN(p){return (ownsPrivTier(p,'A',2)||hasUpgrade(p,'carter'))?2:1;}   // the Kaufhaus or the Carter: the cart carries 2 (each face prints 2 — they do not stack)
 function cartCasks(p){return readyInVessels(p).filter(o=>canShipQ(p,o.c.q,null));}
@@ -1830,9 +1825,7 @@ function yardPick(choice,style){const b=(UI.pendingYard||[])[0];if(!b)return;con
   UI.afterRt=rt;enterSource(n,'actscont');}
 
 //==================================================================
-// THE PRIVATE BUILDINGS — the wharf engine. A tile from your hand onto ANY open slot (no
-// building on it — a docked Ship above is fine), or the FLIP of your standing tier 1; it
-// fires as a stop when you work the station its slot flanks; no die; printed points.
+// THE PRIVATE BUILDINGS — the wharf engine: the build, the Flip, the On-visit stop (RULES.md §12)
 //==================================================================
 function openPrivSlots(){return SLOTS.map(s=>s.id).filter(sid=>!bAt(sid));}   // vacant ground only — never a Public Work, never a rival's tile
 function privSlots(p,station){return openPrivSlots();}
@@ -1910,9 +1903,7 @@ function bmGo(kind,rt,free,pid){
 function bmSkip(){const B=UI.bm;const rt=B?B.returnTo:'stops';UI.bm=null;resume(rt);}
 
 //==================================================================
-// SAIL & DELIVER — a full Ship sails at once: the tide · the Bonded Store's post offer · every
-// post on its lane +1 · each cask DELIVERS in boarding order: cask die + your building die there,
-// park, every building die there +1 (the Kontorhaus / Guildhouse line fires), an ⚜, the prize.
+// SAIL & DELIVER — a full Ship sails at once; each cask delivers in boarding order (RULES.md §7, §9)
 //==================================================================
 function sailShip(slot,creditId){const t=S.slots[slot];if(!t||t.type!=='ship'||!(t.load||[]).length)return;
   const dest=shipDest(t);if(!dest||dest==='wild')return;
@@ -2081,8 +2072,7 @@ function checkTriggers(){if(S.ending)return;
 }
 
 //==================================================================
-// SCORING — deliveries and presents as they happened · pips at sea · docked dice · the private
-// buildings' printed ★ · the majorities · the Flight · the Alderman. Vessels score nothing.
+// SCORING (RULES.md §15)
 //==================================================================
 function seaPips(p){let n=0;SEG_KEYS.forEach(k=>{const f=S.sea.posts[k]&&S.sea.posts[k][p.id];if(f!=null)n+=f;});
   FAR.forEach(k=>{const b=bldgAt(p,k);if(b)n+=b.face;});return n;}

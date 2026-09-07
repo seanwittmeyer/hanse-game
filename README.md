@@ -1,24 +1,23 @@
 # Brewhouses of the Hanse
 
-A theme-first **medium euro** for **2–4 players**. It's c. 1350: you run a Hanseatic **merchant brewing house**. The whole game happens at **the Wharf** — four action stations on a shared 2×2 (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots — where the work runs **Gain goods → Brew → Age → Ship**: gain grain and hops, brew and age casks of beer, and ship them on destination-bound Ships to the kontore of the Hanse. No money, no cards-as-hand, no dice-as-randomizers — goods are the only currency.
+A theme-first **medium euro** for **2–4 players**. It's c. 1350 in Hamburg: you run a Hanseatic **merchant brewing house**. The work runs **Gain goods → Brew → Age → Ship** at **the Wharf** (four stations ringed by eight slots), and nothing sails without your dice at sea. No money, no cards-as-hand, no dice-as-randomizers: goods are the only currency, and twelve quality dice are your whole game.
 
-**This is a print-and-play tabletop game under active development.** The rules, values, and components change between versions; this file deliberately doesn't track them. **`play.html`'s `KEY` constant marks the live build.**
-
-Published from `main` via GitHub Pages.
+**A print-and-play tabletop game under active development.** Values and components change between versions; `play.html`'s `KEY` marks the live build. Published from `main` via GitHub Pages.
 
 ## The pages
-- **`index.html`** — the landing page: a summary and the links.
-- **`rulebook.html`** — the **printed rulebook** (US Letter, duplex — it goes in the box). Rulebook + Player Aid = the complete rules.
-- **`play.html`** — the playable hot-seat client & the reference implementation. Any seat can be an AI opponent (tiers in rising strength, from greedy heuristics to Monte-Carlo search) — same rules, same information, no cheating.
-- **`print.html`** — the **print-&-play kit** (the only kit in use): every board, card, and token on deterministic sheets with cut guides and native print-to-PDF.
+- **`index.html`** — the landing page.
+- **`rulebook.html`** — the **printed rulebook** (US Letter, duplex — it goes in the box). Rulebook + player aid = the complete rules.
+- **`play.html`** — the playable hot-seat client and the reference implementation. Any seat can be an AI opponent (greedy heuristics up to Monte-Carlo search); same rules, same information, no cheating.
+- **`print.html`** — the **print-and-play kit**: every board, tile, card and token on deterministic sheets with cut guides and native print-to-PDF.
 
 ## The documents
-- **`RULES.md`** — **the one rules document**: clean operational rules, no design or decision history.
-- **`COMPONENTS.md`** — the single physical manifest: boards, tokens, the tile families, the player board, destinations. `print.html` cuts from it.
-- **`DESIGN.md`** — why the game is the way it is: pillars, the current architecture, the change log, the balance lessons, and the **open watches**.
-- **`STYLE.md`** — the Term Registry: every word printed on a component comes from it.
-- **`AUTOMA.md`** — the AI opponents (the five-tier ladder) and the test harnesses in `playtests/` (rule verification, bulk simulation, the AI ladder).
-- **`CLAUDE.md`** — how to work in this repo (the interlocks; a change is never local).
-- The v5-era decision records live under **`archive/records/`**; everything older is preserved in git history.
+- **`RULES.md`** — the rules: the latest snapshot, nothing else.
+- **`COMPONENTS.md`** — the component list, with sizes and counts.
+- **`DESIGN.md`** — why the game is the way it is: pillars, the architecture, the one change log, the lessons, the state of play and the open watches.
+- **`STYLE.md`** — the term registry: every word printed on a component comes from it.
+- **`AUTOMA.md`** — the AI opponents and the harnesses in `playtests/` (the rule battery, the bulk sim).
+- **`CLAUDE.md`** — how to work in this repo (a change is a ruling, never a local edit).
+- **`plan/`** — the program plans. **`art/`** — the art, its prompts (`art/PROMPTS.md`) and the icon accounting (`art/ICONS.md`).
+- **`archive/`** — everything before v8: the frozen v5.8 and v6.5b builds and the pre-v8 records. Never edited.
 
-> This is a tightly-coupled system: theme, mechanics, components, and the published pages all reinforce each other. Before changing anything, build the whole picture — see `CLAUDE.md`.
+> A tightly-coupled system: theme, mechanics, components and the published pages all state the same facts. Before changing anything, build the whole picture — see `CLAUDE.md`.
