@@ -1,6 +1,6 @@
 # Brewhouses of the Hanse
 
-A theme-first **medium euro** for **2–4 players**. It's c. 1350: you run a Hanseatic **merchant brewing house**. The whole game happens at **the Wharf** — four action stations on a shared 2×2 (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots — where the work runs **Source → Brew → Age → Ship**: source grain and hops, brew and age casks of beer, and ship them on destination-bound hulls to the kontore of the Hanse. No money, no cards-as-hand, no dice-as-randomizers — goods are the only currency.
+A theme-first **medium euro** for **2–4 players**. It's c. 1350: you run a Hanseatic **merchant brewing house**. The whole game happens at **the Wharf** — four action stations on a shared 2×2 (Market · Brewhouse · Cellar · Harbor) ringed by 8 slots — where the work runs **Gain goods → Brew → Age → Ship**: gain grain and hops, brew and age casks of beer, and ship them on destination-bound hulls to the kontore of the Hanse. No money, no cards-as-hand, no dice-as-randomizers — goods are the only currency.
 
 **This is a print-and-play tabletop game under active development.** The rules, values, and components change between versions; this file deliberately doesn't track them. **`play.html`'s `KEY` constant marks the live build.**
 

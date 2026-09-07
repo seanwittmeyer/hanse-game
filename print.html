@@ -578,7 +578,7 @@ function aid3Panels(){
     +'<div class="step"><span class="sn">2</span><span class="sx">Work it — its <b>primary</b> and its <b>alternate</b></span></div>'
     +'<div class="step"><span class="sn">3</span><span class="sx">+ <b>Load 1</b> at each flanking slot + <b>your own private building</b> there — any order, all optional except the Harbor’s <b>must</b></span></div>'
     +'<h5>'+LU('store')+'The Stations — primary / alternate</h5>'
-    +'<div class="ln">'+LU('store')+' <b>Market</b>: Source 2 / <b>Load 1</b>, any Ship   '+LU('flask-conical')+' <b>Brewhouse</b>: Brew, search the stack / <b>Build</b> on the wharf, any vacant slot (tier 1 1'+G+'1'+H+' · Flip 2'+G+'1'+H+')</div>'
+    +'<div class="ln">'+LU('store')+' <b>Market</b>: Gain 2 goods / <b>Load 1</b>, any Ship   '+LU('flask-conical')+' <b>Brewhouse</b>: Brew, search the stack / <b>Build</b> on the wharf, any vacant slot (tier 1 1'+G+'1'+H+' · Flip 2'+G+'1'+H+')</div>'
     +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: <b>Commission</b> (a must · Cog free · Hulk 1'+G+') → <b>Post</b> on its lane → the maiden load / <b>Build</b> at a Kontor or <b>Raise</b>   '+LU('age-3')+' <b>Cellar</b>: Age 3 / <b>Cart 1</b> to Bruges</div>'
     +'<h5>'+LU('dices')+'The Die</h5>'
     +'<div class="dstrip">'
@@ -625,14 +625,14 @@ function aid3Panels(){
     +AID_ROW('sailboat','Ship','Cog 2 free · Hulk 3 1G · wild — full = it sails')
     +AID_ROW('building-2','Public Work','passive, free — sails away with its Ship')
     +AID_ROW('hammer','Private building','yours alone · any vacant slot · on visit · tier 1 2★ · tier 2 4★')
-    +AID_ROW('kontorhaus','Kontor tile','Warehouse count +1 there · Kontorhaus +1 ⚜ · Guildhouse Raise')
+    +AID_ROW('kontorhaus','Kontor building','Warehouse count +1 there · Kontorhaus +1 ⚜ · Guildhouse Raise')
     +AID_ROW('wrench','Specialist','Bergen’s prize, free — 2 seats')
     +AID_ROW('scroll-text','Recipe','permission to brew — its printed fee')
     +'<h5>'+LU('package-plus')+'The 8 Cask Bonuses</h5>'
     +AID_ROW('goods-2','Gain 2 goods','any mix')
-    +AID_ROW('age-2','Age +2','two aging steps')
-    +AID_ROW('package-plus','Load 1 more','any eligible Ship')
-    +AID_ROW('flask-conical','Brew 1','a full brew, at its cost')
+    +AID_ROW('age-2','Age 2','two aging steps')
+    +AID_ROW('package-plus','Load 1','any eligible Ship')
+    +AID_ROW('flask-conical','Brew','a full brew, at its cost')
     +AID_ROW('scroll-text','Gain 1 recipe','at its fee')
     +AID_ROW('wrench','Gain 1 Specialist','into an open seat')
     +AID_ROW('hammer','Build','any build you are eligible for')
@@ -780,7 +780,7 @@ function wharfCross(){
   const wharf='<div class="wharf">'
     +'<div></div>'+slot+slot+'<div></div>'
     +slot
-    +station('A','Market','market',['goods-2','package-plus'],'Source 2 / Load 1')
+    +station('A','Market','market',['goods-2','package-plus'],'Gain 2 goods / Load 1')
     +station('B','Brewhouse','brewhouse',['flask-conical','hammer'],'Brew / Build')
     +slot+slot
     +station('C','Harbor','harbor',['ship','kontorhaus'],'Commission + Post / Build a Kontor · Raise')
@@ -1183,14 +1183,14 @@ function checklist(pages,famPages){
     +'<p style="font-size:.1in;color:#5b4a37;margin:.02in 0 .06in">Counts are tuning placeholders ⚙. The rules live on the <b>player aid</b> and in the rulebook — this page only says what to make, how many, and where it sits on the table.</p>'
     +'<div class="cols2">';
   h+=T('Boards')
-    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints its primary and alternate (Market Source 2/<b>Load 1</b> · Brewhouse Brew/<b>Build</b> · Harbor Commission/<b>Build a Kontor · Raise</b> · Cellar Age 3/<b>Cart 1</b>). The slots seat a Public Work or a private building; a docked Ship stands beside the slot.','1')
+    +R('Main board — the Wharf','The shared action area: 4 stations in a 2×2, ringed by 8 slots. Each station prints its primary and alternate (Market Gain 2 goods/<b>Load 1</b> · Brewhouse Brew/<b>Build</b> · Harbor Commission/<b>Build a Kontor · Raise</b> · Cellar Age 3/<b>Cart 1</b>). The slots seat a Public Work or a private building; a docked Ship stands beside the slot.','1')
     +R('The sea board','Double-sided: <b>side A</b> for 2 players, <b>side B</b> for 3–4. Hamburg · the cart road · the five segments (a post seat per colour) · the three far Kontor panels (building slots · the field · the prize · the pair) · the Bruges panel (the yard track · the hall places · the hall die’s seat). <b>Every die at sea stands on it all game.</b>','1')
     +R('Market &amp; Stores board','The face-up displays (Ships 3 · Specialists 4 · the cask stacks · the recipe stacks), ringed by the 50-cell score ring.','1')
-    +R('Player boards','3 vessels · 2 Specialist seats · the personal supply well · the Flight. <b>One in front of each player</b>; the hand of 4 private tiles and the set of 3 Kontor tiles lie beside it.',PLAYERS.length)
+    +R('Player boards','3 vessels · 2 Specialist seats · the personal supply well · the Flight. <b>One in front of each player</b>; the hand of 4 private tiles and the set of 3 Kontor building tiles lie beside it.',PLAYERS.length)
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles','The beer itself, brewed never bought; face-up stacks on the Market &amp; Stores board — <b>a Q2+ brew searches its stack</b>; Gruit takes the top tile. '+CASKS.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(CASKS))
-    +R('Ship tiles','Neutral hulls, each bound for a printed Kontor or <b>wild</b>; the tile is its berths and <b>full = it sails at once</b>. A shuffled deck → a display of 3. Cog ×11 (free) · Hulk ×7 (1G).',SHIP_DECK.length)
+    +R('Ship tiles','Neutral hulls, each bound for a printed Kontor or <b>wild</b>; the tile is its berths and <b>full = it sails at once</b>. <b>The two wild Cogs dock at setup</b> on two random slots. A shuffled deck → a display of 3. Cog ×11 (free) · Hulk ×7 (1G).',SHIP_DECK.length)
     +R('Public Works','The shared brown family — the filler roster of 7: <b>deal 4 at every player count</b> onto random slots; the rest to the box; nothing refills. Passive on their slot’s traffic; <b>every tile sails away with the Ship at its slot</b> (the tide).',sumN(BUILDINGS))
     +R('Private building tiles','The hand of four designs — <b>tier 1 front / tier 2 back</b> (the Flip turns it in place). Built on <b>any vacant slot</b>, never over a Work; fires <b>on visit</b> at the station its slot flanks. Owner-only; prints its ★ (2 / 4); no die. One set per colour.',PRIVATES.length*PLAYERS.length)
     +R('Kontor building tiles','The set of three — Warehouse · Kontorhaus · Guildhouse. Placed in a Kontor slot where your posts run the whole lane, <b>marked with a supply die at 1</b> (the delivery modifier). One set per colour.',KBUILDINGS.length*PLAYERS.length)

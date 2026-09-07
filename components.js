@@ -41,9 +41,9 @@ const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · vic
 // Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
 const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or is carted
   {k:'source',  ai:'goods-2',       act:'Gain 2 goods',             q:1},
-  {k:'age',     ai:'age-2',         act:'Age +2',                   q:2},
-  {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
-  {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:2},
+  {k:'age',     ai:'age-2',         act:'Age 2',                    q:2},
+  {k:'load',    ai:'package-plus',  act:'Load 1',                   q:2},
+  {k:'brew',    ai:'flask-conical', act:'Brew',                     q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · its fee',  q:2},
   {k:'spec',    ai:'wrench',        act:'Gain 1 specialist',        q:2},
   {k:'build',   ai:'hammer',        act:'Build · its fee',          q:2},
@@ -140,7 +140,7 @@ const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   //
 const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
 // v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
 // the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
+const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age 2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // v5.3 (ruled): the Public Works are die-less SETUP FURNITURE — no start face, no fee chip
   // (nobody builds or buys them; the fee data survives only as a dial seam). msChip retired.

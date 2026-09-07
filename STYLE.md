@@ -81,7 +81,7 @@ governed here.
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
 | **claim** | Take a Manifest demand line your delivered cask satisfies; score its ★ at once (each line once per voyage) | ~~fulfil~~ |
 | **resolve** | Work through your station's stops: its 2 printed actions + its 2 flanking slots — any order, each once, all optional | ~~resolve the stops~~ |
-| **gain / spend / pay** | Per the house guide §4.5 | — |
+| **gain / spend / pay** | Per the house guide §4.5. **Gain N goods** is the ONE name for taking goods: the Market's primary prints *Gain 2 goods* and the cask bonus prints the same words on the same `goods-2` glyph (designer-ruled 2026-09-07) | ~~source~~ (retired 2026-09-07 — one action, one term; the English verb survives only in prose that does not name the action) |
 | **warp** | Move an empty hull to another shipless slot (Capstan) | ~~move~~ (for ships) |
 | **overbuild** | Build on an occupied slot (one payment; the old tile is boxed) | — |
 
@@ -96,7 +96,7 @@ here*.
 | Category | Master order |
 |---|---|
 | Goods | Grain · Hops |
-| Stations | Market · Brewhouse · Cellar · Harbor (Source → Brew → Age → Ship… spoken: the work order) |
+| Stations | Market · Brewhouse · Cellar · Harbor (Gain goods → Brew → Age → Ship… spoken: the work order) |
 | Kontore | Bruges · London · Bergen · Novgorod |
 | Beers | Gruit · Hopped · Broyhan · Keut · Mumme · Bock (by quality, Broyhan before Keut) |
 | Scoring | Delivered dice · Scored in play · Majorities · Buildings (the standing dice) · the Flight · Guild ★ |
@@ -196,7 +196,7 @@ player aid; they do not learn or track rule changes on tiles, boards, or tooltip
    printed face; never a lesson.
 4. **Nothing prints in all caps (designer-ruled 2026-09-06).** An action name is Title Case
    wherever it names the action — *Build · Brew · Post · Raise · Cart · Flip · Load · Commission
-   · Source · Age · Present · Move* — matching *Source 2 / Load 1 / Age 3* on the boards; a
+   · Gain · Age · Present · Move* — matching *Gain 2 goods / Load 1 / Age 3* on the boards; a
    state is sentence case (*Ready* keeps its capital as a term; *empty · wild · vacant* do not);
    emphasis is **bold**, never capitals; a heading may set title-case text in small caps
    (CSS), never `text-transform: uppercase`. The same casing on every surface — the rules
@@ -294,11 +294,13 @@ Coper · Herald) are RETIRED with v7 — historical, never printed again.*
 | private building | n | The family players build on the wharf: a tile of yours on any VACANT slot (never over a Public Work, never a rival's tile — designer-ruled 2026-09-06), tier 1 / tier 2 (the FLIP), owner-only, no die, printed points 2 / 4; it fires **On visit** | supersedes ~~Venture~~ |
 | On visit | trig | The private building tile's trigger: its line fires when its OWNER works the station its slot flanks — the slot picks the station, not the tile's name (designer-ruled 2026-09-06) | joins the §4b tile-trigger set |
 | tier 1 / tier 2 | n | A private building tile's two faces (replaces ~~L1 / L2~~ as the printed label; the FLIP carries); the points print as the `star-2` / `star-4` glyph alone (v8.0e) | — |
+| one action, one term | law | Designer-ruled 2026-09-07: an action has ONE printed name wherever it appears — the station face, the cask bonus, a building's line, the aid, the app. *Gain 2 goods* (never ~~Source 2~~), *Brew* (never ~~Brew 1~~ / ~~Brew once~~), *Age 2* (never ~~Age +2~~ / ~~Age +2 more~~), *Load 1* (never ~~Load 1 more~~), *Kontor building* (never ~~Kontor tile~~). A count rides the name (*Gain 2 goods · Age 3 · Cart 2*); a verb with no count is one of the thing (*Brew · Build · Post · Raise*) | the audit's open pairs: *deliver / land* · *lift / Raise* on one `die-plus1` glyph · *hull / Ship* — the designer's call |
+| the two wild Cogs | n | The setup's docked Ships (v8.0f): the deck's two wild Cogs dock on two random slots before the display is dealt; the wild Hulk stays in the deck | — |
 | the warm Gruit | n | The Ready Gruit every player starts with in vessel 1: its own die (the twelfth, never from the supply) at 1 on it, the top Gruit tile under it (v8.0e) | KEPT from the v5 warm start |
 | BUILD | v | RE-DERIVED: one build you are eligible for — a private building or a FLIP on the wharf, or a Kontor building at a Kontor whose chain you hold; three doors: the Brewhouse's ALT (wharf) · the Harbor's ALT (Kontor) · the cask bonus · London's prize | the §4e v7 sense retires |
 | Granary · Kaufhaus · Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping Office | n | The eight private building faces | *Cold Store*, *Lagering Cellar*, *Counting House* return re-faced |
 | Warehouse · Kontorhaus · Guildhouse | n | The three Kontor building tiles: the Warehouse *vouches* (your count reads +1 for a Ship bound there — a standing read, v8.0d); the Kontorhaus and the Guildhouse fire on your landing | — |
-| pay X: Y | grammar | The at-cost line (designer-ruled 2026-09-07, v8.0d): a printed price, a colon, a verb — paying is optional ("may"), the verb then fires once; the Granary / Kaufhaus *pay 1 G: Brew once* · the Bonded Store *On sail: each shipper may pay 1 G: Post on its lane*. Cost before effect (§G §4); on a face the `G` chip, a colon, the verb's icon | never *buy*, never *for*; no building hands out goods |
+| pay X: Y | grammar | The at-cost line (designer-ruled 2026-09-07, v8.0d): a printed price, a colon, a verb — paying is optional ("may"), the verb then fires once; the Granary / Kaufhaus *pay 1 G: Brew* · the Bonded Store *On sail: each shipper may pay 1 G: Post on its lane*. Cost before effect (§G §4); on a face the `G` chip, a colon, the verb's icon | never *buy*, never *for*; no building hands out goods |
 | Shipmaster · Agent · Lodesman · Carter · Guildmaster | n | The new specialists (§13 of the rules) | *Agent* avoids the §4d *factor* collision |
 | the tide | n | KEPT: every Public Work departs with the Ship at its slot; a private building never | — |
 | LAND | v | KEPT, narrowed: a sailed cask arrives at its Kontor and scores cask die + your building die there | — |

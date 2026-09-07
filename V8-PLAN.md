@@ -1024,7 +1024,10 @@ there); Gruit's tiles, the exports' bonus tiles, the yard, the hall and Source 2
 its own twelfth die at 1 on it, the top Gruit tile under it; the supply keeps its ten and twelve
 dice per player stand (the from-the-ten cut ran 3p at 7–13 rounds in the sim; the twelfth die holds
 the band); the private tiles print their points as the `star-2` / `star-4`
-glyph. Record: `DESIGN.md` §9 (v8.0e).*
+glyph. Record: `DESIGN.md` §9 (v8.0e). **v8.0f (2026-09-07):** the two wild Cogs dock at setup on
+random slots (the designer's R1), and *one action, one term* — *Source* leaves the registry, the
+Market's primary prints *Gain 2 goods* like the bonus, and *Brew · Age 2 · Load 1* replace *Brew 1 /
+Brew once · Age +2 · Load 1 more*. Record: `DESIGN.md` §9 (v8.0f).*
 
 ### 13.0 The game in one breath
 

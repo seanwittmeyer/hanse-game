@@ -45,7 +45,7 @@ as two loops that need each other:
   building dice first.
 - **The priced lines** (v8.0d): the Granary's brew is priced as a brew minus its grain
   (`aiPactValue`); the Bonded Store's post offer as a post against the same die as a cask,
-  minus the fee, under the last-dice rule (`aiBondPost`); the Warehouse is the seat's Kontor tile
+  minus the fee, under the last-dice rule (`aiBondPost`); the Warehouse is the seat's Kontor building
   when its count trails its recipes (`aiKTile`).
 - **The cart's door** (`aiCartDoor`): the hall when cask die + the hall die (+ the
   Guildmaster) beats the yard's zone; a shippable export yields to the sea (two dice, an ⚜, a
@@ -102,7 +102,8 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Open (AI-only; none gates a rules read)
 
-- The sea tempo: the greedy seats still fill hulls slowly (Hulks of three wait); the load and
-  commission values want a read at a human table before any tuning corpus.
+- The sea tempo: the greedy seats still fill hulls slowly (Hulks of three wait); since v8.0f two
+  wild Cogs stand docked from setup — re-read the fill rate; the load and commission values want
+  a read at a human table before any tuning corpus.
 - The GM's rollouts at 4p; sub-Guildmaster MC budget tiers; a blind-AI option — optional ideas.
 - The physical automa deck (a card-driven tabletop bot) waits until the ⚙ numbers settle.

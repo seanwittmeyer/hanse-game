@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v8.0**). Design rationale & history: `DESIGN.md` §9; the v8 program, the designer's review and the implementation plan: `V8-PLAN.md` §12–§13.
-> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80e`) — the source of truth on values and behaviour.
+> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80f`) — the source of truth on values and behaviour.
 > - `print.html` (the v8.0 kit, cut 2026-09-06) and `rulebook.html` (the v8.0 book) are current; the art the new faces still lack is queued in `art/PROMPTS.md` (the v8.0 kit art queue).
 > - **READ §0 FIRST.** §0 states the v8.0 kit truth — what was ADDED, RE-CUT, and RETIRED. §§1–17 below still enumerate the v5.8/v7 body in detail and are superseded where §0 says so; the full section rewrite is the kit pass.
 
@@ -15,7 +15,7 @@
 
 | Component | v7.0b | v8.0 | State |
 |---|---|---|---|
-| The Wharf board | 1 | 1 | re-printed station faces: Market *Source 2 / Load 1* · Brewhouse *Brew / Build* · Harbor *Commission (must) + Post / Build a Kontor · Raise* · Cellar *Age 3 / Cart 1* |
+| The Wharf board | 1 | 1 | re-printed station faces: Market *Gain 2 goods / Load 1* · Brewhouse *Brew / Build* · Harbor *Commission (must) + Post / Build a Kontor · Raise* · Cellar *Age 3 / Cart 1* |
 | The Destinations board | 1 | 0 | **RETIRED** |
 | **The sea board** | 0 | 1, double-sided (12.6 × 10.7 in) | **NEW** — Hamburg (the Wharf) at the western edge, over the chart · the cart road to Bruges · five segments (W1 the Wadden Coast · W2 the Dover Strait → London; E1 the Skagerrak → Bergen; E1 · E2 the Sound → Novgorod), each printing **one post seat per colour** (side A: 2 seats · side B: 4) · three far Kontor panels (the minimum Q2 · **building slots** 2 on A / 3 on B, the third for 4p · the majority pair · the field · the prize line) · the Bruges panel (**the yard track**: BEST 1–3 · GOOD 4–6 · OK 7+, side A 1–2 / 3–4 / 5+ · **the hall**: 8 places on B / 6 on A, the first three printing 2 · 2 · 1 goods · **the hall die's seat**) |
 | Market & Stores board | 1 | 1 | the Bourse lane struck; displays: Ships 3 · Specialists 4 · recipes; the score ring |
@@ -26,8 +26,8 @@
 | **Kontor building tiles** | 0 | **12** (3 designs × 4 colours) | **NEW** — Warehouse (your quality count reads +1 for a Ship bound here) · Kontorhaus (+1 ⚜ more on your landing) · Guildhouse (Raise one die of yours at sea +1 on your landing); placed in a Kontor slot, marked with the builder's die |
 | **Kontor chits** | 0 | 3 | **NEW** — a wild Ship's named Kontor, set on the hull by the first load |
 | Public Works | 12 | 12 (7 as filler: Malt Kiln ×2 · Customs House · Ropewalk · Cooperage · Bonded Store · Victualling Yard) | the Weigh House and the four Staple Houses sit out; **deal 4 at every player count** ⚙ (four slots open from the start, designer-ruled 2026-09-06); the roster pass comes after the core |
-| Ship tiles | 18 | **18** (per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1) | re-faced: no Bruges hulls; the wild face prints a dashed Kontor seat; Cog free · Hulk 1 `G` |
-| Cask tiles | 52 | 52 | re-printed on the eight-verb pool (source · age · load · brew · recipe · specialist · build · post); Gruit's sixteen all print *Gain 2 goods* |
+| Ship tiles | 18 | **18** (per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1) | re-faced: no Bruges hulls; **the two wild Cogs dock at setup on two random slots** (v8.0f); the wild face prints a dashed Kontor seat; Cog free · Hulk 1 `G` |
+| Cask tiles | 52 | 52 | re-printed on the eight-verb pool (Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post); Gruit's sixteen all print *Gain 2 goods* |
 | Recipe cards | 24 | 24 | fees only (Broyhan 1 `H` · Keut 1 `G` · Mumme 1 `G` 1 `H` · Bock 1 `G` 2 `H`); no kettle line, no far-dice icons |
 | Specialist tiles | 15 designs | **10 singles** | Braumeister · Shipmaster · Cellarman · Stevedore · Agent · Lodesman · Carter · Guildmaster · Chronicler · Alderman |
 | **⚜ invitation tokens** | 0 | 16 | **NEW** (wooden, or the contract backs); no cap, no ceiling |
@@ -55,16 +55,21 @@ tokens, three chits, eight fewer dice, four decks and trackers gone.
 - **No building hands out goods** (designer-ruled 2026-09-07, v8.0d — "at cost"): the Granary
   and the Kaufhaus print *pay 1 `G`: Brew once*; the Bonded Store's sail line is *pay 1 `G`:
   Post on its lane*; the Warehouse vouches (*a Ship bound here: count +1*). Goods come only
-  from Source 2, the cask tiles (Gruit's sixteen *Gain 2 goods* untouched), the yard and the
+  from Gain 2 goods, the cask tiles (Gruit's sixteen *Gain 2 goods* untouched), the yard and the
   hall — a die pays for them. **The at-cost grammar prints cost before effect:** the `G` chip,
   a colon, the verb's icon (`components.js`).
+- **One action, one term** (designer-ruled 2026-09-07, v8.0f): the Market's primary prints *Gain 2
+  goods* — the cask bonus's words on the cask bonus's glyph; the bonuses and the building lines
+  print the station verb's own name (*Brew · Age 2 · Load 1*); *Source* left the registry.
+- **The two wild Cogs dock at setup** (designer-ruled 2026-09-07, v8.0f) on two random slots; the
+  deck of 16 keeps the wild Hulk; the kit is unchanged.
 - **The warm Gruit** (designer-ruled 2026-09-07, v8.0e): every player starts with a Ready Gruit in
   vessel 1 — its own die, the twelfth, set at 1 on it (the supply keeps its ten), the top Gruit tile
   under it (16 − n tiles remain in the stack); the kit goes from 44 to **48 dice** (12 × 4).
 - **The Ship tiles print the Kontor or the wild seat**, the berths and the fee; the Kontor
   minimum leaves the hull (it prints on the panel).
 - **The cask tiles print the eight verbs**; LIFT leaves the pool.
-- **The Wharf board's station faces**: Source 2 / Load 1 · Brew / Build · Commission (*must*)
+- **The Wharf board's station faces**: Gain 2 goods / Load 1 · Brew / Build · Commission (*must*)
   + Post / Build a Kontor · Raise · Age 3 / Cart 1.
 
 **RETIRED (v7 → v8):** the Destinations board · the Bourse track and its markers · contract

@@ -2,13 +2,13 @@
 
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
-marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80e`),
+marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80f`),
 this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
 (`print.html`) are current.*
 
 **2–4 players · c. 1350 · Hamburg. You run a merchant brewing house of the Hanseatic League.**
 Goods are the only currency — no money, no spendable prestige. You must be a brewer and a
-merchant: the work runs **Source → Brew → Age → Ship**, and nothing sails without your dice at
+merchant: the work runs **Gain goods → Brew → Age → Ship**, and nothing sails without your dice at
 sea. The winner is the player with the most ★ when the dice run out.
 
 ---
@@ -48,7 +48,8 @@ Shared board:
 - **Cask tiles** in face-up stacks, one per in-play beer (a Q2+ Brew searches its stack; Gruit's
   stack is uniform and is not searched).
 - The **Ship deck** — 18 ⚙: per far Kontor Cog ×3 (2 berths, free) · Hulk ×2 (3 berths, 1 `G`);
-  **wild** Cog ×2 · Hulk ×1. Shuffled, display of **3** ⚙. **No Ship is docked at setup.**
+  **wild** Cog ×2 · Hulk ×1. **The two wild Cogs dock at setup** ⚙ on two random slots (a Ship may
+  stand over a Public Work); the rest is shuffled, display of **3** ⚙.
 - The **Specialist deck** (10 singles ⚙), display of **4**.
 - **16 ⚜ invitation tokens**, **3 Kontor chits** (for wild Ships), score discs on the ring.
 
@@ -87,7 +88,7 @@ slot's load if it has not been used.
 
 | Station | Primary | Alternate (the same visit) |
 |---|---|---|
-| **A · Market** | **Source 2** ⚙ — take 2 goods, any mix | **Load 1** Ready cask onto **any** docked Ship (§7) |
+| **A · Market** | **Gain 2 goods** ⚙, any mix | **Load 1** Ready cask onto **any** docked Ship (§7) |
 | **B · Brewhouse** | **Brew** — pay a recipe's goods; a supply die into an open vessel at the beer's printed start value; **a Q2+ Brew searches the beer's stack and chooses the tile** (§5) | **Build, the wharf** — place a private building from your hand onto any vacant slot, or Flip your standing tier 1, at its fee (§12) |
 | **C · Harbor** | **Commission — *must*, when it can** — take a Ship from the display at its fee (**Cog free · Hulk 1 `G`** ⚙), dock it on a shipless slot or over an empty docked Ship (which returns to the deck); the display refills at once. **Then Post**: stand a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it onto the new Ship now, free — **the maiden load, a Load in every respect** (§7), taken after the post. | **Build, a Kontor** — at a far Kontor where **your own post stands on every segment of its branch**, place one of your Kontor building tiles in an open slot and stand a supply die on it at face 1 (§8) — **or Raise**: turn one die of yours at sea +1 (cap 6) |
 | **D · Cellar** | **Age 3** — turn your aging dice up three steps, split freely | **Cart 1** — send one Ready cask of yours to Bruges by road, resolved at once at the yard or the hall (§10) |
@@ -136,8 +137,8 @@ landing and **never scores again**.
 | Mumme | 4 | `G H H H` | 1 · 3 | 6 |
 | Bock | 5 | `G G H H H` | 2 · 3 | 6 |
 
-**The eight cask bonuses ⚙:** *Gain 2 goods · Age +2 · Load 1 more (onto any eligible docked
-Ship — a normal load; its cask's bonus fires too) · Brew 1 (a full brew at its cost, with its
+**The eight cask bonuses ⚙:** *Gain 2 goods · Age 2 · Load 1 (onto any eligible docked Ship —
+a normal load; its cask's bonus fires too) · Brew (a full brew at its cost, with its
 search) · Gain 1 recipe (from the display, at its fee) · Gain 1 specialist (from the display,
 into an open seat) · Build (one build you are eligible for: a private building at its fee, a
 Flip at its fee, or a Kontor building with a supply die) · Post (a supply die at face 1 on the
@@ -151,7 +152,7 @@ under its die. An empty stack means that beer cannot brew now.
 
 ## 5. Brewing and the search
 
-Brew = the Brewhouse's primary, a cask's *Brew 1*, or a Brewers' Guildhall's brew on visit.
+Brew = the Brewhouse's primary, a cask's *Brew* bonus, or a building's *Brew* line on visit.
 Pay the recipe's goods, set a supply die into an open vessel at the beer's start value, and
 take a tile from the beer's stack: **a Q2+ brew searches the stack and chooses**; **Gruit takes
 the top tile**. You may brew any beer whose recipe you hold; there is no kettle and no licence.
@@ -161,7 +162,7 @@ Gruit is Ready at brew; it never boards a Ship (§7) — it goes to Bruges by ca
 
 ## 6. Aging
 
-A die turns up only when something turns it: the Cellar's **Age 3**, a cask's ***Age +2***,
+A die turns up only when something turns it: the Cellar's **Age 3**, a cask's ***Age 2***,
 your **Cold Store** or **Lagering Cellar** (§12), the **Braumeister** (§13). No good is ever
 spent on a step. No automatic aging except by a specialist.
 
@@ -174,7 +175,7 @@ printed far Kontor, or is **wild**. No Ship goes to Bruges. **Nobody owns a hull
 load any docked Ship.
 
 - **Commission** (the Harbor, §3): pay the fee, dock the hull, then Post, then the maiden load.
-- **Load** (a flanking stop · the Market's Load 1 · *Load 1 more* · the Stevedore): one Ready
+- **Load** (a flanking stop · the Market's Load 1 · the *Load 1* bonus · the Stevedore): one Ready
   cask from your vessels onto a docked Ship, if all of:
   1. **the minimum**: the beer's printed quality is **Q2 or more** ⚙ (so Gruit never boards);
   2. **the quality count**: the beer's printed quality **≤ the number of your dice standing at
@@ -309,9 +310,9 @@ nothing else. Every tier 2 contains its tier 1.
 
 | Tier 1 (fires on visit) | Tier 2, the Flip |
 |---|---|
-| **Granary** — pay 1 `G`: Brew once (a full brew at its recipe cost plus the grain, with its search) | **Kaufhaus** — pay 1 `G`: Brew once, and your Cart carries 2 casks |
-| **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew once (a full brew, with its search) |
-| **Cold Store** — Age +2 more (Age 5) | **Lagering Cellar** — Age +2 more and one Ready cask of yours +1 (cap quality + 1) |
+| **Granary** — pay 1 `G`: Brew (a full brew at its recipe cost plus the grain, with its search) | **Kaufhaus** — pay 1 `G`: Brew, and your Cart carries 2 casks |
+| **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew (a full brew, with its search) |
+| **Cold Store** — Age 2 | **Lagering Cellar** — Age 2 and one Ready cask of yours +1 (cap quality + 1) |
 | **Counting House** — Raise one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise +1 and Post once more (no second commission) |
 
 ---

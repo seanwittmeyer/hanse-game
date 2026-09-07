@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80e). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80f). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80e',function(){eq(KEY,'hanse-v80e');});
+t('KEY is hanse-v80f',function(){eq(KEY,'hanse-v80f');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -44,14 +44,15 @@ t('the warm Gruit: a Ready Gruit in vessel 1 with the twelfth die at 1 and the t
   S.players.forEach(function(p){var c=p.vessels[0];ok(c&&c.style==='gruit'&&c.die===1&&caskReady(c)&&c.act==='source',p.name+'\\'s Ready Gruit, its tile under it');eq(p.vessels[1],null);eq(p.supply,SUPPLY_DICE);eq(twelve(p),SUPPLY_DICE+2,'twelve');});
   eq(pileList('gruit').length,16-3,'three Gruit tiles taken');var p=cur();eq(cartCasks(p).length,1,'cartable at count 1');
   UI={sub:'stops',stops:[],usedStops:[]};enterCart('end');eq(UI.sub,'cart');cartPickCask(0);ok(!p.vessels[0],'carted');eq(S.yard.length,1,'to the yard');eq((UI.pendingActs||[]).length+((UI.sub==='source')?1:0)>=1,true,'its bonus fires');});
-t('setup: WORKS_DEAL Public Works dealt, the rest boxed, no bag; no Ship docked',function(){fresh(3);
-  var works=0,ships=0;SLOTS.forEach(function(s){var b=S.buildings[s.id];if(b&&!b.p)works++;if(S.slots[s.id])ships++;});
-  eq(works,WORKS_DEAL[3],'works standing');eq(ships,0,'no hull docked');
+t('setup: WORKS_DEAL Public Works dealt, the rest boxed, no bag; the two wild Cogs docked on two random slots',function(){fresh(3);
+  var works=0,ships=0,wild=0;SLOTS.forEach(function(s){var b=S.buildings[s.id];if(b&&!b.p)works++;var t=S.slots[s.id];if(t){ships++;if(t.type==='ship'&&t.ship==='cog'&&t.dest==='wild'&&!t.chit&&!t.load.length)wild++;}});
+  eq(works,WORKS_DEAL[3],'works standing');eq(ships,SETUP_WILD,'two hulls docked');eq(wild,SETUP_WILD,'both wild Cogs, empty, unnamed');
+  var seen={};for(var g=0;g<20;g++){fresh(2);seen[SLOTS.filter(function(s){return S.slots[s.id];}).map(function(s){return s.id;}).sort().join('+')]=1;}ok(Object.keys(seen).length>1,'random slots');
   ok(!S.worksBag&&!S.buildDeck,'no bag, no deck');
   fresh(4);works=0;SLOTS.forEach(function(s){var b=S.buildings[s.id];if(b&&!b.p)works++;});eq(works,WORKS_DEAL[4],'4p deals 4');});
-t('setup: the deck is 18 with 3 wild and no Bruges hull; the display 3',function(){fresh(2);
-  var all=S.shipDeck.concat(S.shipDisplay);eq(all.length,18);
-  eq(all.filter(function(x){return x.dest==='wild';}).length,3,'wild');
+t('setup: the deck is 18 less the two docked wild Cogs; the wild Hulk stays; no Bruges hull; the display 3',function(){fresh(2);
+  var all=S.shipDeck.concat(S.shipDisplay);eq(all.length,18-SETUP_WILD);
+  eq(all.filter(function(x){return x.dest==='wild';}).length,1,'the wild Hulk');eq(all.filter(function(x){return x.dest==='wild'&&x.ship==='hulk';}).length,1);
   ok(!all.some(function(x){return x.dest==='bruges';}),'no Bruges hull');
   eq(S.shipDisplay.length,SHIP_DISPLAY);
   eq(SHIP_CAP.cog,2);eq(SHIP_CAP.hulk,3);eq(COMMISSION_COST.cog,{});eq(COMMISSION_COST.hulk,{g:1});});
@@ -228,7 +229,7 @@ t('the lifts cap at quality + 1: the Malt Kiln, the Bonded Store, the Lagering C
   eq(liftCap(mkCask('bock',5)),6);eq(liftCap(mkCask('hopped',2)),3);
   p.vessels[1]=mkCask('bock',5);ok(liftable(p).some(function(o){return o.i===1;}),'a Ready Bock lifts to 6');
   p.vessels[1].die=6;ok(!liftable(p).some(function(o){return o.i===1;}),'never past 6');});
-t('the Ropewalk offers a second load onto a DIFFERENT Ship; the Cooperage adds a berth; the Stevedore loads 2',function(){fresh(2);var p=cur();
+t('the Ropewalk offers a second load onto a DIFFERENT Ship; the Cooperage adds a berth; the Stevedore loads 2',function(){fresh(2);clearWharf();var p=cur();
   var a='s1',b='s2';clearSlot(a);clearSlot(b);S.buildings[a]={b:'ropewalk'};putShip(a,'hulk','bergen');putShip(b,'hulk','bergen');
   putPost('w1',0,1);p.vessels[0]=mkCask('hopped',2);p.vessels[1]=mkCask('hopped',2);
   loadInto(p,a,0);eq(UI.sub,'load','the cross-quay load opened');eq(UI.load.ships,[b],'a different Ship');
@@ -352,7 +353,7 @@ t('tier 2 is the FLIP of your own tier 1 (2G1H), in place; no per-station cap �
   UI.pb={returnTo:'end',free:false,pid:0,station:null};UI.sub='pbuild';pbuildPick('flip','A');
   eq(privAt('s1').tier,2,'flipped');eq(p.grain,2);eq(p.hops,3,'2G1H');eq(p.supply,SUPPLY_DICE,'no die');
   ok(!pbuildOptions(p,true).some(function(x){return x.k==='flip'&&x.station==='A';}),'no second flip');});
-t('the private stop fires for its OWNER only, at the station its slot flanks: Granary pay 1 G: Brew once · Cold Store Age +2 · Shipping Office Raise + Post; the Guildhall brews once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
+t('the private stop fires for its OWNER only, at the station its slot flanks: Granary pay 1 G: Brew · Cold Store Age 2 · Shipping Office Raise + Post; the Guildhall brews once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s1';}),'the owner\\'s stop');
   S.active=1;visit(q,'A');ok(!UI.stops.some(function(x){return x.kind==='pact';}),'a rival sees no stop');S.active=0;
@@ -363,7 +364,7 @@ t('the private stop fires for its OWNER only, at the station its slot flanks: Gr
   p.grain=1;p.hops=5;ok(!pactAvail(p,privAt('s1')),'a grain short of recipe + surcharge: the line is closed');p.grain=5;p.hops=0;ok(pactAvail(p,privAt('s1')),'Gruit at 2G still opens it');
   clearSlot('s8');S.buildings.s8={p:'D',tier:1,owner:0};p.vessels[0]=mkCask('mumme',1);
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s8';}),'the Cold Store fires at the Market it flanks');
-  UI={sub:'stops',stops:[],usedStops:[]};enterPact('s8','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age +2');ageSkip();
+  UI={sub:'stops',stops:[],usedStops:[]};enterPact('s8','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age 2');ageSkip();
   clearSlot('s6');S.buildings.s6={p:'C',tier:2,owner:0};enterPact('s6','end');eq(UI.sub,'raise','the Shipping Office raises');raisePick(0);eq(UI.sub,'post','then posts once more');postSkip();
   clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};visit(p,'B');
   eq(UI.stops.filter(function(x){return x.kind==='cell'&&x.cell==='B'&&!x.alt;}).length,1,'one Brew cell stop');

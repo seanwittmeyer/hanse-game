@@ -632,7 +632,7 @@ const ICONTIP={
   wheat:'Grain (G) — a brewing input and the medium of exchange.',
   sprout:'Hops (H) — a brewing input; the brewer’s pinch.',
   beer:'Cask — a brewed beer; its die rides vessel → Ship → Kontor (Gruit: vessel → cart → the yard).',
-  store:'Market — Source 2 (primary) · Load 1 onto any docked Ship (alternate).',
+  store:'Market — Gain 2 goods (primary) · Load 1 onto any docked Ship (alternate).',
   'flask-conical':'Brewhouse — Brew (primary): pay a recipe, a supply die, search the stack · Build on the wharf (alternate): a private building on any vacant slot, or the Flip.',
   hourglass:'Cellar — Age 3 (primary) · Cart 1 Ready cask to Bruges (alternate): the yard or the hall.',
   ship:'Harbor — Commission, a must when it can, then Post on that Ship’s lane (primary) · Build at a Kontor or Raise (alternate).',
@@ -679,9 +679,9 @@ const STYLES={
 };
 const EXPORT_ROSTER=['broyhan','keut','mumme','bock'];   // deal 3 of 4 each game
 // THE EIGHT CASK BONUSES — the tile fires once, as the cask boards a Ship or is carted.
-const CASK_ACT={source:'Gain 2 goods, any mix',age:'Age +2, split freely',
-  load:'Load 1 more cask onto any eligible Ship (its bonus fires too)',
-  brew:'Brew 1 cask — a full brew (search the stack), at its cost',
+const CASK_ACT={source:'Gain 2 goods, any mix',age:'Age 2, split freely',
+  load:'Load 1 — a Ready cask onto any eligible Ship (its bonus fires too)',
+  brew:'Brew — a full brew (search the stack), at its cost',
   recipe:'Gain 1 recipe — from the display, at its printed fee',
   spec:'Gain 1 specialist — from the display, into an open seat',
   build:'Build — a private building or Flip at its fee, or a Kontor building with a supply die',
@@ -751,6 +751,7 @@ const COMMISSION_COST={cog:{},hulk:{g:1}};   // ⚙
 function commCostFor(p,ship){return ship?(COMMISSION_COST[ship]||{}):{};}
 function commFeeStr(){return 'Cog free · Hulk 1G';}
 const SHIP_DISPLAY=3;          // ⚙ a face-up display of 3
+const SETUP_WILD=2;            // ⚙ the two wild Cogs dock at setup on random slots (ruled 2026-09-07); the wild Hulk stays in the deck
 const SHIP_DECK_MIX=[          // ⚙ 18 hulls — per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1
   ['cog','london'],['cog','london'],['cog','london'],['hulk','london'],['hulk','london'],
   ['cog','bergen'],['cog','bergen'],['cog','bergen'],['hulk','bergen'],['hulk','bergen'],
@@ -780,19 +781,19 @@ function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
 // up; a tile stands on ANY open slot (no building on it) and fires when its owner works the
 // station that slot flanks; no die stands on it; it prints its points (2 / 4) scored at the end.
 const PRIVATES={
-  granary    :{name:'Granary',            station:'A', tier:1, pts:2, icon:'wheat',        kind:'ppaybrew',   desc:'On visit: pay 1 G: Brew once (a full brew at its cost, with its search)'},
-  kaufhaus   :{name:'Kaufhaus',           station:'A', tier:2, pts:4, icon:'store',        kind:'ppaybrew',   desc:'On visit: pay 1 G: Brew once · your Cart carries 2 casks'},
+  granary    :{name:'Granary',            station:'A', tier:1, pts:2, icon:'wheat',        kind:'ppaybrew',   desc:'On visit: pay 1 G: Brew (a full brew at its cost, with its search)'},
+  kaufhaus   :{name:'Kaufhaus',           station:'A', tier:2, pts:4, icon:'store',        kind:'ppaybrew',   desc:'On visit: pay 1 G: Brew · your Cart carries 2 casks'},
   scriptorium:{name:'Scriptorium',        station:'B', tier:1, pts:2, icon:'scroll-text',  kind:'passive',    desc:'Recipes cost you no fee, at every door'},
-  guildhall  :{name:'Brewers’ Guildhall', station:'B', tier:2, pts:4, icon:'flask-conical',kind:'pbrew',      desc:'On visit: Brew once (a full brew, with its search) · you hold every dealt recipe'},
-  coldstore  :{name:'Cold Store',         station:'D', tier:1, pts:2, icon:'snowflake',    kind:'page2',      desc:'On visit: Age +2'},
-  lagering   :{name:'Lagering Cellar',    station:'D', tier:2, pts:4, icon:'snowflake',    kind:'page2lift',  desc:'On visit: Age +2 · one Ready cask of yours +1 (cap quality + 1)'},
+  guildhall  :{name:'Brewers’ Guildhall', station:'B', tier:2, pts:4, icon:'flask-conical',kind:'pbrew',      desc:'On visit: Brew (a full brew, with its search) · you hold every dealt recipe'},
+  coldstore  :{name:'Cold Store',         station:'D', tier:1, pts:2, icon:'snowflake',    kind:'page2',      desc:'On visit: Age 2'},
+  lagering   :{name:'Lagering Cellar',    station:'D', tier:2, pts:4, icon:'snowflake',    kind:'page2lift',  desc:'On visit: Age 2 · one Ready cask of yours +1 (cap quality + 1)'},
   counting   :{name:'Counting House',     station:'C', tier:1, pts:2, icon:'goods-1',      kind:'praise',     desc:'On visit: Raise one die of yours at sea +1'},
   shipping   :{name:'Shipping Office',    station:'C', tier:2, pts:4, icon:'post',         kind:'praisepost', desc:'On visit: Raise +1 · Post once more'},
 };
 const PRIV_TILES={A:['granary','kaufhaus'],B:['scriptorium','guildhall'],C:['counting','shipping'],D:['coldstore','lagering']};   // the four designs (the key is the design, not a station): [tier 1, tier 2]
 const T1_FEE={g:1,h:1};       // ⚙ a tier 1 onto any open slot
 const FLIP_FEE={g:2,h:1};     // ⚙ the FLIP to tier 2
-const BREW_SUR={g:1};        // ⚙ the Granary / Kaufhaus line — On visit: pay 1 G: Brew once (the recipe's cost plus this)
+const BREW_SUR={g:1};        // ⚙ the Granary / Kaufhaus line — On visit: pay 1 G: Brew (the recipe's cost plus this)
 const BOND_FEE={g:1};        // ⚙ the Bonded Store — On sail: each shipper may pay 1 G: Post on its lane
 function privDef(b){return b&&b.p?PRIVATES[PRIV_TILES[b.p][(b.tier||1)-1]]:null;}
 function privName(b){const d=privDef(b);return d?d.name:'';}
@@ -829,7 +830,7 @@ const SLOTS=[
 ];
 const ADJ={A:['B','C'],B:['A','D'],C:['A','D'],D:['B','C']};
 const CELLNAME={A:'Market',B:'Brewhouse',C:'Harbor',D:'Cellar'};
-const CELLROLE={A:'Source',B:'Brew',C:'Ship',D:'Age'};
+const CELLROLE={A:'Gain',B:'Brew',C:'Ship',D:'Age'};
 // each station's two flanking slots — a load stop, and the owner's private building
 const FLANKS={A:['s1','s8'],B:['s2','s3'],C:['s6','s7'],D:['s4','s5']};
 
@@ -868,7 +869,7 @@ let activeTab=0;
 // boot then WAITS for an INIT over postMessage, local save/load are bypassed, and net.js (the
 // bridge script below — fully inert without the flag) drives seats/authority.
 const NET=(typeof location!=='undefined'&&/[?&]net=1(?:&|$)/.test(location.search||''));
-const KEY='hanse-v80e';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
+const KEY='hanse-v80f';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -931,8 +932,10 @@ function freshState(n,names){
   // the Public Works: deal WORKS_DEAL[n] onto random slots; the rest to the box; nothing refills
   {const deck=buildWorksDeck();const ids=shuffle(SLOTS.map(s=>s.id));const deal=WORKS_DEAL[n]||4;
    for(let i=0;i<deal&&deck.length;i++)st.buildings[ids[i]]={b:deck.shift()};}
-  // the Ship deck, display of 3; NO Ship is docked at setup — the first Harbor visit commissions by law
+  // the Ship deck, display of 3; the two wild Cogs dock at setup on two random slots (a Ship may stand over a Public Work)
   st.shipDeck=shuffle(SHIP_DECK_MIX.map(x=>({ship:x[0],dest:x[1]})));
+  {const wild=[];st.shipDeck=st.shipDeck.filter(x=>{if(x.ship==='cog'&&x.dest==='wild'&&wild.length<SETUP_WILD){wild.push(x);return false;}return true;});
+   const ids=shuffle(SLOTS.map(s=>s.id));wild.forEach((x,i)=>{st.slots[ids[i]]={type:'ship',ship:x.ship,dest:x.dest,chit:null,load:[]};});}
   while(st.shipDisplay.length<SHIP_DISPLAY&&st.shipDeck.length)st.shipDisplay.push(st.shipDeck.shift());
   // the STARTER POST: in REVERSE turn order each seat stands its eleventh die on W1 or E1
   for(let i=n-1;i>=0;i--)st.starterQueue.push(i);
@@ -1069,7 +1072,7 @@ function ownSq(pid){const o=S.players[pid];return '<span class="osq" style="back
 
 // ---- tooltips for stations & slots (reminders, never lessons) ----
 const CELLTIP={
-  Market:'Market — primary: Source '+SRC_PRIMARY+' · alternate: Load 1 onto any docked Ship.',
+  Market:'Market — primary: Gain '+SRC_PRIMARY+' goods · alternate: Load 1 onto any docked Ship.',
   Brewhouse:'Brewhouse — primary: Brew (search the stack) · alternate: Build on the wharf, a private building or the Flip.',
   Cellar:'Cellar — primary: Age '+CELLAR_POOL+', split freely · alternate: Cart 1 Ready cask to Bruges.',
   Harbor:'Harbor — primary: Commission (a must when it can) then Post on that lane, then the maiden load · alternate: Build at a Kontor, or Raise.',
@@ -1093,7 +1096,7 @@ function occToken(t){
   return '';}
 const STYLE_COLOR={gruit:'#8a949c',hopped:'#c2922f',broyhan:'#b06a34',keut:'#9c5f2e',mumme:'#caa12a',bock:'#7c2128'};
 const DEST_COLOR={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128',wild:'#6f6253'};
-const P_ACT_TXT={source:'+2 goods',age:'Age +2',load:'Load 1 more',brew:'Brew 1 (search)',recipe:'Gain 1 recipe',spec:'Gain 1 specialist',build:'Build · its fee',post:'Post'};
+const P_ACT_TXT={source:'Gain 2 goods',age:'Age 2',load:'Load 1',brew:'Brew',recipe:'Gain 1 recipe',spec:'Gain 1 specialist',build:'Build · its fee',post:'Post'};
 const DIE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};   // 3×3 grid, 0-indexed
 function dieFace(n,cls,color,tip){n=Math.min(6,n|0);const show=Math.max(1,n);let c='';for(let i=0;i<9;i++)c+='<span class="pip'+(DIE_PIPS[show].includes(i)?' on':'')+'"></span>';
   return '<span class="die'+(cls?' '+cls:'')+(color?' pdie':'')+'"'+(color?' style="background:'+color+'"':'')+' data-tip="'+attr(tip||'A quality die — its face is its whole record.')+'">'+c+'</span>';}
@@ -1303,7 +1306,7 @@ function startGame(){
   S.players.forEach((p,i)=>{p.ai=ais[i];});
   document.getElementById('setup').classList.add('hidden');
   log('Game begins — '+setupN+' brewing houses'+(ais.some(a=>a)?' · AI seats: '+S.players.filter(p=>p.ai).map(p=>p.name+' ('+aiLabel(p)+')').join(', '):'')+'. The export beers this game (3 of 4): '+exportLabel()+'.');
-  log('Twelve dice: ten in the personal supply, one on the Ready Gruit in vessel 1, one the starter post — in reverse turn order each house stands it on W1 or E1. '+LU('building-2')+' Public Works stand on '+(WORKS_DEAL[setupN]||4)+' slots (the tide takes each with its Ship; nothing refills). No Ship is docked: the first Harbor visit must commission.');
+  log('Twelve dice: ten in the personal supply, one on the Ready Gruit in vessel 1, one the starter post — in reverse turn order each house stands it on W1 or E1. '+LU('building-2')+' Public Works stand on '+(WORKS_DEAL[setupN]||4)+' slots (the tide takes each with its Ship; nothing refills). Two wild Cogs stand docked from the start; the first Harbor visit must still commission.');
   save();render();maybeRunAI();
 }
 
@@ -1333,7 +1336,7 @@ function stationActAvail(p,c,a){
 // the station verbs as the board PRINTS them (STYLE.md §2/§3): the button carries the icon and the
 // printed words only; the reminder rides the tooltip (the charter: components big, prose small)
 const STN_VERB={
-  source :{ic:'goods-2',     lbl:p=>'Source '+SRC_PRIMARY,       tip:p=>'take '+SRC_PRIMARY+' goods, any mix'},
+  source :{ic:'goods-2',     lbl:p=>'Gain '+SRC_PRIMARY+' goods',  tip:p=>'any mix — the same words and glyph as the cask bonus'},
   loadany:{ic:'package-plus',lbl:p=>'Load 1',                    tip:p=>'one Ready cask of yours onto any docked Ship (Q2+, under your count, its lane open)'},
   brew   :{ic:'flask-conical',lbl:p=>'Brew',                     tip:p=>'a full brew at its recipe cost, with its search; Gruit takes the top tile'},
   pbuild :{ic:'hammer',      lbl:p=>'Build',                     tip:p=>'a tile from your hand onto any vacant slot ('+costStr(T1_FEE)+'), or Flip your standing tier 1 ('+costStr(FLIP_FEE)+')'},
@@ -2822,7 +2825,7 @@ function renderAid(){
       +row('layers','Work its whole counter','any order, all optional except the Harbor’s must: its primary · its alternate · a Load at each flanking slot · your own private building there')+'</div>'
     +'<div class="asec"><b>The cask</b><div class="alife">'
       +stp('flask-conical','Brew')+ARR+stp('hourglass','Age')+ARR+stp('check','Ready')+ARR+stp('package-plus','Board: Q2+ · under your count · the lane open')+ARR+stp('sail','Full = sails')+ARR+stp('landmark','Land = cask die + your building die')+'</div>'
-      +row('beer','The eight cask bonuses — the tile fires once, as its cask boards or is carted','Gain 2 goods · Age +2 · Load 1 more · Brew 1 · Gain 1 recipe at its fee · Gain 1 specialist · Build · Post · a Q2+ Brew searches the stack and picks the tile; Gruit takes the top tile (every one Gain 2 goods)')+'</div>'
+      +row('beer','The eight cask bonuses — the tile fires once, as its cask boards or is carted','Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe at its fee · Gain 1 specialist · Build · Post · a Q2+ Brew searches the stack and picks the tile; Gruit takes the top tile (every one Gain 2 goods)')+'</div>'
     +'<div class="asec"><b>The sea — the quality count</b>'
       +row('post','A Post is a die of yours on a segment','it grows from Hamburg (the lowest segment of the lane you do not hold) · +1 each time a Ship sails through · a lane is open once every segment holds anyone’s post')
       +row('kontorhaus','A Kontor building: your tile + a supply die, where your posts reach','the die is the delivery modifier · +1 on any landing there · its line: the Warehouse — your count reads +1 for a Ship bound there · the Kontorhaus — +1 ⚜ on your landing · the Guildhouse — Raise on your landing · one per player per Kontor')
@@ -2831,7 +2834,7 @@ function renderAid(){
       +'<table class="atable"><tr><th></th><th>Kontor</th><th>Prize per cask</th><th>Pair</th></tr>'+dests+'</table>'
       +'<div class="subnote">each landing pays 1 ⚜ · the pair goes to the two leaders by parked dice at the end · a wild Ship’s port is named by the first cask loaded</div></div>'
     +'<div class="asec"><b>Stations</b><div class="astgrid">'
-      +row('store','Market','P: Source '+SRC_PRIMARY+', any mix · A: Load 1 → any docked Ship')
+      +row('store','Market','P: Gain '+SRC_PRIMARY+' goods, any mix · A: Load 1 → any docked Ship')
       +row('flask-conical','Brewhouse','P: Brew — a supply die, search the stack · A: Build on the wharf ('+costStr(T1_FEE)+' · Flip '+costStr(FLIP_FEE)+')')
       +row('age-3','Cellar','P: Age '+CELLAR_POOL+', split freely · A: Cart 1 Ready cask to Bruges — the yard or the hall')
       +row('ship','Harbor','P: Commission (a must when it can: '+commFeeStr()+') then Post on that lane, then the maiden load · A: Build at a Kontor, or Raise')+'</div>'
