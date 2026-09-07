@@ -1013,7 +1013,25 @@ tide is the only thing that opens ground); (3) four Public Works at every player
 6 / 4); (4) the Brewers' Guildhall's line is *On visit: Brew once (a full brew, with its search)*,
 not "brew twice this visit". The same read asked the app to glow every choice on the board and
 let the hand tiles be tapped over (a view, never a rule), and ruled the casing law (`STYLE.md`
-§4c rule 4: nothing prints in all caps). Record: `DESIGN.md` §9 (v8.0b).*
+§4c rule 4: nothing prints in all caps). Record: `DESIGN.md` §9 (v8.0b). **v8.0c (2026-09-07):**
+the Granary and the Warehouse read *Gain 2 goods, any mix* (the fixed 1 `G` + 1 `H` pair was the
+first cut's Hop Garden/Maltings carried unexamined). **v8.0d (2026-09-07 — the designer's
+direction the same day, ruled "don't change the Gruit casks; change the rest"):** no building
+hands out goods — the Granary/Kaufhaus *pay 1 `G`: Brew once*, the Bonded Store's sail line *each
+shipper may pay 1 `G`: Post on its lane*, the Warehouse *vouches* (count +1 for a Ship bound
+there); Gruit's tiles, the exports' bonus tiles, the yard, the hall and Source 2 stand. Record:
+`DESIGN.md` §9 (v8.0d). **v8.0e (2026-09-07):** the warm Gruit returns — a Ready Gruit in vessel 1,
+its own twelfth die at 1 on it, the top Gruit tile under it; the supply keeps its ten and twelve
+dice per player stand (the from-the-ten cut ran 3p at 7–13 rounds in the sim; the twelfth die holds
+the band); the private tiles print their points as the `star-2` / `star-4`
+glyph. Record: `DESIGN.md` §9 (v8.0e). **v8.0f (2026-09-07):** the two wild Cogs dock at setup on
+random slots (the designer's R1), and *one action, one term* — *Source* leaves the registry, the
+Market's primary prints *Gain 2 goods* like the bonus, and *Brew · Age 2 · Load 1* replace *Brew 1 /
+Brew once · Age +2 · Load 1 more*. Record: `DESIGN.md` §9 (v8.0f). **v8.0g (2026-09-07 — the designer's batch on §13.7):** rulings 1 · 2 · 3 · 5 · 7 · 9 · 10
+confirmed on their defaults (every Kontor prize free); **4 overruled — per-port minimums on the DIE:
+London 2 · Bergen 3 · Novgorod 4**, read as the cask boards; 6 deferred (the hall as framed until the
+core is ironed out); **8 overruled — building slots 1 on side A, 2 on side B**. The registry's three
+pairs ruled *deliver · Raise die · Ship*. Record: `DESIGN.md` §9 (v8.0g).*
 
 ### 13.0 The game in one breath
 

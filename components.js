@@ -1,17 +1,16 @@
-// Brewhouses of the Hanse — the shared CARD COMPONENT LIBRARY (v8.0 kit).
+// Brewhouses of the Hanse — the shared CARD COMPONENT LIBRARY.
 // Single source of the printed card faces: data + generators + card CSS, used by BOTH
 // print.html (the print kit) and play.html (the app mirrors the kit). Faces are the
 // canon — edit a card HERE, never per-page. Everything lives in one IIFE and is exposed as
 // window.HC; the card CSS injects itself at load (scoped so it cannot restyle a host page).
 //
-// KEEP THIS FILE CLEAN AND LIGHT (designer-ruled 2026-08-22): style/art commentary — prompts,
-// briefs, treatment recipes, round rulings — lives in STYLE.md and art/PROMPTS.md + art/ICONS.md,
-// never here. Comments in this file only mark a PLACEHOLDER awaiting replacement; when the
-// placeholder is filled, the comment comes out.
+// KEEP THIS FILE CLEAN AND LIGHT: style/art commentary — prompts, briefs, treatment recipes — lives in
+// STYLE.md and art/PROMPTS.md (the icon accounting: art/ICONS.md), never here. A comment here marks a
+// PLACEHOLDER awaiting replacement; when the placeholder is filled, the comment comes out.
 (function(){
 'use strict';
 // ICON_ART maps a lucide name (or a virtual name) to art/icons/<file>.png; LU emits the art
-// <img> when mapped, else the lucide <i>; LUX forces raw lucide. Rulings & recipes: art/ICONS.md.
+// <img> when mapped, else the lucide <i>; LUX forces raw lucide. The icon accounting: art/ICONS.md.
 const ICON_ART={coins:'goods',dices:'quality-die',
   'dice-1':'die-1','dice-2':'die-2','dice-3':'die-3','dice-4':'die-4','dice-5':'die-5','dice-6':'die-6',
   star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'building',
@@ -34,24 +33,21 @@ const LU=(n,cls)=>ICON_ART[n]?'<img class="ai ic'+(cls?' '+cls:'')+'" src="art/i
 const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+'</span>');if(h)a.push('<span class="gc h">'+LU('sprout','h')+h+'</span>');return a.join('');};
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
-// v3.0-A "SPECIFIC GAINS" — a cask's slot-action is one of NINE concrete acquisitions, printed on the
-// tile and steerable at the kettle (the face-up top of each quality pile). The pool is quality-gated:
-// survey/hire/brew join at Q3+ (v4.12 — brew was Q4+: 'brew is a true throttle'). Convert and the pool Wild are CUT (Convert -> the Grain
-// Exchange work; Wild survives only as the Workshop dock effect + the flipped-tile Floor stops).
-// Gruit is PINNED to Source. Icons/texts mirror play.html CASK_ACT.
+// THE CASK BONUSES — the eight-verb pool ⚙ printed on the cask tiles: the printed mix IS the stack a
+// Q2+ brew searches; Gruit is PINNED to Gain 2 goods (no search). Icons/texts mirror play.html CASK_ACT.
 const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or is carted
   {k:'source',  ai:'goods-2',       act:'Gain 2 goods',             q:1},
-  {k:'age',     ai:'age-2',         act:'Age +2',                   q:2},
-  {k:'load',    ai:'package-plus',  act:'Load 1 more cask',         q:2},
-  {k:'brew',    ai:'flask-conical', act:'Brew 1 cask',              q:2},
+  {k:'age',     ai:'age-2',         act:'Age 2',                    q:2},
+  {k:'load',    ai:'package-plus',  act:'Load 1',                   q:2},
+  {k:'brew',    ai:'flask-conical', act:'Brew',                     q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · its fee',  q:2},
   {k:'spec',    ai:'wrench',        act:'Gain 1 specialist',        q:2},
   {k:'build',   ai:'hammer',        act:'Build · its fee',          q:2},
   {k:'post',    ai:'post',          act:'Post · a supply die',      q:2},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
-// cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
-// ready = maturation steps (v1.1: Hopped & Broyhan are FAST = ready 1; Keut ready 2; Mumme/Bock ready 3).
+// cask supply — fixed global counts (COMPONENTS.md; the scarce high-Q exports are intentional). Gruit PINNED to Gain 2 goods; a Q2+ brew searches.
+// ready = maturation steps (Hopped & Broyhan 1 · Keut 2 · Mumme/Bock 3).
 const CASKS=[
   {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:0, pin:CASK_POOL[0]},   // Ready at brew (die 1); every tile prints Gain 2 goods; the cart is its road
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:12, ready:1},
@@ -72,51 +68,35 @@ const SHIP_DECK=[   // ⚙ 18 hulls — per far Kontor Cog ×3 · Hulk ×2; wild
   ['cog','Novgorod'],['cog','Novgorod'],['cog','Novgorod'],['hulk','Novgorod'],['hulk','Novgorod'],
   ['cog','Wild'],['cog','Wild'],['hulk','Wild'],
 ];
-// ---- SLOT TILES (v3.0-A): PRIVILEGES & BUILDINGS — the one owned family on the living slots (mirrors
-// play.html BUILDINGS). One grammar: "a tile modifies the OCCUPANT docked on it", in two verbs —
-//   • VALUE = a PRIVILEGE (blue): prints a plain +N★ bonus. When the OWNER's cask departs the slot
-//     toward a sale, turn its tally die to N — once, at departure, nothing recalculated (the pips ARE
-//     the ★ banked on delivery; no premium, no cap rule, no sail-time bump). A rival's cargo banks nothing.
-//   • TRANSFORM = a WORK (green): changes the docked cask/ship, for WHOEVER docks there. Three works
-//     print an ACTION — their slot's stop offers "deploy here OR the printed action".
-// v3.0-A cuts the Gauger's Office + the Festkeller; Rich Berth is reworked to the sail-short valve;
-// Pilot's House · Open Staithe · Rope Walk · Grain Exchange · Mission Quay are new works.
-// art: — the five new works ride interim stand-in art (the cut tiles' freed files + ship art) until
-// their own images are generated; briefs are queued in art/PROMPTS.md.
+// ---- THE PUBLIC WORKS (mirrors play.html BUILDINGS) ----
 const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a cask docked here'},ship:{ic:'sailboat',lbl:'a Ship docked here'}};
 const BUILDINGS=[
   // THE PUBLIC WORKS — the filler roster ⚙ (the roster pass comes after the core): shared,
   // die-less, passive on their slot's traffic; the tide takes every one with its Ship.
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, cond:'On load', effIc:'die-plus1',  eff:'die +1 (cap Q+1)'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, cond:'On load', effIc:'die-plus1',  eff:'Raise die (cap Q+1)'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, eff:'your count reads +1 here'},
   {k:'ropewalk',  nm:'Ropewalk',          verb:'transform', tgt:'cask', ic:'cable',        n:1, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, eff:'+1 berth'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, cond:'On load: '+LU('die-plus1'), eff:'On sail: shippers '+LU('goods-2')},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, cond:'On load: '+LU('die-plus1'), eff:'On sail: pay '+cost(1,0)+': '+LU('post')+' its lane'},
   {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, cond:'On load', eff:'the cask bonus fires ×2'},
 ];
-// ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
-// CELLAR (distinct from the earned-and-placed public Buildings). Mirrors play.html IMPROVEMENTS.
-// v82 "Scarce Improvements": these now form a SHUFFLED DECK of (n−1) copies of each type (n=players) feeding a
-// face-up DISPLAY of 4 at the Cellar (refills from the deck). 3 copies/type covers a 4-player deck (n−1=3).
-// Specialist tile art: object shots as art/improve-<slug(nm)>.jpg — the SPEC + briefs live in art/PROMPTS.md.
+// ---- THE SPECIALISTS (mirrors play.html IMPROVEMENTS); the art: art/improve-<slug(nm)>.jpg — briefs in art/PROMPTS.md ----
 const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the Gain 1 specialist bonus) · ten singles ⚙ · 2 seats per house
   {ic:'wrench',      nm:'Braumeister', act:'turn start: age 1 '+LU('beer')+' +1', c:'#5b3a8e', n:1},
   {ic:'sailboat',    nm:'Shipmaster',  act:LU('ship')+' Harbor: sail 1 '+LU('sailboat')+' with your '+LU('beer')+' unfull', c:'#5b3a8e', n:1},
   {ic:'wrench',      nm:'Cellarman',   act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', c:'#5b3a8e', n:1},
   {ic:'package-plus',nm:'Stevedore',   act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
-  {ic:'landmark',    nm:'Agent',       act:'a rival lands at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
+  {ic:'landmark',    nm:'Agent',       act:'a rival delivers at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
   {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1},
   {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s goods +1', c:'#5b3a8e', n:1},
   {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
-  {ic:'book-open',   nm:'Chronicler',  act:'land a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
+  {ic:'book-open',   nm:'Chronicler',  act:'deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
   {ic:'gavel',       nm:'Alderman',    act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 const KONTOR_C={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-// v3.2d — recipe cards are DOUBLE-SIDED: the cost face / the BREWED face (a big check, bottom-right).
-// Flip a card the first time you brew that beer — your flipped recipe cards ARE the Flight: the unlock
-// currency AND the scoring record (the ladder counts distinct beers BREWED). The board strip is gone.
+// recipe cards are DOUBLE-SIDED: the cost face / the BREWED face (a big check, bottom-right); the flipped cards are the Flight record.
 const STARTERS=[   // the starting recipes are CARDS — one each per player, dealt at setup
   {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
@@ -130,35 +110,27 @@ const RECIPES=[  // EXPORT recipe cards — buy = the printed fee ⚙ (paid at t
 //==================================================================
 // ART — piece face generators (the scrutinized tile/card/board art)
 //==================================================================
-// BUILDING tile (v1.0 keystone) — an OWNED slot modifier: icon + name + verb badge (VALUE/TRANSFORM) +
-// the effect + a target glyph (what it modifies: cask/ship/line/owner) + the goods cost. Value = violet, Transform = green.
-// BUILDING CARD (printables2 v5) — buildings migrate from flat tiles to 2″ double-sided ART CARDS (same grammar
-// as the cask/ship cards). FRONT = full-bleed building art (art/building-<key>.png) behind a scrim, with the name
-// + verb badge (Value/Transform) up top and the effect + target glyph + goods cost in a colour foot. The card
-// nests in the 2.5″ player-colour owner FRAME, so the coloured edge around it marks ownership.
-const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   // v5.2 (ruled): PUBLIC WORKS turn BROWN — green is a player colour; VENTURE = the owner-only blue below — SPECIALIST = purple below
-const BLD_FOOT='rgba(58,51,66,.7)';   // legacy fallback   // building card foot/base — dark purple-grey (#3a3342) at 70% opacity so the illustration bleeds ~30% through the foot. Same on front & back.
-// v3.4a at 66% height — the SAME anatomy the 2in card earned (icon+name header · art window ·
-// the colour foot: the effect big, then the target chip + cost row), compressed, never flattened.
-const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age +2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};   // v5.1: the 'alms' entry left with the Almoner's Stall
+// BUILDING tile — icon + name + trigger + effect + cost in the family's foot colour; the art (art/building-<key>.png) behind a scrim.
+const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   // PUBLIC WORKS brown (green is a player colour) · private buildings the owner-only blue · SPECIALISTS purple
+const BLD_FOOT='rgba(58,51,66,.7)';   // the neutral foot — dark purple-grey at 70% so the illustration bleeds through
+// the 2.5×1.32 tile anatomy: icon+name header · art window · the colour foot (the effect big, then the cost).
+const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age 2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
-  // v5.3 (ruled): the Public Works are die-less SETUP FURNITURE — no start face, no fee chip
-  // (nobody builds or buys them; the fee data survives only as a dial seam). msChip retired.
+  // the Public Works print no start face and no fee chip (nobody builds or buys them)
   const msChip='';const _msOld=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
   const lead=sa?LU(sa.ai):(d.effIc?LU(d.effIc):null);
   const txt=sa?sa.t:d.eff;
-  // the trigger grammar, two-column foot (ruled 2026-08-23): the BIG action icon is its own
+  // the trigger grammar, two-column foot: the BIG action icon is its own
   // column (about two text lines tall); the trigger and the action stack beside it. No icon →
   // the two lines stack full-width. Rules never ride a component.
   let ft;
   if(d.cond&&lead) ft='<div class="bt-foot btF2"><span class="ac">'+lead+'</span><span class="bt-2col"><span class="bt-cond">'+d.cond+'</span><span class="bt-etext">'+txt+'</span></span></div>';
   else if(d.cond)  ft='<div class="bt-foot btFC"><span class="bt-cond">'+d.cond+'</span><span class="bt-eff">'+txt+'</span></div>';
   else             ft='<div class="bt-foot"><span class="bt-eff'+(lead?' bt-act':'')+'">'+(lead?'<span class="ac">'+lead+'</span><span class="bt-etext">'+txt+'</span>':txt)+'</span></div>';
-  // the title prints BARE (no lucide crest — ruled 2026-08-23); a staple tile carries its
-  // kontor CREST art left of the title (ruled 2026-08-23, the Ropewalk-pattern pass)
+  // the title prints BARE (no lucide crest); a staple tile carries its kontor CREST art left of the title
   return '<div class="btile btW" style="--c:'+foot+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bt-top">'+(d.staple?'<span class="bt-crest">'+LU('kontor-'+d.staple)+'</span>':'')
@@ -172,14 +144,14 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
 const PRIVATES=[
-  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h'))},
-                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'Cart 2'}},
+  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical')), txt:'Brew'},
+                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical'))+VSEP('·')+VBIG(LU('truck')), txt:'Brew · Cart 2'}},
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
-                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},
-  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise'},
-                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise · Post'}},
+                               t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe'}},
+  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise die'},
+                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise die · Post'}},
   {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'private-coldstore.png',     own:VBIG(LU('age-2'))},
-                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'lift, cap Q+1'}},
+                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'Raise die, cap Q+1'}},
 ];
 function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
@@ -191,69 +163,53 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
     +'<span class="bt-cost">'+cost(tier===2?2:1,1)+'</span></div>'
   +'<div class="bt-foot vt2"><span class="vt-own" title="the line — fires when its owner works this station">'+(f.own||'')
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
-    +'<span class="vt-pub vt-pts" title="the printed points — scored at the end while the tile stands">'+LU('star','starmark')+'<b>'+f.pts+'</b></span></div>'
+    +'<span class="vt-pub vt-pts" title="the printed points — scored at the end while the tile stands">'+LU('star-'+f.pts,'starmark')+'</span></div>'
   +'</div>';}
 // ---- THE KONTOR BUILDING TILES — each house's set of three, each usable once; placed in a
 // Kontor's slot and marked with a supply die (the delivery modifier); the line fires on each
-// landing of its owner there. 1.32×1.32in, house-ringed.
+// delivery of its owner there. 1.32×1.32in, house-ringed.
 const KBUILDINGS=[
-  {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h')), txt:'on your landing'},
-  {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your landing'},
-  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise on your landing'},
+  {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('compass'))+' count +1', txt:'a Ship bound here'},
+  {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your delivery'},
+  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise die on your delivery'},
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW kbt" style="--c:'+(col||PRIV_FOOT)+ring+';width:1.32in;height:1.32in">'
   +artLayer(({warehouse:'venture-warehouse-l1.png',kontorhaus:'kontor-tile-kontorhaus.png',guildhouse:'kontor-tile-guildhouse.png'})[d.k])
   +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>10?' long':'')+'">'+d.nm+'</span></div>'
   +'<div class="bt-foot btFC"><span class="bt-cond">'+d.txt+'</span><span class="bt-eff">'+d.line+'</span></div>'
-  +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any landing here; its pips score at the end">'+LU('dice-1')+'</div>'
+  +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any delivery here; its pips score at the end">'+LU('dice-1')+'</div>'
   +'</div>';}
-// ---- the ⚜ INVITATION token — earned one per cask landed at a far Kontor, spent at the hall
-function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask landed at a far Kontor; spend it to present at the hall">\u269c</div>';}
+// ---- the ⚜ INVITATION token — earned one per cask delivered at a far Kontor, spent at the hall
+function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask delivered at a far Kontor; spend it to present at the hall">\u269c</div>';}
 // ---- the KONTOR CHIT — one per far Kontor; the first cask loaded onto a wild Ship sets it on the hull
 function kontorChit(k){return '<div class="kchit" style="--c:'+(KONTOR_C[k]||'#6f6253')+'" title="the Kontor chit — names a wild Ship\u2019s Kontor">'+LU('kontor-'+k)+'<span>'+k.charAt(0).toUpperCase()+k.slice(1)+'</span></div>';}
-// a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
-// claim rule (one line per delivered cask · each line once per voyage · ★ at once) lives on
-// the rules page — the card is pure data, the tile grammar of the whole kit.
-// BUILDING CARD BACK — the flipped/displaced face: when your tile is overbuilt (the builder pays the 1G
-// ground rent) it returns to you FACE-DOWN into an OPEN Floor slot of your one row (none open → boxed) —
-// a Floor WILD stop, pure engine: flips score NOTHING. Same art + title (muted) so it's identifiable.
+// BUILDING tile back — the muted art + title; the face reads WILD
 function buildingBack(d){   // the FLOOR side: it only says WILD
   return '<div class="btile btF" style="--c:'+BLD_FOOT+'">'
   +artLayer(d.art||('building-'+d.k+'.png'))
   +'<div class="bt-wild"><span class="bt-circ">'+LU('sparkles')+'</span><b>Wild</b></div>'
   +'<div class="bt-sub">a Floor slot &middot; none open &rarr; discard</div>'
   +'</div>';}
-// SPECIALIST CARD (v10) — now a SQUARE 2in×2in card, matching the Building card's footprint (was a half-height
-// 2in×1in strip). Full-bleed OBJECT art (improve-<slug>.jpg — a single trade-tool icon on a plain beige field,
-// no scene) + scrim, name/icon on top, and a PURPLE foot bar carrying the effect + cost. Same art-card grammar
-// as the casks/ships/buildings. Card bg = the same purple as the foot, so any html2canvas foot-edge hairline
-// is purple-on-purple.
-const IMP_FOOT='#4a3a6e';   // Specialist foot/base — PURPLE (the third tile type, v2.4.1; was Cellar-green)
+// SPECIALIST tile — a 2×2in square: full-bleed OBJECT art (improve-<slug>.jpg) + scrim, the name and the effect on a
+// PURPLE foot; the card bg is the foot's purple so any html2canvas foot-edge hairline is purple-on-purple.
+const IMP_FOOT='#4a3a6e';   // the Specialist foot — purple
 function improveTile(d){const k=d.slug||slug(d.nm);
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
   +'<div class="ic-foot"><span class="ic-nm">'+d.nm+'</span><span class="ic-act">'+d.act+'</span></div>'
-  +'</div>';}   // designer-ruled 2026-08-31: the title sits at the FOOT, above the action (the head stays clear);
-                // v7.0a same day: the FEE PILL retires — specialists are Bergen's free prize, the one channel (the g/h data stays inert for the archived kits)
-// printables2 v3: a CASK is a double-sided CARD (2×3). FRONT = the buy/age side: Q+name on the top end, brew
-// cost under it, the AGING TRACK in the centre (the card carries its own step count — so the player-board
-// maturation track + cellar markers come off the board), and Q+action on the bottom end. BACK = the brewed
-// side: Q+name + a die/presence space on the top end, the action just above the bottom end, Q on the bottom.
-// (act = the drawn slot-action {ai,act}; Gruit passes its pinned Source — the printed mix IS the brew-draw.)
-// ---- background ART slot (printables2) ----
-// Flip ART_ON to true once the images exist in art/ (named below). Until then a faint hatch marks the slot.
-// Filenames: casks → art/cask-<beer>.png (gruit/hopped/broyhan/keut/mumme/bock/gose/zerbster/duckstein/jopenbier);
-//            ships → art/ship-<hull>.png (cog/hulk). Prompts to generate them: art/PROMPTS.md.
+  +'</div>';}   // the title sits at the FOOT, above the action (the head stays clear); no fee pill — specialists are earned, never bought
+// the CASK CARD (2×3, double-sided): the buy/age face and the brewed face (act = the drawn cask bonus {ai,act}).
+// ---- the background ART slot ----
+// ART_ON=false paints a faint hatch instead of the image. Filenames: casks → art/cask-<beer>.png;
+// ships → art/ship-<hull>.png (cog/hulk). Prompts: art/PROMPTS.md.
 const ART_ON=true, ART_DIR='art/';
 // art rides an <img> (object-fit:cover) rather than a CSS background — html2canvas rasterizes an <img> at its
 // NATIVE source resolution (sharp PNG export), whereas a background-image is upscaled from the element's CSS size.
 function artLayer(file){return ART_ON
   ? '<div class="artbg scrim"><img class="artbg-img" src="'+ART_DIR+file+'" alt=""></div>'
   : '<div class="artbg ph" data-art="'+ART_DIR+file+'"></div>';}
-// v3.4a: the CASK is a 2.5×1in TILE. It seats on vessels (aging side up), wharf slots and SHIP
-// BERTHS (wharf side up) — the tile itself travels; the berth cube proxy retires. The WHARF side
-// prints the DIE SEAT the tally die parks on.
+// the CASK TILE (2.4×1in): the aging side (vessels) and the wharf side (slots and berths), which prints the die seat.
 function caskCardFront(d,act){   // the AGING side: Q·name (+special) · the maturation track · brew cost + the action preview
   let c=cost(d.g,d.h);if(d.alt)c+='<span style="opacity:.85">/</span>'+cost(d.alt[0],d.alt[1]);
   let track='<div class="ct-step start">'+LU('flask-conical')+'</div>';
@@ -268,7 +224,7 @@ function caskCardFront(d,act){   // the AGING side: Q·name (+special) · the ma
     +'<div class="ct-act2" title="the load bonus — fires as the cask boards a Ship"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></div>'
   +'</div>';}
 function caskCardBack(d,act){const start=Math.max(1,d.q-(d.ready||0));
-  // the WHARF side (round 7, designer-ruled — and COMPONENTS §4 as written): the START die FACE
+  // the WHARF side: the START die FACE
   // prints IN the seat (set your die to it at brew), the numbered quality mark rides beside the
   // name (READY), and the load bonus sits at the FOOT. The start/ready text line is cut.
   return '<div class="ctile ctB" style="--c:'+d.c+'">'
@@ -277,15 +233,9 @@ function caskCardBack(d,act){const start=Math.max(1,d.q-(d.ready||0));
     +'<div class="ct-main"><div class="ct-hd2"><span class="ct-q2" title="Ready at quality '+d.q+'">'+LU('quality-'+d.q)+'</span><span class="ct-nm2">'+d.nm+'</span></div>'
       +'<span class="ct-act2"><span class="ac">'+LU(act.ai)+'</span><span class="t">'+act.act+'</span></span></div>'
   +'</div>';}
-// printables2 v4: a SHIP is a full-bleed 2.5″ CARD (was a small tile) — the destination's CITY is the
-// background art (wharf-<dest>.png), with the cask-card treatment: hull + commission cost over the art on
-// the top end, the quality gate + numbered load-order berths floating low over the wharf, and a gradient
-// FOOT in the destination's colour carrying the kontor name (the ship's identity). NO action — a ship is
-// just hull size · destination · quality gate · cost.
-// v3.4a: the SHIP is a vertical CARRIER tile — a 1.33in details head (the identity: hull · commission ·
-// kontor · gate) + cap × FULL-WIDTH 1in BERTHS. Loading seats the cask TILE itself on a berth (wharf
-// side up, its die riding its printed seat) — the berth cube proxy retires. Hulk = one berth taller.
-const SHIP_H=hull=>3;   // v4.9b UI pass [designer-ruled]: EVERY hull prints the SAME 2.5×3in tile (the Hulk footprint) — berth count unchanged (1in per berth from the top; the TOP berth is the TRIGGER: it prints the hull's identity, and covering it with the last cask IS the sail); the space below the berths simply shows the port art
+// the SHIP TILE — the port's wharf art (wharf-<dest>.png) under a kontor-colour wash; the identity head
+// (hull · fee · the Kontor or the wild seat) then one full-width 1in berth per cap; a cask tile seats on a berth.
+const SHIP_H=hull=>3;   // EVERY hull prints the SAME 2.5×3in tile (the Hulk footprint); the TOP berth is the trigger — covering it with the last cask IS the sail; below the berths the port art shows
 function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm]||SHIP_DEST.Wild;
   const fee=HULL[hull].fee;
   let rows='<div class="st-trig">'
@@ -304,23 +254,20 @@ function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm
 // element's CSS size by html2canvas (blurry). No scrim: the ship-at-sea graphic carries no text overlay.
 function shipBack(hull){return '<div class="stile ship-back" style="background:#33445a;height:'+SHIP_H(hull||'cog')+'in">'
   +'<div class="artbg"><img class="artbg-img" src="'+ART_DIR+'ship-back.png" alt=""></div></div>';}
-function tok(d){const art={wheat:'grain',sprout:'hops'}[d.ic];   // the big .7in goods tokens KEEP the art (round 4b: wheat/sprout left the map for small-size legibility)
+function tok(d){const art={wheat:'grain',sprout:'hops'}[d.ic];   // the big .7in goods tokens carry the grain/hops art
   return '<div class="tok" style="--c:'+d.c+'">'+(art?'<img class="ai" src="art/icons/'+art+'.png" alt="">':LU(d.ic))+'</div>';}
 function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle')+'</div>';}
-// (v3.4c: the owner FRAME is retired — a little player-colour HOUSE token, set on the building
-// card, marks ownership; no token = neutral. Store-bought monopoly-style houses, nothing to cut.)
-// UNLOCK COVER (ONE ROW) — a player-colour blank on Floor slots 3–7; each new distinct beer
-// BREWED (from the 2nd) or the Coppersmith removes the next one.
+// the UNLOCK COVER tile — a player-colour blank (not in the v8 kit)
 function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a new distinct brew<br>(or the Coppersmith)<br>opens this slot</span></div>';}
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 
-// ---- PLAYER BOARD (v4.9d — the designer's sketch): the physical 7.65×3.85in board, ONE
+// ---- PLAYER BOARD: the physical 7.65×3.85in board, ONE
 // generator for the print sheet AND the live app. Zones: crest+name · the ★ SCORE seat ·
 // the SUPPLY ledge (dice/grain/hops tally seats) · VESSEL 1-3 wells (2.4×1in — the cask
 // tile sits IN the well at true size) · SPECIALIST seats 1-2 (2×2in) · the printed FLIGHT
-// ladder (beers SHIPPED: 1..5 → 0/0/4/9/16★) · the CONTRACTS pile zone. `live` (app only):
-// {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,contracts,vknote}.
+// ladder (beers DELIVERED: 3/4/5 → 3/6/10★) · the personal supply well. `live` (app only):
+// {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,supply}.
 function playerBoard(d,live){const L=live||{};
   const seatBox=(v)=>v!=null?'<b class="pbrd-num">'+v+'</b>':'<span class="pbrd-box"></span>';   // live: a bare number · print: the empty well stays
   const vsl=(i)=>'<div class="pbrd-slot pbrd-vsl">'
@@ -330,7 +277,7 @@ function playerBoard(d,live){const L=live||{};
     +'<span class="sn">Specialist seat '+i+'</span>'
     +((L.seats&&L.seats[i-1])||'<span class="si">'+LU('wrench')+'</span>')+'</div>';
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:3,4:6,5:10};
-  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>landed</b></div>'
+  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>delivered</b></div>'
     +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
   return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
     +'<div class="pbrd-id">'
@@ -340,7 +287,7 @@ function playerBoard(d,live){const L=live||{};
       +'<span class="pbrd-supply"><span class="pbrd-sup" title="the personal supply \u2014 dice unspent">'+LU('dices')+seatBox(L.dice)+'</span>'
         +'<span class="pbrd-sup pbg" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
         +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
-        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 11 dice: 10 in the supply, 1 the starter post \u00b7 goods max 8 each</span></span>'
+        +'<span class="pbrd-note">start Gruit+Hopped \u00b7 12 dice: 10 in the supply, 1 on the Gruit, 1 the starter post \u00b7 goods max 8 each</span></span>'
     +'</div>'
     +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
     +'<div class="pbrd-row">'+ssl(1)+ssl(2)
@@ -372,7 +319,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
 .ccard .g,.bcard .g,.icard .g,.card .g{color:#ffe08a} .ccard .h,.bcard .h,.icard .h,.card .h{color:#c4e69c}\n\
 .ccard .gc,.bcard .gc,.icard .gc,.card .gc{display:inline-flex;align-items:center;gap:.02in;font-size:.12in;font-weight:bold}\n\
 .ccard .gc svg,.ccard .gc .ic,.bcard .gc svg,.bcard .gc .ic,.icard .gc svg,.icard .gc .ic,.card .gc svg,.card .gc .ic{width:.15in;height:.15in;flex:0 0 auto}\n\
-  /* ====== SPECIALIST CARD (v10) — SQUARE, matching the 2in×2in building card: full-bleed object art + purple foot ====== */\n\
+  /* ====== SPECIALIST CARD — SQUARE, matching the 2in×2in building card: full-bleed object art + purple foot ====== */\n\
   .icard{width:2in;height:2in;background:var(--c,#46663a);color:#fff;position:relative;overflow:hidden;\n\
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n\
   .icard > *{position:relative;z-index:1}\n\
@@ -387,7 +334,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .icard .ic-act .g{color:#ffe08a} .icard .ic-act .h{color:#c4e69c}\n\
   .icard .ic-cost{margin-left:auto;font-weight:bold;font-size:.145in;display:inline-flex;align-items:center;flex:0 0 auto;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n\
   .icard .ic-cost .gc{gap:.02in} .icard .ic-cost .gc svg,.icard .ic-cost .gc .ic{width:.16in;height:.16in}\n\
-  /* ====== printables2: BUILDING CARDS (2″, double-sided) — FRONT full-bleed building art + effect ·\n\
+  /* ====== BUILDING CARDS (2″, double-sided) — FRONT full-bleed building art + effect ·\n\
      BACK the generic Wild + developer ★ (displaced face). Nests in the 2.5″ player-colour owner FRAME\n\
      (the coloured edge showing around it = whose building it is). Same art-card grammar as the casks/ships. ====== */\n\
   .bcard{width:2in;height:2in;background:var(--c,#3a3342);color:#fff;position:relative;overflow:hidden;\n\
@@ -407,7 +354,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .bcard .bc-opt.pts .bc-big svg,.bcard .bc-opt.pts .bc-big .ic{color:#e0b232}   /* the points star in the kit gold (dark-ground tint) */\n\
   .bcard .bc-slash{font-size:.3in;font-weight:300;opacity:.65}\n\
   .bcard .bc-ic{flex:0 0 auto} .bcard .bc-ic svg,.bcard .bc-ic .ic{width:.2in;height:.2in;stroke-width:1.8}\n\
-  /* (v2.3: the WHARFAGE chip is retired — value = a privilege, owner-only; no delivery payments between players) */\n\
+  /* (the WHARFAGE chip is retired — value = a privilege, owner-only; no delivery payments between players) */\n\
   .bcard .bc-wf{display:none;\n\
     background:rgba(0,0,0,.34);border-radius:.04in;padding:.022in .05in}\n\
   .bcard .bc-wf svg,.bcard .bc-wf .ic{width:.13in;height:.13in;stroke-width:2}\n\
@@ -425,14 +372,14 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .bcard .bc-tgt svg,.bcard .bc-tgt .ic{width:.15in;height:.15in;color:#23201c;stroke-width:2}\n\
   .bcard .bc-row .gc{margin-left:auto;font-size:.14in} .bcard .bc-row .gc svg,.bcard .bc-row .gc .ic{width:.15in;height:.15in}\n\
   .bcard .bc-top svg,.bcard .bc-top .ic{filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n\
-  /* BUILDING CARD BACK (v6) — the SAME building art + title as the front (muted), plus the Wild action + the\n\
+  /* BUILDING CARD BACK — the SAME building art + title as the front (muted), plus the Wild action + the\n\
      developer ★. Reuses the front\'s bc-top/bc-foot layout so a flipped card still reads as its building. */\n\
   .bcard.bc-bk .artbg{filter:grayscale(.55) brightness(.78)}\n\
   .bcard .bc-wild{font-size:.1in;line-height:1.15;flex:1}\n\
   .bcard .bc-sub{font-variant:small-caps;font-size:.092in;opacity:.85;letter-spacing:.3px}\n\
   .bcard .bc-dev{margin-left:auto;font-weight:900;font-size:.2in;display:inline-flex;align-items:center;gap:.02in}\n\
   .bcard .bc-dev svg,.bcard .bc-dev .ic{width:.2in;height:.2in;color:#ffd24a}\n\
-  /* ====== printables2: CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */\n\
+  /* ====== CASK CARDS (double-sided, 2×3) — FRONT buy/age (aging track) · BACK brewed (action) ====== */\n\
   .ccard{width:2.5in;height:2.5in;background:var(--c,#777);color:#fff;position:relative;overflow:hidden;\n\
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.5)}\n\
   .ccard .ce{padding:.12in .17in;display:flex;flex-direction:column;gap:.035in;flex:0 0 auto}   /* content margin (the gradient/art are full-bleed on .ce/.artbg, so this insets text only) */\n\
@@ -472,7 +419,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .cc-back .ce.bot{gap:.05in;padding-top:.34in;background:linear-gradient(to top,var(--c) 0%,var(--c) 38%,transparent 100%)}   /* the front\'s beer colour, solid at the foot, fading up into the illustration */\n\
   .cc-back .ce.top{padding-bottom:.3in;background:linear-gradient(to bottom,var(--c) 0%,var(--c) 36%,transparent 100%)}   /* a matching colour gradient at the top, fading down into the illustration */\n\
   .cc-actfloat{flex:1;display:flex;align-items:flex-end;justify-content:center;padding-bottom:0;transform:translateY(.13in)}   /* the action / berths float low over the illustration, dropped toward the colour foot */\n\
-  /* SHIP CARD (printables2 v4) — hull + cost over the art, gate + berths floating low, the kontor name in the colour foot */\n\
+  /* SHIP CARD — hull + cost over the art, gate + berths floating low, the kontor name in the colour foot */\n\
   .ship-card .ce.top{background:none;padding-bottom:.08in}   /* ships keep a plain art top (no colour gradient — that\'s cask-back only) */\n\
   .ship-card .ce.top .cnm{font-size:.22in;display:inline-flex;align-items:center;gap:.05in}\n\
   .ship-card .ce.top .cnm svg,.ship-card .ce.top .cnm .ic{width:.26in;height:.26in}\n\
@@ -490,7 +437,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .cc-back .ce.top .cnm{font-size:.225in}   /* the back\'s top title a touch larger */\n\
   .cc-back .ce.top .cq{font-size:.44in}   /* big quality + beer icon on the left of the back\'s top */\n\
   .cc-back .ce.top .cq svg,.cc-back .ce.top .cq .ic{width:.38in;height:.38in}\n\
-  /* ===== background ART slot (printables2): a layer behind the card/tile content. Placeholder = a faint hatch;\n\
+  /* ===== background ART slot: a layer behind the card/tile content. Placeholder = a faint hatch;\n\
      when ART_ON, it carries the generated image (art/cask-<beer>.png · art/ship-<hull>.png) with a scrim for legibility. ===== */\n\
   .ccard > *{position:relative;z-index:1}\n\
   .ccard > .artbg{z-index:0}\n\
@@ -512,7 +459,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
     display:flex;align-items:center;justify-content:center}\n\
   .disc::after{content:"";position:absolute;inset:.075in;border:.6pt solid rgba(255,255,255,.7);border-radius:50%}\n\
   .disc svg{width:.2in;height:.2in}\n\
-  /* BUILDING OWNERSHIP FRAMES (printables2) — a player-colour 2.5in base the 2in Building tile sits on; the\n\
+  /* BUILDING OWNERSHIP FRAMES — a player-colour 2.5in base the 2in Building tile sits on; the\n\
      colour border showing around the smaller tile = whose building it is. Sized to drop into a 2.5in wharf slot. */\n\
   .frame{width:2.5in;height:2.5in;background:var(--c);border-radius:.12in;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.25)}\n\
   .frame::after{content:"";position:absolute;left:.25in;right:.25in;top:.59in;bottom:.59in;border:2px dashed rgba(255,255,255,.85);border-radius:.07in}   /* the 2x1.32 building tile seat */\n\
@@ -549,7 +496,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .card .c-buy .gate svg,.card .c-buy .gate .ic{width:.12in;height:.12in}\n\
   /* title + BREW-cost strip — the visible edge when the card is tucked up under the board.\n\
      FIXED two-row layout (rung+name / cost) so every card\'s bottom edge reads identically.\n\
-     Kit pass 2026-08-17 (print-proof): the band grows .56→.72in, the brew cost .13→.17in, and\n\
+     the band grows .56→.72in, the brew cost .13→.17in, and\n\
      the bottom padding holds the cost row ~1/8in off the cut edge — a duplex-misalignment\n\
      safe margin (the live table\'s print clipped the old edge-hugging row). */\n\
   .card .c-strip{position:relative;z-index:1;margin-top:auto;flex:0 0 .72in;background:var(--cc,#8a6408);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.05in;\n\
@@ -566,7 +513,7 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .card .c-strip .c-lbl{font-size:.105in;font-style:italic;opacity:.85}\n\
   .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}\n\
   .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}\n\
-  /* the BREWED face (v3.2d): a big check stamped on the bottom-right corner, riding above the strip */\n\
+  /* the BREWED face: a big check stamped on the bottom-right corner, riding above the strip */\n\
   .card .c-brewed{position:absolute;right:.09in;bottom:.09in;width:.24in;height:.24in;border-radius:50%;z-index:2;\n\
     background:#4a6b3a;border:2px solid #f7efdc;box-shadow:0 1px 3px rgba(0,0,0,.4);color:#fff;\n\
     display:flex;align-items:center;justify-content:center}\n\
@@ -577,18 +524,18 @@ var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (inj
   .cover span{font-variant:small-caps;font-weight:bold;font-size:.12in;text-align:center;line-height:1.25;opacity:.92}\n\
   /* ---- the one-read die chip on Privilege tiles ---- */\n\
   .diech svg,.diech .ic{width:.14in;height:.14in;vertical-align:-.025in}';
-var HC_CSS2="\n/* ===== v3.4a COMPONENT REFIT \u2014 cask TILES (2.5x1) \u00b7 buildings (2x1.32) \u00b7 carrier SHIPS ===== */\n/* CASK TILE: the beer art anchors the LEFT and fades into the beer's colour (a masked img over the\n   solid ground); the info rides the colour side. */\n.ctile{width:2.4in;height:1in;position:relative;overflow:hidden;color:#fff;background:var(--c,#777);border-radius:.09in;\n  display:flex;align-items:center;gap:.08in;padding:.09in .11in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n.ctile>*{position:relative;z-index:1}\n.ctile>.ct-art{position:absolute;left:0;top:0;bottom:0;width:1.2in;z-index:0;overflow:hidden;\n  -webkit-mask-image:linear-gradient(90deg,#000 24%,transparent 94%);mask-image:linear-gradient(90deg,#000 24%,transparent 94%)}\n.ctile>.ct-art img{position:relative;width:112%;height:152%;left:-6%;top:-26%;object-fit:cover;display:block}\n/* AGING side: two rows on the colour \u2014 Q\u00b7name\u00b7cost up top, perk + the track + the action below\n   (the track keeps right, past the art fade) */\n.ctA{flex-direction:column;justify-content:space-between;align-items:stretch;padding:.04in .09in .05in}\n.ctA .ct-hd{display:flex;align-items:center;gap:.06in;min-width:0}\n.ctA .ct-act2{justify-content:flex-end}\n.ctA .ct-act2 .ac{width:.26in;height:.26in}\n.ctA .ct-q{display:inline-flex;align-items:center;gap:.03in;font-weight:900;font-size:.24in;line-height:1;flex:0 0 auto}\n.ctA .ct-q svg,.ctA .ct-q .ic{width:.19in;height:.19in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctA .ct-nm{font-variant:small-caps;font-weight:bold;font-size:.17in;line-height:1;white-space:nowrap;overflow:hidden;flex:0 1 auto}\n.ctA .ct-cost{margin-left:auto;display:inline-flex;gap:.05in;font-weight:bold;font-size:.14in;align-items:center;flex:0 0 auto;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.ctA .ct-cost .gc{gap:.02in;font-size:.14in}.ctA .ct-cost .gc svg,.ctA .ct-cost .gc .ic{width:.16in;height:.16in}\n.ctA .ct-bot{display:flex;align-items:center;justify-content:flex-end;gap:.06in;min-width:0}\n.ctA .ct-perk{position:absolute;left:.08in;bottom:.05in;z-index:1;max-width:.92in;font-size:.078in;font-style:italic;line-height:1.1;opacity:.95}\n.ctA .ct-perk b{font-size:.105in;font-style:normal}\n.ctA .ct-perk .ic,.ctA .ct-perk svg{width:.1in;height:.1in}\n.ctA .ct-step{width:.36in;height:.25in;border:1.9px solid rgba(255,255,255,.92);border-radius:.05in;\n  display:flex;align-items:center;justify-content:center;font-size:.15in;font-weight:bold;flex:0 0 auto;background:rgba(0,0,0,.14)}\n.ctA .ct-step.rdy{border-color:#4a6b3a;background:#4a6b3a;box-shadow:0 1px 2px rgba(0,0,0,.4)}\n.ctA .ct-step.rdy svg,.ctA .ct-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.4}\n.ctA .ct-step.start{border-style:dashed}\n.ctA .ct-step.start svg,.ctA .ct-step.start .ic{width:.18in;height:.18in}\n/* WHARF side: the die seat LEFT (the Q prints IN it; the parked die covers it), name over action mid,\n   the art on the RIGHT fading leftward into the colour */\n.ctB{padding-right:.15in}\n.ctB>.ct-art{left:auto;right:0;-webkit-mask-image:linear-gradient(270deg,#000 24%,transparent 94%);mask-image:linear-gradient(270deg,#000 24%,transparent 94%)}\n.ctB .ct-seat{flex:0 0 auto;width:.56in;height:.56in;border:2px dashed rgba(255,255,255,.88);border-radius:.07in;\n  display:flex;align-items:center;justify-content:center;gap:.025in;font-weight:900;font-size:.24in;background:rgba(0,0,0,.18);position:relative}\n.ctB .ct-seat svg,.ctB .ct-seat .ic{width:.19in;height:.19in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctB .ct-main{flex:1;display:flex;flex-direction:column;gap:.05in;min-width:0;max-width:1.54in}\n.ctB .ct-nm2{font-variant:small-caps;font-weight:bold;font-size:.18in;line-height:1;white-space:nowrap;overflow:hidden;text-align:left}\n.ctile .ct-act2{display:flex;align-items:center;gap:.05in;font-size:.13in;line-height:1.05;font-weight:600;min-width:0}\n.ctile .ct-act2 .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}\n.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}\n.seatdie{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}\n/* BUILDING 2x1.32 \u2014 art-forward (the reference look): big serif name over the art, ONE foot row:\n   the effect left, the cost BIG at right, in the verb colour fading up from the bottom. */\n.btile{width:2.5in;height:1.32in;position:relative;overflow:hidden;color:#fff;background:var(--c,#3a3342);\n  display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 2px rgba(0,0,0,.6);border-radius:.09in}\n.btile>*{position:relative;z-index:1}.btile>.artbg{position:absolute;inset:0;z-index:0}\n.btile .artbg.scrim::after{background:linear-gradient(180deg,rgba(0,0,0,.44),rgba(0,0,0,.04) 40%,rgba(0,0,0,.04) 62%,rgba(0,0,0,.35))}\n.btile .bt-top{display:flex;align-items:center;gap:.06in;padding:.08in .1in 0}\n.btile .bt-ic{flex:0 0 auto;display:inline-flex}.btile .bt-ic svg,.btile .bt-ic .ic{width:.21in;height:.21in;stroke-width:1.9;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7))}\n.btile .bt-nm{font-variant:small-caps;font-weight:bold;font-size:.185in;line-height:1;flex:1;white-space:nowrap;overflow:hidden}\n.btile .bt-nm.long{font-size:.148in}\n.btile .bt-nm.xlong{font-size:.128in}\n.btile .bt-foot{position:relative;z-index:1;background:none;\n  padding:.12in .1in .07in;display:flex;align-items:center;gap:.07in}\n.btile .bt-foot::before{content:\"\";position:absolute;inset:0;z-index:-1;opacity:.7;\n  background:linear-gradient(to top,var(--c) 0%,var(--c) 70%,transparent 100%)}\n.btile .bt-eff{font-size:.15in;font-weight:600;line-height:1.1;flex:1;min-width:0}\n.btile .bt-eff::first-letter{text-transform:uppercase}\n.btile .bt-eff .ic,.btile .bt-eff svg{width:.15in;height:.15in;vertical-align:-.02in}\n.btile .bt-eff .g{color:#ffe08a}.btile .bt-eff .h{color:#c4e69c}\n.btile .bt-cost{flex:0 0 auto;display:inline-flex;align-items:center;font-weight:bold;font-size:.14in;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.btile .bt-cost .gc{gap:.02in;font-size:.14in}.btile .bt-cost .gc svg,.btile .bt-cost .gc .ic{width:.16in;height:.16in}\n.btile .g,.stile .g,.ctile .g{color:#ffe08a}.btile .h,.stile .h,.ctile .h{color:#c4e69c}\n.btile .diech svg,.btile .diech .ic{width:.14in;height:.14in;vertical-align:-.025in}\n/* BUILDING \u2014 floor side: WILD, nothing else */\n.btF .artbg{filter:grayscale(.55) brightness(.72)}\n.btF .bt-wild{flex:1;display:flex;align-items:center;justify-content:center;gap:.08in;font-size:.24in;font-weight:900;letter-spacing:1px}\n.btF .bt-circ{display:inline-flex;align-items:center;justify-content:center;width:.34in;height:.34in;border-radius:50%;background:rgba(255,255,255,.92)}\n.btF .bt-circ svg,.btF .bt-circ .ic{width:.2in;height:.2in;color:#23201c;stroke-width:2.1}\n.btF .bt-sub{text-align:center;font-variant:small-caps;font-weight:bold;font-size:.095in;opacity:.9;padding-bottom:.07in}\n.stile{width:2.5in;flex:0 0 auto;position:relative;overflow:hidden;color:#fff;background:var(--c,#33445a);border-radius:.09in;\n  display:flex;flex-direction:column;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n/* the hold: full-height port art under a kontor-colour wash + faint planking \u2014 the tile reads\n   as a ship of ITS port, never as blank board */\n.stile>.artbg{position:absolute;inset:0;z-index:0}\n.stile>.artbg.scrim::after{content:none}\n.stile>.artbg img{filter:saturate(1.12) contrast(1.06)}\n/* kit pass 2026-08-17: the wharf paintings carry flat cream mats top+bottom (the letterbox gotcha) — ride the art 125% tall, shifted up, so BOTH mats crop off and the dock scene reaches the tile foot (the ship back keeps the plain fill; bakeArt mirrors this window for the PNG export) */\n.stile:not(.ship-back)>.artbg img.artbg-img{height:125%;top:-13%;bottom:auto}\n.stile .st-wash{position:absolute;inset:0;z-index:0;\n  background:var(--c);\n  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 .3in,rgba(0,0,0,.3) .95in,rgba(0,0,0,.3) 100%);\n  mask-image:linear-gradient(180deg,#000 0,#000 .3in,rgba(0,0,0,.3) .95in,rgba(0,0,0,.3) 100%)}\n.stile>.st-trig,.stile>.st-berth{position:relative;z-index:1}\n/* the TRIGGER berth (top 1in): identity above, its own marked seat below \u2014 the last cask covers it and sails */\n.stile .st-trig{flex:0 0 1in;display:flex;flex-direction:column}\n.stile .st-toprow{display:flex;justify-content:space-between;align-items:center;gap:.08in;padding:.06in .1in 0;flex:0 0 auto}\n.stile .st-k{display:inline-flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.185in;min-width:0;white-space:nowrap;overflow:hidden}\n.stile .st-k svg,.stile .st-k .ic{width:.2in;height:.2in;flex:0 0 auto;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}\n.stile .st-meta{display:inline-flex;align-items:center;gap:.09in;flex:0 0 auto}\n.stile .st-gate{font-weight:900;font-size:.16in;display:inline-flex;align-items:center;gap:.02in}\n.stile .st-cost{font-weight:bold;font-size:.14in;display:inline-flex;align-items:center;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.stile .st-gate svg,.stile .st-gate .ic{width:.17in;height:.17in}\n.stile .gc{display:inline-flex;align-items:center;gap:.02in;font-weight:bold}\n.stile .gc svg,.stile .gc .ic{width:.16in;height:.16in;flex:0 0 auto}\n/* the SEAT \u2014 one grammar with the die seat: dashed outline = a component parks on this footprint */\n.stile .st-seat{position:relative;flex:1;margin:.055in .07in .06in;border:2px dashed rgba(255,255,255,.72);border-radius:.07in;\n  display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.12)}\n.stile .st-berth{flex:0 0 1in;display:flex;flex-direction:column}\n.stile .st-hold{flex:1 1 auto;position:relative;z-index:0}\n.stile .st-num{position:absolute;left:.05in;top:.05in;min-width:.2in;height:.2in;padding:0 .03in;border-radius:.04in;\n  background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900}\n.stile .st-ghost{opacity:.38}.stile .st-ghost svg,.stile .st-ghost .ic{width:.3in;height:.3in}\n.stile .st-go{display:inline-flex;align-items:center;gap:.06in}\n.stile .st-go svg,.stile .st-go .ic{width:.26in;height:.26in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}\n.stile .st-go .amp{font-family:Georgia,serif;font-weight:bold;font-size:.19in;line-height:1}\n";
+var HC_CSS2="\n/* ===== THE COMPONENT REFIT \u2014 cask TILES (2.5x1) \u00b7 buildings (2x1.32) \u00b7 carrier SHIPS ===== */\n/* CASK TILE: the beer art anchors the LEFT and fades into the beer's colour (a masked img over the\n   solid ground); the info rides the colour side. */\n.ctile{width:2.4in;height:1in;position:relative;overflow:hidden;color:#fff;background:var(--c,#777);border-radius:.09in;\n  display:flex;align-items:center;gap:.08in;padding:.09in .11in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n.ctile>*{position:relative;z-index:1}\n.ctile>.ct-art{position:absolute;left:0;top:0;bottom:0;width:1.2in;z-index:0;overflow:hidden;\n  -webkit-mask-image:linear-gradient(90deg,#000 24%,transparent 94%);mask-image:linear-gradient(90deg,#000 24%,transparent 94%)}\n.ctile>.ct-art img{position:relative;width:112%;height:152%;left:-6%;top:-26%;object-fit:cover;display:block}\n/* AGING side: two rows on the colour \u2014 Q\u00b7name\u00b7cost up top, perk + the track + the action below\n   (the track keeps right, past the art fade) */\n.ctA{flex-direction:column;justify-content:space-between;align-items:stretch;padding:.04in .09in .05in}\n.ctA .ct-hd{display:flex;align-items:center;gap:.06in;min-width:0}\n.ctA .ct-act2{justify-content:flex-end}\n.ctA .ct-act2 .ac{width:.26in;height:.26in}\n.ctA .ct-q{display:inline-flex;align-items:center;gap:.03in;font-weight:900;font-size:.24in;line-height:1;flex:0 0 auto}\n.ctA .ct-q svg,.ctA .ct-q .ic{width:.19in;height:.19in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctA .ct-nm{font-variant:small-caps;font-weight:bold;font-size:.17in;line-height:1;white-space:nowrap;overflow:hidden;flex:0 1 auto}\n.ctA .ct-cost{margin-left:auto;display:inline-flex;gap:.05in;font-weight:bold;font-size:.14in;align-items:center;flex:0 0 auto;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.ctA .ct-cost .gc{gap:.02in;font-size:.14in}.ctA .ct-cost .gc svg,.ctA .ct-cost .gc .ic{width:.16in;height:.16in}\n.ctA .ct-bot{display:flex;align-items:center;justify-content:flex-end;gap:.06in;min-width:0}\n.ctA .ct-perk{position:absolute;left:.08in;bottom:.05in;z-index:1;max-width:.92in;font-size:.078in;font-style:italic;line-height:1.1;opacity:.95}\n.ctA .ct-perk b{font-size:.105in;font-style:normal}\n.ctA .ct-perk .ic,.ctA .ct-perk svg{width:.1in;height:.1in}\n.ctA .ct-step{width:.36in;height:.25in;border:1.9px solid rgba(255,255,255,.92);border-radius:.05in;\n  display:flex;align-items:center;justify-content:center;font-size:.15in;font-weight:bold;flex:0 0 auto;background:rgba(0,0,0,.14)}\n.ctA .ct-step.rdy{border-color:#4a6b3a;background:#4a6b3a;box-shadow:0 1px 2px rgba(0,0,0,.4)}\n.ctA .ct-step.rdy svg,.ctA .ct-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.4}\n.ctA .ct-step.start{border-style:dashed}\n.ctA .ct-step.start svg,.ctA .ct-step.start .ic{width:.18in;height:.18in}\n/* WHARF side: the die seat LEFT (the Q prints IN it; the parked die covers it), name over action mid,\n   the art on the RIGHT fading leftward into the colour */\n.ctB{padding-right:.15in}\n.ctB>.ct-art{left:auto;right:0;-webkit-mask-image:linear-gradient(270deg,#000 24%,transparent 94%);mask-image:linear-gradient(270deg,#000 24%,transparent 94%)}\n.ctB .ct-seat{flex:0 0 auto;width:.56in;height:.56in;border:2px dashed rgba(255,255,255,.88);border-radius:.07in;\n  display:flex;align-items:center;justify-content:center;gap:.025in;font-weight:900;font-size:.24in;background:rgba(0,0,0,.18);position:relative}\n.ctB .ct-seat svg,.ctB .ct-seat .ic{width:.19in;height:.19in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctB .ct-main{flex:1;display:flex;flex-direction:column;gap:.05in;min-width:0;max-width:1.54in}\n.ctB .ct-nm2{font-variant:small-caps;font-weight:bold;font-size:.18in;line-height:1;white-space:nowrap;overflow:hidden;text-align:left}\n.ctile .ct-act2{display:flex;align-items:center;gap:.05in;font-size:.13in;line-height:1.05;font-weight:600;min-width:0}\n.ctile .ct-act2 .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}\n.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}\n.seatdie{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}\n/* BUILDING 2x1.32 \u2014 art-forward (the reference look): big serif name over the art, ONE foot row:\n   the effect left, the cost BIG at right, in the verb colour fading up from the bottom. */\n.btile{width:2.5in;height:1.32in;position:relative;overflow:hidden;color:#fff;background:var(--c,#3a3342);\n  display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 2px rgba(0,0,0,.6);border-radius:.09in}\n.btile>*{position:relative;z-index:1}.btile>.artbg{position:absolute;inset:0;z-index:0}\n.btile .artbg.scrim::after{background:linear-gradient(180deg,rgba(0,0,0,.44),rgba(0,0,0,.04) 40%,rgba(0,0,0,.04) 62%,rgba(0,0,0,.35))}\n.btile .bt-top{display:flex;align-items:center;gap:.06in;padding:.08in .1in 0}\n.btile .bt-ic{flex:0 0 auto;display:inline-flex}.btile .bt-ic svg,.btile .bt-ic .ic{width:.21in;height:.21in;stroke-width:1.9;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7))}\n.btile .bt-nm{font-variant:small-caps;font-weight:bold;font-size:.185in;line-height:1;flex:1;white-space:nowrap;overflow:hidden}\n.btile .bt-nm.long{font-size:.148in}\n.btile .bt-nm.xlong{font-size:.128in}\n.btile .bt-foot{position:relative;z-index:1;background:none;\n  padding:.12in .1in .07in;display:flex;align-items:center;gap:.07in}\n.btile .bt-foot::before{content:\"\";position:absolute;inset:0;z-index:-1;opacity:.7;\n  background:linear-gradient(to top,var(--c) 0%,var(--c) 70%,transparent 100%)}\n.btile .bt-eff{font-size:.15in;font-weight:600;line-height:1.1;flex:1;min-width:0}\n.btile .bt-eff::first-letter{text-transform:uppercase}\n.btile .bt-eff .ic,.btile .bt-eff svg{width:.15in;height:.15in;vertical-align:-.02in}\n.btile .bt-eff .g{color:#ffe08a}.btile .bt-eff .h{color:#c4e69c}\n.btile .bt-cost{flex:0 0 auto;display:inline-flex;align-items:center;font-weight:bold;font-size:.14in;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.btile .bt-cost .gc{gap:.02in;font-size:.14in}.btile .bt-cost .gc svg,.btile .bt-cost .gc .ic{width:.16in;height:.16in}\n.btile .g,.stile .g,.ctile .g{color:#ffe08a}.btile .h,.stile .h,.ctile .h{color:#c4e69c}\n.btile .diech svg,.btile .diech .ic{width:.14in;height:.14in;vertical-align:-.025in}\n/* BUILDING \u2014 floor side: WILD, nothing else */\n.btF .artbg{filter:grayscale(.55) brightness(.72)}\n.btF .bt-wild{flex:1;display:flex;align-items:center;justify-content:center;gap:.08in;font-size:.24in;font-weight:900;letter-spacing:1px}\n.btF .bt-circ{display:inline-flex;align-items:center;justify-content:center;width:.34in;height:.34in;border-radius:50%;background:rgba(255,255,255,.92)}\n.btF .bt-circ svg,.btF .bt-circ .ic{width:.2in;height:.2in;color:#23201c;stroke-width:2.1}\n.btF .bt-sub{text-align:center;font-variant:small-caps;font-weight:bold;font-size:.095in;opacity:.9;padding-bottom:.07in}\n.stile{width:2.5in;flex:0 0 auto;position:relative;overflow:hidden;color:#fff;background:var(--c,#33445a);border-radius:.09in;\n  display:flex;flex-direction:column;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n/* the hold: full-height port art under a kontor-colour wash + faint planking \u2014 the tile reads\n   as a ship of ITS port, never as blank board */\n.stile>.artbg{position:absolute;inset:0;z-index:0}\n.stile>.artbg.scrim::after{content:none}\n.stile>.artbg img{filter:saturate(1.12) contrast(1.06)}\n/* the wharf paintings carry flat cream mats top+bottom (the letterbox gotcha) — ride the art 125% tall, shifted up, so BOTH mats crop off and the dock scene reaches the tile foot (the ship back keeps the plain fill; bakeArt mirrors this window for the PNG export) */\n.stile:not(.ship-back)>.artbg img.artbg-img{height:125%;top:-13%;bottom:auto}\n.stile .st-wash{position:absolute;inset:0;z-index:0;\n  background:var(--c);\n  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 .3in,rgba(0,0,0,.3) .95in,rgba(0,0,0,.3) 100%);\n  mask-image:linear-gradient(180deg,#000 0,#000 .3in,rgba(0,0,0,.3) .95in,rgba(0,0,0,.3) 100%)}\n.stile>.st-trig,.stile>.st-berth{position:relative;z-index:1}\n/* the TRIGGER berth (top 1in): identity above, its own marked seat below \u2014 the last cask covers it and sails */\n.stile .st-trig{flex:0 0 1in;display:flex;flex-direction:column}\n.stile .st-toprow{display:flex;justify-content:space-between;align-items:center;gap:.08in;padding:.06in .1in 0;flex:0 0 auto}\n.stile .st-k{display:inline-flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.185in;min-width:0;white-space:nowrap;overflow:hidden}\n.stile .st-k svg,.stile .st-k .ic{width:.2in;height:.2in;flex:0 0 auto;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}\n.stile .st-meta{display:inline-flex;align-items:center;gap:.09in;flex:0 0 auto}\n.stile .st-gate{font-weight:900;font-size:.16in;display:inline-flex;align-items:center;gap:.02in}\n.stile .st-cost{font-weight:bold;font-size:.14in;display:inline-flex;align-items:center;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.stile .st-gate svg,.stile .st-gate .ic{width:.17in;height:.17in}\n.stile .gc{display:inline-flex;align-items:center;gap:.02in;font-weight:bold}\n.stile .gc svg,.stile .gc .ic{width:.16in;height:.16in;flex:0 0 auto}\n/* the SEAT \u2014 one grammar with the die seat: dashed outline = a component parks on this footprint */\n.stile .st-seat{position:relative;flex:1;margin:.055in .07in .06in;border:2px dashed rgba(255,255,255,.72);border-radius:.07in;\n  display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.12)}\n.stile .st-berth{flex:0 0 1in;display:flex;flex-direction:column}\n.stile .st-hold{flex:1 1 auto;position:relative;z-index:0}\n.stile .st-num{position:absolute;left:.05in;top:.05in;min-width:.2in;height:.2in;padding:0 .03in;border-radius:.04in;\n  background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900}\n.stile .st-ghost{opacity:.38}.stile .st-ghost svg,.stile .st-ghost .ic{width:.3in;height:.3in}\n.stile .st-go{display:inline-flex;align-items:center;gap:.06in}\n.stile .st-go svg,.stile .st-go .ic{width:.26in;height:.26in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}\n.stile .st-go .amp{font-family:Georgia,serif;font-weight:bold;font-size:.19in;line-height:1}\n";
 var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;font-size:.105in;font-weight:600;opacity:.95;background:rgba(0,0,0,.28);border-radius:.1in;padding:.015in .05in;align-self:flex-start}.ctB .ct-start b{font-size:.13in}.ctB .ct-start svg,.ctB .ct-start .ic{width:.12in;height:.12in}'
 /* BUILDING standard-verb chip — the cask tiles' .ac circle, same size, same grammar */
 +'.btile .bt-eff.bt-act{display:inline-flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.16in}'
 +'.btile .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}'
 +'.btile .ac svg,.btile .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}'
-/* LADING order strip (v4.5b): kontor colour, three rows — where · what→★ · the claim reminder */
+/* LADING order strip: kontor colour, three rows — where · what→★ · the claim reminder */
 /* ILLUSTRATED ICONS — the art <img> tracks the .ic sizing everywhere the CSS pairs "svg,.ic";
    these cover the few svg-only spots + give any unsized site a 1em fallback */
 +'img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}'
 +'.tok img.ai{width:.5in;height:.5in}.disc img.ai{width:.22in;height:.22in}.wtok img.ai{width:.32in;height:.32in}'
-/* round 2 (designer, 2026-08-03): the white action circles RETIRE — a cask tile shows the bare
+/* the white action circles RETIRE — a cask tile shows the bare
    action icon at the full height the circle had; a building shows it at TWICE that (unmissable) */
 +'.ctile .ct-act2 .ac{background:transparent;border-radius:0;width:.3in;height:.3in}'
 +'.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.3in;height:.3in}'
@@ -599,12 +546,12 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.ctA .ct-q img.ai{width:.36in;height:.36in}'
 +'.ctB .ct-seat img.ai{width:.44in;height:.44in}'
 +'.card .c-strip .c-rung{background:none;padding:0}.card .c-strip .c-rung img.ai{width:.3in;height:.3in}'
-/* round 4 (designer): building action rows — icon hugs the text (the sticker art carries its own
+/* building action rows — icon hugs the text (the sticker art carries its own
    transparent margin), and the description prints sentence case, never small-caps */
 +'.btile .bt-eff.bt-act{gap:0;font-variant:normal}'
 /* the die MODIFIER marks print big inline in building effects (class dlift — print.html owns .dl) */
 +'.btile .bt-eff img.ai.dlift{width:.34in;height:.34in;vertical-align:-.12in;margin-right:.01in}'
-/* round 5 (designer): ONE consistent big icon size on building feet; the icon pulls ~1mm left,
+/* ONE consistent big icon size on building feet; the icon pulls ~1mm left,
    the text + cost BOTTOM-ALIGN beside it and long text wraps UPWARD (flex-end) */
 +'.btile .bt-foot{align-items:flex-end}'
 +'.btile .bt-eff.bt-act{align-items:flex-end}'
@@ -618,26 +565,26 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.ctile .ct-act2 .ac{width:.44in;height:.44in;margin:-.07in .025in -.07in 0}'
 +'.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.44in;height:.44in}'
 +'.ctA .ct-act2 .ac{width:.44in;height:.44in}'
-/* round 7: the seat holds the START die face; the quality mark heads the title row; the
+/* the seat holds the START die face; the quality mark heads the title row; the
    action sits at the foot of the main column */
 +'.ctB .ct-main{justify-content:space-between;padding:.03in 0}'
 +'.ctB .ct-hd2{display:flex;align-items:center;gap:.045in;min-width:0}'
 +'.ctB .ct-hd2 img.ai{width:.4in;height:.4in;flex:0 0 auto;margin:-.03in 0}'
-/* ship tiles (round 4): the berth imagery reads at arm\'s length — bigger cask-&-sail on the
+/* ship tiles: the berth imagery reads at arm\'s length — bigger cask-&-sail on the
    trigger, and the waiting berths\' cask ghost prints FULL-STRENGTH (the grey-out was invisible) */
 +'.stile .st-go svg,.stile .st-go .ic{width:.42in;height:.42in}'
 +'.stile .st-ghost{opacity:1}'
 +'.stile .st-ghost svg,.stile .st-ghost .ic{width:.48in;height:.48in}'
-/* v4.9b: the mark's start-face chip on the building top row */
+/* the mark's start-face chip on the building top row */
 +'.btile .bt-ms{flex:0 0 auto;display:inline-flex;align-items:center;margin-right:.02in}'
 +'.btile .vt-row{display:flex;align-items:center;width:100%}'
 +'.btile .vt-pub{position:absolute;right:-.06in;bottom:-.06in;z-index:3;display:flex;align-items:flex-start;justify-content:flex-start;width:.82in;height:.82in;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.45);border-radius:.09in;padding:.045in 0 0 .045in;margin:0}'
-+'.btile .vt-led{border-style:dashed;align-items:center;justify-content:center;padding:0;opacity:.85}'   /* v7 — the LEDGER SEAT: the tray die stands in this square */
++'.btile .vt-led{border-style:dashed;align-items:center;justify-content:center;padding:0;opacity:.85}'   /* the LEDGER SEAT (unused) */
 +'.btile .vt-led svg,.btile .vt-led .ic,.btile .vt-led img.ai{width:.3in;height:.3in;opacity:.75}'
 +'.btile .vt-top{align-items:flex-start}'
 +'.btile .bt-tcol{display:flex;flex-direction:column;gap:.02in;min-width:0;flex:1}'
 +'.btile .bt-trig{font-variant:small-caps;font-weight:bold;font-size:.13in;line-height:1;opacity:.95}'
-+'.btile .vt2{align-items:center;gap:.05in;padding-right:.8in}'
++'.btile .vt2{align-items:center;gap:.05in;padding-right:.62in}'
 +'.btile .vt2 .vt-own{display:inline-flex;align-items:center;gap:0;min-width:0}'
 +'.btile .vt2 .ac .starmark{width:.5in!important;height:.5in!important;vertical-align:0}'
 +'.btile .vt2 .ac{margin:0;position:relative;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center}'
@@ -662,7 +609,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .btF2 .bt-etext{padding-bottom:0;font-size:.15in;font-weight:600;line-height:1.1}'
 +'.btile .btFC{flex-direction:column;align-items:flex-start;gap:.02in;padding-top:.14in}'
 +'.btile .bt-nm,.btile .bt-cond,.btile .bt-eff,.btile .bt-etext{text-align:left}'   // the face owns its alignment — a centering ancestor (the app's board slot) must never restyle a printed component
-+'\n/* ===== v4.9d PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
++'\n/* ===== PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
 +'.pbrd{--pc:#7c2128;width:7.65in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
 +'.pbrd .sn{font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.62;line-height:1.05}'
 +'.pbrd-id{display:flex;align-items:center;gap:.09in;flex:0 0 .38in}'
@@ -703,7 +650,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-supwell .si{display:flex;gap:.08in;opacity:.3}.pbrd-supwell .si img.ai,.pbrd-supwell .si .ic{width:.32in;height:.32in}'
 +'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Order wears its Kontor's crest
 var HC_CSS4=''
-/* the ⚜ CONTRACT card — a tri-folded letter under the Guild's wax seal (2026-08-17 look, v7 recut) */
+/* the ⚜ CONTRACT card — a tri-folded letter under the Guild's wax seal (unused) */
 +'.invcard{width:1.85in;height:2.55in;box-sizing:border-box;position:relative;background:#f7efdc;color:#5b4a37;border:1px solid #b8a87f;display:flex;flex-direction:column;align-items:center;overflow:hidden}'
 +'.invcard .iv-frame{position:absolute;inset:.08in;border:1.5px solid rgba(138,100,8,.45)}'
 +'.invcard .iv-crease{position:absolute;left:.03in;right:.03in;height:0;border-top:1.5px solid rgba(91,74,55,.15)}'
@@ -725,7 +672,7 @@ var HC_CSS4=''
 +'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.14in;height:.14in;flex:0 0 auto}'
 +'.invcard.cvb .iv-sealw{margin-top:.62in}'
 +'.invcard.cvb .iv-nm{margin-top:.16in}'
-/* the v7 DEMAND card — the hall-well tile: parchment, the requirement big, the two die seats */
+/* the DEMAND card (unused) — the hall-well tile: parchment, the requirement big, the two die seats */
 +'.dmtile{width:2.5in;height:1.32in;box-sizing:border-box;position:relative;border:2.5px solid var(--c,#8a6408);border-radius:.08in;background:#f3ecdd;color:#2b2018;display:flex;flex-direction:column;justify-content:space-between;padding:.08in .11in .09in}'
 +'.dmtile .dm-hd{display:flex;flex-direction:column;gap:.01in}'
 +'.dmtile .dm-lbl{font-variant:small-caps;font-weight:900;font-size:.095in;color:var(--c);letter-spacing:.5px}'
@@ -744,15 +691,15 @@ var HC_CSS4=''
 +'.dmtile.dmb{align-items:center;justify-content:center;background:#efe2c4}'
 +'.dmtile.dmb .dm-bknm{font-size:.5in;line-height:1;color:#8a6408}'
 +'.dmtile.dmb .dm-bksub{font-variant:small-caps;font-weight:900;font-size:.13in;color:#5b4a37}'
-/* the v7 LADDER marker (.55in chit, kontor colour) + the PRIVATE FLAG (1in chit, house colour) */
+/* the LADDER marker (unused) (.55in chit, kontor colour) + the PRIVATE FLAG (1in chit, house colour) */
 +'.ladmk{width:.55in;height:.55in;box-sizing:border-box;border-radius:.08in;background:var(--c,#8a6408);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}'
 +'.ladmk img.ai,.ladmk .ic,.ladmk svg{width:.26in;height:.26in}'
 +'.ladmk span{font-size:.14in;margin-top:.01in}'
 +'.flagtok{width:1in;height:1in;box-sizing:border-box;position:relative;border-radius:.12in;background:#f3ecdd;border:.05in solid var(--c,#7c2128);color:var(--c,#7c2128);display:flex;align-items:center;justify-content:center}'
 +'.flagtok svg,.flagtok .ic{width:.46in;height:.46in;stroke-width:2}'
 +'.flagtok .ft-fee{position:absolute;right:.04in;bottom:.03in;font-weight:bold;font-size:.11in;background:rgba(0,0,0,.55);color:#fff;border-radius:.1in;padding:.015in .05in}'
-+'.btile .vt-pts{border-style:solid;align-items:center;justify-content:center;gap:.02in;padding:0;font-weight:900;font-size:.24in;line-height:1;color:#ffd24a}'
-+'.btile .vt-pts .starmark{width:.3in!important;height:.3in!important}'
++'.btile .vt-pub.vt-pts{border-style:solid;width:.6in;height:.6in;right:-.04in;bottom:-.04in;align-items:center;justify-content:center;gap:0;padding:0;font-weight:900;font-size:.24in;line-height:1;color:#ffd24a}'   // the star-N glyph alone — a right-sized box, the foot's text gains the width
++'.btile .vt-pts .starmark{width:.46in!important;height:.46in!important;vertical-align:0!important}'
 +'.btile.kbt .bt-nm{font-size:.15in}.btile.kbt .kb-seat{position:absolute;right:.06in;top:.3in;width:.42in;height:.42in;border:2px dashed rgba(255,255,255,.85);border-radius:.06in;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2)}'
 +'.btile.kbt .kb-seat img.ai,.btile.kbt .kb-seat svg{width:.3in;height:.3in;opacity:.7}'
 +'.stile .st-chit{display:inline-flex;align-items:center;gap:.04in;border:2px dashed rgba(255,255,255,.8);border-radius:.05in;padding:.01in .05in}'

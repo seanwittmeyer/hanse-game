@@ -1,7 +1,4 @@
 // Brewhouses of the Hanse — THE SITE NAVIGATION, in one place.
-// (2026-08-09, designer: consistent navigation on every page; 2026-08-23: the surfaces
-// streamlined — index is the landing page, rulebook.html is the one rules page.)
-//
 // Every page carries the SAME destinations in the SAME order with the SAME colours; the
 // page you are on renders as a marked, non-clickable chip. Edit the roster HERE, never
 // per-page. Tiny and dependency-free on purpose.
