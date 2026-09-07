@@ -2,7 +2,7 @@
 
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
-marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80c`),
+marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80d`),
 this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
 (`print.html`) are current.*
 
@@ -107,7 +107,9 @@ traffic it is; the filler roster until the roster pass ⚙):
 - **Cooperage**: the Ship here has **+1 berth** (it sails full only when that berth is also
   full).
 - **Bonded Store**: *On load here:* the boarding die **+1** (cap quality + 1) · *On sail from
-  this slot:* every player with a cask aboard gains 2 goods, any mix.
+  this slot:* each player with a cask aboard **may pay 1 `G`: Post** on the Ship's lane ⚙ — a
+  supply die at face 1 on the lowest segment of that lane they do not hold, in boarding order
+  (a lane held whole, an empty supply or no grain: nothing).
 - **Victualling Yard**: *On load here:* the boarding cask's bonus fires **×2**.
 
 **The tide: every Public Work departs with the Ship that sails from its slot** (boxed, gone for
@@ -184,7 +186,7 @@ load any docked Ship.
   shared hull sails everyone's cargo on your clock.
 - **A full Ship sails at once.** No station verb sails a Ship unfull (the Shipmaster, §13,
   excepted). On sailing: the slot's Public Work departs with it (the tide) · the Bonded Store
-  pays as printed · **every post on every segment of its lane turns +1** (cap 6) · each cask
+  offers its post (§4) · **every post on every segment of its lane turns +1** (cap 6) · each cask
   aboard **lands in boarding order** (§9) · the hull returns to the deck; the display refills.
 
 ---
@@ -217,11 +219,14 @@ every segment.
 - **The building die is the delivery modifier**: every cask of yours landing there scores its
   die + this die (§9). **The building die turns +1 each time any cask lands at that Kontor**
   (cap 6), whoever landed it, and each time you Raise it.
-- **The tile's line fires on each landing of yours there** ⚙: **Warehouse** — gain 2 goods, any mix ·
-  **Kontorhaus** — gain 1 ⚜ more · **Guildhouse** — Raise one die of yours at sea +1.
+- **The tile's line** ⚙: **Warehouse** — your quality count reads **+1 for a Ship bound here**
+  (a standing read, like the Customs House; a wild Ship once its chit names this Kontor) ·
+  **Kontorhaus** — on each landing of yours here, gain 1 ⚜ more · **Guildhouse** — on each
+  landing of yours here, Raise one die of yours at sea +1.
 - **The quality count: the quality you may deliver anywhere = the number of your dice standing
   at sea** (posts + building dice, the starter post included). Count 1 carts a Gruit; 2 ships a
-  Hopped; 5 a Bock. It is read at the Load and at the Cart against the beer's printed quality.
+  Hopped; 5 a Bock. It is read at the Load and at the Cart against the beer's printed quality;
+  the Lodesman, the Customs House and your Warehouse at the Ship's Kontor each read **+1**.
   No tracker: the dice are the count.
 - **Every die at sea scores 1★ per pip at the end** (§15).
 
@@ -302,7 +307,7 @@ nothing else. Every tier 2 contains its tier 1.
 
 | Tier 1 (fires on visit) | Tier 2, the Flip |
 |---|---|
-| **Granary** — gain 2 goods, any mix | **Kaufhaus** — gain 2 goods, any mix, and your Cart carries 2 casks |
+| **Granary** — pay 1 `G`: Brew once (a full brew at its recipe cost plus the grain, with its search) | **Kaufhaus** — pay 1 `G`: Brew once, and your Cart carries 2 casks |
 | **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew once (a full brew, with its search) |
 | **Cold Store** — Age +2 more (Age 5) | **Lagering Cellar** — Age +2 more and one Ready cask of yours +1 (cap quality + 1) |
 | **Counting House** — Raise one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise +1 and Post once more (no second commission) |

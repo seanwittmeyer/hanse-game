@@ -1015,10 +1015,12 @@ not "brew twice this visit". The same read asked the app to glow every choice on
 let the hand tiles be tapped over (a view, never a rule), and ruled the casing law (`STYLE.md`
 §4c rule 4: nothing prints in all caps). Record: `DESIGN.md` §9 (v8.0b). **v8.0c (2026-09-07):**
 the Granary and the Warehouse read *Gain 2 goods, any mix* (the fixed 1 `G` + 1 `H` pair was the
-first cut's Hop Garden/Maltings carried unexamined). **Queued, the designer's direction the same
-day, not yet ruled:** move away from free resource giveaways toward discounted or at-cost actions
-in Great Western Trail's grammar (e.g. *pay 1 grain: Brew* — a brew now, not next turn); the
-inventory and a first cut await the ruling.*
+first cut's Hop Garden/Maltings carried unexamined). **v8.0d (2026-09-07 — the designer's
+direction the same day, ruled "don't change the Gruit casks; change the rest"):** no building
+hands out goods — the Granary/Kaufhaus *pay 1 `G`: Brew once*, the Bonded Store's sail line *each
+shipper may pay 1 `G`: Post on its lane*, the Warehouse *vouches* (count +1 for a Ship bound
+there); Gruit's tiles, the exports' bonus tiles, the yard, the hall and Source 2 stand. Record:
+`DESIGN.md` §9 (v8.0d).*
 
 ### 13.0 The game in one breath
 

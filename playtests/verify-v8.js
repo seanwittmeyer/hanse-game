@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80c). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80d). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80c',function(){eq(KEY,'hanse-v80c');});
+t('KEY is hanse-v80d',function(){eq(KEY,'hanse-v80d');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -103,6 +103,13 @@ t('qualityCount = posts + building dice, GLOBAL; the starter counts; the Lodesma
   putKB('bergen',0,4,'warehouse');eq(qualityCount(p),3,'a building die counts once whatever its face');
   eq(countAt(p,null),3);p.upgrades=['lodesman'];eq(countAt(p,null),4,'the Lodesman +1');
   var id='s1';clearSlot(id);S.buildings[id]={b:'customs'};eq(countAt(p,id),5,'the Customs House +1 here');});
+t('the Warehouse vouches: your count reads +1 for a Ship bound for its Kontor — not elsewhere, not at the cart; a wild Ship once its chit names it',function(){fresh(2);var p=S.players[0];
+  var c0=qualityCount(p);clearSlot('s1');putShip('s1','cog','bergen',[]);eq(countAt(p,'s1'),c0,'no Warehouse yet');
+  putKB('bergen',0,1,'warehouse');eq(qualityCount(p),c0+1,'the building die counts, globally');eq(countAt(p,'s1'),c0+2,'+1 more for a Ship bound for Bergen');eq(countAt(p,null),c0+1,'not at the cart');
+  clearSlot('s2');putShip('s2','cog','london',[]);eq(countAt(p,'s2'),c0+1,'not for London');
+  clearSlot('s3');putShip('s3','cog','wild',[]);eq(countAt(p,'s3'),c0+1,'a wild Ship, unnamed');S.slots.s3.chit='bergen';eq(countAt(p,'s3'),c0+2,'named Bergen: it vouches');
+  var q=S.players[1];eq(countAt(q,'s1'),qualityCount(q),'a rival’s Warehouse vouches for nobody else');
+  fresh(2);p=S.players[0];putKB('bergen',0,1,'kontorhaus');clearSlot('s1');putShip('s1','cog','bergen',[]);eq(countAt(p,'s1'),qualityCount(p),'a Kontorhaus does not vouch');});
 t('canShipQ: Hopped needs 2, Bock 5; the same read at every port and at the cart',function(){fresh(2);var p=S.players[0];
   ok(canShipQ(p,1,null),'Gruit at 1');ok(!canShipQ(p,2,null),'Hopped needs 2');
   putPost('w1',0,1);ok(canShipQ(p,2,null));ok(!canShipQ(p,5,null));
@@ -232,12 +239,12 @@ t('landDeliver: val = face + your building die there; no building → the face a
   putKB('bergen',0,4,'warehouse');landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
   d=p.delivered[p.delivered.length-1];eq(d.val,2+4,'two dice');eq(d.bdie,4);
   eq(pileList('hopped').length,n0,'no tile returned to the stack');});
-t('every building die there ticks +1 on ANY landing (cap 6); the owner\\'s tile line fires: Warehouse 2 goods, any mix · Kontorhaus +1 ⚜ · Guildhouse a RAISE; the Agent +1 more on a rival\\'s landing',function(){fresh(3);var p=S.players[0],q=S.players[1],r=S.players[2];
+t('every building die there ticks +1 on ANY landing (cap 6); the owner\\'s tile line: Kontorhaus +1 ⚜ · Guildhouse a Raise; the Warehouse hands out nothing at the landing (it vouches at the Load); the Agent +1 more on a rival\\'s landing',function(){fresh(3);var p=S.players[0],q=S.players[1],r=S.players[2];
   putKB('bergen',0,1,'warehouse');putKB('bergen',1,6,'kontorhaus');
   var Lg={dest:'bergen',queue:[]};UI={sub:'move'};var g0=p.grain,h0=p.hops,i1=q.invites;
   landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
   eq(bldgDie(p,'bergen'),2,'own landing ticks');eq(bldgDie(q,'bergen'),6,'cap 6');
-  eq((UI.pendingGoods||[]).map(function(x){return x.pid+':'+x.n;}),['0:2'],'the Warehouse line — 2 goods, any mix, chosen as the sail resolves');eq(p.grain,g0);eq(p.hops,h0,'nothing fixed');UI.pendingGoods=[];eq(p.invites,INV_PER_LANDING,'1 ⚜');eq(q.invites,i1,'a rival landing pays no ⚜ to q');
+  eq((UI.pendingGoods||[]).length,0,'the Warehouse hands out no goods');eq(p.grain,g0);eq(p.hops,h0,'nothing gained');eq(p.invites,INV_PER_LANDING,'1 ⚜');eq(q.invites,i1,'a rival landing pays no ⚜ to q');
   landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(q.invites,i1+INV_PER_LANDING+1,'the Kontorhaus +1 more');
   fresh(3);p=S.players[0];q=S.players[1];putKB('bergen',0,1,'guildhouse');q.upgrades=[];p.upgrades=['agent'];Lg={dest:'bergen',queue:[]};UI={sub:'move'};
   landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(bldgDie(p,'bergen'),3,'the Agent: +1 more');
@@ -341,11 +348,15 @@ t('tier 2 is the FLIP of your own tier 1 (2G1H), in place; no per-station cap �
   UI.pb={returnTo:'end',free:false,pid:0,station:null};UI.sub='pbuild';pbuildPick('flip','A');
   eq(privAt('s1').tier,2,'flipped');eq(p.grain,2);eq(p.hops,3,'2G1H');eq(p.supply,SUPPLY_DICE,'no die');
   ok(!pbuildOptions(p,true).some(function(x){return x.k==='flip'&&x.station==='A';}),'no second flip');});
-t('the private stop fires for its OWNER only, at the station its slot flanks: Granary 2 goods, any mix · Cold Store Age +2 · Shipping Office RAISE + POST; the Guildhall BREWS once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
+t('the private stop fires for its OWNER only, at the station its slot flanks: Granary pay 1 G: Brew once · Cold Store Age +2 · Shipping Office Raise + Post; the Guildhall brews once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s1';}),'the owner\\'s stop');
   S.active=1;visit(q,'A');ok(!UI.stops.some(function(x){return x.kind==='pact';}),'a rival sees no stop');S.active=0;
-  var h0=p.hops;UI={sub:'stops',stops:[],usedStops:[]};enterPact('s1','end');eq(UI.sub,'source');eq(UI.src.n,2,'the Granary — 2 goods, any mix');srcTake(0,2);eq(p.hops,h0+2,'two hops taken');
+  var g0=p.grain,h0=p.hops,s0=p.supply;UI={sub:'stops',stops:[],usedStops:[]};enterPact('s1','end');eq(UI.sub,'brew','the Granary opens a brew');eq(costStr(UI.brew.sur),'1G','at the surcharge');
+  ok(!canPay({grain:1,hops:5},plusCost(STYLES.hopped.in,BREW_SUR))&&canPay({grain:2,hops:5},plusCost(STYLES.hopped.in,BREW_SUR)),'Hopped costs 2G 1H through the Granary');
+  brewPick('hopped');if(UI.sub==='brewverb')brewVerbPick(Object.keys(pileVerbs('hopped'))[0]);
+  eq(p.grain,g0-2,'the recipe\\'s grain plus the surcharge');eq(p.hops,h0-1,'the recipe\\'s hop');eq(p.supply,s0-1,'a die on the cask');ok(p.vessels.some(function(c){return c&&c.style==='hopped';}),'brewed');
+  p.grain=1;p.hops=5;ok(!pactAvail(p,privAt('s1')),'a grain short of recipe + surcharge: the line is closed');p.grain=5;p.hops=0;ok(pactAvail(p,privAt('s1')),'Gruit at 2G still opens it');
   clearSlot('s8');S.buildings.s8={p:'D',tier:1,owner:0};p.vessels[0]=mkCask('mumme',1);
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s8';}),'the Cold Store fires at the Market it flanks');
   UI={sub:'stops',stops:[],usedStops:[]};enterPact('s8','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age +2');ageSkip();
@@ -359,10 +370,20 @@ t('the private stop fires for its OWNER only, at the station its slot flanks: Gr
 t('the cart carries 2 with a Kaufhaus OR the Carter — they do not stack',function(){fresh(2);var p=cur();
   eq(cartN(p),1);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),2,'the Kaufhaus');
   p.upgrades=['carter'];eq(cartN(p),2,'both: still 2');S.buildings.s1=null;eq(cartN(p),2,'the Carter alone');});
-t('the Bonded Store pays every shipper 2 goods, any mix, at the sail (a goods prompt for the active seat)',function(){fresh(2);var p=S.players[0],q=S.players[1];
-  clearSlot('s1');S.buildings.s1={b:'bonded'};putShip('s1','cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
+t('the Bonded Store offers each shipper a post at the sail — pay 1 G: a supply die at face 1 on the lowest segment of the lane they do not hold, boarding order; the human-gate holds for an off-turn shipper; an AI decides itself; a lane held whole → nothing',function(){fresh(2);var p=S.players[0],q=S.players[1];p.grain=3;q.grain=3;
+  clearSlot('s1');S.buildings.s1={b:'bonded'};putShip('s1','cog','novgorod',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
+  var s0=p.supply,g0=p.grain,t0=q.supply,seg0=nextPostSeg(p,'novgorod');eq(seg0,'e2','the starter holds e1: the next segment is E2');
   UI={sub:'move'};sailShip('s1',0);
-  eq((UI.pendingGoods||[]).map(function(x){return x.pid+':'+x.n;}),['0:2','1:2'],'two goods to each shipper');ok(!bKeyAt('s1'),'the tide took the Store');});
+  eq((UI.pendingBond||[]).map(function(x){return x.pid+':'+x.dest;}),['0:novgorod','1:novgorod'],'one offer per shipper, boarding order');ok(!bKeyAt('s1'),'the tide took the Store');eq((UI.pendingGoods||[]).length,0,'no goods');
+  afterSail('end');eq(UI.sub,'bondpost','the active human decides');eq(UI.bond.pid,0);eq(UI.bond.seg,'e2');
+  bondPick(true);eq(p.supply,s0-1,'a die spent');eq(p.grain,g0-1,'1 G paid');eq(S.sea.posts.e2[0],1,'the post stands at face 1 (placed after the lane ticked)');
+  eq(UI.sub,'bondpost','the rival shipper is asked next');eq(UI.bond.pid,1);ok(humanGate(),'the human-gate pauses for the off-turn seat');eq(pendingHeadPid(),1);
+  bondPick(false);eq(q.supply,t0,'passed: no die');eq(q.grain,3,'no grain');ok(UI.sub!=='bondpost','the offers are spent');
+  fresh(2);p=S.players[0];q=S.players[1];q.ai={tier:'journeyman'};q.grain=0;
+  clearSlot('s1');S.buildings.s1={b:'bonded'};putShip('s1','cog','bergen',[{owner:1,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
+  UI={sub:'move'};sailShip('s1',0);afterSail('end');ok(!(UI.sub==='bondpost'&&UI.bond&&UI.bond.pid===1),'the AI shipper resolves its own offer (here: it cannot pay)');
+  fresh(2);p=S.players[0];p.grain=3;var s1=p.supply;clearSlot('s1');S.buildings.s1={b:'bonded'};putShip('s1','cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:0,style:'hopped',q:2,die:2,act:'source'}]);
+  UI={sub:'move'};sailShip('s1',0);afterSail('end');ok(UI.sub!=='bondpost','Bergen\\'s lane is the starter\\'s E1: held whole, no offer stands');eq(p.supply,s1,'nothing spent');});
 t('the private tiles score their printed ★ (2 / 4) while they stand; the tide never takes them',function(){fresh(2);var p=S.players[0];
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};
   eq(wharfPts(p),6);eq(scorePlayer(p).wharf,6);

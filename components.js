@@ -92,7 +92,7 @@ const BUILDINGS=[
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, eff:'your count reads +1 here'},
   {k:'ropewalk',  nm:'Ropewalk',          verb:'transform', tgt:'cask', ic:'cable',        n:1, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, eff:'+1 berth'},
-  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, cond:'On load: '+LU('die-plus1'), eff:'On sail: shippers '+LU('goods-2')},
+  {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, cond:'On load: '+LU('die-plus1'), eff:'On sail: pay '+cost(1,0)+': '+LU('post')+' its lane'},
   {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, cond:'On load', eff:'the cask bonus fires ×2'},
 ];
 // ---- PRIVATE BREWERY IMPROVEMENTS (v1.0): the few inherently-private upgrades, BOUGHT for goods at the
@@ -172,8 +172,8 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
 const PRIVATES=[
-  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-2'))},
-                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'Cart 2'}},
+  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical')), txt:'Brew'},
+                               t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical'))+VSEP('·')+VBIG(LU('truck')), txt:'Brew · Cart 2'}},
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
                                t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},
   {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise'},
@@ -197,7 +197,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
 // Kontor's slot and marked with a supply die (the delivery modifier); the line fires on each
 // landing of its owner there. 1.32×1.32in, house-ringed.
 const KBUILDINGS=[
-  {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('goods-2')), txt:'on your landing'},
+  {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('compass'))+' count +1', txt:'a Ship bound here'},
   {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your landing'},
   {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise on your landing'},
 ];

@@ -296,7 +296,8 @@ Coper · Herald) are RETIRED with v7 — historical, never printed again.*
 | tier 1 / tier 2 | n | A private building tile's two faces (replaces ~~L1 / L2~~ as the printed label; the FLIP carries) | — |
 | BUILD | v | RE-DERIVED: one build you are eligible for — a private building or a FLIP on the wharf, or a Kontor building at a Kontor whose chain you hold; three doors: the Brewhouse's ALT (wharf) · the Harbor's ALT (Kontor) · the cask bonus · London's prize | the §4e v7 sense retires |
 | Granary · Kaufhaus · Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping Office | n | The eight private building faces | *Cold Store*, *Lagering Cellar*, *Counting House* return re-faced |
-| Warehouse · Kontorhaus · Guildhouse | n | The three Kontor building tiles | — |
+| Warehouse · Kontorhaus · Guildhouse | n | The three Kontor building tiles: the Warehouse *vouches* (your count reads +1 for a Ship bound there — a standing read, v8.0d); the Kontorhaus and the Guildhouse fire on your landing | — |
+| pay X: Y | grammar | The at-cost line (designer-ruled 2026-09-07, v8.0d): a printed price, a colon, a verb — paying is optional ("may"), the verb then fires once; the Granary / Kaufhaus *pay 1 G: Brew once* · the Bonded Store *On sail: each shipper may pay 1 G: Post on its lane*. Cost before effect (§G §4); on a face the `G` chip, a colon, the verb's icon | never *buy*, never *for*; no building hands out goods |
 | Shipmaster · Agent · Lodesman · Carter · Guildmaster | n | The new specialists (§13 of the rules) | *Agent* avoids the §4d *factor* collision |
 | the tide | n | KEPT: every Public Work departs with the Ship at its slot; a private building never | — |
 | LAND | v | KEPT, narrowed: a sailed cask arrives at its Kontor and scores cask die + your building die there | — |

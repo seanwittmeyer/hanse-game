@@ -43,6 +43,10 @@ as two loops that need each other:
   count; the tile by the seat's lane (the Kontorhaus for the hall lane or an ⚜-poor seat, the
   Guildhouse once dice stand at sea, else the Warehouse). **RAISE** turns the lowest die,
   building dice first.
+- **The priced lines** (v8.0d): the Granary's brew is priced as a brew minus its grain
+  (`aiPactValue`); the Bonded Store's post offer as a post against the same die as a cask,
+  minus the fee, under the last-dice rule (`aiBondPost`); the Warehouse is the seat's Kontor tile
+  when its count trails its recipes (`aiKTile`).
 - **The cart's door** (`aiCartDoor`): the hall when cask die + the hall die (+ the
   Guildmaster) beats the yard's zone; a shippable export yields to the sea (two dice, an ⚜, a
   prize) unless the game is ending. **The yard's prize**: a recipe in the BEST/GOOD zones
@@ -71,7 +75,7 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (57 checks in 15 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (58 checks in 15 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · landing = two dice ·
   Bruges · invitations · the prizes · the private ladder · the end and the score · Gruit,

@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80c).
+// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80d).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙
@@ -37,7 +37,7 @@ function __vReset(){__V={work:0,comm:0,commMust:0,commLapse:0,posts:0,postsFree:
   sails:0,sailsUnfull:0,wildSails:0,land:0,landBdie:0,ticksPost:0,ticksBldg:0,inv:0,
   carts:0,yard:0,yardGruit:0,yardRecipe:0,hall:0,hallStars:0,recipesTile:0,specs:0,
   pbuilds:0,flips:0,pacts:0,verbs:{},works:{},wildPort:{},yardZone:{},kbTile:{},prizeLondon:{},
-  stranded:0,brews:0,brewsGruit:0};}
+  stranded:0,brews:0,brewsGruit:0,bondOffers:0,bondPosts:0,payBrews:0};}
 var __on=function(){return __V&&!aiSimulating;};
 var __doMove=doMove;doMove=function(c){if(__on())__V.work++;return __doMove(c);};
 var __enterCommission=enterCommission;enterCommission=function(rt,must){if(__on()){__V.comm++;if(must)__V.commMust++;}return __enterCommission(rt,must);};
@@ -68,6 +68,9 @@ var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var n0=p.upgrades.len
 var __placePrivOn=placePrivOn;placePrivOn=function(slot){var b0=privAt(slot);var r=__placePrivOn(slot);if(__on()&&!b0&&privAt(slot))__V.pbuilds++;return r;};
 var __pbuildPick=pbuildPick;pbuildPick=function(kind,st){var r=__pbuildPick(kind,st);if(__on()&&kind==='flip')__V.flips++;return r;};
 var __enterPact=enterPact;enterPact=function(slot,rt){if(__on())__V.pacts++;return __enterPact(slot,rt);};
+var __bondStand=bondStand;bondStand=function(p,seg){if(__on())__V.bondPosts++;return __bondStand(p,seg);};
+var __sailShipBond=sailShip;sailShip=function(slot,cid){var was=(UI.pendingBond||[]).length;var r=__sailShipBond(slot,cid);if(__on())__V.bondOffers+=((UI.pendingBond||[]).length-was);return r;};
+var __brewCommitSur=brewCommit;brewCommit=function(style,verb){var B=UI.brew||UI.bverb||{};var sur=!!(B.sur&&!B.free);var r=__brewCommitSur(style,verb);if(__on()&&sur)__V.payBrews++;return r;};
 var __fireCaskAct=fireCaskAct;fireCaskAct=function(act,rt){if(__on())__V.verbs[act]=(__V.verbs[act]||0)+1;return __fireCaskAct(act,rt);};
 var __brewCommit=brewCommit;brewCommit=function(st,v){var p=cur();var n0=p._brews||0;var r=__brewCommit(st,v);if(__on()&&(p._brews||0)>n0){__V.brews++;if(st==='gruit')__V.brewsGruit++;}return r;};
 var __bmGo=bmGo;bmGo=function(k,rt,free,pid){if(__on()&&free&&rt==='benefitcont')__V.prizeLondon[k]=(__V.prizeLondon[k]||0)+1;return __bmGo(k,rt,free,pid);};
@@ -190,7 +193,7 @@ let anyErr=0,anyId=0;
   console.log(`USAGE/game — WORK ${fmt(us.work)} · brews ${fmt(us.brews)} (Gruit ${fmt(us.brewsGruit)}) · commissions ${fmt(us.comm)} (must ${fmt(us.commMust)}) · posts ${fmt(us.posts)} (by bonus/prize ${fmt(us.postsFree)}) · Kontor builds ${fmt(us.kbuilds)} [${Object.entries(sumObj('kbTile')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')}] · RAISEs ${fmt(us.raises)}`);
   console.log(`  sails ${fmt(us.sails)} (unfull ${fmt(us.sailsUnfull)} · wild ${fmt(us.wildSails)}: ${Object.entries(sumObj('wildPort')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · landings ${fmt(us.land)} (building die share ${fmt(us.landBdie)}★) · post ticks ${fmt(us.ticksPost)} · building ticks ${fmt(us.ticksBldg)}`);
   console.log(`  carts ${fmt(us.carts)}: the yard ${fmt(us.yard)} (Gruit ${fmt(us.yardGruit)} · recipes ${fmt(us.yardRecipe)} · zones ${Object.entries(sumObj('yardZone')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · the hall ${fmt(us.hall)} (${fmt(us.hallStars)}★; the hall die ends ${fmt(avg(ok.map(r=>r.hallDie)))}) · ⚜ held at end ${fmt(avg(ok.map(r=>r.invHeld)))}`);
-  console.log(`  private builds ${fmt(us.pbuilds)} · flips ${fmt(us.flips)} · building stops fired ${fmt(us.pacts)} · specialists seated ${fmt(us.specs)} · recipes by bonus ${fmt(us.recipesTile)} · London's prize: ${Object.entries(sumObj('prizeLondon')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
+  console.log(`  private builds ${fmt(us.pbuilds)} · flips ${fmt(us.flips)} · building stops fired ${fmt(us.pacts)} (priced brews ${fmt(us.payBrews)}) · Bonded Store offers ${fmt(us.bondOffers)} → posts ${fmt(us.bondPosts)} · specialists seated ${fmt(us.specs)} · recipes by bonus ${fmt(us.recipesTile)} · London's prize: ${Object.entries(sumObj('prizeLondon')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  cask bonuses fired: ${Object.entries(sumObj('verbs')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'} · Works on a load: ${Object.entries(sumObj('works')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  the count at end avg ${fmt(avg(ok.map(r=>avg(r.counts))))} (max ${Math.max(...ok.map(r=>Math.max(...r.counts)))}) · chains held ${fmt(avg(ok.map(r=>r.chains)))} · Ready casks stranded ${fmt(us.stranded)} · sea pips' share of the score ${pct(avg(ok.map(r=>r.seaShare)),1)} · docked pips ${fmt(avg(ok.map(r=>r.docked)))}`);
   const dd={london:0,bergen:0,novgorod:0};ok.forEach(r=>Object.keys(dd).forEach(k=>dd[k]+=r.byDest[k]||0));
