@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80b). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80c). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80b',function(){eq(KEY,'hanse-v80b');});
+t('KEY is hanse-v80c',function(){eq(KEY,'hanse-v80c');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -232,12 +232,12 @@ t('landDeliver: val = face + your building die there; no building → the face a
   putKB('bergen',0,4,'warehouse');landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
   d=p.delivered[p.delivered.length-1];eq(d.val,2+4,'two dice');eq(d.bdie,4);
   eq(pileList('hopped').length,n0,'no tile returned to the stack');});
-t('every building die there ticks +1 on ANY landing (cap 6); the owner\\'s tile line fires: Warehouse 1G1H · Kontorhaus +1 ⚜ · Guildhouse a RAISE; the Agent +1 more on a rival\\'s landing',function(){fresh(3);var p=S.players[0],q=S.players[1],r=S.players[2];
+t('every building die there ticks +1 on ANY landing (cap 6); the owner\\'s tile line fires: Warehouse 2 goods, any mix · Kontorhaus +1 ⚜ · Guildhouse a RAISE; the Agent +1 more on a rival\\'s landing',function(){fresh(3);var p=S.players[0],q=S.players[1],r=S.players[2];
   putKB('bergen',0,1,'warehouse');putKB('bergen',1,6,'kontorhaus');
   var Lg={dest:'bergen',queue:[]};UI={sub:'move'};var g0=p.grain,h0=p.hops,i1=q.invites;
   landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
   eq(bldgDie(p,'bergen'),2,'own landing ticks');eq(bldgDie(q,'bergen'),6,'cap 6');
-  eq(p.grain,g0+1);eq(p.hops,h0+1,'the Warehouse line');eq(p.invites,INV_PER_LANDING,'1 ⚜');eq(q.invites,i1,'a rival landing pays no ⚜ to q');
+  eq((UI.pendingGoods||[]).map(function(x){return x.pid+':'+x.n;}),['0:2'],'the Warehouse line — 2 goods, any mix, chosen as the sail resolves');eq(p.grain,g0);eq(p.hops,h0,'nothing fixed');UI.pendingGoods=[];eq(p.invites,INV_PER_LANDING,'1 ⚜');eq(q.invites,i1,'a rival landing pays no ⚜ to q');
   landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(q.invites,i1+INV_PER_LANDING+1,'the Kontorhaus +1 more');
   fresh(3);p=S.players[0];q=S.players[1];putKB('bergen',0,1,'guildhouse');q.upgrades=[];p.upgrades=['agent'];Lg={dest:'bergen',queue:[]};UI={sub:'move'};
   landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(bldgDie(p,'bergen'),3,'the Agent: +1 more');
@@ -341,11 +341,11 @@ t('tier 2 is the FLIP of your own tier 1 (2G1H), in place; no per-station cap �
   UI.pb={returnTo:'end',free:false,pid:0,station:null};UI.sub='pbuild';pbuildPick('flip','A');
   eq(privAt('s1').tier,2,'flipped');eq(p.grain,2);eq(p.hops,3,'2G1H');eq(p.supply,SUPPLY_DICE,'no die');
   ok(!pbuildOptions(p,true).some(function(x){return x.k==='flip'&&x.station==='A';}),'no second flip');});
-t('the private stop fires for its OWNER only, at the station its slot flanks: Granary 1G1H · Cold Store Age +2 · Shipping Office RAISE + POST; the Guildhall BREWS once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
+t('the private stop fires for its OWNER only, at the station its slot flanks: Granary 2 goods, any mix · Cold Store Age +2 · Shipping Office RAISE + POST; the Guildhall BREWS once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s1';}),'the owner\\'s stop');
   S.active=1;visit(q,'A');ok(!UI.stops.some(function(x){return x.kind==='pact';}),'a rival sees no stop');S.active=0;
-  var g0=p.grain;UI={sub:'stops',stops:[],usedStops:[]};enterPact('s1','end');eq(p.grain,g0+1,'the Granary');
+  var h0=p.hops;UI={sub:'stops',stops:[],usedStops:[]};enterPact('s1','end');eq(UI.sub,'source');eq(UI.src.n,2,'the Granary — 2 goods, any mix');srcTake(0,2);eq(p.hops,h0+2,'two hops taken');
   clearSlot('s8');S.buildings.s8={p:'D',tier:1,owner:0};p.vessels[0]=mkCask('mumme',1);
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s8';}),'the Cold Store fires at the Market it flanks');
   UI={sub:'stops',stops:[],usedStops:[]};enterPact('s8','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age +2');ageSkip();

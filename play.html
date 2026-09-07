@@ -730,7 +730,7 @@ function kontorSlotsN(n){return (n||2)>=4?3:2;}   // ⚙ building slots per far 
 // ---- THE KONTOR BUILDING TILES — each player's set of three, each usable once; the tile's
 // line fires on each landing of yours there; the die on it is the delivery modifier.
 const KBUILDINGS={
-  warehouse :{name:'Warehouse',  icon:'warehouse', desc:'On your landing here: gain 1G 1H'},
+  warehouse :{name:'Warehouse',  icon:'warehouse', desc:'On your landing here: Gain 2 goods, any mix'},
   kontorhaus:{name:'Kontorhaus', icon:'kontorhaus',desc:'On your landing here: +1 ⚜ more'},
   guildhouse:{name:'Guildhouse', icon:'landmark',  desc:'On your landing here: Raise one die of yours at sea +1'},
 };
@@ -780,7 +780,7 @@ function bDesc(k){return (BUILDINGS[k]||{desc:''}).desc;}
 // up; a tile stands on ANY open slot (no building on it) and fires when its owner works the
 // station that slot flanks; no die stands on it; it prints its points (2 / 4) scored at the end.
 const PRIVATES={
-  granary    :{name:'Granary',            station:'A', tier:1, pts:2, icon:'wheat',        kind:'pgoods11',   desc:'On visit: +1G +1H'},
+  granary    :{name:'Granary',            station:'A', tier:1, pts:2, icon:'wheat',        kind:'pgoods2',    desc:'On visit: Gain 2 goods, any mix'},
   kaufhaus   :{name:'Kaufhaus',           station:'A', tier:2, pts:4, icon:'store',        kind:'pgoods2',    desc:'On visit: +2 goods, any mix · your Cart carries 2 casks'},
   scriptorium:{name:'Scriptorium',        station:'B', tier:1, pts:2, icon:'scroll-text',  kind:'passive',    desc:'Recipes cost you no fee, at every door'},
   guildhall  :{name:'Brewers’ Guildhall', station:'B', tier:2, pts:4, icon:'flask-conical',kind:'pbrew',      desc:'On visit: Brew once (a full brew, with its search) · you hold every dealt recipe'},
@@ -865,7 +865,7 @@ let activeTab=0;
 // boot then WAITS for an INIT over postMessage, local save/load are bypassed, and net.js (the
 // bridge script below — fully inert without the flag) drives seats/authority.
 const NET=(typeof location!=='undefined'&&/[?&]net=1(?:&|$)/.test(location.search||''));
-const KEY='hanse-v80b';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
+const KEY='hanse-v80c';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1848,7 +1848,7 @@ function pbuildSkip(){const B=UI.pb;const rt=B?B.returnTo:'stops';UI.pb=null;res
 // the private building's STOP — the owner only, once a visit
 function pactKind(b){const d=privDef(b);if(!d)return null;return d.kind==='passive'?null:d.kind;}   // the Scriptorium is passive (its recipe part of the Guildhall too)
 function pactAvail(p,b){const k=pactKind(b);
-  if(k==='pgoods11'||k==='pgoods2')return true;
+  if(k==='pgoods2')return true;
   if(k==='page2')return maturingInVessels(p).length>0;
   if(k==='page2lift')return maturingInVessels(p).length>0||liftable(p).length>0;
   if(k==='praise')return canRaise(p);
@@ -1859,7 +1859,6 @@ function enterPact(slot,rt){const p=cur();const b=privAt(slot);
   if(!b||b.owner!==p.id||!pactAvail(p,b)){log('↳ the building’s line is not available right now.');return resume(rt);}
   const k=pactKind(b);const d=privDef(b);
   log('↳ '+LU('hammer')+' <b>'+d.name+'</b> fires — '+d.desc+'.');
-  if(k==='pgoods11'){snapshot();gain(p,1,1);return resume(rt);}
   if(k==='pgoods2')return enterSource(2,rt);
   if(k==='page2')return enterAge(2,'pool',rt);
   if(k==='page2lift')return enterAge(2,'pool',rt,{thenLift:true});
@@ -1925,7 +1924,7 @@ function landDeliver(lp,L,Lg){const dest=Lg.dest;
     const was=sl.face;sl.face=Math.min(6,sl.face+1+agent);
     if(sl.face>was&&!aiSimulating)log('↳ '+o.name+'’s '+LU('kontorhaus')+KBUILDINGS[sl.tile].name+' die at '+DEST[dest].name+' turns to <b>'+sl.face+'</b>'+(agent?' (the Agent +1 more)':'')+'.');
     if(sl.pid===lp.id){
-      if(sl.tile==='warehouse'){gain(lp,1,1);if(!aiSimulating)log('↳ the '+LU('warehouse')+' <b>Warehouse</b> pays its line — 1G 1H.');}
+      if(sl.tile==='warehouse'){(UI.pendingGoods=UI.pendingGoods||[]).push({pid:lp.id,n:2,why:'the Warehouse'});if(!aiSimulating)log('↳ the '+LU('warehouse')+' <b>Warehouse</b> pays its line — 2 goods, any mix.');}
       else if(sl.tile==='kontorhaus'){lp.invites++;if(!aiSimulating)log('↳ the '+LU('kontorhaus')+' <b>Kontorhaus</b> pays its line — +1 ⚜ more.');}
       else if(sl.tile==='guildhouse'){(UI.pendingRaise=UI.pendingRaise||[]).push({pid:lp.id,why:'the Guildhouse'});}}});
   lp.invites+=INV_PER_LANDING;
@@ -2473,7 +2472,6 @@ function aiStationActValue(p,c,a){
     if(canRaise(p))b=Math.max(b,0.8+(aiLateGame(p)?1.0:0));return b;}
   return 0;}
 function aiPactValue(p,b){const k=pactKind(b);
-  if(k==='pgoods11')return aiVerbValue(p,'source')*0.9;
   if(k==='pgoods2')return aiVerbValue(p,'source');
   if(k==='page2')return aiVerbValue(p,'age');
   if(k==='page2lift')return aiVerbValue(p,'age')+(liftable(p).length?1.2:0);

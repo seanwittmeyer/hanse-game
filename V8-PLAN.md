@@ -1013,7 +1013,12 @@ tide is the only thing that opens ground); (3) four Public Works at every player
 6 / 4); (4) the Brewers' Guildhall's line is *On visit: Brew once (a full brew, with its search)*,
 not "brew twice this visit". The same read asked the app to glow every choice on the board and
 let the hand tiles be tapped over (a view, never a rule), and ruled the casing law (`STYLE.md`
-§4c rule 4: nothing prints in all caps). Record: `DESIGN.md` §9 (v8.0b).*
+§4c rule 4: nothing prints in all caps). Record: `DESIGN.md` §9 (v8.0b). **v8.0c (2026-09-07):**
+the Granary and the Warehouse read *Gain 2 goods, any mix* (the fixed 1 `G` + 1 `H` pair was the
+first cut's Hop Garden/Maltings carried unexamined). **Queued, the designer's direction the same
+day, not yet ruled:** move away from free resource giveaways toward discounted or at-cost actions
+in Great Western Trail's grammar (e.g. *pay 1 grain: Brew* — a brew now, not next turn); the
+inventory and a first cut await the ruling.*
 
 ### 13.0 The game in one breath
 

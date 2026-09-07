@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v8.0b “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80b`; designer-ruled 2026-09-06 — the shape in §6, the derivation in `V8-PLAN.md` §12–§13, the log in §9; the designer's own table is next, then the oracle read — never a corpus before a human table). *The v5 line, kept as history:* **v5.7 “Plain Sail”** was the last v5 build (records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`); the v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
+|**Status**     |**v8.0b “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80c`; designer-ruled 2026-09-06 — the shape in §6, the derivation in `V8-PLAN.md` §12–§13, the log in §9; the designer's own table is next, then the oracle read — never a corpus before a human table). *The v5 line, kept as history:* **v5.7 “Plain Sail”** was the last v5 build (records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`); the v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
 
 ---
 
@@ -264,6 +264,31 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v8.0c — Gain 2 (2026-09-07, designer-ruled — `KEY hanse-v80c`)
+
+*"Granary T1 and Warehouse have a gain good plus 1 hop. This seems silly. Why not just make it
+gain two?"* The fixed 1 `G` + 1 `H` pair was a carry-over from the plan's first cut (the Hop Garden
+that grew into a Maltings), not a ruling; its only mechanical effect was to make the tile weaker
+than *Gain 2 goods* by forbidding two hops, and its only printed effect was a two-icon plus-line
+no other face uses. **Both faces now read *Gain 2 goods, any mix* on the `goods-2` glyph** — the
+one goods grammar the cask tiles, the Kaufhaus, the Bonded Store, the yard and the hall already
+speak. The brakes on a goods faucet are structural (the owner's visit at the flanked station,
+move-adjacent cadence, the fee, the vacant slot, the cap of 8 per good), not the mix; an owner
+steering it into hops to fund a Bock is the engine buying off the pinch, which is the Great
+Western Trail ruling working. Watch: the Granary → Kaufhaus step is now *cart 2 + 2★* for
+2 `G` 1 `H`, a smaller step than before; the table reads whether the Flip still earns its fee.
+Engine: the Granary's stop and the Warehouse's landing line are the same 2-goods prompt the
+Bonded Store uses (a landing on a rival's turn splits automatically off-turn); the dead
+`pgoods11` kind retired. Surfaces: `RULES.md` §8/§12 · `rulebook.html` §7 example, §8 table,
+§9 · `COMPONENTS.md` §0 · `components.js` (both faces) · `print.html` (the aid) · the battery.
+
+**QUEUED — the at-cost actions pass (the designer's direction, 2026-09-07, not yet ruled):**
+*"I'd like to shift away from so many free resource giveaways and replace them with discounted
+or at-cost actions"* — Great Western Trail's grammar (discard a card for $2; hire for +$2), e.g.
+*pay 1 grain: Brew* as a line that lets you brew now instead of next turn. The inventory of the
+free faucets and a first cut of priced faces is in the session record; the ruling is the
+designer's.
 
 ### v8.0b — the free ground (2026-09-06, designer-ruled — `KEY hanse-v80b`)
 

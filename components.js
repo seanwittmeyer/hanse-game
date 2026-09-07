@@ -172,7 +172,7 @@ function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
 const VBIG=h=>'<span class="ac">'+h+'</span>';
 const VSEP=s=>'<span class="vsep">'+s+'</span>';
 const PRIVATES=[
-  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h'))},
+  {k:'A', station:'Market',    t1:{nm:'Granary',            ic:'wheat',         pts:2, art:'building-granary.png',   own:VBIG(LU('goods-2'))},
                                t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'building-exchange.png',  own:VBIG(LU('goods-2'))+VSEP('·')+VBIG(LU('truck')), txt:'Cart 2'}},   // PLACEHOLDER art: the merchants' exchange stands in for the Kaufhaus (brief: art/PROMPTS.md)
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
                                t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'venture-brew-l2.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe · Brew'}},   // PLACEHOLDER art: the Great Copper stands in for the Guildhall
@@ -197,7 +197,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
 // Kontor's slot and marked with a supply die (the delivery modifier); the line fires on each
 // landing of its owner there. 1.32×1.32in, house-ringed.
 const KBUILDINGS=[
-  {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('goods-1'))+VSEP('+')+VBIG(LU('sprout','h')), txt:'on your landing'},
+  {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('goods-2')), txt:'on your landing'},
   {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your landing'},
   {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise on your landing'},
 ];

@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80b).
+// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80c).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙

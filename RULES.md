@@ -2,7 +2,7 @@
 
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
-marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80b`),
+marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80c`),
 this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
 (`print.html`) are current.*
 
@@ -217,7 +217,7 @@ every segment.
 - **The building die is the delivery modifier**: every cask of yours landing there scores its
   die + this die (§9). **The building die turns +1 each time any cask lands at that Kontor**
   (cap 6), whoever landed it, and each time you Raise it.
-- **The tile's line fires on each landing of yours there** ⚙: **Warehouse** — gain 1 `G` 1 `H` ·
+- **The tile's line fires on each landing of yours there** ⚙: **Warehouse** — gain 2 goods, any mix ·
   **Kontorhaus** — gain 1 ⚜ more · **Guildhouse** — Raise one die of yours at sea +1.
 - **The quality count: the quality you may deliver anywhere = the number of your dice standing
   at sea** (posts + building dice, the starter post included). Count 1 carts a Gruit; 2 ships a
@@ -302,7 +302,7 @@ nothing else. Every tier 2 contains its tier 1.
 
 | Tier 1 (fires on visit) | Tier 2, the Flip |
 |---|---|
-| **Granary** — +1 `G` +1 `H` | **Kaufhaus** — +2 goods, any mix, and your Cart carries 2 casks |
+| **Granary** — gain 2 goods, any mix | **Kaufhaus** — gain 2 goods, any mix, and your Cart carries 2 casks |
 | **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew once (a full brew, with its search) |
 | **Cold Store** — Age +2 more (Age 5) | **Lagering Cellar** — Age +2 more and one Ready cask of yours +1 (cap quality + 1) |
 | **Counting House** — Raise one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise +1 and Post once more (no second commission) |
