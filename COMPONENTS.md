@@ -36,7 +36,7 @@
 | Player aids | 3–6 | 3–6 | re-printed (the letter tri-fold, three identical panels): the turn · the four verb pairs · the die · the sea and the count · the Kontore · Bruges · the end and the score · the icon legend · the eight bonuses |
 
 **Headline:** one new board, one neutral die, twelve small Kontor building tiles, sixteen
-tokens, three chits, eight fewer dice, four decks and trackers gone.
+tokens, three chits, four fewer dice, four decks and trackers gone.
 
 **THE RULINGS THAT TOUCH A PRINTED FACE (the v4.13 law — every one lands here):**
 
