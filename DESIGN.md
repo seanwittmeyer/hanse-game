@@ -300,6 +300,14 @@ Works table, the Kontor tile row · `STYLE.md` §4f (the *pay X: Y* grammar) · 
 faces) · `print.html` (the aid) · the battery (58) · the sim's counters (priced brews · Bonded
 offers → posts).
 
+**The app's action bar re-derived to the registry (2026-09-07, designer-flagged: *"remove all of the
+extra nonsense"*).** A stop button had grown a station prefix and a reminder suffix (*[icon]
+Market · Load 1 · any docked Ship*). It now prints exactly what the station face prints — the
+verb's icon and its printed words (*Source 2 · Load 1 · Brew · Build · Commission · Build a
+Kontor · Raise · Age 3 · Cart 1*, the private tile by name, a docked Ship as *Load 1 · Cog →
+Bergen 1/2*); the reminders ride the tooltip (`STN_VERB` in `play.html`), and *stops* left the
+player copy (`STYLE.md` §2 bans the noun). A view change: no `KEY` bump.
+
 ### v8.0c — Gain 2 (2026-09-07, designer-ruled — `KEY hanse-v80c`)
 
 *"Granary T1 and Warehouse have a gain good plus 1 hop. This seems silly. Why not just make it

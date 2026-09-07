@@ -1327,16 +1327,21 @@ function stationActAvail(p,c,a){
   if(a==='pbuild')return pbuildOptions(p,false).length>0;
   if(a==='kbuild')return kbuildTargets(p).length>0||canRaise(p);
   return false;}
-function stnActTxt(p,a){
-  if(a==='source')return 'Source '+SRC_PRIMARY;
-  if(a==='brew')return 'Brew (search)';
-  if(a==='age')return 'Age '+CELLAR_POOL;
-  if(a==='comm')return 'Commission ('+commFeeStr()+') · Post · the maiden load';
-  if(a==='loadany')return 'Load 1 · any docked Ship';
-  if(a==='cart')return 'Cart 1 → Bruges';
-  if(a==='pbuild')return 'Build on the wharf';
-  if(a==='kbuild')return 'Build at a Kontor · Raise';
-  return a;}
+// the station verbs as the board PRINTS them (STYLE.md §2/§3): the button carries the icon and the
+// printed words only; the reminder rides the tooltip (the charter: components big, prose small)
+const STN_VERB={
+  source :{ic:'goods-2',     lbl:p=>'Source '+SRC_PRIMARY,       tip:p=>'take '+SRC_PRIMARY+' goods, any mix'},
+  loadany:{ic:'package-plus',lbl:p=>'Load 1',                    tip:p=>'one Ready cask of yours onto any docked Ship (Q2+, under your count, its lane open)'},
+  brew   :{ic:'flask-conical',lbl:p=>'Brew',                     tip:p=>'a full brew at its recipe cost, with its search; Gruit takes the top tile'},
+  pbuild :{ic:'hammer',      lbl:p=>'Build',                     tip:p=>'a tile from your hand onto any vacant slot ('+costStr(T1_FEE)+'), or Flip your standing tier 1 ('+costStr(FLIP_FEE)+')'},
+  comm   :{ic:'ship',        lbl:p=>'Commission',                tip:p=>'a must when it can · '+commFeeStr()+' · then Post on its lane · then the maiden load'},
+  kbuild :{ic:'kontorhaus',  lbl:p=>'Build a Kontor · Raise',    tip:p=>'a Kontor building where your posts run the whole lane — or turn one die of yours at sea +1'},
+  age    :{ic:'age-3',       lbl:p=>'Age '+CELLAR_POOL,          tip:p=>CELLAR_POOL+' aging steps, split freely'},
+  cart   :{ic:'truck',       lbl:p=>'Cart '+cartN(p),            tip:p=>'a Ready cask of yours to Bruges by road, count permitting — the yard or the hall'},
+};
+function stnActLabel(p,a){const v=STN_VERB[a];return v?(LU(v.ic)+' '+v.lbl(p)):a;}
+function stnActTip(p,a){const v=STN_VERB[a];return v?v.tip(p):'';}
+function stnActTxt(p,a){const v=STN_VERB[a];return v?(v.lbl(p)+' — '+v.tip(p)):a;}
 function stnActWhy(a){
   if(a==='brew')return 'Needs an open vessel, an affordable recipe with tiles in its stack, and a die in your supply.';
   if(a==='age')return 'No maturing cask in your vessels.';
@@ -1419,10 +1424,16 @@ function stopAvail(st){const p=cur();
   if(st.kind==='shipmaster')return sailNowShips(p).length>0;
   return false;}
 function stopLabel(st){const p=cur();
-  if(st.kind==='cell')return LU(ICON[CELLNAME[st.cell]])+' '+CELLNAME[st.cell]+' · '+stnActTxt(p,seatVerb(st.cell,st.alt))+(st.must?' <b>· must</b>':'');
-  if(st.kind==='load'){const t=S.slots[st.slot];return t?(LU('sailboat')+' Load '+shipName(t)+' → '+shipDestName(t)+' ('+t.load.length+'/'+effCap(t)+')'):'(sailed)';}
+  if(st.kind==='cell')return stnActLabel(p,seatVerb(st.cell,st.alt))+(st.must?' <b>· must</b>':'');
+  if(st.kind==='load'){const t=S.slots[st.slot];return t?(LU('package-plus')+' Load 1 · '+shipName(t)+' → '+shipDestName(t)+' '+t.load.length+'/'+effCap(t)):'(sailed)';}
   if(st.kind==='pact'){const b=privAt(st.slot);return b?(LU('hammer')+' '+privName(b)):'(gone)';}
-  if(st.kind==='shipmaster')return LU('wrench')+' Shipmaster — sail a docked Ship with your cask, unfull';
+  if(st.kind==='shipmaster')return LU('wrench')+' Shipmaster · Sail';
+  return '';}
+function stopTip(st){const p=cur();
+  if(st.kind==='cell')return stnActTip(p,seatVerb(st.cell,st.alt));
+  if(st.kind==='load')return 'Load one Ready cask of yours onto this Ship (Q2+, under your count, its lane open); a full Ship sails at once.';
+  if(st.kind==='pact'){const b=privAt(st.slot);const d=b&&privDef(b);return d?d.desc:'';}
+  if(st.kind==='shipmaster')return 'A docked Ship carrying a cask of yours sails unfull; a wild one, you name its Kontor.';
   return '';}
 // resume / return helpers — clear the sub-flow fields, then route to the right phase
 function resume(rt){
@@ -2788,7 +2799,7 @@ function render(){
   document.getElementById('turnlbl').textContent=(S.phase==='starter'?'The starter posts':'Round '+S.turn)+(S.ending?' · final':'');
   refreshIcons();
 }
-function btn(label,fn,cls){return '<button class="'+(cls||'')+'" onclick="'+fn+'">'+label+'</button>';}
+function btn(label,fn,cls,tip){return '<button class="'+(cls||'')+'"'+(tip?' data-tip="'+attr(tip)+'"':'')+' onclick="'+fn+'">'+label+'</button>';}
 function btnOff(label,why){return '<button disabled style="opacity:.42;cursor:not-allowed" data-tip="'+attr(why||'Not available right now.')+'">'+label+'</button>';}
 // ---- PLAYER AID ----
 function toggleAid(){const el=document.getElementById('aid');if(el.classList.contains('hidden')){renderAid();el.classList.remove('hidden');if(window.lucide)lucide.createIcons();}else el.classList.add('hidden');}
@@ -2861,8 +2872,8 @@ function renderBar(){
     const cells=placing?['A','B','C','D']:ADJ[p.cell];
     acts=cells.map(c=>btn((placing?'⚑ ':'→ ')+LU(ICON[CELLNAME[c]])+' '+CELLNAME[c],'doMove(\''+c+'\')','primary')).join('');}
   else if(U==='stops'){
-    prompt='Work the <b>'+CELLNAME[p.cell]+'</b> — '+UI.stops.length+' stop'+(UI.stops.length===1?'':'s')+' left, any order'+(mustStopsLeft()?', <b>the commission is a must</b>':', all optional')+'.';
-    acts=UI.stops.map((st,i)=>stopAvail(st)?btn(stopLabel(st),'resolveStop('+i+')',st.must?'primary':'go')
+    prompt='Work the <b>'+CELLNAME[p.cell]+'</b> · any order, all optional'+(mustStopsLeft()?' · <b>the commission is a must</b>':'')+'.';
+    acts=UI.stops.map((st,i)=>stopAvail(st)?btn(stopLabel(st),'resolveStop('+i+')',st.must?'primary':'go',stopTip(st))
       :btnOff(stopLabel(st),st.kind==='cell'?stnActWhy(seatVerb(st.cell,st.alt)):st.kind==='load'?'No Ready cask may board this Ship (Q2+, under your count, its lane open).':'Not available right now.')).join('');
     if(!UI.stops.length)acts='<span class="note">nothing left at this station</span>';}
   else if(U==='source'){const n=UI.src.n;prompt='Take '+n+' good'+(n===1?'':'s')+' (any mix).';
