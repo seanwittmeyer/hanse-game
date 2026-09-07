@@ -2,7 +2,7 @@
 
 *The one rules document. Clean operational rules only — the v8 program, the designer's review
 and the implementation plan live in `V8-PLAN.md`; design rationale in `DESIGN.md`. Numbers
-marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80f`),
+marked ⚙ are tunable placeholders. This is the v8.0 test build: `play.html` (`KEY hanse-v80g`),
 this document, `COMPONENTS.md` §0, `STYLE.md` §4f, `rulebook.html` and the print kit
 (`print.html`) are current.*
 
@@ -38,8 +38,8 @@ Shared board:
   the rest go to the box. Nothing refills a slot.
 - **The sea board** — side A (2p) / side B (3–4p): Hamburg at the centre, the cart road to
   Bruges, the five **segments** (§8), each printing one **post seat per colour**; the three far
-  **Kontor panels** (London · Bergen · Novgorod), each printing its **building slots** (2 on
-  side A · 3 on side B, the third for 4p ⚙), its **minimum**, its **majority pair**, its
+  **Kontor panels** (London · Bergen · Novgorod), each printing its **building slots** (1 on
+  side A · 2 on side B ⚙), its **minimum** (a die floor: London 2 · Bergen 3 · Novgorod 4 ⚙), its **majority pair**, its
   **field** and its **prize**; and the **Bruges panel**, printing **the yard track** (three
   zones), **the hall** (6 places on A · 8 on B ⚙) and **the hall die's seat**.
 - **The hall die** (neutral) on its seat at **2** ⚙.
@@ -93,8 +93,8 @@ slot's load if it has not been used.
 | **C · Harbor** | **Commission — *must*, when it can** — take a Ship from the display at its fee (**Cog free · Hulk 1 `G`** ⚙), dock it on a shipless slot or over an empty docked Ship (which returns to the deck); the display refills at once. **Then Post**: stand a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it onto the new Ship now, free — **the maiden load, a Load in every respect** (§7), taken after the post. | **Build, a Kontor** — at a far Kontor where **your own post stands on every segment of its branch**, place one of your Kontor building tiles in an open slot and stand a supply die on it at face 1 (§8) — **or Raise**: turn one die of yours at sea +1 (cap 6) |
 | **D · Cellar** | **Age 3** — turn your aging dice up three steps, split freely | **Cart 1** — send one Ready cask of yours to Bruges by road, resolved at once at the yard or the hall (§10) |
 
-*"When it can"* = a Ship is on display, a slot is free or an empty hull can be displaced, and
-you can pay one of the hulls shown. Otherwise the commission lapses for that visit.
+*"When it can"* = a Ship is on display, a slot is free or an empty Ship can be displaced, and
+you can pay one of the Ships shown. Otherwise the commission lapses for that visit.
 
 **The slots flank the stations:** Market **s1·s8** · Brewhouse **s2·s3** · Harbor **s6·s7** ·
 Cellar **s4·s5**. **A slot holds one building (bottom: a Public Work or a private building)
@@ -123,10 +123,10 @@ good — nothing refills).
 ## 4. The cask & the die
 
 **The die is the cask.** Brew sets a supply die to the printed start value (quality − aging
-steps); aging turns it up to the quality (**Ready**) and it never turns on its own; a **lift**
-(the Malt Kiln, the Bonded Store, the Lagering Cellar — wharf buildings only) may push it to
+steps); aging turns it up to the quality (**Ready**) and it never turns on its own; a **Raise die**
+at the wharf (the Malt Kiln, the Bonded Store, the Lagering Cellar — wharf buildings only) may push it to
 **quality + 1 at most** ⚙, so **6 is the highest face**; it is read as it boards; it parks at
-landing and **never scores again**.
+delivery and **never scores again**.
 
 | Beer | Q | Brew | Start · steps | Tiles ⚙ |
 |---|---|---|---|---|
@@ -145,7 +145,7 @@ Flip at its fee, or a Kontor building with a supply die) · Post (a supply die a
 next segment of any lane — no commission needed)*. **A bonus fires once, as its cask boards a
 Ship or is carted** (after any sail it completes). Each export's six tiles print six different
 bonuses; Hopped's twelve print the eight, four of them twice; **Gruit's sixteen all print
-*Gain 2 goods***, so a Gruit brew takes the top tile without a search. A landed tile stays
+*Gain 2 goods***, so a Gruit brew takes the top tile without a search. A delivered tile stays
 under its die. An empty stack means that beer cannot brew now.
 
 ---
@@ -170,27 +170,29 @@ spent on a step. No automatic aging except by a specialist.
 
 ## 7. Ships, loading, the berth race, sailing
 
-Ships are shared hulls: **Cog 2 berths (free) · Hulk 3 berths (1 `G`)** ⚙. Each is bound for a
-printed far Kontor, or is **wild**. No Ship goes to Bruges. **Nobody owns a hull**; anyone may
+Ships are shared Ships: **Cog 2 berths (free) · Hulk 3 berths (1 `G`)** ⚙. Each is bound for a
+printed far Kontor, or is **wild**. No Ship goes to Bruges. **Nobody owns a Ship**; anyone may
 load any docked Ship.
 
-- **Commission** (the Harbor, §3): pay the fee, dock the hull, then Post, then the maiden load.
+- **Commission** (the Harbor, §3): pay the fee, dock the Ship, then Post, then the maiden load.
 - **Load** (a flanking stop · the Market's Load 1 · the *Load 1* bonus · the Stevedore): one Ready
   cask from your vessels onto a docked Ship, if all of:
-  1. **the minimum**: the beer's printed quality is **Q2 or more** ⚙ (so Gruit never boards);
+  1. **the minimum**: the cask's **die, as it boards** (after the slot's Raise die, §4), meets the
+     Kontor's printed floor ⚙ — **London 2 · Bergen 3 · Novgorod 4**. A Hopped raised to 3 may go to
+     Bruges by cart, to London or to Bergen. **Gruit never boards** (§10);
   2. **the quality count**: the beer's printed quality **≤ the number of your dice standing at
-     sea** (§8) — the Customs House and the Lodesman read +1;
+     sea** (§8) — the Customs House, the Lodesman and your Warehouse read +1;
   3. **the lane is open**: every segment of the Ship's Kontor's branch holds at least one post,
-     anyone's (§8). **A wild Ship with no Kontor yet**: some lane is open to you.
+     anyone's (§8). **A wild Ship with no Kontor yet**: some open lane whose minimum the die meets.
 - **A wild Ship**: the player whose cask is **the first loaded** names its Kontor at once — any
-  far Kontor whose lane is open — and sets that Kontor's chit on the hull. Every later load reads
+  far Kontor whose lane is open and whose minimum that die meets — and sets that Kontor's chit on the Ship. Every later load reads
   the chit like a printed Kontor.
 - Casks are private until they board: the interaction is the **berth race** — topping off a
-  shared hull sails everyone's cargo on your clock.
+  shared Ship sails everyone's cargo on your clock.
 - **A full Ship sails at once.** No station verb sails a Ship unfull (the Shipmaster, §13,
   excepted). On sailing: the slot's Public Work departs with it (the tide) · the Bonded Store
   offers its post (§4) · **every post on every segment of its lane turns +1** (cap 6) · each cask
-  aboard **lands in boarding order** (§9) · the hull returns to the deck; the display refills.
+  aboard **delivers in boarding order** (§9) · the Ship returns to the deck; the display refills.
 
 ---
 
@@ -219,13 +221,13 @@ every segment.
   post stands on every segment of that Kontor's branch** (Novgorod: E1 and E2). **One builder
   per slot; one building per player per Kontor**; each tile is used once. It enters by the
   Harbor's Build (§3), the *Build* cask bonus or London's prize.
-- **The building die is the delivery modifier**: every cask of yours landing there scores its
-  die + this die (§9). **The building die turns +1 each time any cask lands at that Kontor**
-  (cap 6), whoever landed it, and each time you Raise it.
+- **The building die is the delivery modifier**: every cask of yours delivery there scores its
+  die + this die (§9). **The building die turns +1 each time any cask delivers at that Kontor**
+  (cap 6), whoever delivered it, and each time you Raise die on it.
 - **The tile's line** ⚙: **Warehouse** — your quality count reads **+1 for a Ship bound here**
   (a standing read, like the Customs House; a wild Ship once its chit names this Kontor) ·
-  **Kontorhaus** — on each landing of yours here, gain 1 ⚜ more · **Guildhouse** — on each
-  landing of yours here, Raise one die of yours at sea +1.
+  **Kontorhaus** — on each delivery of yours here, gain 1 ⚜ more · **Guildhouse** — on each
+  delivery of yours here, Raise die — one die of yours at sea +1.
 - **The quality count: the quality you may deliver anywhere = the number of your dice standing
   at sea** (posts + building dice, the starter post included). Count 1 carts a Gruit; 2 ships a
   Hopped; 5 a Bock. It is read at the Load and at the Cart against the beer's printed quality;
@@ -235,9 +237,9 @@ every segment.
 
 ---
 
-## 9. Landing — two dice, an invitation, the prize
+## 9. Delivery — two dice, an invitation, the prize
 
-When your cask **lands** at a far Kontor, in boarding order:
+When your cask **delivers** at a far Kontor, in boarding order:
 
 1. **Score cask die + your building die at that Kontor** (no building: the cask die alone).
    Nothing else — no market, no premium, no demand.
@@ -250,9 +252,9 @@ When your cask **lands** at a far Kontor, in boarding order:
 
 | Kontor | Minimum ⚙ | Branch | Prize ⚙ | Majority pair ⚙ |
 |---|---|---|---|---|
-| **London** | Q2 | W1 · W2 | **one Build of any kind**, the goods fee waived, the die still spent (a post · a Kontor building · a private building or Flip) — or nothing | 5 / 2 |
-| **Bergen** | Q2 | E1 | **a specialist** from the display into an open seat, free — or nothing | 5 / 2 |
-| **Novgorod** | Q2 | E1 · E2 | **Raise one die of yours at sea +1** (cap 6) | 7 / 3 |
+| **London** | die 2 | W1 · W2 | **one Build of any kind**, the goods fee waived, the die still spent (a post · a Kontor building · a private building or Flip) — or nothing | 5 / 2 |
+| **Bergen** | die 3 | E1 | **a specialist** from the display into an open seat, free — or nothing | 5 / 2 |
+| **Novgorod** | die 4 | E1 · E2 | **Raise die** — one die of yours at sea +1 (cap 6) | 7 / 3 |
 | **Bruges** (the cart) | — | the road | the yard track's zone prize (§10); the hall: none | 4 / 2 by hall places |
 
 ---
@@ -273,7 +275,7 @@ cask bonus fires as it is carted.** It resolves at once at one of two doors:
   place's printed prize if any (places 1–3 print **2 · 2 · 1 goods** ⚙); **then the hall die
   turns +1** (cap 6). No recipe. Gruit never. Hall full: the yard.
 
-**Invitations ⚜:** tokens, face-up, **no cap**. **The only faucet: 1 ⚜ per cask of yours landing
+**Invitations ⚜:** tokens, face-up, **no cap**. **The only faucet: 1 ⚜ per cask of yours delivery
 at a far Kontor** ⚙ (the Kontorhaus pays a second). **The only sink: the hall.** The hall's
 places are the Bruges majority (§15).
 
@@ -312,8 +314,8 @@ nothing else. Every tier 2 contains its tier 1.
 |---|---|
 | **Granary** — pay 1 `G`: Brew (a full brew at its recipe cost plus the grain, with its search) | **Kaufhaus** — pay 1 `G`: Brew, and your Cart carries 2 casks |
 | **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew (a full brew, with its search) |
-| **Cold Store** — Age 2 | **Lagering Cellar** — Age 2 and one Ready cask of yours +1 (cap quality + 1) |
-| **Counting House** — Raise one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise +1 and Post once more (no second commission) |
+| **Cold Store** — Age 2 | **Lagering Cellar** — Age 2 and Raise die: one Ready cask of yours +1 (cap quality + 1) |
+| **Counting House** — Raise die: one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise die and Post once more (no second commission) |
 
 ---
 
@@ -327,11 +329,11 @@ never bought; never two of a kind. The roster of ten singles ⚙:
   unfull; a wild one, you name its Kontor.
 - **Cellarman** — your brews' dice start +1 (never past Ready).
 - **Stevedore** — each time you load, load up to 2 casks.
-- **Agent** — a rival's cask lands where you hold a building: that building die +1 more.
+- **Agent** — a rival's cask delivers where you hold a building: that building die +1 more.
 - **Lodesman** — your quality count reads +1.
 - **Carter** — your Cart carries 2 casks; the yard's goods prizes pay you +1.
 - **Guildmaster** — each present of yours at the hall: +2★.
-- **Chronicler** — each cask you land — at a far Kontor, the yard or the hall: +1★.
+- **Chronicler** — each cask you deliver — at a far Kontor, the yard or the hall: +1★.
 - **Alderman** — game end: +2★ per Kontor with 3+ dice of yours parked (Bruges: hall places).
 
 ## 14. End of the game — the dice clock
@@ -342,7 +344,7 @@ aboard a docked Ship scores its pips only; brews in vessels score nothing.
 
 ## 15. Scoring
 
-1. **Landings and presents** — scored as they happened: cask die + building die (a far Kontor)
+1. **Deliveries and presents** — scored as they happened: cask die + building die (a far Kontor)
    · cask die + the hall die (the hall) · the Chronicler's and Guildmaster's ★.
 2. **Pips at sea** — every post and building die of yours, 1★ per pip.
 3. **Docked Ships** — every die of yours aboard, 1★ per pip.
@@ -350,7 +352,7 @@ aboard a docked Ship scores its pips only; brews in vessels score nothing.
 5. **Majorities** — at each far Kontor by dice in the field, at Bruges by dice on hall places:
    the printed pair to the two leading players; no dice there, no share; ties split the summed
    places; third place pays nothing.
-6. **The Flight** — distinct beers landed (tiles under your dice at the Kontore, the yard and
+6. **The Flight** — distinct beers delivered (tiles under your dice at the Kontore, the yard and
    the hall): **3 → 3★ · 4 → 6★ · 5 → 10★** ⚙.
 7. **The Guild** — the Alderman's printed line.
 8. Tiebreak: the quality count, then goods.
@@ -361,5 +363,5 @@ Nothing is remembered.)*
 ## 16. Expansions
 
 **Specialty Beers** and **Jopenbier** ride the count (Gose Q2 · Zerbster Q3 · Duckstein Q2 with
-its innate lift · Jopenbier Q6 needs count 6 and lifts to 6 by aging). Their toggles stay off
+its innate Raise die · Jopenbier Q6 needs count 6 and reaches 6 by aging). Their toggles stay off
 in the test build.

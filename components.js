@@ -47,7 +47,7 @@ const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or i
   {k:'post',    ai:'post',          act:'Post · a supply die',      q:2},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
-// cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Source; Q2+ draw at brew (steerable).
+// cask supply — fixed global counts (COMPONENTS §5; the scarce high-Q exports are intentional). Gruit PINNED to Gain 2 goods; Q2+ draw at brew (steerable).
 // ready = maturation steps (v1.1: Hopped & Broyhan are FAST = ready 1; Keut ready 2; Mumme/Bock ready 3).
 const CASKS=[
   {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:0, pin:CASK_POOL[0]},   // Ready at brew (die 1); every tile prints Gain 2 goods; the cart is its road
@@ -85,7 +85,7 @@ const BTGT={cask:{ic:'beer',lbl:'a cask docked here'},ship:{ic:'sailboat',lbl:'a
 const BUILDINGS=[
   // THE PUBLIC WORKS — the filler roster ⚙ (the roster pass comes after the core): shared,
   // die-less, passive on their slot's traffic; the tide takes every one with its Ship.
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, cond:'On load', effIc:'die-plus1',  eff:'die +1 (cap Q+1)'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, cond:'On load', effIc:'die-plus1',  eff:'Raise die (cap Q+1)'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, eff:'your count reads +1 here'},
   {k:'ropewalk',  nm:'Ropewalk',          verb:'transform', tgt:'cask', ic:'cable',        n:1, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, eff:'+1 berth'},
@@ -102,11 +102,11 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the 
   {ic:'sailboat',    nm:'Shipmaster',  act:LU('ship')+' Harbor: sail 1 '+LU('sailboat')+' with your '+LU('beer')+' unfull', c:'#5b3a8e', n:1},
   {ic:'wrench',      nm:'Cellarman',   act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', c:'#5b3a8e', n:1},
   {ic:'package-plus',nm:'Stevedore',   act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
-  {ic:'landmark',    nm:'Agent',       act:'a rival lands at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
+  {ic:'landmark',    nm:'Agent',       act:'a rival delivers at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
   {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1},
   {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s goods +1', c:'#5b3a8e', n:1},
   {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
-  {ic:'book-open',   nm:'Chronicler',  act:'land a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
+  {ic:'book-open',   nm:'Chronicler',  act:'deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
   {ic:'gavel',       nm:'Alderman',    act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
@@ -173,10 +173,10 @@ const PRIVATES=[
                                t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical'))+VSEP('·')+VBIG(LU('truck')), txt:'Brew · Cart 2'}},
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
                                t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe'}},
-  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise'},
-                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise · Post'}},
+  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise die'},
+                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise die · Post'}},
   {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'private-coldstore.png',     own:VBIG(LU('age-2'))},
-                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'lift, cap Q+1'}},
+                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'Raise die, cap Q+1'}},
 ];
 function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
@@ -192,21 +192,21 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   +'</div>';}
 // ---- THE KONTOR BUILDING TILES — each house's set of three, each usable once; placed in a
 // Kontor's slot and marked with a supply die (the delivery modifier); the line fires on each
-// landing of its owner there. 1.32×1.32in, house-ringed.
+// delivery of its owner there. 1.32×1.32in, house-ringed.
 const KBUILDINGS=[
   {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('compass'))+' count +1', txt:'a Ship bound here'},
-  {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your landing'},
-  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise on your landing'},
+  {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your delivery'},
+  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise die on your delivery'},
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW kbt" style="--c:'+(col||PRIV_FOOT)+ring+';width:1.32in;height:1.32in">'
   +artLayer(({warehouse:'venture-warehouse-l1.png',kontorhaus:'kontor-tile-kontorhaus.png',guildhouse:'kontor-tile-guildhouse.png'})[d.k])
   +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>10?' long':'')+'">'+d.nm+'</span></div>'
   +'<div class="bt-foot btFC"><span class="bt-cond">'+d.txt+'</span><span class="bt-eff">'+d.line+'</span></div>'
-  +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any landing here; its pips score at the end">'+LU('dice-1')+'</div>'
+  +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any delivery here; its pips score at the end">'+LU('dice-1')+'</div>'
   +'</div>';}
-// ---- the ⚜ INVITATION token — earned one per cask landed at a far Kontor, spent at the hall
-function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask landed at a far Kontor; spend it to present at the hall">\u269c</div>';}
+// ---- the ⚜ INVITATION token — earned one per cask delivered at a far Kontor, spent at the hall
+function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask delivered at a far Kontor; spend it to present at the hall">\u269c</div>';}
 // ---- the KONTOR CHIT — one per far Kontor; the first cask loaded onto a wild Ship sets it on the hull
 function kontorChit(k){return '<div class="kchit" style="--c:'+(KONTOR_C[k]||'#6f6253')+'" title="the Kontor chit — names a wild Ship\u2019s Kontor">'+LU('kontor-'+k)+'<span>'+k.charAt(0).toUpperCase()+k.slice(1)+'</span></div>';}
 // a beer/tier chip (the beer glyph) and/or a die chip (the die-as-parked glyph) → the ★. The
@@ -316,7 +316,7 @@ function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?
 // generator for the print sheet AND the live app. Zones: crest+name · the ★ SCORE seat ·
 // the SUPPLY ledge (dice/grain/hops tally seats) · VESSEL 1-3 wells (2.4×1in — the cask
 // tile sits IN the well at true size) · SPECIALIST seats 1-2 (2×2in) · the printed FLIGHT
-// ladder (beers LANDED: 3/4/5 → 3/6/10★) · the personal supply well. `live` (app only):
+// ladder (beers DELIVERED: 3/4/5 → 3/6/10★) · the personal supply well. `live` (app only):
 // {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,supply}.
 function playerBoard(d,live){const L=live||{};
   const seatBox=(v)=>v!=null?'<b class="pbrd-num">'+v+'</b>':'<span class="pbrd-box"></span>';   // live: a bare number · print: the empty well stays
@@ -327,7 +327,7 @@ function playerBoard(d,live){const L=live||{};
     +'<span class="sn">Specialist seat '+i+'</span>'
     +((L.seats&&L.seats[i-1])||'<span class="si">'+LU('wrench')+'</span>')+'</div>';
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:3,4:6,5:10};
-  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>landed</b></div>'
+  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>delivered</b></div>'
     +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
   return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
     +'<div class="pbrd-id">'

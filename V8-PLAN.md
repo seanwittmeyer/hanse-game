@@ -1027,7 +1027,11 @@ the band); the private tiles print their points as the `star-2` / `star-4`
 glyph. Record: `DESIGN.md` §9 (v8.0e). **v8.0f (2026-09-07):** the two wild Cogs dock at setup on
 random slots (the designer's R1), and *one action, one term* — *Source* leaves the registry, the
 Market's primary prints *Gain 2 goods* like the bonus, and *Brew · Age 2 · Load 1* replace *Brew 1 /
-Brew once · Age +2 · Load 1 more*. Record: `DESIGN.md` §9 (v8.0f).*
+Brew once · Age +2 · Load 1 more*. Record: `DESIGN.md` §9 (v8.0f). **v8.0g (2026-09-07 — the designer's batch on §13.7):** rulings 1 · 2 · 3 · 5 · 7 · 9 · 10
+confirmed on their defaults (every Kontor prize free); **4 overruled — per-port minimums on the DIE:
+London 2 · Bergen 3 · Novgorod 4**, read as the cask boards; 6 deferred (the hall as framed until the
+core is ironed out); **8 overruled — building slots 1 on side A, 2 on side B**. The registry's three
+pairs ruled *deliver · Raise die · Ship*. Record: `DESIGN.md` §9 (v8.0g).*
 
 ### 13.0 The game in one breath
 

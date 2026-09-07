@@ -37,7 +37,7 @@ as two loops that need each other:
   slot, and the lane it opens for the table — against the same die as a cask. The last dice of
   the supply are casks unless the post is worth more.
 - **The mandatory commission** is priced whole (`aiCommValue`: the berths, the post it grants,
-  the maiden load), damped once the wharf already holds three hulls; the Harbor's `must` stop
+  the maiden load), damped once the wharf already holds three Ships; the Harbor's `must` stop
   is always resolved first.
 - **The Kontor building** (`aiKBuildValue`): casks to deliver × the modifier, the pips, the
   count; the tile by the seat's lane (the Kontorhaus for the hall lane or an ⚜-poor seat, the
@@ -77,16 +77,16 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 - **`playtests/verify-v8.js`** — the rule battery (59 checks in 15 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
-  mandatory commission · the post · lanes, loading, wild Ships, sailing · landing = two dice ·
+  mandatory commission · the post · lanes, loading, wild Ships, sailing · delivery = two dice ·
   Bruges · invitations · the prizes · the private ladder · the end and the score · Gruit,
   aging, no kettle · the AI never stalls. Seconds, always.
 - **`playtests/sim.js`** — the robustness/pace gate riding the engine's own `aiStep`: 0 crashes
   / 0 deadlocks across 2–4p, the twelve-dice identity at every end, the pace band, the trigger
   split, and the v8 usage counters (posts, Kontor builds, RAISEs, sails and wild ports,
-  landings and the building-die share, ticks, carts by door and zone, the hall die, ⚜,
+  deliveries and the building-die share, ticks, carts by door and zone, the hall die, ⚜,
   private builds and flips, building stops, specialists seated and their share of wins, the
   cask bonuses fired, the Works fired, the count at the end, stranded casks, the sea pips'
-  share of the score, docked pips, landings by Kontor); `PERSONAS=1` prints the lane report
+  share of the score, docked pips, deliveries by Kontor); `PERSONAS=1` prints the lane report
   after the usage.
 - **Standing rule:** the greedy tiers gate **robustness and pace**, never strategy or balance —
   they under-pilot deep lines by construction. Strategy reads = the MC tiers, the committed
@@ -102,7 +102,7 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Open (AI-only; none gates a rules read)
 
-- The sea tempo: the greedy seats still fill hulls slowly (Hulks of three wait); since v8.0f two
+- The sea tempo: the greedy seats still fill Ships slowly (Hulks of three wait); since v8.0f two
   wild Cogs stand docked from setup — re-read the fill rate; the load and commission values want
   a read at a human table before any tuning corpus.
 - The GM's rollouts at 4p; sub-Guildmaster MC budget tiers; a blind-AI option — optional ideas.

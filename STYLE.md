@@ -67,15 +67,15 @@ governed here.
 | Verb | Means | Banned variants |
 |---|---|---|
 | **score** | Add ★ to your score-track disc at once | ~~bank~~ |
-| **deliver** | A cask resolves at its Kontor: score the die, park it, take the prize | ~~ship (v)~~, ~~sell~~ |
+| **deliver** | A cask resolves at its Kontor: score cask die + your building die there, park it, take the ⚜ and the prize (designer-ruled 2026-09-07: *deliver* is the ONE word — ~~land~~ retires from every surface) | ~~ship (v)~~, ~~sell~~, ~~land~~ / ~~landing~~ |
 | **sail** | A full Ship departs; its casks then deliver in boarding order | ~~ship (v)~~, ~~depart~~ |
 | **park** | Set a quality die on the Destinations board (pips up) | ~~place~~ (for dice) |
 | **place presence** | Park 1 tray die (face 1) at a Kontor you have delivered to | ~~bump~~ |
-| **board** | A cask moves from your vessel onto a berth (the minimum reads the die here) | ~~embark~~ |
+| **board** | A cask moves from your vessel onto a berth (the minimum reads the die here — v8.0g restores this read) | ~~embark~~ |
 | **load** | Put 1 Ready cask from your vessels onto a docked Ship | — |
 | **brew** | Pay a recipe; a tray die becomes the cask at its start value | — |
 | **age** | Turn an aging die up (stops at the quality: Ready); the Cellar prints **Age 3** | ~~mature (v)~~ |
-| **lift** | A building turns the boarding die past its quality (cap 6) | ~~boost~~ |
+| ~~lift~~ | RETIRED 2026-09-07 — the wharf's boarding bump is **Raise die** (cap quality + 1), the same verb and glyph as Raise die at sea | — |
 | **commission** | Harbor: pay the Ship's printed fee (Skute 2 G · Cog 1 G · Hulk free — v4.8), place it on a slot without a Ship | ~~buy a ship~~, ~~charter~~ |
 | **build** | Place a building tile from the display on a slot; the builder stands a tray die on it at the tile's printed start face (v4.9b — every use turns it up; pips score at game end) | ~~raise~~, ~~place~~ (for buildings), ~~construct~~ |
 | **seat** | Place a Specialist into an open seat | ~~hire~~ (allowed as the load-bonus label only) |
@@ -196,7 +196,7 @@ player aid; they do not learn or track rule changes on tiles, boards, or tooltip
    printed face; never a lesson.
 4. **Nothing prints in all caps (designer-ruled 2026-09-06).** An action name is Title Case
    wherever it names the action — *Build · Brew · Post · Raise · Cart · Flip · Load · Commission
-   · Gain · Age · Present · Move* — matching *Gain 2 goods / Load 1 / Age 3* on the boards; a
+   · Gain · Age · Present · Move · Raise die* — matching *Gain 2 goods / Load 1 / Age 3* on the boards; a
    state is sentence case (*Ready* keeps its capital as a term; *empty · wild · vacant* do not);
    emphasis is **bold**, never capitals; a heading may set title-case text in small caps
    (CSS), never `text-transform: uppercase`. The same casing on every surface — the rules
@@ -277,11 +277,11 @@ Coper · Herald) are RETIRED with v7 — historical, never printed again.*
 | POST | v | Stand a supply die as a post on the lowest segment of a lane you do not yet hold (the commission's post · the cask bonus · the Shipping Office · London's prize) | — |
 | unlocked / open | adj | A segment is unlocked while any post stands on it; a lane is open while every segment of its branch is unlocked — open to every player | — |
 | the chain | n | Your own posts on every segment of a branch; the prerequisite for a Kontor building there | — |
-| Kontor building | n | One of your three Kontor building tiles (Warehouse · Kontorhaus · Guildhouse) placed in a Kontor's slot and marked with a supply die at face 1; the die is the delivery modifier (+1 per landing there) and scores its pips | *Kontorhaus* re-derives from §4d as a TILE name; *Warehouse* returns re-faced |
-| building slot | n | A far Kontor panel's printed space for one Kontor building; one builder per slot; one per player per Kontor | ~~socket~~ · ~~seat~~ (Kontor sense) retire; *seat* stays for specialists and post seats |
-| RAISE | v | Turn one die of yours at sea +1 (cap 6): the Harbor's second arm, Novgorod's prize, the Counting House, the Shipping Office, the Guildhouse | ~~raise~~ was banned as a build synonym (§2); it is now its own verb, never a build |
+| Kontor building | n | One of your three Kontor building tiles (Warehouse · Kontorhaus · Guildhouse) placed in a Kontor's slot and marked with a supply die at face 1; the die is the delivery modifier (+1 per delivery there) and scores its pips | *Kontorhaus* re-derives from §4d as a TILE name; *Warehouse* returns re-faced |
+| building slot | n | A far Kontor panel's printed space for one Kontor building; 1 on side A (2p) · 2 on side B (3–4p) — ruled 2026-09-07; one builder per slot; one per player per Kontor | ~~socket~~ · ~~seat~~ (Kontor sense) retire; *seat* stays for specialists and post seats |
+| Raise die | v | Turn a die +1: at sea (cap 6) — the Harbor's second arm, Novgorod's prize, the Counting House, the Shipping Office, the Guildhouse; or a boarding cask at the wharf (cap quality + 1) — the Malt Kiln, the Bonded Store, the Lagering Cellar. ONE verb on the one `die-plus1` glyph (designer-ruled 2026-09-07; ~~lift~~ retires) | ~~raise~~ was banned as a build synonym (§2); it is now its own verb, never a build |
 | the quality count | n | The number of your dice standing at sea (posts + building dice, the starter post included): the quality you may deliver anywhere | ~~YOUR MINIMUM~~ retires |
-| minimum | n | RE-DERIVED: a far Kontor's printed quality floor (Q2), read against the beer's printed quality as the cask boards | the §1 die-floor sense retires |
+| minimum | n | RE-RULED 2026-09-07: a far Kontor's printed **die floor** — London 2 · Bergen 3 · Novgorod 4 — read on the die as the cask boards (after the slot's Raise die); the §1 sense returns | ~~Q2 everywhere~~ (v8.0–v8.0f) |
 | wild Ship | n | A Ship with no printed Kontor; the FIRST cask loaded names its Kontor with a chit | — |
 | Kontor chit | n | The token that names a wild Ship's Kontor, set on the hull by the first load | — |
 | the cart / CART | n / v | The Cellar's ALTERNATE: one Ready cask of yours to Bruges by road; its cask bonus fires as it is carted | — |
@@ -290,22 +290,22 @@ Coper · Herald) are RETIRED with v7 — historical, never printed again.*
 | the hall die | n | The neutral die on the Bruges panel, starting at 2, +1 per present, cap 6; in no count, no pips | — |
 | place | n | One of the hall's or the yard's printed die spaces | ~~bench~~ retires |
 | present | v | RE-DERIVED: enter the hall (1 ⚜ + a Q2+ cask); at Bruges only, by cart | — |
-| Invitation (⚜) | n | RE-DERIVED: a token, earned 1 per cask of yours landing at a far Kontor (+1 with a Kontorhaus), spent to present; no cap | — |
+| Invitation (⚜) | n | RE-DERIVED: a token, earned 1 per cask of yours delivered at a far Kontor (+1 with a Kontorhaus), spent to present; no cap | — |
 | private building | n | The family players build on the wharf: a tile of yours on any VACANT slot (never over a Public Work, never a rival's tile — designer-ruled 2026-09-06), tier 1 / tier 2 (the FLIP), owner-only, no die, printed points 2 / 4; it fires **On visit** | supersedes ~~Venture~~ |
 | On visit | trig | The private building tile's trigger: its line fires when its OWNER works the station its slot flanks — the slot picks the station, not the tile's name (designer-ruled 2026-09-06) | joins the §4b tile-trigger set |
 | tier 1 / tier 2 | n | A private building tile's two faces (replaces ~~L1 / L2~~ as the printed label; the FLIP carries); the points print as the `star-2` / `star-4` glyph alone (v8.0e) | — |
-| one action, one term | law | Designer-ruled 2026-09-07: an action has ONE printed name wherever it appears — the station face, the cask bonus, a building's line, the aid, the app. *Gain 2 goods* (never ~~Source 2~~), *Brew* (never ~~Brew 1~~ / ~~Brew once~~), *Age 2* (never ~~Age +2~~ / ~~Age +2 more~~), *Load 1* (never ~~Load 1 more~~), *Kontor building* (never ~~Kontor tile~~). A count rides the name (*Gain 2 goods · Age 3 · Cart 2*); a verb with no count is one of the thing (*Brew · Build · Post · Raise*) | the audit's open pairs: *deliver / land* · *lift / Raise* on one `die-plus1` glyph · *hull / Ship* — the designer's call |
+| one action, one term | law | Designer-ruled 2026-09-07: an action has ONE printed name wherever it appears — the station face, the cask bonus, a building's line, the aid, the app. *Gain 2 goods* (never ~~Source 2~~), *Brew* (never ~~Brew 1~~ / ~~Brew once~~), *Age 2* (never ~~Age +2~~ / ~~Age +2 more~~), *Load 1* (never ~~Load 1 more~~), *Kontor building* (never ~~Kontor tile~~). A count rides the name (*Gain 2 goods · Age 3 · Cart 2*); a verb with no count is one of the thing (*Brew · Build · Post · Raise*) | the audit's pairs, RULED 2026-09-07: **deliver** (never ~~land~~) · **Raise die** (never ~~lift~~) · **Ship** (never ~~hull~~ in player copy) |
 | the two wild Cogs | n | The setup's docked Ships (v8.0f): the deck's two wild Cogs dock on two random slots before the display is dealt; the wild Hulk stays in the deck | — |
 | the warm Gruit | n | The Ready Gruit every player starts with in vessel 1: its own die (the twelfth, never from the supply) at 1 on it, the top Gruit tile under it (v8.0e) | KEPT from the v5 warm start |
 | BUILD | v | RE-DERIVED: one build you are eligible for — a private building or a FLIP on the wharf, or a Kontor building at a Kontor whose chain you hold; three doors: the Brewhouse's ALT (wharf) · the Harbor's ALT (Kontor) · the cask bonus · London's prize | the §4e v7 sense retires |
 | Granary · Kaufhaus · Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping Office | n | The eight private building faces | *Cold Store*, *Lagering Cellar*, *Counting House* return re-faced |
-| Warehouse · Kontorhaus · Guildhouse | n | The three Kontor building tiles: the Warehouse *vouches* (your count reads +1 for a Ship bound there — a standing read, v8.0d); the Kontorhaus and the Guildhouse fire on your landing | — |
+| Warehouse · Kontorhaus · Guildhouse | n | The three Kontor building tiles: the Warehouse *vouches* (your count reads +1 for a Ship bound there — a standing read, v8.0d); the Kontorhaus and the Guildhouse fire on your delivery | — |
 | pay X: Y | grammar | The at-cost line (designer-ruled 2026-09-07, v8.0d): a printed price, a colon, a verb — paying is optional ("may"), the verb then fires once; the Granary / Kaufhaus *pay 1 G: Brew* · the Bonded Store *On sail: each shipper may pay 1 G: Post on its lane*. Cost before effect (§G §4); on a face the `G` chip, a colon, the verb's icon | never *buy*, never *for*; no building hands out goods |
 | Shipmaster · Agent · Lodesman · Carter · Guildmaster | n | The new specialists (§13 of the rules) | *Agent* avoids the §4d *factor* collision |
 | the tide | n | KEPT: every Public Work departs with the Ship at its slot; a private building never | — |
-| LAND | v | KEPT, narrowed: a sailed cask arrives at its Kontor and scores cask die + your building die there | — |
-| the Flight | n | RE-DERIVED: distinct beers LANDED (tiles under your dice at the Kontore, the yard and the hall), 3/6/10 | — |
-| lift | v | KEPT, narrowed: a wharf building turns a die past its quality, cap quality + 1 | the LIFT cask bonus retires |
+| ~~LAND~~ | v | RETIRED 2026-09-07 — the word is **deliver** (§2) on every surface | — |
+| the Flight | n | RE-DERIVED: distinct beers DELIVERED (tiles under your dice at the Kontore, the yard and the hall), 3/6/10 | — |
+| ~~lift~~ | v | RETIRED 2026-09-07 into **Raise die** (cap quality + 1 at the wharf) | the LIFT cask bonus retired earlier |
 
 **Retired at v8 (never printed again):** tray · the second kettle · kettle · Mash Tun · Great
 Copper (as licences) · YOUR MINIMUM · socket · market cell · quality band · market track /
@@ -314,7 +314,7 @@ price marker · the Bourse · shift · the glut · Venture · ledger die · over
 ladder · ladder marker · private flag · SAIL (as a station verb) · presence placement · Place 1
 presence · Coper · Herald · Shipwright · Guild Scholar · Town Crier · Supercargo · Innkeeper ·
 Assay Loft · Rack House · Staple Rights · Weigh House (until the pass) · Skute · the bag · the
-first-landing letter · INVEST · OPEN · leg · factor · establishment · bench.
+first-delivery letter · INVEST · OPEN · leg · factor · establishment · bench.
 
 ## §5. Deferred to the next copy pass (logged, not yet applied)
 

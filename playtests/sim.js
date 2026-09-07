@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80f).
+// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80g).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙
@@ -183,7 +183,7 @@ let anyErr=0,anyId=0;
   console.log(`winner total avg ${fmt(avg(ok.map(r=>r.winTotal)))} · margin avg ${fmt(avg(ok.map(r=>r.winTotal-r.secondTotal)))} · seat wins ${Object.keys(seat).map(s=>'P'+(+s+1)+' '+pct(seat[s],ok.length)).join(' ')}`);
   { const M=ok.map(r=>r.marg).filter(Boolean);
     if(M.length){const m=k=>fmt(avg(M.map(x=>x[k])));
-      console.log(`  margin decomposition (winner − 2nd): landings ${m('d')} · hall ${m('h')} · pips ${m('sea')} · wharf ${m('w')} · majorities ${m('mj')} · flight ${m('fl')} · specialists ${m('sp')}`);
+      console.log(`  margin decomposition (winner − 2nd): deliveries ${m('d')} · hall ${m('h')} · pips ${m('sea')} · wharf ${m('w')} · majorities ${m('mj')} · flight ${m('fl')} · specialists ${m('sp')}`);
       const marg=ok.map(r=>r.winTotal-r.secondTotal).sort((a,b)=>a-b);
       const q=f=>marg[Math.min(marg.length-1,Math.floor(f*marg.length))];
       console.log(`  margin shape: median ${q(0.5)} · p90 ${q(0.9)} · blowouts (>25★) ${pct(marg.filter(x=>x>25).length,marg.length)} · close (≤10★) ${pct(marg.filter(x=>x<=10).length,marg.length)}`);}}
@@ -191,14 +191,14 @@ let anyErr=0,anyId=0;
   Object.keys(us).forEach(k=>us[k]/=ok.length);
   const sumObj=(key)=>{const o={};ok.forEach(r=>Object.keys(r.V[key]||{}).forEach(k=>o[k]=(o[k]||0)+r.V[key][k]));return o;};
   console.log(`USAGE/game — WORK ${fmt(us.work)} · brews ${fmt(us.brews)} (Gruit ${fmt(us.brewsGruit)}) · commissions ${fmt(us.comm)} (must ${fmt(us.commMust)}) · posts ${fmt(us.posts)} (by bonus/prize ${fmt(us.postsFree)}) · Kontor builds ${fmt(us.kbuilds)} [${Object.entries(sumObj('kbTile')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')}] · RAISEs ${fmt(us.raises)}`);
-  console.log(`  sails ${fmt(us.sails)} (unfull ${fmt(us.sailsUnfull)} · wild ${fmt(us.wildSails)}: ${Object.entries(sumObj('wildPort')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · landings ${fmt(us.land)} (building die share ${fmt(us.landBdie)}★) · post ticks ${fmt(us.ticksPost)} · building ticks ${fmt(us.ticksBldg)}`);
+  console.log(`  sails ${fmt(us.sails)} (unfull ${fmt(us.sailsUnfull)} · wild ${fmt(us.wildSails)}: ${Object.entries(sumObj('wildPort')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · deliveries ${fmt(us.land)} (building die share ${fmt(us.landBdie)}★) · post ticks ${fmt(us.ticksPost)} · building ticks ${fmt(us.ticksBldg)}`);
   console.log(`  carts ${fmt(us.carts)}: the yard ${fmt(us.yard)} (Gruit ${fmt(us.yardGruit)} · recipes ${fmt(us.yardRecipe)} · zones ${Object.entries(sumObj('yardZone')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · the hall ${fmt(us.hall)} (${fmt(us.hallStars)}★; the hall die ends ${fmt(avg(ok.map(r=>r.hallDie)))}) · ⚜ held at end ${fmt(avg(ok.map(r=>r.invHeld)))}`);
   console.log(`  private builds ${fmt(us.pbuilds)} · flips ${fmt(us.flips)} · building stops fired ${fmt(us.pacts)} (priced brews ${fmt(us.payBrews)}) · Bonded Store offers ${fmt(us.bondOffers)} → posts ${fmt(us.bondPosts)} · specialists seated ${fmt(us.specs)} · recipes by bonus ${fmt(us.recipesTile)} · London's prize: ${Object.entries(sumObj('prizeLondon')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  cask bonuses fired: ${Object.entries(sumObj('verbs')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'} · Works on a load: ${Object.entries(sumObj('works')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  the count at end avg ${fmt(avg(ok.map(r=>avg(r.counts))))} (max ${Math.max(...ok.map(r=>Math.max(...r.counts)))}) · chains held ${fmt(avg(ok.map(r=>r.chains)))} · Ready casks stranded ${fmt(us.stranded)} · sea pips' share of the score ${pct(avg(ok.map(r=>r.seaShare)),1)} · docked pips ${fmt(avg(ok.map(r=>r.docked)))}`);
   const dd={london:0,bergen:0,novgorod:0};ok.forEach(r=>Object.keys(dd).forEach(k=>dd[k]+=r.byDest[k]||0));
   const dsum=Object.values(dd).reduce((a,b)=>a+b,0)||1;
-  console.log(`  landings by Kontor: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
+  console.log(`  deliveries by Kontor: ${Object.keys(dd).map(k=>k+' '+pct(dd[k],dsum)).join(' · ')}`);
   { const held={},won={};ok.forEach(r=>{Object.keys(r.specHeld).forEach(k=>held[k]=(held[k]||0)+r.specHeld[k]);Object.keys(r.specWin).forEach(k=>won[k]=(won[k]||0)+1);});
     console.log(`  specialists (seated → share of wins): ${Object.keys(held).map(k=>k+' '+held[k]+'→'+pct(won[k]||0,held[k])).join(' · ')||'—'}`);}
   if(PERSONAS){

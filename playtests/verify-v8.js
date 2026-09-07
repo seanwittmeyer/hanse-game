@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80f). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80g). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80f',function(){eq(KEY,'hanse-v80f');});
+t('KEY is hanse-v80g',function(){eq(KEY,'hanse-v80g');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -120,14 +120,15 @@ t('canShipQ: Hopped needs 2, Bock 5; the same read at every port and at the cart
   putPost('w1',0,1);ok(canShipQ(p,2,null));ok(!canShipQ(p,5,null));
   putPost('w2',0,1);putPost('e2',0,1);putKB('london',0,1);eq(qualityCount(p),5);ok(canShipQ(p,5,null),'Bock at 5');
   p.vessels[0]=null;eq(cartCasks(p).length,0);p.vessels[0]=mkCask('bock',5);eq(cartCasks(p).length,1,'the cart reads the count');});
-t('canTake refuses a cask above the count, below Q2, Gruit, or with its lane closed',function(){fresh(2);var p=cur();
-  var id='s1';clearSlot(id);putShip(id,'cog','bergen');
-  p.vessels[0]=mkCask('hopped',2);ok(!canTake(id,0),'count 1 cannot ship Hopped');
-  putPost('w1',0,1);ok(canTake(id,0),'count 2 ships it');
-  p.vessels[1]=mkCask('gruit',1);ok(!canTake(id,1),'Gruit never boards');
-  var lid='s2';clearSlot(lid);putShip(lid,'cog','london');ok(!canTake(lid,0),'London closed: w2 holds no post');
-  putPost('w2',1,1);ok(canTake(lid,0),'a rival post opens the lane for all');
-  eq(KONTOR_MIN,2,'the minimum is Q2 everywhere');});
+t('canTake: the minimum reads the DIE as it boards — London 2 · Bergen 3 · Novgorod 4; a Raise die at the slot counts; the count gates the printed Q; Gruit never boards; the lane must be open',function(){fresh(2);var p=cur();
+  eq(KONTOR_MIN,{london:2,bergen:3,novgorod:4},'the die floors');clearWharf();
+  putShip('s1','cog','bergen');putShip('s2','cog','novgorod');putPost('w1',0,1);putPost('w2',0,1);putPost('e2',0,1);putShip('s3','cog','london');   // count 4: the starter e1 + w1 + w2 + e2; every lane open
+  p.vessels[0]=mkCask('hopped',2);ok(!canTake('s1',0),'a Hopped at 2 misses Bergen\\'s 3');ok(canTake('s3',0),'London takes a 2');
+  p.vessels[0].die=3;ok(canTake('s1',0),'raised to 3 it boards for Bergen');ok(!canTake('s2',0),'Novgorod wants 4');
+  p.vessels[0].die=2;S.buildings.s1={b:'maltkiln'};ok(canTake('s1',0),'the Malt Kiln\\'s Raise die (2 → 3) meets Bergen as it boards');S.buildings.s1=null;
+  p.vessels[0]=mkCask('gruit',1);ok(!canTake('s3',0),'Gruit never boards');
+  p.vessels[0]=mkCask('bock',5);ok(!canTake('s2',0),'a Bock at 5 needs count 5');putKB('london',0,1);ok(canTake('s2',0),'count 5: Novgorod takes the 5');
+  S.sea.posts.e2={};ok(!canTake('s2',0),'Novgorod\\'s lane closed without e2');});
 
 // ---------- 3 · the chain and the Kontor buildings ----------
 t('hasChain: your OWN post on every segment; Novgorod needs E1 and E2; a rival post never counts',function(){fresh(2);var p=S.players[0];
@@ -138,9 +139,9 @@ t('hasChain: your OWN post on every segment; Novgorod needs E1 and E2; a rival p
 t('canKBuild needs the chain, an open slot, no building of yours there, a tile and a die; two players may each hold a chain',function(){fresh(2);var p=S.players[0],q=S.players[1];
   ok(canKBuild(p,'bergen'));ok(canKBuild(q,'bergen'),'both hold e1');
   ok(!canKBuild(p,'london'),'no chain');
-  putKB('bergen',0,1);ok(!canKBuild(p,'bergen'),'one per player per Kontor');ok(canKBuild(q,'bergen'),'the second slot');
-  putKB('bergen',1,1);eq(kOpenSlot('bergen'),-1,'2 slots at 2p');
-  fresh(4);eq(S.sea.kontor.bergen.slots.length,3,'3 slots at 4p');eq(kontorSlotsN(3),2,'2 at 3p');});
+  putKB('bergen',0,1);ok(!canKBuild(p,'bergen'),'one per player per Kontor');ok(!canKBuild(q,'bergen'),'the one slot at 2p is taken');eq(kOpenSlot('bergen'),-1,'1 slot at 2p');
+  fresh(3);p=S.players[0];q=S.players[1];putKB('bergen',0,1);ok(canKBuild(q,'bergen'),'the second slot at 3p');
+  fresh(4);eq(S.sea.kontor.bergen.slots.length,2,'2 slots at 4p');eq(kontorSlotsN(3),2,'2 at 3p');eq(kontorSlotsN(2),1,'1 at 2p');});
 t('kbuildPick: the tile leaves the set, a die stands at 1, the count rises; the tile is used once',function(){fresh(2);var p=cur();
   UI.kb={ks:['bergen'],returnTo:'end',pid:0,k:null};UI.sub='kbuild';kbuildPick('bergen','kontorhaus');
   var b=bldgAt(p,'bergen');ok(b&&b.tile==='kontorhaus'&&b.face===1,'the building stands');
@@ -189,7 +190,7 @@ t('postPick spends a die at face 1, no goods; the bonus and London\\'s prize off
   p.grain=3;p.hops=2;UI.post={segs:['w1'],returnTo:'end',ctx:{pid:0},pid:0};UI.sub='post';postPick('w1');
   eq(S.sea.posts.w1[0],1);eq(p.grain,3);eq(p.hops,2,'no fee');
   UI={sub:'move'};enterPost(FAR,'end',true,{pid:0});eq(UI.post.segs.slice().sort(),['e2','w2'],'every lane\\'s next segment');postSkip();
-  p.vessels[0]=mkCask('hopped',2);putPost('w2',0,1);
+  p.vessels[0]=mkCask('hopped',3);putPost('w2',0,1);   // a Hopped raised to 3: Bergen's die floor
   S.shipDisplay=[{ship:'cog',dest:'bergen'}];UI.comm={returnTo:'end',idx:0,must:false};UI.stage='place';commPlace('s1');
   eq(UI.sub,'load','the maiden load opened (the Bergen lane held whole → no post)');ok(UI.load.ships[0]==='s1','scoped to the new hull');});
 
@@ -200,12 +201,13 @@ t('a lane opens once every segment holds anyone\\'s post — public',function(){
   ok(!laneOpenFor(p,'bruges'),'Bruges is never a lane');});
 t('a wild berth needs an open lane; the FIRST cask loaded names the port and sets the chit; later loads read it',function(){fresh(2);var p=cur();
   var id='s1';clearSlot(id);putShip(id,'hulk','wild');putPost('w1',0,1);
-  p.vessels[0]=mkCask('hopped',2);
-  ok(canTake(id,0),'Bergen is open (both starters on e1)');
+  p.vessels[0]=mkCask('hopped',2);ok(!canTake(id,0),'a die of 2 meets no open port (Bergen wants 3; London is closed)');
+  p.vessels[0]=mkCask('hopped',3);
+  ok(canTake(id,0),'Bergen is open (both starters on e1) and the die meets its 3');
   loadInto(p,id,0);eq(UI.sub,'wilddest','the first load names the port');eq(UI.wild.opts,['bergen'],'only the open lane');
   wildPick('bergen');eq(S.slots[id].chit,'bergen');eq(S.slots[id].load.length,1,'then the load resolved');
   eq(shipDest(S.slots[id]),'bergen','the chit reads like a printed Kontor');
-  p.vessels[1]=mkCask('hopped',2);loadInto(p,id,1);eq(S.slots[id].load.length,2,'a later load reads the chit, no prompt');});
+  p.vessels[1]=mkCask('hopped',3);loadInto(p,id,1);eq(S.slots[id].load.length,2,'a later load reads the chit, no prompt');});
 t('a printed hull sails at once when full; the tide; every post on the lane ticks +1 (cap 6), the sailer\\'s included; the hull returns',function(){fresh(2);
   var id='s1';clearSlot(id);S.buildings[id]={b:'maltkiln'};
   putShip(id,'cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
@@ -231,7 +233,7 @@ t('the lifts cap at quality + 1: the Malt Kiln, the Bonded Store, the Lagering C
   p.vessels[1].die=6;ok(!liftable(p).some(function(o){return o.i===1;}),'never past 6');});
 t('the Ropewalk offers a second load onto a DIFFERENT Ship; the Cooperage adds a berth; the Stevedore loads 2',function(){fresh(2);clearWharf();var p=cur();
   var a='s1',b='s2';clearSlot(a);clearSlot(b);S.buildings[a]={b:'ropewalk'};putShip(a,'hulk','bergen');putShip(b,'hulk','bergen');
-  putPost('w1',0,1);p.vessels[0]=mkCask('hopped',2);p.vessels[1]=mkCask('hopped',2);
+  putPost('w1',0,1);p.vessels[0]=mkCask('hopped',3);p.vessels[1]=mkCask('hopped',3);   // Bergen's floor is 3
   loadInto(p,a,0);eq(UI.sub,'load','the cross-quay load opened');eq(UI.load.ships,[b],'a different Ship');
   clearSlot('s3');S.buildings.s3={b:'cooperage'};var t2=putShip('s3','cog','bergen');eq(effCap(t2),3,'2+1');
   p.upgrades=['crane'];UI={sub:'move'};enterLoad([b],'end',1);eq(UI.load.loadsLeft,2,'the Stevedore');});

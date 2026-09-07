@@ -3,7 +3,7 @@
 > **The box manifest.** What is *in* the game, line by line. **Every count is a placeholder ⚙.**
 >
 > - Operational rules: `RULES.md` (the one clean rules document, **v8.0**). Design rationale & history: `DESIGN.md` §9; the v8 program, the designer's review and the implementation plan: `V8-PLAN.md` §12–§13.
-> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80f`) — the source of truth on values and behaviour.
+> - The live build is `play.html` — **v8.0 “Brewer & Merchant”** (`KEY hanse-v80g`) — the source of truth on values and behaviour.
 > - `print.html` (the v8.0 kit, cut 2026-09-06) and `rulebook.html` (the v8.0 book) are current; the art the new faces still lack is queued in `art/PROMPTS.md` (the v8.0 kit art queue).
 > - **READ §0 FIRST.** §0 states the v8.0 kit truth — what was ADDED, RE-CUT, and RETIRED. §§1–17 below still enumerate the v5.8/v7 body in detail and are superseded where §0 says so; the full section rewrite is the kit pass.
 
@@ -23,10 +23,10 @@
 | Quality dice | 52 | **48** (12 × 4) | ten in the supply + the starter post + the warm Gruit's die (v8.0e); the same dice are casks, posts and Kontor building markers |
 | **The hall die** | 0 | 1, neutral | **NEW** — stands on the Bruges panel at 2; +1 per present |
 | Private building tiles | 16 Ventures | **16** (4 designs × 4 colours, tier 1 / tier 2) | re-faced: Granary / Kaufhaus · Scriptorium / Brewers' Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office; **printed points 2 / 4**; the trigger *On visit* (it fires when its owner works the station its slot flanks); **built on any VACANT slot, never over a Public Work** (designer-ruled 2026-09-06); no ledger seat, no die |
-| **Kontor building tiles** | 0 | **12** (3 designs × 4 colours) | **NEW** — Warehouse (your quality count reads +1 for a Ship bound here) · Kontorhaus (+1 ⚜ more on your landing) · Guildhouse (Raise one die of yours at sea +1 on your landing); placed in a Kontor slot, marked with the builder's die |
-| **Kontor chits** | 0 | 3 | **NEW** — a wild Ship's named Kontor, set on the hull by the first load |
+| **Kontor building tiles** | 0 | **12** (3 designs × 4 colours) | **NEW** — Warehouse (your quality count reads +1 for a Ship bound here) · Kontorhaus (+1 ⚜ more on your delivery) · Guildhouse (Raise die — one die of yours at sea +1 — on your delivery); placed in a Kontor slot, marked with the builder's die |
+| **Kontor chits** | 0 | 3 | **NEW** — a wild Ship's named Kontor, set on the Ship by the first load |
 | Public Works | 12 | 12 (7 as filler: Malt Kiln ×2 · Customs House · Ropewalk · Cooperage · Bonded Store · Victualling Yard) | the Weigh House and the four Staple Houses sit out; **deal 4 at every player count** ⚙ (four slots open from the start, designer-ruled 2026-09-06); the roster pass comes after the core |
-| Ship tiles | 18 | **18** (per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1) | re-faced: no Bruges hulls; **the two wild Cogs dock at setup on two random slots** (v8.0f); the wild face prints a dashed Kontor seat; Cog free · Hulk 1 `G` |
+| Ship tiles | 18 | **18** (per far Kontor Cog ×3 · Hulk ×2; wild Cog ×2 · Hulk ×1) | re-faced: no Bruges Ships; **the two wild Cogs dock at setup on two random slots** (v8.0f); the wild face prints a dashed Kontor seat; Cog free · Hulk 1 `G` |
 | Cask tiles | 52 | 52 | re-printed on the eight-verb pool (Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post); Gruit's sixteen all print *Gain 2 goods* |
 | Recipe cards | 24 | 24 | fees only (Broyhan 1 `H` · Keut 1 `G` · Mumme 1 `G` 1 `H` · Bock 1 `G` 2 `H`); no kettle line, no far-dice icons |
 | Specialist tiles | 15 designs | **10 singles** | Braumeister · Shipmaster · Cellarman · Stevedore · Agent · Lodesman · Carter · Guildmaster · Chronicler · Alderman |
@@ -38,15 +38,15 @@
 **Headline:** one new board, one neutral die, twelve small Kontor building tiles, sixteen
 tokens, three chits, four fewer dice, four decks and trackers gone.
 
-**THE RULINGS THAT TOUCH A PRINTED FACE (the v4.13 law — every one lands here):**
+**THE RULINGS THAT TOUCH A PRINTED FACE (the v4.13 law — every one delivers here):**
 
 - **The dice are a personal supply** (no tray): the player board prints the supply well and
   the line *12 dice · 10 in the supply · 1 on the Gruit · 1 the starter post*.
 - **The sea board prints every home for ownership and every destination**: post seats per
   colour on every segment; building slots with a die seat and a tile seat at every far
-  Kontor; the minimum Q2 on every far panel; the yard track's three zones and their prizes;
+  Kontor (1 on side A, 2 on side B); each far panel's die floor — London 2 · Bergen 3 · Novgorod 4; the yard track's three zones and their prizes;
   the hall's places and the hall die's seat; the cart road; Hamburg.
-- **The Kontor building tiles print name + trigger + effect** (*On your landing here:* …) and
+- **The Kontor building tiles print name + trigger + effect** (*On your delivery here:* …) and
   a die seat for the builder's die (the modifier · the pips).
 - **The private building tiles print their points as the `star-N` glyph** (`star-2` on tier 1,
   `star-4` on tier 2 — designer-ruled 2026-09-07: the glyph alone, never a star and a numeral), the trigger
@@ -61,16 +61,22 @@ tokens, three chits, four fewer dice, four decks and trackers gone.
 - **One action, one term** (designer-ruled 2026-09-07, v8.0f): the Market's primary prints *Gain 2
   goods* — the cask bonus's words on the cask bonus's glyph; the bonuses and the building lines
   print the station verb's own name (*Brew · Age 2 · Load 1*); *Source* left the registry.
+- **The registry's three pairs, ruled** (2026-09-07, v8.0g): *deliver* (never *deliver*), *Raise die* (never
+  *lift* — the Malt Kiln, the Bonded Store and the Lagering Cellar print the same verb and glyph as the
+  sea's Raise die), *Ship* (never *Ship*).
+- **Per-port minimums on the die** (designer-ruled 2026-09-07, v8.0g): each far panel prints its die
+  floor — London 2 · Bergen 3 · Novgorod 4 — read on the cask's die as it boards; the building slots
+  are 1 on side A and 2 on side B.
 - **The two wild Cogs dock at setup** (designer-ruled 2026-09-07, v8.0f) on two random slots; the
   deck of 16 keeps the wild Hulk; the kit is unchanged.
 - **The warm Gruit** (designer-ruled 2026-09-07, v8.0e): every player starts with a Ready Gruit in
   vessel 1 — its own die, the twelfth, set at 1 on it (the supply keeps its ten), the top Gruit tile
   under it (16 − n tiles remain in the stack); the kit goes from 44 to **48 dice** (12 × 4).
 - **The Ship tiles print the Kontor or the wild seat**, the berths and the fee; the Kontor
-  minimum leaves the hull (it prints on the panel).
+  minimum leaves the Ship (it prints on the panel as the die floor: 2 · 3 · 4).
 - **The cask tiles print the eight verbs**; LIFT leaves the pool.
 - **The Wharf board's station faces**: Gain 2 goods / Load 1 · Brew / Build · Commission (*must*)
-  + Post / Build a Kontor · Raise · Age 3 / Cart 1.
+  + Post / Build a Kontor · Raise die · Age 3 / Cart 1.
 
 **RETIRED (v7 → v8):** the Destinations board · the Bourse track and its markers · contract
 cards · demand cards · majority ladder markers · private flags · the Venture ledger dice · the
@@ -103,7 +109,7 @@ per player.
 | **Destinations board** | 1 | The four Kontor panels — Bruges · London · Bergen · Novgorod — each printing its **minimum (die N+)**, its **prize as a CHOICE** (*the thing **or** 2★* ⚙ — Novgorod instead prints **value = the die +3★** ⚙ and offers no thing), its **majority tiers** (4/2/0 · 5/3/1 · 9/5/2 · 8/5/2 ⚙) and the **parking field** where delivered dice stand (pips face-up = the scored-★ audit) — **plus THE BOURSE TRACK** (v5.6, ruled: it moved here from its own strip). *(The Manifest deck well left at v5.6 — and the deck itself left the game at v5.7.)* *(The kit cuts it as one narrow board pairing with Market & Stores.)* |
 | **The Bourse track** *(v5.3 · MOVED v5.6)* | — | **Prints ON the Destinations board** (v5.6, ruled — the standalone strip leaves the kit). One lane, **−1 · 0 · +1 · +2 · +3** ⚙, **cells wide enough to hold EVERY beer token at once** (they stack up at +3 on setup and spread as the game runs). |
 | Player boards | 4 | **3 vessel slots + 2 specialist seats — all open from the start** (v45h). The Flight ladder (the Manifest reminder zone clears at v5.7 with the cards). Recipe cards sit beside it. Goods cap 8 printed. |
-| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Kontor prizes taken as ★ · Cooperage wharfage · Staple premiums · 1★ placed presence) as they land. *(New in v4.0 — the hard line demands a home for scored ★.)* |
+| **Score track** ring | 1 | A **50-cell ring** (0–49; a lap marker flips +50) wrapping the Market & Stores rim + 1 disc per player — the ★ scored in play (delivery ★ = die + Bourse marker · Kontor prizes taken as ★ · Cooperage wharfage · Staple premiums · 1★ placed presence) as they deliver. *(New in v4.0 — the hard line demands a home for scored ★.)* |
 | Market & Stores board *(kit)* | 1 | **17.45×10.8″** — the displays: Ships 4 · Specialists 4 in the main column; the right column is **CASKS & RECIPES** (every beer's face-up pile ON the board — Gruit + Hopped · the dealt Q3 + Q4 beers · the Q5 beer + Jopenbier — beside the four export recipe stacks by tier); ringed by the score track. Cask slots 2.4×1″, recipe slots 1.85×2.55″ — component-true. *(The building display retired at v5.3 — Public Works stand from setup, Ventures live in hand.)* |
 | **Player aid** *(kit)* | 3–6 | A **letter TRI-FOLD of three identical double-sided aids** — front: the play face; back: End & Score + the two-column icon legend. Two straight cuts yield three aids; identical panels register under any duplex flip (4p: print two sheets). Rulebook + aid = the complete rules. |
 
@@ -152,7 +158,7 @@ contract-solid, and its tile prints the off-book line.)*
 
 ## 5. Ship tiles (24 ⚙ — the Ship is all berths)
 
-Neutral, each bound for a printed Kontor, deck-fed **display of 4**. **Every hull cuts the same
+Neutral, each bound for a printed Kontor, deck-fed **display of 4**. **Every Ship cuts the same
 2.5×3″ tile (v4.9b)** — a stack of full-width 1″ berth wells from the top; the space below a
 Skute's or Cog's berths simply shows the port art (no seats). Berths fill bottom→top; the
 **top berth prints the identity** (the Kontor crest · **both boarding gates — the READY
@@ -214,14 +220,14 @@ Bourse ±1 / ±2* — a free stop for **whoever** activates a line through the s
 
 Each house starts with the same **hand of 4**. **THREE WAYS ONTO THE WHARF (v5.5, ruled):**
 
-1. **PLAY AN L1** — a hand tile lands **L1-side up on ANY OPEN SLOT** (THE OPEN GROUND —
+1. **PLAY AN L1** — a hand tile delivers **L1-side up on ANY OPEN SLOT** (THE OPEN GROUND —
    only with the wharf FULL may it instead replace a Public Work, the worn tile boxed;
    never another player’s L1/L2). Fee **1 `G`**.
 2. **FLIP** — a **standing L1 of yours turns over IN PLACE to its own L2 face**; **no hand
    tile is spent**, the cardboard is the same piece. Fee **2 `G`**. *This is the v5.5
    change: four tiles can become four buildings that each reach L2, instead of collapsing
    into two.*
-3. **OVERBUILD** — a **second hand tile lands L2-side up over one of your own L1s** (the
+3. **OVERBUILD** — a **second hand tile delivers L2-side up over one of your own L1s** (the
    spent L1 tile is boxed; the ground is kept), which is how a **different** theme’s L2
    reaches ground you already hold. Fee **2 `G`**.
 
@@ -322,7 +328,7 @@ v5.1) · displays: Ships 4 / Specialists 4 ·
 wharf seeds: Hulk→Bruges + 1 Ship ·
 worker placed free · first player fixed.
 
-## 10. Kit deltas (every ruling that touches a printed face lands a note here; older deltas live in git history)
+## 10. Kit deltas (every ruling that touches a printed face delivers a note here; older deltas live in git history)
 
 **v7.0b “Build leaves the counter” delta (2026-09-01, designer-ruled — `KEY hanse-v70b`):**
 
@@ -362,13 +368,13 @@ picture; this note records the SHARED face re-cuts this pass):**
   reminder reprints for the v7 ground fees (open 1 `G` · replace 2 `G` · L2/flip 2 `G`
   ⚙). The action line is unchanged cardboard — v7 opens it to any visitor (own casks;
   the tick is the rent), which is a rules fact, not a face fact.
-- **THE P5 KIT PASS LANDED (2026-08-31, this build):** `print.html` cuts the full §0
+- **THE P5 KIT PASS DELIVERED (2026-08-31, this build):** `print.html` cuts the full §0
   kit — **contract cards ×14** (the tri-folded Guild letter: the claim condition + the
   ⚜ Invitation identity; uniform letter back, cardstock) · **demand cards ×12**
   (2.5×1.32″ parchment tile: requirement · the ⚜ PRESENT bonus · the +1★ market line ·
   2 die seats; uniform back, plotter double-sided) · the **Destinations board re-cut**
   (each panel: the printed **6-rung ladder** with its dashed marker seat · the
-  lane-gate line · the first-landing letter line · the **demand well**; the factor
+  lane-gate line · the first-delivery letter line · the **demand well**; the factor
   sockets and Kontorhaus lines left) · the **Wharf station faces** (Source 3/Source 1 ·
   Brew/the second kettle · Commission/SAIL-now · Age 3/Load-any) · the **ship deck 18**
   (Cog ×10 free · Hulk ×8 1 `G`, display 3; the Skute sheet retired) · the **Venture
@@ -379,7 +385,7 @@ picture; this note records the SHARED face re-cuts this pass):**
   the kit whole: the sea map sheet · establishments · closures · house markers · the
   Tastings remnants (`components.js` pruned the same day — the generators live in git
   history). Shared-data re-cuts in `components.js`: `HULL` Cog 0/Hulk 1 `G` (the app's
-  hull tiles had still printed the v6 fees — drift caught and closed) · `SHIP_DECK` 18
+  Ship tiles had still printed the v6 fees — drift caught and closed) · `SHIP_DECK` 18
   · `CASK_POOL` prints the v7 verbs (**LIFT** die+1 · **BUILD** at its fee) in the engine's
   census order · the works roster drops the Tollhouse ⚙ and the Chancery.
 
@@ -389,7 +395,7 @@ picture; this note records the SHARED face re-cuts this pass):**
   worth?* (die · port premium · Bourse marker · Manifest), and v5.6's Bourse does that job
   publicly and readably. They also broke the component-state hard line: three lines each
   claimable once per voyage with **nothing physical marking a spent one**.
-- **Ships reprint without their card foot** — no tuck, no demand strip. A hull is berths, a
+- **Ships reprint without their card foot** — no tuck, no demand strip. A Ship is berths, a
   destination and a minimum.
 - **The Weigh House reprints, re-derived:** *"On sail: this cargo does NOT glut"* (was: each
   cask may claim 2 Manifest lines). It certifies the shipment, so the market does not absorb
@@ -460,7 +466,7 @@ drops to **Q2+**, so **Hopped's 12-tile census now prints 2 of them** (the Q2 po
 5 verbs → 6; the Venture door was starved, not priced shut). The **player aid + rulebook
 reprint** (the tide, the bag, the Q2 verb). Counts otherwise unchanged.
 
-**The numbered-goods icons land (2026-08-23, ruled — REPRINT, no counts, no rules):** the
+**The numbered-goods icons deliver (2026-08-23, ruled — REPRINT, no counts, no rules):** the
 art triplet `goods-1` / `goods-2` / `goods-3` exists, so every face that grants a **specific
 number** of goods stops borrowing the generic basket and prints its own numeral. **Cask
 tiles:** *Gain 2 goods* → `goods-2` (Gruit's pin, every Q2+ census, Jopenbier's pin) ·
@@ -475,7 +481,7 @@ stopped distinguishing anything once the tide became the family rule — each no
 what is actually its own (the 2-goods payout · the ×2 load bonus).
 
 **Component-copy ruling (2026-08-23, designer-ruled — REPRINT, no counts, no rules):** THE
-GOLDEN RULE lands in `STYLE.md` §4c — rules never live on components, boards, or in the play
+GOLDEN RULE delivers in `STYLE.md` §4c — rules never live on components, boards, or in the play
 interface. Every building/Venture face rewords to the **trigger grammar** (*On load · On sail ·
 On sail to <Kontor> · On line · At end* — the trigger on its own line when a face carries more
 than the bare pair; the cask tiles' icon+text pattern is the model). The **four Staple Houses

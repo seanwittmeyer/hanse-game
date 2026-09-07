@@ -51,7 +51,7 @@
   /* (the card-face CSS — casks · ships · Public Works · private and Kontor building tiles · specialists · recipes · tokens · the player board — lives in components.js, the shared library) */
   /* ====== 1.5mm BLEED on the plotter TILES (print-kit only — play.html keeps true tiles) ======
      The packed box = the tile + 1.5mm bleed all round; adjacent bleeds TOUCH (1.5+1.5 = the 3mm cut
-     gap), so the sheet interior is solid ink and a laser misaligned by <1.5mm still lands on colour.
+     gap), so the sheet interior is solid ink and a laser misaligned by <1.5mm still delivers on colour.
      Only the tile's BACKGROUND COLOUR and ART layers extend outward — the content never moves, and the
      cut rrect stays on the tile's true edge. (.059in = 1.5mm ÷ SCALE at the native SCALE 1.0 — these
      rules live in native units and MUST retune with TILE_BLEED_N if SCALE ever changes; the 2026-08-18
@@ -579,7 +579,7 @@ function aid3Panels(){
     +'<div class="step"><span class="sn">3</span><span class="sx">+ <b>Load 1</b> at each flanking slot + <b>your own private building</b> there — any order, all optional except the Harbor’s <b>must</b></span></div>'
     +'<h5>'+LU('store')+'The Stations — primary / alternate</h5>'
     +'<div class="ln">'+LU('store')+' <b>Market</b>: Gain 2 goods / <b>Load 1</b>, any Ship   '+LU('flask-conical')+' <b>Brewhouse</b>: Brew, search the stack / <b>Build</b> on the wharf, any vacant slot (tier 1 1'+G+'1'+H+' · Flip 2'+G+'1'+H+')</div>'
-    +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: <b>Commission</b> (a must · Cog free · Hulk 1'+G+') → <b>Post</b> on its lane → the maiden load / <b>Build</b> at a Kontor or <b>Raise</b>   '+LU('age-3')+' <b>Cellar</b>: Age 3 / <b>Cart 1</b> to Bruges</div>'
+    +'<div class="ln">'+LU('ship')+' <b>Harbor</b>: <b>Commission</b> (a must · Cog free · Hulk 1'+G+') → <b>Post</b> on its lane → the maiden load / <b>Build</b> at a Kontor or <b>Raise die</b>   '+LU('age-3')+' <b>Cellar</b>: Age 3 / <b>Cart 1</b> to Bruges</div>'
     +'<h5>'+LU('dices')+'The Die</h5>'
     +'<div class="dstrip">'
       +AID_CHIP('flask-conical','Brew','start')+AID_ARR
@@ -587,45 +587,44 @@ function aid3Panels(){
       +AID_CHIP('check','Ready','')+AID_ARR
       +AID_CHIP('quality-2','Board','≤ count')+AID_ARR
       +AID_CHIP('sail','Sail','full')+AID_ARR
-      +AID_CHIP('landmark','Land','2 dice')
+      +AID_CHIP('landmark','Deliver','2 dice')
     +'</div>'
-    +'<div class="ln">· Load: <b>Q2+</b> · Q <b>≤ your count</b> · the lane <b>open</b> · Gruit never boards</div>'
+    +'<div class="ln">· Load: the die meets the <b>Kontor’s floor</b> (London 2 · Bergen 3 · Novgorod 4) as it boards · Q <b>≤ your count</b> · the lane <b>open</b> · Gruit never boards</div>'
     +'<h5>'+LU('post')+'The Sea — the quality count</h5>'
     +'<div class="ln">· <b>Post</b>: a supply die at 1 on the lowest segment of the lane you do not hold · <b>+1 each Ship through</b></div>'
-    +'<div class="ln">· <b>Kontor building</b>: your tile + a die at 1 where <b>your posts run the whole lane</b> · +1 on <b>any</b> landing there · your landings score <b>die + this die</b></div>'
+    +'<div class="ln">· <b>Kontor building</b>: your tile + a die at 1 where <b>your posts run the whole lane</b> · +1 on <b>any</b> delivery there · your deliveries score <b>die + this die</b></div>'
     +'<div class="ln"><span class="em">Count your dice at sea</span> = the quality you may deliver anywhere · every die at sea scores its pips at the end</div>'
-    +'<h5>'+LU('landmark')+'The Kontore — min Q2 · 1 ⚜ per landing</h5>'
+    +'<h5>'+LU('landmark')+'The Kontore — die floors 2 · 3 · 4 · 1 ⚜ per delivery</h5>'
     +'<table class="kt"><tr><th>Kontor</th><th>Prize / cask</th><th>Pair</th></tr>'
     +AID_K3('kontor-london','London','one Build, the fee waived','5/2')
     +AID_K3('kontor-bergen','Bergen','a Specialist, free','5/2')
-    +AID_K3('kontor-novgorod','Novgorod','Raise one die at sea +1','7/3')
+    +AID_K3('kontor-novgorod','Novgorod','Raise die at sea','7/3')
     +AID_K3('kontor-bruges','Bruges · cart','the yard’s zone prize','4/2 hall')
     +'</table>'
     +'<div class="ln">'+LU('truck')+' <b>the yard</b>: Best a recipe free <i>or</i> 2 goods · Good a recipe at fee <i>or</i> 1 good · OK 1 good · '+LU('crown')+' <b>the hall</b>: 1 ⚜ + a Q2+ cask → die + <b>the hall die</b>, then +1; places 1–3 pay 2·2·1 goods</div>'
-    +'<div class="dontf"><b>Don’t forget:</b> ① a <b>wild</b> Ship — the first cask loaded names its port ② the <b>tide</b> takes the slot’s Public Work ③ a cask <b>bonus fires as it boards or is carted</b> ④ ⚜ come only from far landings</div>');
+    +'<div class="dontf"><b>Don’t forget:</b> ① a <b>wild</b> Ship — the first cask loaded names its port ② the <b>tide</b> takes the slot’s Public Work ③ a cask <b>bonus fires as it boards or is carted</b> ④ ⚜ come only from far deliveries</div>');
   const back=aid3('back','book-open','End, Score &amp; Icons',
      '<h5>'+LU('timer')+'End &amp; Score</h5>'
     +'<div class="ln"><b>The first empty personal supply</b> sets the final round — finish it. Round '+MAX_ROUND+' backstops. Nothing sails at the end.</div>'
-    +'<div class="ln">· In play: <b>landings</b> — cask die + your building die · <b>the hall</b> — cask die + the hall die · the Chronicler’s and Guildmaster’s ★</div>'
-    +'<div class="ln">· At the end: <b>pips</b> — every die of yours at sea, and aboard a docked Ship · <b>private buildings</b> 2★ / 4★ printed · <b>majorities</b> — each pair by parked dice (Bruges by hall places; none there = no share; ties split) · <b>the Flight</b> — beers landed, 3/4/5 → 3/6/10★ · the Alderman</div>'
+    +'<div class="ln">· In play: <b>deliveries</b> — cask die + your building die · <b>the hall</b> — cask die + the hall die · the Chronicler’s and Guildmaster’s ★</div>'
+    +'<div class="ln">· At the end: <b>pips</b> — every die of yours at sea, and aboard a docked Ship · <b>private buildings</b> 2★ / 4★ printed · <b>majorities</b> — each pair by parked dice (Bruges by hall places; none there = no share; ties split) · <b>the Flight</b> — beers delivered, 3/4/5 → 3/6/10★ · the Alderman</div>'
     +'<div class="ln">· Tiebreak: the quality count, then goods.</div>'
     +'<div class="leg leg2">'
     +'<h5>'+LU('dices')+'The Die</h5>'
     +AID_ROW('check','Ready','the die reaches its quality')
-    +AID_ROW('die-plus1','Lift','a wharf building, cap quality + 1')
-    +AID_ROW('quality-2','Minimum','Q2 or better boards')
-    +AID_ROW('map-pin','Parked','a landed die — the field, the majority')
+    +AID_ROW('die-q','Minimum','the die meets the Kontor’s floor: 2 · 3 · 4')
+    +AID_ROW('map-pin','Parked','a delivered die — the field, the majority')
     +'<h5>'+LU('post')+'The Sea</h5>'
     +AID_ROW('post','Post','your die on a segment · +1 per Ship through')
-    +AID_ROW('kontorhaus','Kontor building','your tile + die · +1 per landing there')
-    +AID_ROW('die-plus1','Raise','one die of yours at sea +1')
-    +AID_ROW('mail','⚜ Invitation','1 per far landing · spend at the hall')
+    +AID_ROW('kontorhaus','Kontor building','your tile + die · +1 per delivery there')
+    +AID_ROW('die-plus1','Raise die','+1: a boarding cask at a Kiln or Bonded Store (cap Q+1) · a die of yours at sea (cap 6)')
+    +AID_ROW('mail','⚜ Invitation','1 per far delivery · spend at the hall')
     +'<h5>'+LU('beer')+'Tiles</h5>'
     +AID_ROW('quality-3','Cask','a brewed beer + its grade')
     +AID_ROW('sailboat','Ship','Cog 2 free · Hulk 3 1G · wild — full = it sails')
     +AID_ROW('building-2','Public Work','passive, free — sails away with its Ship')
     +AID_ROW('hammer','Private building','yours alone · any vacant slot · on visit · tier 1 2★ · tier 2 4★')
-    +AID_ROW('kontorhaus','Kontor building','Warehouse count +1 there · Kontorhaus +1 ⚜ · Guildhouse Raise')
+    +AID_ROW('kontorhaus','Kontor building','Warehouse count +1 there · Kontorhaus +1 ⚜ · Guildhouse Raise die')
     +AID_ROW('wrench','Specialist','Bergen’s prize, free — 2 seats')
     +AID_ROW('scroll-text','Recipe','permission to brew — its printed fee')
     +'<h5>'+LU('package-plus')+'The 8 Cask Bonuses</h5>'
@@ -639,7 +638,7 @@ function aid3Panels(){
     +AID_ROW('post','Post','a die on the next segment of any lane')
     +'<h5>'+LU('star')+'Scoring Marks</h5>'
     +AID_ROW('trophy','Majority','the pair, by parked dice')
-    +AID_ROW('layers','The Flight','distinct beers landed')
+    +AID_ROW('layers','The Flight','distinct beers delivered')
     +AID_ROW('timer','The Clock','the first empty supply')
     +'</div>');
   return {front:[front,front,front],back:[back,back,back]};   // identical panels — any duplex flip registers
@@ -783,7 +782,7 @@ function wharfCross(){
     +station('A','Market','market',['goods-2','package-plus'],'Gain 2 goods / Load 1')
     +station('B','Brewhouse','brewhouse',['flask-conical','hammer'],'Brew / Build')
     +slot+slot
-    +station('C','Harbor','harbor',['ship','kontorhaus'],'Commission + Post / Build a Kontor · Raise')
+    +station('C','Harbor','harbor',['ship','kontorhaus'],'Commission + Post / Build a Kontor · Raise die')
     +station('D','Cellar','cellar',['age-3','truck'],'Age 3 / Cart 1')
     +slot
     +'<div></div>'+slot+slot+'<div></div>'
@@ -792,7 +791,7 @@ function wharfCross(){
   return clip+'<div class="mboard cross" style="padding:'+(CROSS_PAD+CROSS_BLEED).toFixed(3)+'in">'+wharf+'</div>';
 }
 // printables2: the SCORE RING — one clockwise lap of 50 cells with a FIXED, elegant walk: 15 spaces along
-// the top and bottom, 10 down each side, so every CORNER lands on a multiple of 5 — 0/50 (top-left, the
+// the top and bottom, 10 down each side, so every CORNER delivers on a multiple of 5 — 0/50 (top-left, the
 // start), 15 (top-right), 25 (bottom-right), 40 (bottom-left) — and every 5th cell carries the alternate
 // band (count by fives). Passing 49 flips the disc's lap marker (+50 — the second lap).
 function scoreRingCells(NW,NH,T){
@@ -842,9 +841,9 @@ const SEA_SEG={
   e2:{nm:'the Sound',      code:'E2',x:4.55,y:4.3, w:3.05,h:1.95},
 };
 const SEA_K=[
-  {k:'london',  nm:'London',  kc:'#b8860b', tint:'#f7efda', branch:'W1 · W2', x:7.95,y:.35, w:4.35,h:3.15, prize:{ic:'hammer',t:'one Build, the fee waived'}, pair:[5,2]},
-  {k:'bergen',  nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', branch:'E1',      x:7.95,y:3.7, w:4.35,h:3.15, prize:{ic:'wrench',t:'a Specialist, free'},        pair:[5,2]},
-  {k:'novgorod',nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', branch:'E1 · E2', x:7.95,y:7.05,w:4.35,h:3.3,  prize:{ic:'die-plus1',t:'Raise one die at sea'},     pair:[7,3]},
+  {k:'london',  nm:'London',  kc:'#b8860b', tint:'#f7efda', branch:'W1 · W2', min:2, x:7.95,y:.35, w:4.35,h:3.15, prize:{ic:'hammer',t:'one Build, the fee waived'}, pair:[5,2]},
+  {k:'bergen',  nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', branch:'E1',      min:3, x:7.95,y:3.7, w:4.35,h:3.15, prize:{ic:'wrench',t:'a Specialist, free'},        pair:[5,2]},
+  {k:'novgorod',nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', branch:'E1 · E2', min:4, x:7.95,y:7.05,w:4.35,h:3.3,  prize:{ic:'die-plus1',t:'Raise die at sea'},     pair:[7,3]},
 ];
 const SEA_BR={x:.3,y:7.45,w:7.45,h:2.9};
 const SEA_HB={x:.3,y:.35,w:.85,h:6.6};
@@ -856,12 +855,12 @@ function seaSeg(s,seats){
     +'<div class="seats">'+cols+'</div>'
     +'<div class="seg-l">'+LU('sail')+LU('die-plus1','dlift')+'<span>each Ship through</span></div></div>';}
 function seaKontor(d,slots){
-  let sl='';for(let i=0;i<slots;i++)sl+='<span class="kslot'+(i===2?' four':'')+'" title="a building slot — one of your Kontor building tiles, marked with a supply die at 1">'+LU('kontorhaus')+(i===2?'<i>4p</i>':'')+'</span>';
+  let sl='';for(let i=0;i<slots;i++)sl+='<span class="kslot" title="a building slot — one of your Kontor building tiles, marked with a supply die at 1">'+LU('kontorhaus')+'</span>';
   return '<div class="kp2" style="'+pos(d)+';--kc:'+d.kc+';--kt:'+d.tint+'">'
-    +'<div class="kp2-t">'+LU('kontor-'+d.k)+'<b>'+d.nm+'</b><span class="branch">'+d.branch+'</span><span class="min">'+LU('quality-2')+'+</span></div>'
+    +'<div class="kp2-t">'+LU('kontor-'+d.k)+'<b>'+d.nm+'</b><span class="branch">'+d.branch+'</span><span class="min" title="the die floor — the cask’s die as it boards">'+LU('dice-'+(d.min||2))+'+</span></div>'
     +'<div class="kslots">'+sl+'</div>'
     +'<div class="kp2-r"><span class="prize">'+LU('gift')+LU(d.prize.ic)+'<span>'+d.prize.t+'</span></span><span class="pair">'+LU('trophy')+'<b>'+d.pair[0]+' / '+d.pair[1]+'</b></span></div>'
-    +'<div class="kfield"><span>the field — landed dice park here</span></div></div>';}
+    +'<div class="kfield"><span>the field — delivered dice park here</span></div></div>';}
 function seaBruges(side){
   const z=side==='A'?[2,2,2]:[3,3,3];const hallN=side==='A'?6:8;
   const ZONES=[{nm:'Best',p:LU('scroll-text')+'<i>fee waived</i> <b>or</b> '+LU('goods-2')},{nm:'Good',p:LU('scroll-text')+'<i>at its fee</i> <b>or</b> '+LU('goods-1')},{nm:'OK …',p:LU('goods-1')}];
@@ -887,7 +886,7 @@ function seaLanes(){
     +C(hb.x+hb.w/2,hb.y+hb.h,hb.x+hb.w/2,SEA_BR.y+.1,SEA_BR.x+1.2,SEA_BR.y+.55,'road')
     +'</svg>';}
 function seaBoard(side){
-  const seats=side==='A'?2:4, slots=side==='A'?2:3;
+  const seats=side==='A'?2:4, slots=side==='A'?1:2;   // building slots: 1 on side A (2p) · 2 on side B (3–4p) — ruled 2026-09-07
   return '<div class="sb">'+(ART_ON?'<img class="sb-art" src="'+ART_DIR+'seamap.png" alt="">':'')+'<div class="sb-wash"></div>'
     +seaLanes()
     +'<div class="hb" style="'+pos(SEA_HB)+'"><span>'+LU('anchor')+' Hamburg · the Wharf</span></div>'
@@ -993,7 +992,7 @@ function addPolyCut(pg,pts){   // a closed polygon cut (the Wharf cross) — con
 // ROUNDED-RECT path — one joined laser line whose radius matches the tile art's .09in corner (× SCALE) —
 // and carries a 1.5mm BLEED all round (the .bl wrapper extends the colours/art past the cut; the content
 // never moves). Adjacent bleed boxes TOUCH: 1.5 + 1.5mm of bleed IS the 3mm gap between cut lines, so the
-// sheet interior is solid ink and a slightly misaligned laser still lands on colour.
+// sheet interior is solid ink and a slightly misaligned laser still delivers on colour.
 // runs = [{kind, items:[{html,back,fam}]}] (two footprints — the Cog/Hulk carriers — pack as consecutive runs).
 const TILE_CUT_R=+(0.09*SCALE).toFixed(3), TILE_MAX_H=15, TILE_W=22;
 const TILE_BLEED=0.059, TILE_BLEED_N=+(0.059/SCALE).toFixed(3);   // 1.5mm print bleed per side · its native size (1.5mm ÷ SCALE)
@@ -1060,8 +1059,8 @@ function wharfBoardSheet(pages){
 function seaBoardSheets(pages){
   const G=SEA_GEO;const w=+(SEA_NW*SCALE).toFixed(4),h=+(SEA_NH*SCALE).toFixed(4);
   const x=+((G.w-w)/2).toFixed(3),y=+((G.h-h)/2).toFixed(3);
-  [['B','The sea board — side B (3–4 players): four post seats a segment · three building slots · the hall of 8 · the yard in zones of 3 (front — mount side A on the back)'],
-   ['A','The sea board — side A (2 players): two post seats a segment · two building slots · the hall of 6 · the yard in zones of 2 (back)']].forEach(([side,label])=>{
+  [['B','The sea board — side B (3–4 players): four post seats a segment · two building slots · the hall of 8 · the yard in zones of 3 (front — mount side A on the back)'],
+   ['A','The sea board — side A (2 players): two post seats a segment · one building slot · the hall of 6 · the yard in zones of 2 (back)']].forEach(([side,label])=>{
     const pg=newPage(pages,'boards',label,G);
     pg.items.push({x,y,w,h,nat:[SEA_NW,SEA_NH],html:seaBoard(side)});
     pg.rrects=[{x,y,w,h,r:0.14}];});
@@ -1118,7 +1117,7 @@ function buildPages(){
   const cogs=[],hulks=[];
   (MODE==='proof'?[['cog','London'],['hulk','Wild']]:SHIP_DECK).forEach(([hull,dest])=>{
     (hull==='cog'?cogs:hulks).push({fam:'Ships',html:shipCard(hull,dest),back:shipBack(hull)});});
-  packSpaced(pages,'tiles','Ship tile fronts — the hulls (Cog 2 berths free · Hulk 3 berths 1G · per far Kontor Cog ×3 · Hulk ×2 · wild Cog ×2 · Hulk ×1 — deck 18, display 3) · 22″ plotter · 1.5mm bleed · double-sided',[{kind:'shipc',items:cogs},{kind:'shiph',items:hulks}],famPages);
+  packSpaced(pages,'tiles','Ship tile fronts — the Ships (Cog 2 berths free · Hulk 3 berths 1G · per far Kontor Cog ×3 · Hulk ×2 · wild Cog ×2 · Hulk ×1 — deck 18, display 3) · 22″ plotter · 1.5mm bleed · double-sided',[{kind:'shipc',items:cogs},{kind:'shiph',items:hulks}],famPages);
   // --- PUBLIC WORKS → single-faced ---
   const bldItems=[];
   BUILDINGS.forEach(d=>{for(let i=0;i<cnt(d.n);i++)bldItems.push({fam:'Public Works',html:buildingCard(d)});});
@@ -1190,7 +1189,7 @@ function checklist(pages,famPages){
     +'</table>';
   h+=T('Tiles (mount on chipboard, laser-cut)')
     +R('Cask tiles','The beer itself, brewed never bought; face-up stacks on the Market &amp; Stores board — <b>a Q2+ brew searches its stack</b>; Gruit takes the top tile. '+CASKS.map(d=>d.nm+' ×'+d.n).join(' · ')+'.',sumN(CASKS))
-    +R('Ship tiles','Neutral hulls, each bound for a printed Kontor or <b>wild</b>; the tile is its berths and <b>full = it sails at once</b>. <b>The two wild Cogs dock at setup</b> on two random slots. A shuffled deck → a display of 3. Cog ×11 (free) · Hulk ×7 (1G).',SHIP_DECK.length)
+    +R('Ship tiles','Neutral Ships, each bound for a printed Kontor or <b>wild</b>; the tile is its berths and <b>full = it sails at once</b>. <b>The two wild Cogs dock at setup</b> on two random slots. A shuffled deck → a display of 3. Cog ×11 (free) · Hulk ×7 (1G).',SHIP_DECK.length)
     +R('Public Works','The shared brown family — the filler roster of 7: <b>deal 4 at every player count</b> onto random slots; the rest to the box; nothing refills. Passive on their slot’s traffic; <b>every tile sails away with the Ship at its slot</b> (the tide).',sumN(BUILDINGS))
     +R('Private building tiles','The hand of four designs — <b>tier 1 front / tier 2 back</b> (the Flip turns it in place). Built on <b>any vacant slot</b>, never over a Work; fires <b>on visit</b> at the station its slot flanks. Owner-only; prints its ★ (2 / 4); no die. One set per colour.',PRIVATES.length*PLAYERS.length)
     +R('Kontor building tiles','The set of three — Warehouse · Kontorhaus · Guildhouse. Placed in a Kontor slot where your posts run the whole lane, <b>marked with a supply die at 1</b> (the delivery modifier). One set per colour.',KBUILDINGS.length*PLAYERS.length)
@@ -1201,8 +1200,8 @@ function checklist(pages,famPages){
     +R('Player aids','A letter sheet of <b>three identical aids</b> — two cuts → three double-sided aid panels. <b>One per player.</b>',PLAYERS.length)
     +'</table>';
   h+=T('Tokens &amp; bits')
-    +R('⚜ Invitation tokens','Earned <b>one per cask of yours landed at a far Kontor</b> (a Kontorhaus pays a second); spent to present at the hall. No cap. A general supply.',INV_TOKENS)
-    +R('Kontor chits','<b>One per far Kontor</b> — the first cask loaded onto a wild Ship sets the chit on the hull.',FAR_K.length)
+    +R('⚜ Invitation tokens','Earned <b>one per cask of yours delivered at a far Kontor</b> (a Kontorhaus pays a second); spent to present at the hall. No cap. A general supply.',INV_TOKENS)
+    +R('Kontor chits','<b>One per far Kontor</b> — the first cask loaded onto a wild Ship sets the chit on the Ship.',FAR_K.length)
     +R('Quality dice — 12 mm d6','<b>the component:</b> the cask, the post, the Kontor building marker and the clock in one. <b>12 per colour — 10 in the personal supply, 1 the starter post, 1 on the Ready Gruit in vessel 1.</b> (sourced)',PRES_DICS+' ea')
     +R('The hall die — 12 mm d6, neutral','Stands on the Bruges panel at <b>2</b>; a present scores cask die + this die, then it climbs +1 (cap 6). (sourced)','1')
     +R('Grain cubes','Currency and brew input. <b>A general supply.</b> (sourced)','60')

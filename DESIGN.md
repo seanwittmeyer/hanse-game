@@ -23,7 +23,7 @@
 |**Genre**      |Medium euro · engine building · shared action grid (the Wharf) + private brewery    |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, c. 1350                           |
-|**Status**     |**v8.0f “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80f`; designer-ruled 2026-09-06 — the shape in §6, the derivation in `V8-PLAN.md` §12–§13, the log in §9; the designer's own table is next, then the oracle read — never a corpus before a human table). *The v5 line, kept as history:* **v5.7 “Plain Sail”** was the last v5 build (records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`); the v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
+|**Status**     |**v8.0g “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80g`; designer-ruled 2026-09-06 — the shape in §6, the derivation in `V8-PLAN.md` §12–§13, the log in §9; the designer's own table is next, then the oracle read — never a corpus before a human table). *The v5 line, kept as history:* **v5.7 “Plain Sail”** was the last v5 build (records `archive/records/V55-FOUR-HANDS.md` + `V54-THE-TIDE.md` + `V5-DECISIONS.md`); the v5 line in one breath: **v5.0** opened the wharf (census stacks · Manifests · primary/alternate stations), **v5.1** made buildings riders and specialists station superpowers, **v5.2** split the buildings into two families (shared PUBLIC WORKS · private dual-use VENTURES), and **v5.3** made the Public Works die-less setup furniture, gave every Venture face a public line, opened the ground to L1s — and put the **beer-value BOURSE** at the middle of the economy (delivery = die + track · bulk rise then score · brews crash their own price). **v5.3b** reprints the Tollhouse as the toll bench (a load there shifts any Bourse marker ±1). **v5.4** makes every Public Work ephemeral — the wharf is a tide that washes the furniture away and thins into bare ground for the Ventures. **v5.5** re-derives the Venture hand as **four themed tiles (brew · age · die · points)** and adds the **FLIP** — a standing L1 turns over to its own L2 in place, spending no hand tile — so four tiles can become four buildings that each reach L2. **v5.6** turns the Bourse into a **GLUT**: every marker opens at the top and a sail steps each beer aboard down one (never per cask); the only way up is a shift you build. Every **Kontor prize becomes “the thing OR ★”** and the consolation retires. **v5.7** cuts the **Manifests** — the Bourse is the demand layer, so the demand card was a duplicate that also broke the component-state line. Details: §9; watches: §10. |
 
 ---
 
@@ -264,6 +264,51 @@ Hard-won across v0.9→v5.2; they constrain every future change:
 
 *Newest first. The v5 letters in detail; the pre-v5.0 record is a digest — every full
 entry is preserved in git history (this file before 2026-08-23).*
+
+### v8.0g — The designer's batch: deliver · Raise die · Ship, per-port die minimums, the slots (2026-09-07, designer-ruled — `KEY hanse-v80g`)
+
+*"Deliver, raise die, ship. Carter sounds fine to me. Many of the items have already been ruled on. If I
+don't comment, assume I am affirmatively confirming the assumptions… Per port minimums remain in the
+game. London Q2+, Bergen Q3+, Novgorod Q4+. This means a hopped raised by 1 is Q3 and can go to Bruges
+by cart, London, or Bergen… Building slots in Kontors — 1 for 2 player, 2 for 3/4 player… Each of the
+Kontor bonuses is free."*
+
+**The registry's three pairs, ruled.** *Deliver* is the one word for a cask arriving at its Kontor —
+*land / landing / landed* retire from every surface (the v5 word returns; the score line, the tile
+lines, the ⚜ rule, the Flight and the app's log all say *deliver*). *Raise die* is the one verb on the
+one `die-plus1` glyph: the Malt Kiln, the Bonded Store and the Lagering Cellar *Raise die* a boarding
+cask (cap quality + 1) exactly as the Harbor, the Counting House, the Shipping Office, the Guildhouse
+and Novgorod's prize *Raise die* at sea (cap 6) — *lift* retires. *Ship* is the component's only name
+in player copy — *hull* retires from the rules, the rulebook and the kit.
+
+**Per-port minimums return, on the die.** Each far Kontor panel prints a **die floor — London 2 ·
+Bergen 3 · Novgorod 4** ⚙ — read on the cask's die **as it boards**, after the slot's Raise die (a
+Hopped at 2 boards for Bergen from a Malt Kiln's slot). The quality count still gates the beer's
+printed quality; the port gates the die; Gruit never boards. A wild Ship's first cask may name only a
+port its die meets, and the Shipmaster names an unfull wild Ship only a port every cask aboard meets.
+This is the v5 *board* grammar back (`STYLE.md` §2: *the minimum reads the die here*) and it gives
+Novgorod its identity without a market: the far Kontor wants a 4, so a Bock or a raised Mumme, and the
+designer's stated intent is that Novgorod's dice end up worth more.
+
+**The building slots: 1 on side A (2p), 2 on side B (3–4p)** (was 2 / 3). One builder per slot, one
+per player per Kontor, the chain the only door — confirmed in the same breath: *sailing needs every
+segment unlocked by anyone; building needs your own post on every segment.*
+
+**Confirmed by the designer's rule of silence ("if I don't comment, I confirm"):** the plan's §13.7
+defaults 1 (anyone may load an unlocked lane), 2 (the building die climbs +1 on any delivery, plus
+Raise die), 3 (private buildings take no die), 5 (five segments, E1 shared), 7 (1 ⚜ per far delivery,
+none from Bruges, start at 0), 9 (the Hulk has no gate), 10 (London any Build with the fee waived ·
+Bergen a specialist · Novgorod a Raise die — *every Kontor prize is free*); the Carter's +1 at the
+yard; the hall as framed (*each delivery there costs 1 ⚜ and arrives by cart* — revisited once the
+core is ironed out). **Queued, the designer's direction:** *the building die's start face per Kontor*
+— today every Kontor building's die stands at 1 and is the delivery modifier, +1 per delivery there,
+its pips at the end; the designer wants Novgorod's to pay a little more once a player has set it up
+(the lever is a per-Kontor start face; nothing turned yet). Engine: `KONTOR_MIN` per Kontor with
+`kMin`, `canTake` reads `boardDie` against it, the wild naming filters by it, `kontorSlotsN` 1 / 2.
+Surfaces: `RULES.md` §2/§4/§5/§7/§8/§9/§12 · `rulebook.html` §7 example, §8, §9, §10 (the panels print
+the die floors) · `COMPONENTS.md` §0 · `STYLE.md` §2/§4c/§4f · `components.js` (the Kiln, the private
+and Kontor tiles, the specialists, the player board) · `print.html` (the sea board's panels and slots,
+the aid, the teach) · `README.md` · `index.html` · `CLAUDE.md` · `AUTOMA.md` · the battery (59) · the sim.
 
 ### v8.0f — Two wild Cogs at setup, and one action, one term (2026-09-07, designer-ruled — `KEY hanse-v80f`)
 
@@ -1120,9 +1165,11 @@ are the things to read when one runs — or when a human table sits down.*
 
 **v7 WATCHES (2026-08-31 — the station-verb panel: 3 proposals · 2 sim probes · a judge):**
 
-- **THE V8 PROGRAM (2026-09-04 → the review complete and the plan built 2026-09-06 — `V8-PLAN.md` §12–§13).** The designer's diagnosis, corrected on review: v7 never broke the overlap between the station actions and the core loop, so walking source · brew · age · ship IS the game, everything else hangs off it, and free goods made goods the only resource — an efficiency game without soul. The target is DEPTH (interlocking prerequisites, asymmetric powers, a sea worth a die), and the recorded failure mode is the optimizer's instinct cancelling it (`CLAUDE.md` §1, THE SECOND OVERRIDE). The ruled game: eleven dice; a die ends as a cask, a post or a Kontor building; the quality count (your dice at sea) is the one gate; a landing is two dice; the yard and the hall at Bruges; a GWT private-building engine on the wharf; no kettle, no market track. Every watch below stays as history until the mirror is built (§13.6) and the designer's own table has played it. **No corpus before that table.** Open rulings: `V8-PLAN.md` §13.7.
+- **THE V8 PROGRAM (2026-09-04 → the review complete and the plan built 2026-09-06 — `V8-PLAN.md` §12–§13).** The designer's diagnosis, corrected on review: v7 never broke the overlap between the station actions and the core loop, so walking source · brew · age · ship IS the game, everything else hangs off it, and free goods made goods the only resource — an efficiency game without soul. The target is DEPTH (interlocking prerequisites, asymmetric powers, a sea worth a die), and the recorded failure mode is the optimizer's instinct cancelling it (`CLAUDE.md` §1, THE SECOND OVERRIDE). The ruled game: eleven dice; a die ends as a cask, a post or a Kontor building; the quality count (your dice at sea) is the one gate; a delivery is two dice; the yard and the hall at Bruges; a GWT private-building engine on the wharf; no kettle, no market track. Every watch below stays as history until the mirror is built (§13.6) and the designer's own table has played it. **No corpus before that table.** Open rulings: `V8-PLAN.md` §13.7.
 - **THE DOCKED HULLS — RULED (v8.0f, 2026-09-07):** the two wild Cogs dock at setup on random slots at every count. Watch at the table: the first sail's round, whether the setup Cogs get named before the first commission, and the Public Work under a setup Cog leaving on the first tide.
-- **THE REGISTRY AUDIT — one action, one term (v8.0f).** Landed: *Gain 2 goods · Brew · Age 2 · Load 1 · Kontor building*. Open for the designer: *deliver / land* (the die is the *delivery modifier*; the score line says *Delivered dice*; the rulebook says *lands*) · *lift / Raise* — two verbs on the one `die-plus1` glyph · *hull / Ship* in prose. Each is a registry ruling with a kit-wide pass behind it.
+- **THE REGISTRY AUDIT — one action, one term (v8.0f → v8.0g).** Landed: *Gain 2 goods · Brew · Age 2 · Load 1 · Kontor building*, then the three pairs ruled (*deliver · Raise die · Ship*). The audit continues as a standing gate: a new face never prints a second name for a standing action.
+- **THE BUILDING DIE'S START FACE PER KONTOR (queued, 2026-09-07).** The designer wants Novgorod's Kontor building to pay a little more once its chain is built; today every building die starts at 1. The lever is a per-Kontor start face (say 1 · 1 · 2 ⚙); read the Novgorod delivery count at the table first — the die floor of 4 already makes Novgorod the high-quality port.
+- **THE DIE FLOORS (v8.0g).** London 2 · Bergen 3 · Novgorod 4 on the die as it boards. Read at the table: how often a Malt Kiln or Bonded Store slot is chosen to make a floor; whether Bergen at 3 starves the beginner's port of Hopped (the Kiln is its door); whether Novgorod at 4 is reached before the end at 2p.
 - **THE AT-COST FACES (v8.0d, 2026-09-07).** No building hands out goods any more: the Granary/Kaufhaus sell a brew for 1 `G`, the Bonded Store sells a post for 1 `G` at the sail, the Warehouse vouches (count +1 for a Ship bound there). Read at the designer's table before any corpus: (1) do the export brews starve at 3–4p now that Source 2 and the die-paid prizes are the only faucets — the lever is the surcharge (`BREW_SUR`), never Gruit; (2) how often the Bonded post fires and whether Novgorod's two-segment lane makes the Store a must-load slot; (3) whether the Warehouse's +1 makes Bergen (one segment) the Q3 dump — the lever is which Kontor tile the read applies to, not the read.
 - **THE FIRST ORACLE READ (2026-09-02 — `archive/records/GATEKEEPER-v70b.md`, standing review #4; 30 search-tier 2p games + two blind analyses).** The watch above was right and the number is worse: under the Cellarmaster **21 of 30 2p games end on the ceiling** (the greedy read was 27–31%) with 27% of the dice never spent and deferral reading as free to the search. The two new watches it opens: **the hall price** (PRESENT never beat DELIVER in 100+ matched landings — 314 ⚜ earned, 14 spent, 111/120 ladders frozen, the 14-card contract deck dry in 16 games) and **the one-tile engine** (Great Copper 29 of 30 L2s, 57 of 113 Venture actions through London's per-cask waived prize, the ledger ≈4% of the score). Its §8 queue is the agenda; the §9 table questions gate every reading.
 - **THE SECOND KETTLE (v7.0a — the designer RULED past the panel, eyes open).** The
