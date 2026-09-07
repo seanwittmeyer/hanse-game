@@ -534,9 +534,11 @@ went through the deframe + band gates (frames auto-trimmed on roughly half). The
 3. **`bonus-load.png` re-cut — the OPEN pick:** LOAD becomes **the medieval treadwheel harbor
    crane** lifting a cask (designer-ruled 2026-09-06 — cart and load may not share art). The
    winner replaces `bonus-load.png` IN PLACE so every `package-plus` load site updates; candidates out.
-4. **`station-harbor.png` re-cut — LANDED (pick B, 2026-09-06):** the hull on launch stocks
-   with the bone post die beside it — "commission, then post"; the coin stack retires (a Cog
-   commissions free). Replaced in place; every `LU('ship')` site swapped.
+4. **`station-harbor.png` re-cut — REVERTED (designer-ruled 2026-09-06):** the hull + post-die
+   cut was landed and pulled the same day; **the Round-3 coin stack stands.** The die is not a
+   component of the commission action (the fee is goods — coins read true); an icon shows the
+   action's OWN components and cost, nothing else (`ICONS.md` Round 16). If it ever re-cuts,
+   the coins become GRAIN — never a die.
 
 ### 5 · Boards
 - **The sea board** rides `seamap.png` — **the v8 chart LANDED (pick C, 2026-09-06)**: the
