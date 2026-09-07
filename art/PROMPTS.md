@@ -477,15 +477,26 @@ print; a texture would lift them to the rest of the kit).
 // ============================================================================
 ```
 
-## THE v8.0 KIT ART QUEUE (2026-09-06 — the "Brewer & Merchant" kit pass; the open queue in one place)
+## THE v8.0 KIT ART QUEUE — LANDED 2026-09-06 (all four groups the same day; only the optionals stay open)
 
-*Everything the v8.0 kit currently fakes with a stand-in or a bare Lucide glyph, ranked. Same
+*Everything the v8.0 kit faked with a stand-in or a bare Lucide glyph, ranked. Same
 treatments as ever: **icons** = the c.1350 sticker set (`art/icons/` — one object, warm palette,
 bold contour, alpha-keyed, readable at .3in; recipe in `art/ICONS.md`); **tiles** = the painterly
 single-structure portrait (the shared style block at the top of this file, every gotcha applies);
 **specialists** = THE SPECIALIST PORTRAIT SPEC above (half-body, the trade prop, no text). On
 landing, save under the exact filename and delete the matching `art:` / `slug:` stand-in row in
-`components.js` (each is marked PLACEHOLDER); no rules change — no KEY bump.*
+`components.js` (each was marked PLACEHOLDER); no rules change — no KEY bump.*
+
+**LANDED (designer picks, 2026-09-06):** Shipmaster **A** · Agent **C** · Lodesman **D** ·
+Carter **B** · Guildmaster **A** (the five `slug:` stand-ins dropped — `slug(nm)` resolves) ·
+Kaufhaus **D** · Guildhall **B** · Cold Store **B** · Shipping Office **C** (the four private
+`art:` rows re-pointed) · Kontorhaus **B** · Guildhouse **B** (the artLayer stand-ins
+re-pointed) · **load = crane B** replacing `bonus-load.png` in place · **hall D** + the cart
+ruling (`ICONS.md` Round 15). Batch notes: Shipmaster A/B were tiller-only regens — the first
+pair painted a ship's WHEEL (not invented until c. 1700; the tiller-only clause is now standing
+language for ship subjects); carter-D shipped a gilt frame (fixed 6% crop); every painted render
+went through the deframe + band gates (frames auto-trimmed on roughly half). The optionals
+(§4 item 4, §5's v8 chart, the parchment wash) stay open; nothing waits on them.
 
 ### 1 · Specialist portraits ×5 (the v8 hires — each wearing a retired specialist's portrait today)
 | File | Subject (the prop is the trade's signature) | Stand-in in use |
@@ -515,12 +526,25 @@ landing, save under the exact filename and delete the matching `art:` / `slug:` 
 | `kontor-tile-guildhouse.png` | **Guildhouse** | a guild's meeting house at a far Kontor: a timber hall with a bell turret and a carved guild sign | `building-hansediet.png` |
 
 ### 4 · Icons (the sticker set — `art/icons/`, then wire `ICON_ART` in `components.js`)
-1. **`cart.png`** — the CART verb (the Cellar's ALTERNATE face on the Wharf board, the Carter, the Kaufhaus line, the aid): a two-wheeled cart with a single cask aboard on a road, shafts forward — distinct from `bonus-load.png` (the cask on the DOCK cart, which means "load"). Map as `ICON_ART['truck']='cart'`; every truck site swaps.
-2. **`hall.png`** — the hall (the Bruges panel, the aid, the Guildmaster): a tasting cup under a small laurel, the guild of brewmasters' mark. Map as `ICON_ART['crown']='hall'`.
-3. *(Optional)* **`station-harbor.png` re-cut** — the commission is FREE for a Cog now; the coin stack on the current icon reads as a purchase. A hull on the stocks with a post die beside it would say "commission, then post".
+1. **`cart.png` — LANDED by ruling (2026-09-06):** the road-cart candidates collided with the
+   landed cask-on-cart, so the former load art (`bonus-load.png`) **is** the cart — copied to
+   `cart.png`, `truck:'cart'` mapped (the Cellar's ALTERNATE, the Carter, the Kaufhaus line, the aid).
+2. **`hall.png` — LANDED (pick D, 2026-09-06):** the tasting cup under the arched laurel,
+   the brewmasters' guild mark; `crown:'hall'` mapped (the Bruges panel, the aid, the Guildmaster).
+3. **`bonus-load.png` re-cut — the OPEN pick:** LOAD becomes **the medieval treadwheel harbor
+   crane** lifting a cask (designer-ruled 2026-09-06 — cart and load may not share art). The
+   winner replaces `bonus-load.png` IN PLACE so every `package-plus` load site updates; candidates out.
+4. **`station-harbor.png` re-cut — LANDED (pick B, 2026-09-06):** the hull on launch stocks
+   with the bone post die beside it — "commission, then post"; the coin stack retires (a Cog
+   commissions free). Replaced in place; every `LU('ship')` site swapped.
 
-### 5 · Boards (both playable as they stand)
-- **The sea board** rides `seamap.png` (the portolan chart, Hamburg's wharf works at the left edge) under parchment panels — playable as is. *(Optional)* a v8-specific chart: the same portolan grammar with the North Sea on the left half and the Baltic on the right, the Sound and the Skagerrak suggested as straits, no lettering.
+### 5 · Boards
+- **The sea board** rides `seamap.png` — **the v8 chart LANDED (pick C, 2026-09-06)**: the
+  wordless two-seas portolan (a sea per half, the peninsula between, the straits suggested),
+  replaced in place under both surfaces (the print sheet's `sb-art`, the app's `.seamap`
+  wash). The v7 chart (Hamburg's wharf works at the left edge) lives in git history. Gotcha
+  re-proved on this pass: name a strait and the model letters it — describe the geography
+  namelessly (see `ICONS.md` Round 16).
 - **The Wharf board** is unchanged (`wharf-board.png`).
 
 ### 6 · Nothing wanted
