@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design (live build v8.0e “Brewer & Merchant”)
+# Brewhouses of the Hanse — Design (live build v8.0f “Brewer & Merchant”)
 
 > The working design doc: **why the game is the way it is**, the **current architecture**,
 > the **change log**, the **balance lessons** and the **open watches**. Operational rules
