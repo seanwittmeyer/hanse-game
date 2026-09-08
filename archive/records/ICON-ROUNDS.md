@@ -175,16 +175,18 @@
 > `bonus-load.png` in place — every `package-plus` load site swapped at once, and cart/load
 > read apart at every size.
 
-> **Round 16 (designer, 2026-09-06): the optionals land.** **`station-harbor.png` re-cut
-> (pick B)** — the fresh hull on launch stocks with the bone POST DIE standing beside it; the
-> Round-3 coin stack RETIRES (a Cog commissions FREE in v8 — the icon now says "commission,
-> then post", the Harbor's printed verb pair). Replaced in place: every `LU('ship')` site
-> swapped — the Wharf board's Harbor primary (print + app), the aid's Harbor line, the
-> Shipmaster's card, the app's load/commission prompts. **And the v8 sea chart (pick C)**
-> replaced `seamap.png` in place — the wordless two-seas portolan under both boards. Batch
-> lesson RE-PROVED: naming a strait gets it LETTERED onto the water (Skagerrak · Kattegat ·
-> Baltic Sea baked across three renders) — describe the geography namelessly; a "no lettering"
-> clause alone does not hold against proper nouns in the subject line.
+> **Round 16 (designer, 2026-09-06): the sea chart lands; the harbor re-cut is REVERTED the
+> same day.** **The v8 sea chart (pick C)** replaced `seamap.png` in place — the wordless
+> two-seas portolan under both boards. Batch lesson RE-PROVED: naming a strait gets it
+> LETTERED onto the water (Skagerrak · Kattegat · Baltic Sea baked across three renders) —
+> describe the geography namelessly; a "no lettering" clause alone does not hold against
+> proper nouns in the subject line. **The `station-harbor.png` re-cut (hull + post die, pick
+> B) was landed and REVERTED by ruling within the hour — the Round-3 coin stack STANDS.** The
+> die read as a component that is not in the action: commissioning pays GOODS (Hulk 1G · Cog
+> free), and the coins say "this costs something", which is true. **THE LAW this ruling states
+> (standing for every icon): an icon shows the action's OWN components and cost — no component
+> in the action, no component in the icon.** If the coin stack ever changes, it becomes GRAIN
+> (the actual fee), never a die.
 
 > **Scope ruling (designer, 2026-08-03, mid-program):** §4 building crests, §5 specialist
 > crests and §6 reference glyphs are **SKIPPED** — those surfaces keep their Lucide glyphs
