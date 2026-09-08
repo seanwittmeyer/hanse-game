@@ -302,7 +302,7 @@ function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
   +(brewed?'<div class="c-brewed">'+LU('check')+'</div>':'')
   +'<div class="c-costpanel">'+(r.start
     ? '<span class="clab">starting recipe</span>'
-    : '<span class="clab">wharf fee</span><span class="cbig">'+(((r.buy||{}).g||(r.buy||{}).h)?cost(r.buy.g,r.buy.h):'free')+'</span>')+'</div>'
+    : '<span class="clab">fee</span><span class="cbig">'+(((r.buy||{}).g||(r.buy||{}).h)?cost(r.buy.g,r.buy.h):'free')+'</span>')+'</div>'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU('quality-'+r.L)+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
@@ -702,6 +702,7 @@ var HC_CSS4=''
 +'.btile .vt-pts .starmark{width:.46in!important;height:.46in!important;vertical-align:0!important}'
 +'.btile.kbt .bt-nm{font-size:.15in}.btile.kbt .kb-seat{position:absolute;right:.06in;top:.3in;width:.42in;height:.42in;border:2px dashed rgba(255,255,255,.85);border-radius:.06in;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2)}'
 +'.btile.kbt .kb-seat img.ai,.btile.kbt .kb-seat svg{width:.3in;height:.3in;opacity:.7}'
++'.btile.kbt .btFC{padding-top:.06in;gap:.02in}.btile.kbt .bt-cond{max-width:.64in;font-size:.12in;white-space:normal;line-height:1.1}.btile.kbt .ac,.btile.kbt .ac svg,.btile.kbt .ac .ic{width:.44in;height:.44in}'   // the condition line wraps in the band left of the die seat; the action icon sits below the seat
 +'.stile .st-chit{display:inline-flex;align-items:center;gap:.04in;border:2px dashed rgba(255,255,255,.8);border-radius:.05in;padding:.01in .05in}'
 +'.invtok{width:.75in;height:.75in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.42in;line-height:1;box-shadow:inset 0 0 0 .04in #571a20;text-shadow:0 1px 2px rgba(0,0,0,.5)}'
 +'.kchit{width:.75in;height:.75in;border-radius:50%;background:var(--c,#6f6253);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1;box-shadow:inset 0 0 0 .04in rgba(0,0,0,.35);text-shadow:0 1px 2px rgba(0,0,0,.5)}'

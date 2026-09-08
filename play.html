@@ -638,7 +638,7 @@ const ICONTIP={
   ship:'Harbor — Commission, a must when it can, then Post on that Ship’s lane (primary) · Build at a Kontor or Raise die (alternate).',
   anchor:'Slot — one of the 8 perimeter spaces: a building below, a Ship above (never casks).',
   sailboat:'Ship — bound for its printed Kontor, or wild (named by the first cask loaded); Cog 2 · Hulk 3 berths; full = it sails at once.',
-  landmark:'Kontor — a delivery scores cask die + your building die there; the field is the majority; the minimum is Q2.',
+  landmark:'Kontor — a delivery scores cask die + your building die there; the field is the majority; the die floor: London 2 · Bergen 3 · Novgorod 4.',
   'building-2':'Public Work — shared, passive on its slot’s traffic; it sails away with its Ship, nothing refills.',
   'scroll-text':'Recipe — permission to brew; earned at the yard or by the Gain 1 recipe bonus, at its printed fee.',
   wrench:'Specialist — an asymmetric power, 2 seats; Bergen’s prize or the Gain 1 specialist bonus.',
@@ -1086,7 +1086,7 @@ function tileTip(t,slot){
   if(!t)return (b?bldgTip(b)+' · ':'')+'Open slot — commission a Ship here.';
   if(t.type==='ship'){
     const cargo=t.load.length?(' · aboard '+t.load.map(L=>S.players[L.owner].name+'’s '+styleShort(L.style)+' (die '+L.die+')').join(', ')):'';
-    return shipName(t)+' → '+shipDestName(t)+' · '+t.load.length+'/'+effCap(t)+' berths · boards Ready, Q2+, under your count · full = it sails'+cargo+btip;}
+    return shipName(t)+' → '+shipDestName(t)+' · '+t.load.length+'/'+effCap(t)+' berths · boards Ready · the die meets the floor · Q ≤ your count · the lane open · full = it sails'+cargo+btip;}
   return btip;
 }
 function cellTip(cell){return CELLTIP[CELLNAME[cell]];}
@@ -1335,7 +1335,7 @@ function stationActAvail(p,c,a){
 // printed words only; the reminder rides the tooltip (the charter: components big, prose small)
 const STN_VERB={
   source :{ic:'goods-2',     lbl:p=>'Gain '+SRC_PRIMARY+' goods',  tip:p=>'any mix — the same words and glyph as the cask bonus'},
-  loadany:{ic:'package-plus',lbl:p=>'Load 1',                    tip:p=>'one Ready cask of yours onto any docked Ship (Q2+, under your count, its lane open)'},
+  loadany:{ic:'package-plus',lbl:p=>'Load 1',                    tip:p=>'one Ready cask of yours onto any docked Ship (the die meets the Kontor’s floor, Q ≤ your count, its lane open)'},
   brew   :{ic:'flask-conical',lbl:p=>'Brew',                     tip:p=>'a full brew at its recipe cost, with its search; Gruit takes the top tile'},
   pbuild :{ic:'hammer',      lbl:p=>'Build',                     tip:p=>'a tile from your hand onto any vacant slot ('+costStr(T1_FEE)+'), or Flip your standing tier 1 ('+costStr(FLIP_FEE)+')'},
   comm   :{ic:'ship',        lbl:p=>'Commission',                tip:p=>'a must when it can · '+commFeeStr()+' · then Post on its lane · then the maiden load'},
@@ -1350,7 +1350,7 @@ function stnActWhy(a){
   if(a==='brew')return 'Needs an open vessel, an affordable recipe with tiles in its stack, and a die in your supply.';
   if(a==='age')return 'No maturing cask in your vessels.';
   if(a==='comm')return 'No affordable Ship on display, or no slot to take (the commission lapses).';
-  if(a==='loadany')return 'No Ready cask fits a docked Ship (Q2+, under your count, its lane open).';
+  if(a==='loadany')return 'No Ready cask fits a docked Ship (the die meets the Kontor’s floor, Q ≤ your count, its lane open).';
   if(a==='cart')return 'No Ready cask under your count to cart.';
   if(a==='pbuild')return 'Nothing to build: a tile in hand needs a vacant slot and its fee; a Flip needs your standing tier 1 and its fee.';
   if(a==='kbuild')return 'No Kontor where you hold the whole branch with an open slot, a tile and a die — and no die of yours at sea to Raise die.';
@@ -1435,7 +1435,7 @@ function stopLabel(st){const p=cur();
   return '';}
 function stopTip(st){const p=cur();
   if(st.kind==='cell')return stnActTip(p,seatVerb(st.cell,st.alt));
-  if(st.kind==='load')return 'Load one Ready cask of yours onto this Ship (Q2+, under your count, its lane open); a full Ship sails at once.';
+  if(st.kind==='load')return 'Load one Ready cask of yours onto this Ship (the die meets the Kontor’s floor, Q ≤ your count, its lane open); a full Ship sails at once.';
   if(st.kind==='pact'){const b=privAt(st.slot);const d=b&&privDef(b);return d?d.desc:'';}
   if(st.kind==='shipmaster')return 'A docked Ship carrying a cask of yours sails unfull; a wild one, you name its Kontor.';
   return '';}
@@ -1577,7 +1577,7 @@ function beginLoadStop(slot,rt){const t=S.slots[slot];
 function enterLoad(ships,rt,loadsLeft){const p=cur();
   ships=(ships||[]).filter(sid=>{const t=S.slots[sid];return t&&t.type==='ship';});
   const elig=readyInVessels(p).filter(o=>ships.some(sid=>canTake(sid,o.i)));
-  if(!ships.length||!elig.length){log('↳ nothing to load (no Ready cask is Q2+, under your count, with its lane open).');resume(rt);return;}
+  if(!ships.length||!elig.length){log('↳ nothing to load (no Ready cask meets the Kontor’s floor, Q ≤ your count, with its lane open).');resume(rt);return;}
   loadsLeft=Math.max(loadsLeft||1,hasUpgrade(p,'crane')?2:1);   // the STEVEDORE raises every load flow to 2
   UI.sub='load';UI.load={ships,returnTo:rt,loadsLeft,cask:null,count:0};render();
 }
@@ -2815,7 +2815,7 @@ function renderAid(){
       +row('user-round','Move to an adjacent station','orthogonal only; never stay; turn one places anywhere')
       +row('layers','Work its whole counter','any order, all optional except the Harbor’s must: its primary · its alternate · a Load at each flanking slot · your own private building there')+'</div>'
     +'<div class="asec"><b>The cask</b><div class="alife">'
-      +stp('flask-conical','Brew')+ARR+stp('hourglass','Age')+ARR+stp('check','Ready')+ARR+stp('package-plus','Board: Q2+ · under your count · the lane open')+ARR+stp('sail','Full = sails')+ARR+stp('landmark','Deliver = cask die + your building die')+'</div>'
+      +stp('flask-conical','Brew')+ARR+stp('hourglass','Age')+ARR+stp('check','Ready')+ARR+stp('package-plus','Board: the die meets the floor · Q ≤ your count · the lane open')+ARR+stp('sail','Full = sails')+ARR+stp('landmark','Deliver = cask die + your building die')+'</div>'
       +row('beer','The eight cask bonuses — the tile fires once, as its cask boards or is carted','Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe at its fee · Gain 1 specialist · Build · Post · a Q2+ Brew searches the stack and picks the tile; Gruit takes the top tile (every one Gain 2 goods)')+'</div>'
     +'<div class="asec"><b>The sea — the quality count</b>'
       +row('post','A Post is a die of yours on a segment','it grows from Hamburg (the lowest segment of the lane you do not hold) · +1 each time a Ship sails through · a lane is open once every segment holds anyone’s post')
@@ -2871,7 +2871,7 @@ function renderBar(){
   else if(U==='stops'){
     prompt='Work the <b>'+CELLNAME[p.cell]+'</b> · any order, all optional'+(mustStopsLeft()?' · <b>the commission is a must</b>':'')+'.';
     acts=UI.stops.map((st,i)=>stopAvail(st)?btn(stopLabel(st),'resolveStop('+i+')',st.must?'primary':'go',stopTip(st))
-      :btnOff(stopLabel(st),st.kind==='cell'?stnActWhy(seatVerb(st.cell,st.alt)):st.kind==='load'?'No Ready cask may board this Ship (Q2+, under your count, its lane open).':'Not available right now.')).join('');
+      :btnOff(stopLabel(st),st.kind==='cell'?stnActWhy(seatVerb(st.cell,st.alt)):st.kind==='load'?'No Ready cask may board this Ship (the die meets the Kontor’s floor, Q ≤ your count, its lane open).':'Not available right now.')).join('');
     if(!UI.stops.length)acts='<span class="note">nothing left at this station</span>';}
   else if(U==='source'){const n=UI.src.n;prompt='Take '+n+' good'+(n===1?'':'s')+' (any mix).';
     let sb='';for(let g=n;g>=0;g--){const h=n-g;sb+=btn('Take '+(g?Gi(g):'')+(g&&h?' ':'')+(h?Hi(h):''),'srcTake('+g+','+h+')','go');}
@@ -2892,7 +2892,7 @@ function renderBar(){
   else if(U==='vlift'){prompt=LU('snowflake')+' <b>Lagering Cellar</b> — one Ready cask of yours <b>+1</b> (cap quality + 1).';
     acts=liftable(p).map(o=>btn(LU('beer')+styleShort(o.c.style)+' '+o.c.die+' ▲ '+(o.c.die+1),'liftPick('+o.i+')','go')).join('')+btn('Skip','liftSkip()','ghost');}
   else if(U==='load'){const L=UI.load;
-    if(L.cask==null){prompt='Load — pick a <b>Ready</b> cask from your vessels (Q2+, under your count, its lane open).';
+    if(L.cask==null){prompt='Load — pick a <b>Ready</b> cask from your vessels (the die meets the Kontor’s floor, Q ≤ your count, its lane open).';
       const elig=readyInVessels(p).filter(o=>L.ships.some(sid=>canTake(sid,o.i)));
       acts=elig.map(o=>btn(LU('beer')+styleShort(o.c.style)+' · die '+o.c.die,'loadPickCask('+o.i+')','go')).join('')+btn('Skip','loadSkip()','ghost');}
     else{const lc=p.vessels[L.cask];prompt='Load '+LU('beer')+styleShort(lc.style)+' (die '+lc.die+') onto which Ship?';

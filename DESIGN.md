@@ -15,7 +15,7 @@
 |               |                                                                                   |
 |---------------|-----------------------------------------------------------------------------------|
 |**Players**    |2–4 (a 5p mode runs, untuned)                                                        |
-|**Length**     |≈ 45–60 min at 2p · medium                                                          |
+|**Length**     |≈ 45–60 min at 2p, up to 90 at 4p · medium                                          |
 |**Genre**      |Medium euro · engine building · a shared action grid (the Wharf) + a private brewery + a sea board |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, Hamburg, c. 1350                  |
@@ -204,6 +204,24 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### The re-read after the re-cut — the registry drift closed (2026-09-08, designer-ruled — no `KEY` bump)
+
+*"Make the revisions for the items you identified."* The first full read of the re-cut canon,
+with the kit rendered headless and every face inspected, found the leftovers a surgical pass
+leaves: the rulebook printed *BUILD* in capitals, said *raise* where the verb is *Raise die*,
+called the Harbor's alternate *Build a Kontor building*, counted the visit in *stops* (the noun
+`STYLE.md` §2 bans — and the registry's own *must* and *resolve* rows still used), said *whenever*
+for a repeat, *score track* for the score ring, *neutral Ships* for shared ones, and *90 minutes*
+where `DESIGN.md` said 45–60 at 2p; the app's Kontor tooltip still called the minimum *Q2* and
+eight boarding reminders read *Q2+* where the gate is the die floor; the recipe cards printed
+*wharf fee* for the registry's *fee*; the Kontor building tile's condition line ran under its die
+seat, so a standing die hid the end of *a Ship bound here*. **Ruled under the rule of silence:**
+the ban on *stop* stands and the noun is *action* in player copy (a visit offers up to six
+actions); the length prints as one range on every surface, **45–90 minutes** (45–60 at 2p, up to
+90 at 4p). Surfaces: `RULES.md` §2/§7/§12 · `STYLE.md` §1/§2 · `rulebook.html` (the hero, §4,
+§5, §6, §8, §9, §10) · `play.html` (the tooltips and reminders) · `components.js` (the recipe
+card, the Kontor tile) · `DESIGN.md` §1/§10. No rule changed: verify 59/59, the sim clean.
 
 ### The repo re-cut (2026-09-07, designer-ruled — no `KEY` bump)
 
@@ -469,9 +487,12 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 **Where the build stands (2026-09-07).** v8.0g on every surface: `RULES.md`, the manifest, the
 registry, `play.html` (KEY `hanse-v80g`), `components.js`, `print.html` (the v8 kit: the sea
 board, the re-faced tiles, the ⚜ tokens and chits, the tri-fold aid) and `rulebook.html`, all
-re-derived on 2026-09-06/07. Gates: verify 59/59; the sim clean at 2–4p (0 crashes / 0
-deadlocks, the twelve-dice identity), greedy pace ≈ 14–15 / 13–14 / 13–14 rounds, 100% in the
-13–18 band. The art the new faces still lack is queued in `art/PROMPTS.md`.
+re-derived on 2026-09-06/07 and re-read whole on 2026-09-08. Gates (2026-09-08): verify 59/59; the
+sim clean at 2–4p (0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 16 / 14 / 15
+rounds, 100% in the 13–18 band — but the round-18 backstop, which the pre-floor build never
+reached, fired in a third of the 2p games and a sixth of the 3p games with dice unspent (the sea
+tempo watch, below). The kit renders clean headless: every referenced art file is on disk. The art
+the new faces still lack is queued in `art/PROMPTS.md`.
 
 **Next.** The designer's own table. Then the oracle read: re-derive the probe fleet from
 `archive/v5/playtests/` when called. **Never a corpus before a human table.**
@@ -514,8 +535,12 @@ hall as framed.
 - **The warm Gruit.** The first-round feel: turn one carts a Gruit to the yard without a Brew.
 - **The private ladder.** The Granary → Kaufhaus step is *Cart 2 + 2★* for 2 `G` 1 `H`; does
   the Flip still earn its fee?
-- **The sea tempo.** The greedy seats fill Ships slowly (Hulks of three wait); the load and
-  commission values want a human read before any tuning corpus.
+- **The sea tempo.** The greedy seats fill Ships slowly (Hulks of three wait): 1–1.5 sails a
+  game at 2–3p since the die floors, and the round-18 backstop now fires in a third of 2p greedy
+  games with dice unspent. The load and commission values want a human read before any tuning
+  corpus. Three lines the greedy seats never fire — the Granary's pay-to-Brew, the Bonded
+  Store's post, the hall — are read from the committed lanes and the table, never from the
+  greedy average.
 - **Is there more than one engine tile, and do the dice end the game?** The v7 read's two
   structural findings (one Venture face was the engine; 21 of 30 search-tier 2p games ended on
   the ceiling because deferral read as free). v8's answer is the supply clock and the ladder;

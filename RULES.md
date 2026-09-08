@@ -63,7 +63,7 @@ player fixed.
 
 1. **Move** — move your worker to an **adjacent station** (orthogonal; never stay; turn 1
    places anywhere). Sharing costs nothing.
-2. **Work the station** — resolve its stops **in any order**, each at most once, **all
+2. **Work the station** — take what the visit offers **in any order**, each at most once, **all
    optional except the one printed *must***:
    - its printed **primary** action;
    - its printed **alternate** action;
@@ -172,7 +172,7 @@ printed far Kontor, or is **wild**. No Ship goes to Bruges. **Nobody owns a Ship
 load any docked Ship.
 
 - **Commission** (the Harbor, §3): pay the fee, dock the Ship, then Post, then the maiden load.
-- **Load** (a flanking stop · the Market's Load 1 · the *Load 1* bonus · the Stevedore): one
+- **Load** (a flanking slot · the Market's Load 1 · the *Load 1* bonus · the Stevedore): one
   Ready cask from your vessels onto a docked Ship, if all of:
   1. **the minimum**: the cask's **die, as it boards** (after the slot's Raise die, §4), meets
      the Kontor's printed floor — **London 2 · Bergen 3 · Novgorod 4**. A Hopped raised to 3
@@ -296,8 +296,8 @@ every dealt recipe (§12). Holding every recipe, a bonus recipe simply pays noth
 The four stations are the base: a little of everything for everyone. **Your private buildings
 are strictly better and build on each other.** Your hand holds **4 tiles**: four designs,
 tier 1 on one face and tier 2 on the other. **A tile stands on any vacant slot of the 8 — you
-choose — and fires on visit: whenever you work the station that slot flanks** (a flanking
-stop, §2). Its slot picks its station, not its name: a Cold Store beside the Market fires on
+choose — and fires on visit: each time you work the station that slot flanks** (§2). Its
+slot picks its station, not its name: a Cold Store beside the Market fires on
 your Market visits. Rivals never use it; the tide never takes it; a docked Ship may stand
 above it; **no die stands on it**. No limit per station: two of your tiles may flank one
 station.

@@ -14,7 +14,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | the Wharf | the shared core: 4 stations ringed by 8 slots | wharf | — · yes | the board |
 | station | one of the 4 action spaces (Market · Brewhouse · Cellar · Harbor); each prints a primary and an alternate, both open on a visit | station-* | stations · no | space, cell |
 | primary / alternate | a station's two printed actions | — | — · no | alt (the chip label only) |
-| must | the one mandatory stop: the Harbor's Commission, when it can | — | — · no | required, forced |
+| must | the one mandatory action: the Harbor's Commission, when it can | — | — · no | required, forced |
 | slot | one of the 8 perimeter spaces; seats a building and/or a Ship, never casks; each flanks a station | — | slots · no | — |
 | Hamburg | the home port at the root of the sea board; where the Wharf stands | — | — · yes | — |
 | the sea board | the board printing Hamburg, the cart road, the five segments and the four Kontor panels; side A (2p) / side B (3–4p) | — | — · yes | Destinations board, the map |
@@ -99,7 +99,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | **flip** | turn your standing tier 1 over to its tier 2 | upgrade |
 | **seat** | place a specialist into an open seat | hire |
 | **score** | add ★ on the score ring at once | bank |
-| **resolve** | work through a station's stops in any order, each once | — |
+| **resolve** | work through a visit's actions in any order, each once | — |
 | **pay X: Y** | the at-cost line: a printed price, a colon, a verb; paying is optional ("may"), the verb then fires once — the Granary / Kaufhaus *pay 1 G: Brew* · the Bonded Store *On sail: each shipper may pay 1 G: Post*. Cost before effect: on a face the `G` chip, a colon, the verb's icon | buy, for |
 
 **Triggers**, one grammar on every face: **On load** · **On sail** · **On visit** · **On your
