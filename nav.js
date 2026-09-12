@@ -1,4 +1,4 @@
-// Brewhouses of the Hanse — THE SITE NAVIGATION, in one place.
+// Merchant Brewer of the Hanse — THE SITE NAVIGATION, in one place.
 // Every page carries the SAME destinations in the SAME order with the SAME colours; the
 // page you are on renders as a marked, non-clickable chip. Edit the roster HERE, never
 // per-page. Tiny and dependency-free on purpose.

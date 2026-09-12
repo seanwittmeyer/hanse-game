@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" href="art/favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brewhouses of the Hanse — Play (hot-seat) · v8.0 “Brewer & Merchant”</title>
+<title>Merchant Brewer of the Hanse — Play (hot-seat) · v8.0 “Brewer & Merchant”</title>
 <style>
   :root{
     --parch:#f3e9d2; --parch2:#e9dcc0; --ink:#2b2018; --ink2:#5b4a37;
@@ -2183,7 +2183,7 @@ function studioPlainLog(){return S.log.slice().reverse()
 function safeJson(o){try{return JSON.stringify(o);}catch(e){return '[unserializable: '+(e&&e.message||e)+']';}}
 function diagText(){
   const L=[];
-  L.push('=== Brewhouses of the Hanse — diagnostic ===');
+  L.push('=== Merchant Brewer of the Hanse — diagnostic ===');
   L.push('build: '+(typeof APP_VERSION!=='undefined'?APP_VERSION:'?')+'  ·  save KEY: '+(typeof KEY!=='undefined'?KEY:'?'));
   L.push('captured: '+new Date().toISOString());
   if(!S){L.push('(no game in progress)');return L.join('\n');}

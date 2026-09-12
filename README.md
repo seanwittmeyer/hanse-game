@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse
+# Merchant Brewer of the Hanse
 
 A theme-first **medium euro** for **2–4 players**. It's c. 1350 in Hamburg: you run a Hanseatic **merchant brewing house**. The work runs **Gain goods → Brew → Age → Ship** at **the Wharf** (four stations ringed by eight slots), and nothing sails without your dice at sea. No money, no cards-as-hand, no dice-as-randomizers: goods are the only currency, and twelve quality dice are your whole game.
 

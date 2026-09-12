@@ -1,7 +1,7 @@
 ---
 name: brewhouse-gatekeeper
 description: >-
-  Run a hard-nosed board-game-industry gatekeeper review of Brewhouses of the
+  Run a hard-nosed board-game-industry gatekeeper review of Merchant Brewer of the
   Hanse (or whichever Waterworks Games title is in the working directory),
   then turn that critique into a prioritized path forward. Use this whenever
   the user wants the game evaluated the way a tough reviewer, distributor
@@ -59,7 +59,7 @@ The analytical backbone is the retention model in
 `references/pull-framework.md` — read it before reviewing. The one-line version:
 durable replay in a medium-heavy euro comes mostly from **legible loss** (the
 player can name the decision that cost them and believes a cleaner line was
-reachable). That is the load-bearing test for Brewhouses, because its standing
+reachable). That is the load-bearing test for Merchant Brewer, because its standing
 comps — Great Western Trail and Distilled — both have it.
 
 So every review resolves two axes the user keeps returning to:
@@ -118,7 +118,7 @@ is legible** in the current build.
 ### 6. The comp face-off
 Head-to-head against the games it wants to go toe-to-toe with — default to
 **Great Western Trail** and **Distilled**, plus any comp the user names at
-runtime. For each: where Brewhouses wins, where it loses, where it draws, and
+runtime. For each: where Merchant Brewer wins, where it loses, where it draws, and
 the honest answer to "why would someone keep this on the shelf and shelve the
 comp." Use `references/comps.md` for the dossier. Don't flatter — if it loses
 the face-off, the forward path is where that gets addressed.

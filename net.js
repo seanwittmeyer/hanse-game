@@ -1,4 +1,4 @@
-// net.js — Brewhouses of the Hanse · the ONLINE-TABLE bridge.
+// net.js — Merchant Brewer of the Hanse · the ONLINE-TABLE bridge.
 // Loaded by play.html on every page view but FULLY INERT unless the page was opened with ?net=1
 // (the engine's NET const). In net mode a parent shell (the platform: lobby + backend) embeds
 // this page in an iframe and speaks postMessage; the engine stays the one canonical

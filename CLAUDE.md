@@ -137,7 +137,7 @@ and no rulings.** A comment says what the code does; the story is `DESIGN.md`'s 
 
 ## 7 · What the game is
 
-*Brewhouses of the Hanse* — a 2–4 player medieval-Hanseatic brewing euro, c. 1350, Hamburg;
+*Merchant Brewer of the Hanse* (*Merchant Brewer* for short) — a 2–4 player medieval-Hanseatic brewing euro, c. 1350, Hamburg;
 medium weight (*Great Western Trail* / *Distilled*); print-and-play. You run a merchant
 brewing house at **the Wharf**: four stations on a shared 2×2 (Market · Brewhouse · Cellar ·
 Harbor) ringed by eight slots, where the work runs **Gain goods → Brew → Age → Ship**. Goods

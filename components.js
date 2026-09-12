@@ -1,4 +1,4 @@
-// Brewhouses of the Hanse — the shared CARD COMPONENT LIBRARY.
+// Merchant Brewer of the Hanse — the shared CARD COMPONENT LIBRARY.
 // Single source of the printed card faces: data + generators + card CSS, used by BOTH
 // print.html (the print kit) and play.html (the app mirrors the kit). Faces are the
 // canon — edit a card HERE, never per-page. Everything lives in one IIFE and is exposed as
@@ -311,7 +311,7 @@ function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
 
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 // ---- the card CSS, injected once ----
-var HC_CSS='/* Brewhouses of the Hanse — the shared CARD component styles (injected by components.js).\n\
+var HC_CSS='/* Merchant Brewer of the Hanse — the shared CARD component styles (injected by components.js).\n\
    Verbatim from print.html (the vetted print kit); generic helpers are SCOPED to the\n\
    component roots so the library never restyles a host page\'s own UI (play.html). */\n\
 .ccard,.bcard,.icard,.card,.tok,.disc,.frame,.cover,.wtok{--ink:#2b2018;--ink2:#5b4a37;--parch:#f3e9d2;--green:#4a6b3a;--gold:#b8860b;--red:#7c2128;--sea:#274b5c}\n\

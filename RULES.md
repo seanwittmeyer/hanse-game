@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — The Rules
+# Merchant Brewer of the Hanse — The Rules
 
 *The rules of the live build (`play.html`, KEY `hanse-v80g`). This document is the rules and
 nothing else.*

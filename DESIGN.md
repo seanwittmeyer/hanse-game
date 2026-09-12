@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Design
+# Merchant Brewer of the Hanse — Design
 
 > The design story: **why the game is the way it is**, the **current architecture**, **the one
 > change log**, the **balance lessons**, and **the state of play with its open watches** (§10).
@@ -204,6 +204,19 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### The rename — Merchant Brewer of the Hanse (2026-09-12, designer-ruled; no rules change, no KEY bump)
+
+*"The new title is the Merchant Brewer of the Hanse, or merchant brewer for short."* The title
+names the player, not the building: v8's thesis is *a good brewer AND a good merchant*, and the
+name now says so. **Merchant Brewer of the Hanse** on every surface that prints the title — the
+rulebook's cover, running head and footer; the kit's masthead, the aid's header and the sheet
+labels; the app's title; the landing page; the six documents' headers; the charter's §7; the
+gatekeeper skill — with *Merchant Brewer* as the short form. Unchanged by design: the build name
+*Brewer & Merchant* (a version name, not the title), the save-key prefix `hanse-`, the repository
+and its Pages address, and the archived builds, which keep the name they were played under. The
+studio's game record still carries the old title; the studio's tools expose no rename, so that is
+the designer's own edit.
 
 ### The re-read after the re-cut — the registry drift closed (2026-09-08, designer-ruled — no `KEY` bump)
 

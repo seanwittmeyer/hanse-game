@@ -1,4 +1,4 @@
-# Brewhouses of the Hanse — Term Registry & Style
+# Merchant Brewer of the Hanse — Term Registry & Style
 
 **This file is rank 1.** Every word printed on a component comes from this registry; the
 house style guide (§G) governs sentence shape. Rules: `RULES.md`. Code identifiers are not
@@ -10,6 +10,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 
 | Term | Definition | Icon | Plural · caps | Banned |
 |---|---|---|---|---|
+| the title | *Merchant Brewer of the Hanse*; *Merchant Brewer* for short (designer-ruled 2026-09-12; the build name *Brewer & Merchant*, the save-key prefix `hanse-` and the repo slug stay) | — | — | ~~Brewhouses of the Hanse~~ |
 | player | you, the person at a seat | — | players · no | house |
 | the Wharf | the shared core: 4 stations ringed by 8 slots | wharf | — · yes | the board |
 | station | one of the 4 action spaces (Market · Brewhouse · Cellar · Harbor); each prints a primary and an alternate, both open on a visit | station-* | stations · no | space, cell |
