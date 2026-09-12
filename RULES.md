@@ -1,6 +1,6 @@
 # Merchant Brewer of the Hanse — The Rules
 
-*The rules of the live build (`play.html`, KEY `hanse-v80g`). This document is the rules and
+*The rules of the live build (`play.html`, KEY `hanse-v80h`). This document is the rules and
 nothing else.*
 
 **2–4 players · c. 1350 · Hamburg. You run a merchant brewing house of the Hanseatic League.**
@@ -36,8 +36,8 @@ Shared board:
 - **The sea board**, side A (2p) / side B (3–4p): Hamburg, the cart road to Bruges, the five
   **segments** (§8), each printing one **post seat per colour**; the three far **Kontor
   panels** (London · Bergen · Novgorod), each printing its **building slots** (1 on side A ·
-  2 on side B), its **minimum** (a die floor: London 2 · Bergen 3 · Novgorod 4), its
-  **majority pair**, its **field** and its **prize**; and the **Bruges panel**, printing **the
+  2 on side B) and each slot's **building die start face** (London 1 · Bergen 1 · Novgorod 2 ⚙),
+  its **minimum** (a die floor: London 2 · Bergen 3 · Novgorod 4), its **majority pair**, its **field** and its **prize**; and the **Bruges panel**, printing **the
   yard track** (three zones), **the hall** (6 places on A · 8 on B) and **the hall die's seat**.
 - **The hall die** (neutral) on its seat at **2**.
 - **Recipes:** deal **3 of the 4 export beers**, **4 copies each**; the undealt export's cards
@@ -87,7 +87,7 @@ slot's load if it has not been used.
 |---|---|---|
 | **A · Market** | **Gain 2 goods**, any mix | **Load 1** Ready cask onto **any** docked Ship (§7) |
 | **B · Brewhouse** | **Brew** — pay a recipe's goods; a supply die into an open vessel at the beer's printed start value; **a Q2+ Brew searches the beer's stack and chooses the tile** (§5) | **Build, the wharf** — place a private building from your hand onto any vacant slot, or Flip your standing tier 1, at its fee (§12) |
-| **C · Harbor** | **Commission — *must*, when it can** — take a Ship from the display at its fee (**Cog free · Hulk 1 `G`**), dock it on a shipless slot or over an empty docked Ship (which returns to the deck); the display refills at once. **Then Post**: stand a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it onto the new Ship now, free — **the maiden load, a Load in every respect** (§7), taken after the post. | **Build, a Kontor** — at a far Kontor where **your own post stands on every segment of its branch**, place one of your Kontor building tiles in an open slot and stand a supply die on it at face 1 (§8) — **or Raise die**: turn one die of yours at sea +1 (cap 6) |
+| **C · Harbor** | **Commission — *must*, when it can** — take a Ship from the display at its fee (**Cog free · Hulk 1 `G`**), dock it on a shipless slot or over an empty docked Ship (which returns to the deck); the display refills at once. **Then Post**: stand a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it onto the new Ship now, free — **the maiden load, a Load in every respect** (§7), taken after the post. | **Build, a Kontor** — at a far Kontor where **your own post stands on every segment of its branch**, place one of your Kontor building tiles in an open slot and stand a supply die on it at the slot's printed face (§8) — **or Raise die**: turn one die of yours at sea +1 (cap 6) |
 | **D · Cellar** | **Age 3** — turn your aging dice up three steps, split freely | **Cart 1** — send one Ready cask of yours to Bruges by road, resolved at once at the yard or the hall (§10) |
 
 *"When it can"* = a Ship is on display, a slot is free or an empty Ship can be displaced, and
@@ -216,7 +216,7 @@ every segment.
 - **A segment is unlocked while any post stands on it; a lane is open while every segment of
   its branch is unlocked.** An open lane is open to every player's Ships.
 - **A Kontor building is one of your three Kontor building tiles placed in a Kontor's slot,
-  marked with a supply die at face 1.** You may build only at a far Kontor where **your own
+  marked with a supply die at the slot's printed start face** ⚙ — **London 1 · Bergen 1 · Novgorod 2**. You may build only at a far Kontor where **your own
   post stands on every segment of that Kontor's branch** (Novgorod: E1 and E2). **One builder
   per slot; one building per player per Kontor**; each tile is used once. It enters by the
   Harbor's Build (§3), the *Build* cask bonus or London's prize.

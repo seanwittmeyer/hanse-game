@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80g). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80h). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80g',function(){eq(KEY,'hanse-v80g');});
+t('KEY is hanse-v80h',function(){eq(KEY,'hanse-v80h');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -144,10 +144,13 @@ t('canKBuild needs the chain, an open slot, no building of yours there, a tile a
   fresh(4);eq(S.sea.kontor.bergen.slots.length,2,'2 slots at 4p');eq(kontorSlotsN(3),2,'2 at 3p');eq(kontorSlotsN(2),1,'1 at 2p');});
 t('kbuildPick: the tile leaves the set, a die stands at 1, the count rises; the tile is used once',function(){fresh(2);var p=cur();
   UI.kb={ks:['bergen'],returnTo:'end',pid:0,k:null};UI.sub='kbuild';kbuildPick('bergen','kontorhaus');
-  var b=bldgAt(p,'bergen');ok(b&&b.tile==='kontorhaus'&&b.face===1,'the building stands');
+  var b=bldgAt(p,'bergen');ok(b&&b.tile==='kontorhaus'&&b.face===kbStart('bergen')&&b.face===1,'the building stands at Bergen\\'s printed 1');
+  eq(KB_START,{london:1,bergen:1,novgorod:2},'the start faces');eq(twelve(p),SUPPLY_DICE+2,'still twelve dice');
   eq(qualityCount(p),2);ok(p.ktiles.indexOf('kontorhaus')<0,'the tile used');
   putPost('e2',0,1);ok(canKBuild(p,'novgorod'));UI.kb={ks:['novgorod'],returnTo:'end',pid:0,k:null};UI.sub='kbuild';kbuildPick('novgorod','kontorhaus');
-  ok(!bldgAt(p,'novgorod'),'a used tile cannot be built again');});
+  ok(!bldgAt(p,'novgorod'),'a used tile cannot be built again');
+  fresh(2);p=cur();putPost('e2',0,1);p.supply--;UI.kb={ks:['novgorod'],returnTo:'end',pid:0,k:null};UI.sub='kbuild';kbuildPick('novgorod','warehouse');
+  var nb=bldgAt(p,'novgorod');ok(nb&&nb.face===2,'Novgorod\\'s building die starts at the printed 2');eq(twelve(p),SUPPLY_DICE+2,'twelve dice with the Novgorod building');});
 
 // ---------- 4 · the mandatory commission ----------
 t('beginStops marks the Harbor commission stop must:true when it can; endTurn refuses while it stands',function(){fresh(2);var p=cur();

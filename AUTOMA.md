@@ -38,7 +38,7 @@ as two loops that need each other:
 - **The mandatory commission** is priced whole (`aiCommValue`: the berths, the post it grants,
   the maiden load), damped once the wharf already holds three Ships; the Harbor's `must` stop
   is always resolved first.
-- **The Kontor building** (`aiKBuildValue`): casks to deliver × the modifier, the pips, the
+- **The Kontor building** (`aiKBuildValue`): casks to deliver × the modifier, the pips, the slot's start face (Novgorod's 2), the
   count; the tile by the seat's lane (the Kontorhaus for the hall lane or an ⚜-poor seat, the
   Guildhouse once dice stand at sea, else the Warehouse). **RAISE** turns the lowest die,
   building dice first.

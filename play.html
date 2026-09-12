@@ -713,6 +713,8 @@ const STATION_ALT_ICON={Market:'package-plus',Brewhouse:'hammer',Cellar:'truck',
 // a die floor, read on the cask's die as it boards; Bruges is reached by cart only.
 const KONTOR_MIN={london:2,bergen:3,novgorod:4};   // ⚙ each far Kontor's die floor, read on the DIE as the cask boards — after any Raise die at the slot
 function kMin(k){return KONTOR_MIN[k]||2;}
+const KB_START={london:1,bergen:1,novgorod:2};   // ⚙ the Kontor building die's start face, printed on the slot — Novgorod pays a little more once its chain is built
+function kbStart(k){return KB_START[k]||1;}
 const DEST={
   bruges  :{name:'Bruges',  role:'The Hanzehuis — the road: the yard and the hall',      pair:[4,2]},
   london  :{name:'London',  role:'The Steelyard — a build of any kind',   prize:'build', pair:[5,2]},
@@ -870,7 +872,7 @@ let activeTab=0;
 // boot then WAITS for an INIT over postMessage, local save/load are bypassed, and net.js (the
 // bridge script below — fully inert without the flag) drives seats/authority.
 const NET=(typeof location!=='undefined'&&/[?&]net=1(?:&|$)/.test(location.search||''));
-const KEY='hanse-v80g';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
+const KEY='hanse-v80h';  // the live build's save key — bump it on any rules change (never doc-only work); a bump clears in-progress saves
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
@@ -1714,8 +1716,8 @@ function kbuildPick(k,tile){const K=UI.kb;if(!K)return;const p=S.players[K.pid];
   snapshot();
   const i=kOpenSlot(k);
   p.ktiles.splice(p.ktiles.indexOf(tile),1);
-  S.sea.kontor[k].slots[i]={tile,pid:p.id,face:1};spendDie(p);
-  log(p.name+' builds the '+LU('kontorhaus')+' <b>'+KBUILDINGS[tile].name+'</b> at <b>'+DEST[k].name+'</b> — a supply die stands on it at <b>1</b>: the delivery modifier; +1 on any delivery there; its pips score at the end · the count reads <b>'+qualityCount(p)+'</b>.',true);
+  S.sea.kontor[k].slots[i]={tile,pid:p.id,face:kbStart(k)};spendDie(p);
+  log(p.name+' builds the '+LU('kontorhaus')+' <b>'+KBUILDINGS[tile].name+'</b> at <b>'+DEST[k].name+'</b> — a supply die stands on it at <b>'+kbStart(k)+'</b>: the delivery modifier; +1 on any delivery there; its pips score at the end · the count reads <b>'+qualityCount(p)+'</b>.',true);
   const rt=K.returnTo;UI.kb=null;UI.stage=null;resume(rt);}
 function kbuildBack(){if(UI.kb){UI.kb.k=null;UI.stage=null;render();}}
 function kbuildRaise(){const K=UI.kb;if(!K)return;const rt=K.returnTo;const pid=K.pid;UI.kb=null;UI.stage=null;enterRaise(rt,{pid});}
@@ -2381,6 +2383,7 @@ function aiBestPost(p,lanes,free){let bs=null,bv=-1e9;postTargets(p,lanes).forEa
 function aiKBuildValue(p,k,free){
   const rdy=vesselCasks(p).filter(o=>o.c.style!=='gruit').length+(p.supply>=3?1:0);
   let v=0.8+1.4*Math.min(3,rdy)+0.25*Math.min(6,aiRunway())+(aiCountGap(p)>0?1.5:0)+bldgsOf(p)*0.4;
+  v+=(kbStart(k)-1)*0.9;   // the slot's printed start face — Novgorod's 2 pays on every delivery and at the end
   v*=Math.max(1,aiPW(p,'merchant'),aiPW(p,'majority'));
   if(aiLateGame(p))v*=0.6;
   if(!free)v-=aiVerbValue(p,'brew')*0.35;
@@ -2819,7 +2822,7 @@ function renderAid(){
       +row('beer','The eight cask bonuses — the tile fires once, as its cask boards or is carted','Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe at its fee · Gain 1 specialist · Build · Post · a Q2+ Brew searches the stack and picks the tile; Gruit takes the top tile (every one Gain 2 goods)')+'</div>'
     +'<div class="asec"><b>The sea — the quality count</b>'
       +row('post','A Post is a die of yours on a segment','it grows from Hamburg (the lowest segment of the lane you do not hold) · +1 each time a Ship sails through · a lane is open once every segment holds anyone’s post')
-      +row('kontorhaus','A Kontor building: your tile + a supply die, where your posts reach','the die is the delivery modifier · +1 on any delivery there · its line: the Warehouse — your count reads +1 for a Ship bound there · the Kontorhaus — +1 ⚜ on your delivery · the Guildhouse — Raise die on your delivery · one per player per Kontor')
+      +row('kontorhaus','A Kontor building: your tile + a supply die, where your posts reach','the die starts at the slot’s printed face (London 1 · Bergen 1 · Novgorod 2) and is the delivery modifier · +1 on any delivery there · its line: the Warehouse — your count reads +1 for a Ship bound there · the Kontorhaus — +1 ⚜ on your delivery · the Guildhouse — Raise die on your delivery · one per player per Kontor')
       +row('dices','Count your dice at sea = the quality you may deliver anywhere','1 carts a Gruit · 2 ships a Hopped · 5 a Bock · every die at sea scores its pips at the end')+'</div>'
     +'<div class="asec"><b>The Kontore</b>'
       +'<table class="atable"><tr><th></th><th>Kontor</th><th>Prize per cask</th><th>Pair</th></tr>'+dests+'</table>'
@@ -2913,9 +2916,9 @@ function renderBar(){
     prompt=hpp.name+' — '+LU('post')+' <b>Post</b>: stand a supply die at face 1 on a glowing segment <span class="note">(the lowest segment of the lane you do not hold · supply '+hpp.supply+')</span>.';
     acts=P.segs.map(s=>btn(LU('post')+' '+SEGMENTS[s].nm,'postPick(\''+s+'\')','go')).join('')+btn('Skip the post','postSkip()','ghost');}
   else if(U==='kbuild'){const K=UI.kb;
-    if(UI.stage==='tile'&&K.k){prompt=hpp.name+' — build at <b>'+DEST[K.k].name+'</b>: which of your Kontor building tiles? <span class="note">(a supply die stands on it at 1)</span>';
+    if(UI.stage==='tile'&&K.k){prompt=hpp.name+' — build at <b>'+DEST[K.k].name+'</b>: which of your Kontor building tiles? <span class="note">(a supply die stands on it at '+kbStart(K.k)+')</span>';
       acts=(hpp.ktiles||[]).map(t=>btn(LU(KBUILDINGS[t].icon)+' '+KBUILDINGS[t].name+' <span class="note">'+KBUILDINGS[t].desc+'</span>','kbuildPick(\''+K.k+'\',\''+t+'\')','go')).join('')+btn('◂ Back','kbuildBack()','ghost');}
-    else{prompt=hpp.name+' — '+LU('kontorhaus')+' <b>Build at a Kontor</b> where your posts reach (a tile + a supply die at 1)'+(K.noRaise?'':', or <b>Raise die</b> one die of yours at sea +1')+'.';
+    else{prompt=hpp.name+' — '+LU('kontorhaus')+' <b>Build at a Kontor</b> where your posts reach (a tile + a supply die at the slot’s printed face: London 1 · Bergen 1 · Novgorod 2)'+(K.noRaise?'':', or <b>Raise die</b> one die of yours at sea +1')+'.';
       acts=K.ks.map(k=>btn(kIcon(k)+' '+DEST[k].name,'kbuildPickK(\''+k+'\')','go')).join('')+((!K.noRaise&&canRaise(hpp))?btn('▲ Raise die a die at sea','kbuildRaise()','primary'):'')+btn('Skip','kbuildSkip()','ghost');}}
   else if(U==='raise'){const R=UI.raise;
     prompt=hpp.name+' — <b>Raise die</b>: turn one die of yours at sea +1 (cap 6).';
@@ -3052,7 +3055,7 @@ function renderSea(){
       +'<div class="lnm">'+LU('post')+' '+SEGMENTS[seg].nm+' <span class="lk">'+seg.toUpperCase()+'</span></div><div class="lposts">'+seatsOf(seg)+'</div></div>';};
   const kCap=(k)=>{const D=DEST[k];const ks=S.sea.kontor[k];const onK=kbKs.includes(k)||wildKs.includes(k);
     const slots=ks.slots.map((sl,i)=>sl?'<span class="kslot'+((sl.pid===hpp.id&&rz['b:'+k]!=null)?' stopgo':'')+'"'+((sl.pid===hpp.id&&rz['b:'+k]!=null)?' onclick="raisePick('+rz['b:'+k]+')"':'')+' data-tip="'+attr(S.players[sl.pid].name+'’s '+KBUILDINGS[sl.tile].name+' — '+KBUILDINGS[sl.tile].desc+' · the die is the delivery modifier, face '+sl.face+((sl.pid===hpp.id&&rz['b:'+k]!=null)?' · click to Raise die it':''))+'">'+dieFace(sl.face,'',S.players[sl.pid].color,S.players[sl.pid].name+'’s building die at '+D.name+' — face '+sl.face)+'</span>'
-      :'<span class="kslot" data-tip="'+attr('An open building slot at '+D.name+' — a tile of yours + a supply die, where your posts reach')+'">'+LU('kontorhaus')+'</span>').join('');
+      :'<span class="kslot" data-tip="'+attr('An open building slot at '+D.name+' — a tile of yours + a supply die at '+kbStart(k)+', where your posts reach')+'">'+LU('kontorhaus')+'</span>').join('');
     const field=S.players.map(q=>{const n=fieldAt(q,k);if(!n)return '';const stars=q.delivered.filter(d=>d.dest===k&&!d.yard&&!d.hall).reduce((a,d)=>a+(d.val||0),0);
       let sq='';for(let i=0;i<n;i++)sq+='<span class="dsq" style="background:'+q.color+'"></span>';
       const lead=leadersAt(k).some(x=>x.id===q.id);

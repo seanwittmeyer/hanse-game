@@ -178,7 +178,7 @@ function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055i
   +artLayer(({warehouse:'venture-warehouse-l1.png',kontorhaus:'kontor-tile-kontorhaus.png',guildhouse:'kontor-tile-guildhouse.png'})[d.k])
   +'<div class="bt-top"><span class="bt-nm'+(d.nm.length>10?' long':'')+'">'+d.nm+'</span></div>'
   +'<div class="bt-foot btFC"><span class="bt-cond">'+d.txt+'</span><span class="bt-eff">'+d.line+'</span></div>'
-  +'<div class="kb-seat" title="the die seat — a supply die stands here at 1: the delivery modifier; +1 on any delivery here; its pips score at the end">'+LU('dice-1')+'</div>'
+  +'<div class="kb-seat" title="the die seat — a supply die stands here at the slot’s printed face: the delivery modifier; +1 on any delivery here; its pips score at the end">'+LU('dices')+'</div>'
   +'</div>';}
 // ---- the ⚜ INVITATION token — earned one per cask delivered at a far Kontor, spent at the hall
 function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask delivered at a far Kontor; spend it to present at the hall">\u269c</div>';}

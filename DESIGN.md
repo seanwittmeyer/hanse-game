@@ -19,7 +19,7 @@
 |**Genre**      |Medium euro · engine building · a shared action grid (the Wharf) + a private brewery + a sea board |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, Hamburg, c. 1350                  |
-|**Status**     |**v8.0g “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80g`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
+|**Status**     |**v8.0h “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80h`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
 
 ---
 
@@ -87,7 +87,8 @@ count** that ties the brewery to the sea.
 Gruit* in vessel 1, one standing at sea as the *starter post*. A die leaves the supply as a
 **cask** (Brew), a **post** (a die on a segment of a lane, +1 each time a Ship sails through)
 or a **Kontor building** (a tile of yours in a Kontor's slot, marked with a die that is the
-delivery modifier and climbs +1 per delivery there), and never returns; **the first empty
+delivery modifier — it starts at the slot's printed face, London 1 · Bergen 1 · Novgorod 2,
+and climbs +1 per delivery there), and never returns; **the first empty
 supply ends the game**. **The quality count**: the quality you may deliver anywhere = the
 number of your dice at sea. **A delivery scores two dice**: the cask's and your building die
 there; nothing else. Ships are shared, 2/3 berths, bound for a far Kontor or wild (named by
@@ -204,6 +205,36 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### v8.0h — The building die's start face per Kontor (2026-09-12, designer-ruled — `KEY hanse-v80h`)
+
+*"R1 — Use 1, 1, 2. The extra bump plus deliveries increases Novgorod over time."* The Kontor
+building die no longer stands at 1 everywhere: it stands at **the slot's printed face** —
+**London 1 · Bergen 1 · Novgorod 2** — and climbs +1 per delivery there and by Raise die as
+before. The reasoning is the designer's: Novgorod already asks the most (a die of 4 to board,
+posts on every segment to build) and its building should pay a little more from the first
+delivery, with the climb compounding on top; London and Bergen stay where they were. It is a
+structure lever, not a value lever — one printed number per slot on the sea board, read off the
+component, no table to remember — and it lands as one fact on every surface: `RULES.md` §2/§3/§8,
+the manifest's sea board row, the registry's Kontor building row, the rulebook (§9 and the panels'
+lane lines), the kit (each building slot prints its start face beside the port's die floor), the
+app's prompts, tooltips and help row, the card face (the die seat reads *a supply die stands here
+at the slot's printed face*), the engine (`KB_START` beside `KONTOR_MIN`; `kbuildPick` seats the
+die at `kbStart(k)`) and the AI (`aiKBuildValue` credits the extra pip). The battery checks the
+three faces and seats a Novgorod building at 2 with the twelve-dice identity intact.
+
+**Recorded, not ruled — the hall's payout, the designer's direction.** The payout stays cask die +
+hall die. The designer is weighing a hall die that reads 4–10 rather than 1–6, and one that counts
+*down* rather than up: an early present pays most, and over the game a player is drawn instead to
+the Kontors they invested in; a hall delivery is always good, but an early one is likely a lower
+cask unless a player builds their game around it — and then needs the others' posts to reach the
+Kontor network that pays their investment. The engine's read (in chat, 2026-09-12): the arc
+agrees with the *invest early* pull; a custom 4–10 die is print-and-play-unfriendly, and the same
+fact fits the constitution better as **numbered places** (the hall's places print their value,
+best first, first come first served — the neutral hall die retires); the ⚜ gate then makes the
+first far delivery the key to the best place and sharpens the berth race; the scale wants
+watching (Hopped 2 + a 10 place is 12★ against an early delivery's 3–5★); at 2p six places fill
+early. The numbers and the form are the designer's; nothing built.
 
 ### The rename — Merchant Brewer of the Hanse (2026-09-12, designer-ruled; no rules change, no KEY bump)
 
@@ -497,10 +528,11 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 
 ## 10. The state of play and the open watches
 
-**Where the build stands (2026-09-07).** v8.0g on every surface: `RULES.md`, the manifest, the
-registry, `play.html` (KEY `hanse-v80g`), `components.js`, `print.html` (the v8 kit: the sea
-board, the re-faced tiles, the ⚜ tokens and chits, the tri-fold aid) and `rulebook.html`, all
-re-derived on 2026-09-06/07 and re-read whole on 2026-09-08. Gates (2026-09-08): verify 59/59; the
+**Where the build stands (2026-09-12).** v8.0h on every surface: `RULES.md`, the manifest, the
+registry, `play.html` (KEY `hanse-v80h`), `components.js`, `print.html` (the v8 kit: the sea
+board with each building slot's start face, the re-faced tiles, the ⚜ tokens and chits, the
+tri-fold aid) and `rulebook.html`, all re-derived on 2026-09-06/07, re-read whole on 2026-09-08
+and re-gated on 2026-09-12. Gates (2026-09-08): verify 59/59; the
 sim clean at 2–4p (0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 16 / 14 / 15
 rounds, 100% in the 13–18 band — but the round-18 backstop, which the pre-floor build never
 reached, fired in a third of the 2p games and a sixth of the 3p games with dice unspent (the sea
@@ -512,7 +544,7 @@ the new faces still lack is queued in `art/PROMPTS.md`.
 
 **Every number is a placeholder until the table.** The levers live in the engine's dials block
 (`play.html`): `SUPPLY_DICE` 10 (THE pace dial) · `MAX_ROUND` 18 · `KONTOR_MIN` 2 / 3 / 4 ·
-`kontorSlotsN` 1 / 2 · `WORKS_DEAL` 4 · `SETUP_WILD` 2 · `HALL_DIE_START` 2 · `HALL_PLACES_N`
+`KB_START` 1 / 1 / 2 · `kontorSlotsN` 1 / 2 · `WORKS_DEAL` 4 · `SETUP_WILD` 2 · `HALL_DIE_START` 2 · `HALL_PLACES_N`
 6 / 8 · `HALL_PRIZES` 2 · 2 · 1 · `YARD_ZONES` · `YARD_GOODS` 2 / 1 / 1 · `BREW_SUR` and
 `BOND_FEE` 1 `G` · the fees (Hulk 1 `G`; tier 1 1 `G` 1 `H`; the Flip 2 `G` 1 `H`; the recipe
 fees) · the majority pairs · the Flight ladder 3 / 6 / 10 · the private points 2 / 4.
@@ -525,19 +557,22 @@ hall as framed.
 
 **Open rulings, queued by the designer:**
 
-- **The building die's start face per Kontor.** Today every Kontor building's die stands at 1;
-  the designer wants Novgorod's to pay a little more once its chain is built. The lever is a
-  per-Kontor start face (say 1 · 1 · 2); read the Novgorod delivery count at the table first —
-  the die floor of 4 already makes it the high-quality port.
 - **The hall's payout** — *each delivery there costs 1 ⚜ and arrives by cart* stands as framed,
-  to be revisited once the core is ironed out. The v7 read is the warning: priced wrong, the
-  hall goes dead (in v7.0b PRESENT never beat DELIVER in 100+ matched landings).
+  to be revisited once the core is ironed out; the payout stays cask + die by ruling
+  (2026-09-12). The designer's direction under study: a hall die that reads 4–10 and counts
+  *down*, so an early present pays most and the late game pulls toward the Kontors a player
+  built; the engine's recommended form is numbered places (§9, v8.0h). The v7 read is the
+  warning: priced wrong, the hall goes dead (in v7.0b PRESENT never beat DELIVER in 100+ matched
+  landings).
 
 **Watches for the designer's table:**
 
 - **The die floors** (London 2 · Bergen 3 · Novgorod 4). How often a Malt Kiln or Bonded Store
   slot is chosen to make a floor; whether Bergen at 3 starves the beginner's port of Hopped
   (the Kiln is its door); whether Novgorod at 4 is reached before the end at 2p.
+- **Novgorod's building at 2** (the start faces 1 · 1 · 2). Whether the extra pip plus the
+  climb makes the Novgorod chain worth its four posts at the table; whether anyone builds there
+  at 2p before the supply runs out; whether London and Bergen buildings at 1 still get built.
 - **The at-cost faces.** Goods are scarcer now that Gain 2 goods and the die-paid prizes are
   the only faucets: do the export brews starve at 3–4p (the lever is `BREW_SUR`, never Gruit)?
   How often the Bonded post fires, and whether Novgorod's two-segment lane makes the Store a

@@ -188,7 +188,8 @@
   .sb .kp2-t .min{margin-left:auto;display:inline-flex;align-items:center;font-weight:900;font-size:.2in}
   .sb .kp2-t .min img.ai{width:.4in;height:.4in;margin:-.1in 0}
   .sb .kslots{display:flex;gap:.08in;padding:.08in .1in 0;justify-content:center}
-  .sb .kslot{position:relative;width:1.34in;height:1.34in;border:2.5px dashed var(--kc);border-radius:.08in;background:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .sb .kslot .kstart{width:.3in!important;height:.3in!important;opacity:.92!important;position:absolute;right:.07in;bottom:.07in;margin:0}   /* the slot's printed start face — stays readable beside a standing die */
+.kslot{position:relative;width:1.34in;height:1.34in;border:2.5px dashed var(--kc);border-radius:.08in;background:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
   .sb .kslot img.ai,.sb .kslot .ic{width:.6in;height:.6in;opacity:.35}
   .sb .kslot i{position:absolute;right:.05in;bottom:.03in;font-style:normal;font-weight:900;font-size:.11in;color:var(--kc);opacity:.8}
   .sb .kp2-r{display:flex;align-items:center;justify-content:space-between;gap:.1in;padding:.06in .12in 0;font-size:.115in;line-height:1.1}
@@ -574,7 +575,7 @@ function aid3Panels(){
     +'<div class="ln">· Load: the die meets the <b>Kontor’s floor</b> (London 2 · Bergen 3 · Novgorod 4) as it boards · Q <b>≤ your count</b> · the lane <b>open</b> · Gruit never boards</div>'
     +'<h5>'+LU('post')+'The Sea — the quality count</h5>'
     +'<div class="ln">· <b>Post</b>: a supply die at 1 on the lowest segment of the lane you do not hold · <b>+1 each Ship through</b></div>'
-    +'<div class="ln">· <b>Kontor building</b>: your tile + a die at 1 where <b>your posts run the whole lane</b> · +1 on <b>any</b> delivery there · your deliveries score <b>die + this die</b></div>'
+    +'<div class="ln">· <b>Kontor building</b>: your tile + a die at the slot’s printed face (Novgorod 2) where <b>your posts run the whole lane</b> · +1 on <b>any</b> delivery there · your deliveries score <b>die + this die</b></div>'
     +'<div class="ln"><span class="em">Count your dice at sea</span> = the quality you may deliver anywhere · every die at sea scores its pips at the end</div>'
     +'<h5>'+LU('landmark')+'The Kontore — die floors 2 · 3 · 4 · 1 ⚜ per delivery</h5>'
     +'<table class="kt"><tr><th>Kontor</th><th>Prize / cask</th><th>Pair</th></tr>'
@@ -598,7 +599,7 @@ function aid3Panels(){
     +AID_ROW('map-pin','Parked','a delivered die — the field, the majority')
     +'<h5>'+LU('post')+'The Sea</h5>'
     +AID_ROW('post','Post','your die on a segment · +1 per Ship through')
-    +AID_ROW('kontorhaus','Kontor building','your tile + die · +1 per delivery there')
+    +AID_ROW('kontorhaus','Kontor building','your tile + die at the slot’s face (1 · 1 · 2) · +1 per delivery there')
     +AID_ROW('die-plus1','Raise die','+1: a boarding cask at a Kiln or Bonded Store (cap Q+1) · a die of yours at sea (cap 6)')
     +AID_ROW('mail','⚜ Invitation','1 per far delivery · spend at the hall')
     +'<h5>'+LU('beer')+'Tiles</h5>'
@@ -809,9 +810,9 @@ const SEA_SEG={
   e2:{nm:'the Sound',      code:'E2',x:4.55,y:4.3, w:3.05,h:1.95},
 };
 const SEA_K=[
-  {k:'london',  nm:'London',  kc:'#b8860b', tint:'#f7efda', branch:'W1 · W2', min:2, x:7.95,y:.35, w:4.35,h:3.15, prize:{ic:'hammer',t:'one Build, the fee waived'}, pair:[5,2]},
-  {k:'bergen',  nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', branch:'E1',      min:3, x:7.95,y:3.7, w:4.35,h:3.15, prize:{ic:'wrench',t:'a Specialist, free'},        pair:[5,2]},
-  {k:'novgorod',nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', branch:'E1 · E2', min:4, x:7.95,y:7.05,w:4.35,h:3.3,  prize:{ic:'die-plus1',t:'Raise die at sea'},     pair:[7,3]},
+  {k:'london',  nm:'London',  kc:'#b8860b', tint:'#f7efda', branch:'W1 · W2', min:2, start:1, x:7.95,y:.35, w:4.35,h:3.15, prize:{ic:'hammer',t:'one Build, the fee waived'}, pair:[5,2]},
+  {k:'bergen',  nm:'Bergen',  kc:'#4a6b3a', tint:'#ecf1e8', branch:'E1',      min:3, start:1, x:7.95,y:3.7, w:4.35,h:3.15, prize:{ic:'wrench',t:'a Specialist, free'},        pair:[5,2]},
+  {k:'novgorod',nm:'Novgorod',kc:'#7c2128', tint:'#f6e9ea', branch:'E1 · E2', min:4, start:2, x:7.95,y:7.05,w:4.35,h:3.3,  prize:{ic:'die-plus1',t:'Raise die at sea'},     pair:[7,3]},
 ];
 const SEA_BR={x:.3,y:7.45,w:7.45,h:2.9};
 const SEA_HB={x:.3,y:.35,w:.85,h:6.6};
@@ -823,7 +824,7 @@ function seaSeg(s,seats){
     +'<div class="seats">'+cols+'</div>'
     +'<div class="seg-l">'+LU('sail')+LU('die-plus1','dlift')+'<span>each Ship through</span></div></div>';}
 function seaKontor(d,slots){
-  let sl='';for(let i=0;i<slots;i++)sl+='<span class="kslot" title="a building slot — one of your Kontor building tiles, marked with a supply die at 1">'+LU('kontorhaus')+'</span>';
+  let sl='';for(let i=0;i<slots;i++)sl+='<span class="kslot" title="a building slot — one of your Kontor building tiles, marked with a supply die at the printed face">'+LU('kontorhaus')+LU('dice-'+(d.start||1),'kstart')+'</span>';
   return '<div class="kp2" style="'+pos(d)+';--kc:'+d.kc+';--kt:'+d.tint+'">'
     +'<div class="kp2-t">'+LU('kontor-'+d.k)+'<b>'+d.nm+'</b><span class="branch">'+d.branch+'</span><span class="min" title="the die floor — the cask’s die as it boards">'+LU('dice-'+(d.min||2))+'+</span></div>'
     +'<div class="kslots">'+sl+'</div>'
@@ -1096,7 +1097,7 @@ function buildPages(){
   // --- THE KONTOR BUILDING TILES — the set of three per house colour, single-faced, 1.32in square
   const kbs=[];PLAYERS.slice(0,cnt(PLAYERS.length)).forEach(pl=>KBUILDINGS.forEach(d=>
     kbs.push({fam:'Kontor building tiles',html:kontorBuildingTile(d,pl.c)})));
-  packSpaced(pages,'bits','Kontor building tiles — the set of three per house colour (Warehouse · Kontorhaus · Guildhouse; placed in a Kontor slot where your posts run the whole lane, marked with a supply die at 1) · 22″ plotter · 1.5mm bleed · single-faced',[{kind:'kbt',items:kbs}],famPages);
+  packSpaced(pages,'bits','Kontor building tiles — the set of three per house colour (Warehouse · Kontorhaus · Guildhouse; placed in a Kontor slot where your posts run the whole lane, marked with a supply die at the slot’s printed face — London 1 · Bergen 1 · Novgorod 2) · 22″ plotter · 1.5mm bleed · single-faced',[{kind:'kbt',items:kbs}],famPages);
   // --- SPECIALISTS → single-faced 2in squares
   const wimps=[];IMPROVE.forEach(d=>{for(let i=0;i<cnt(d.n);i++)wimps.push({fam:'Specialists',html:improveTile(d)});});
   packSpaced(pages,'bits','Specialist tiles — the ten singles (single-sided) · 22″ plotter · 1.5mm bleed · cuts 3mm apart',[{kind:'imp',items:wimps}],famPages);
@@ -1158,7 +1159,7 @@ function checklist(pages,famPages){
     +R('Ship tiles','Neutral Ships, each bound for a printed Kontor or <b>wild</b>; the tile is its berths and <b>full = it sails at once</b>. <b>The two wild Cogs dock at setup</b> on two random slots. A shuffled deck → a display of 3. Cog ×11 (free) · Hulk ×7 (1G).',SHIP_DECK.length)
     +R('Public Works','The shared brown family — the filler roster of 7: <b>deal 4 at every player count</b> onto random slots; the rest to the box; nothing refills. Passive on their slot’s traffic; <b>every tile sails away with the Ship at its slot</b> (the tide).',sumN(BUILDINGS))
     +R('Private building tiles','The hand of four designs — <b>tier 1 front / tier 2 back</b> (the Flip turns it in place). Built on <b>any vacant slot</b>, never over a Work; fires <b>on visit</b> at the station its slot flanks. Owner-only; prints its ★ (2 / 4); no die. One set per colour.',PRIVATES.length*PLAYERS.length)
-    +R('Kontor building tiles','The set of three — Warehouse · Kontorhaus · Guildhouse. Placed in a Kontor slot where your posts run the whole lane, <b>marked with a supply die at 1</b> (the delivery modifier). One set per colour.',KBUILDINGS.length*PLAYERS.length)
+    +R('Kontor building tiles','The set of three — Warehouse · Kontorhaus · Guildhouse. Placed in a Kontor slot where your posts run the whole lane, <b>marked with a supply die at the slot’s printed face</b> (London 1 · Bergen 1 · Novgorod 2) (the delivery modifier). One set per colour.',KBUILDINGS.length*PLAYERS.length)
     +R('Specialist tiles','The private purple hires — ten singles. <b>A display of 4</b>; seated free as Bergen’s prize or by the Gain 1 specialist bonus. 2 seats per player.',sumN(IMPROVE))
     +'</table>';
   h+=T('Cards (cardstock — do not mount)')

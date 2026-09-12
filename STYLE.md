@@ -42,7 +42,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | post | a die of yours at face 1 in your seat on a segment; +1 each time any Ship sails through; scores its pips | post | posts · no | marker, presence (at sea) |
 | unlocked / open | a segment is unlocked while any post stands on it; a lane is open while every segment of its branch is unlocked — open to every player | — | — · no | charted |
 | the chain | your own posts on every segment of a branch; the prerequisite for a Kontor building there | — | — · no | — |
-| Kontor building | one of your three tiles (Warehouse · Kontorhaus · Guildhouse) placed in a Kontor's slot and marked with a supply die at 1 | kontorhaus | Kontor buildings · yes (the tile names) | Kontor tile, factory |
+| Kontor building | one of your three tiles (Warehouse · Kontorhaus · Guildhouse) placed in a Kontor's slot and marked with a supply die at the slot's printed start face — London 1 · Bergen 1 · Novgorod 2 | kontorhaus | Kontor buildings · yes (the tile names) | Kontor tile, factory |
 | building slot | a far panel's printed space for one Kontor building: 1 on side A · 2 on side B; one builder per slot, one per player per Kontor | — | slots · no | socket, seat (Kontor sense) |
 | building die | the die on your Kontor building: the delivery modifier, +1 per delivery there, +1 on Raise die | — | — · no | — |
 | the quality count | the number of your dice standing at sea (posts + building dice, the starter post included): the quality you may deliver anywhere | — | — · no | your minimum |
