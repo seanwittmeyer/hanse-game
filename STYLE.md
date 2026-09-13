@@ -18,7 +18,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | must | the one mandatory action: the Harbor's Commission, when it can | — | — · no | required, forced |
 | slot | one of the 8 perimeter spaces; seats a building and/or a Ship, never casks; each flanks a station | — | slots · no | — |
 | Hamburg | the home port at the root of the sea board; where the Wharf stands | — | — · yes | — |
-| the sea board | the board printing Hamburg, the cart road, the five segments and the four Kontor panels; side A (2p) / side B (3–4p) | — | — · yes | Destinations board, the map |
+| the sea board | the board printing Hamburg, the cart road, the four segments (E1 shared) and the four Kontor panels; side A (2p) / side B (3–4p) | — | — · yes | Destinations board, the map |
 | Kontor | one of the four trading posts (Bruges · London · Bergen · Novgorod); London, Bergen and Novgorod are the far Kontore | kontor, kontor-* | Kontore · yes | port, destination |
 | Market & Stores board | the displays ringed by the score ring | — | — · yes | Supply board |
 | player board | 3 vessels · 2 seats · the score seat · the personal supply well · the Flight | — | — · no | — |
@@ -67,11 +67,11 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | specialist | a private purple tile: earned free, never bought, never two of a kind; 2 seats per player | specialist | specialists · no | improvement, hire (n) |
 | Braumeister · Shipmaster · Cellarman · Stevedore · Agent · Lodesman · Carter · Guildmaster · Chronicler · Alderman | the ten specialists, one of each | — | — · yes | — |
 | seat | a specialist space on your player board; a post seat on a segment | — | seats · no | — |
-| recipe | a card granting permission to brew a beer; the exports print a fee | recipe | recipes · no | licence |
+| recipe | a single-faced card granting permission to brew a beer; the exports print a fee; it stands to the left of your player board and crosses to the right as its beer joins the Flight | recipe | recipes · no | licence, the brewed face |
 | exports | the four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — · no | — |
 | stack | a beer's face-up cask-tile supply; a Q2+ Brew searches it and chooses; a delivered tile stays under its die | — | stacks · no | pile |
 | cask bonus | the line a cask tile prints, fired once as the cask boards or is carted: Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post | goods-2, station-age-2, bonus-load, station-brew, recipe, specialist, build, post | bonuses · no | perk, action |
-| the Flight | distinct beers delivered (tiles under your dice at the Kontore, the yard and the hall): 3 / 4 / 5 → 3 / 6 / 10★ | — | — · yes | — |
+| the Flight | the recipe cards to the right of your player board, one per distinct beer that has boarded a Ship or been carted: 3 / 4 / 5 → 3 / 6 / 10★ | — | — · yes | beers delivered (as its definition) |
 | goods | grain + hops, collectively | goods, grain, hops | — · no | resources, money |
 | fee | the printed price of a Ship, a recipe or a build | — | fees · no | cost, price |
 | display | a face-up row components are taken from (Ships 3 · specialists 4) | — | displays · no | pool, market |
@@ -116,7 +116,7 @@ Manifest · Order · lading · line (the row or column) · warp · Coper · Hera
 Guild Scholar · Town Crier · Supercargo · Innkeeper · Assay Loft · Rack House · Staple Rights ·
 Weigh House (until the roster pass) · Skute · the bag · the first-delivery letter · INVEST ·
 OPEN · leg · factor · establishment · bench · Source · lift · land / landing · hull (in player
-copy) · stop (n).
+copy) · stop (n) · the brewed face · port (for a Kontor).
 
 ## §3. Canonical orders (every surface, no exceptions)
 

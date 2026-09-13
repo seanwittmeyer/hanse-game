@@ -96,7 +96,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the 
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 const KONTOR_C={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
-// recipe cards are DOUBLE-SIDED: the cost face / the BREWED face (a big check, bottom-right); the flipped cards are the Flight record.
+// recipe cards are single-faced: the cost face; the card crosses the player board, left to right, as its beer joins the Flight.
 const STARTERS=[   // the starting recipes are CARDS — one each per player, dealt at setup
   {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
@@ -114,10 +114,10 @@ const RECIPES=[  // EXPORT recipe cards — buy = the printed fee ⚙ (paid at t
 const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   // PUBLIC WORKS brown (green is a player colour) · private buildings the owner-only blue · SPECIALISTS purple
 const BLD_FOOT='rgba(58,51,66,.7)';   // the neutral foot — dark purple-grey at 70% so the illustration bleeds through
 // the 2.5×1.32 tile anatomy: icon+name header · art window · the colour foot (the effect big, then the cost).
-const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age 2'},reach:{ai:'map-pin',t:'+1 presence'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'},hire:{ai:'wrench',t:'Gain 1 specialist'}};
+const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age 2'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // the Public Works print no start face and no fee chip (nobody builds or buys them)
-  const msChip='';const _msOld=d.ms?'<span class="bt-ms" title="the mason\u2019s mark starts here \u2014 set your die to this face at build; every use turns it up (pips score at game end)">'+LU('dice-'+d.ms)+'</span>':'';
+  const msChip='';
   // a STANDARD verb prints the same icon chip the casks print — one action grammar across the kit;
   // only the non-standard powers carry text (terse: the rulebook holds the full language)
   const sa=d.act&&STD_ACT[d.act];
@@ -184,13 +184,7 @@ function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055i
 function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask delivered at a far Kontor; spend it to present at the hall">\u269c</div>';}
 // ---- the KONTOR CHIT — one per far Kontor; the first cask loaded onto a wild Ship sets it on the hull
 function kontorChit(k){return '<div class="kchit" style="--c:'+(KONTOR_C[k]||'#6f6253')+'" title="the Kontor chit — names a wild Ship\u2019s Kontor">'+LU('kontor-'+k)+'<span>'+k.charAt(0).toUpperCase()+k.slice(1)+'</span></div>';}
-// BUILDING tile back — the muted art + title; the face reads WILD
-function buildingBack(d){   // the FLOOR side: it only says WILD
-  return '<div class="btile btF" style="--c:'+BLD_FOOT+'">'
-  +artLayer(d.art||('building-'+d.k+'.png'))
-  +'<div class="bt-wild"><span class="bt-circ">'+LU('sparkles')+'</span><b>Wild</b></div>'
-  +'<div class="bt-sub">a Floor slot &middot; none open &rarr; discard</div>'
-  +'</div>';}
+
 // SPECIALIST tile — a 2×2in square: full-bleed OBJECT art (improve-<slug>.jpg) + scrim, the name and the effect on a
 // PURPLE foot; the card bg is the foot's purple so any html2canvas foot-edge hairline is purple-on-purple.
 const IMP_FOOT='#4a3a6e';   // the Specialist foot — purple
@@ -199,7 +193,7 @@ function improveTile(d){const k=d.slug||slug(d.nm);
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
   +'<div class="ic-foot"><span class="ic-nm">'+d.nm+'</span><span class="ic-act">'+d.act+'</span></div>'
   +'</div>';}   // the title sits at the FOOT, above the action (the head stays clear); no fee pill — specialists are earned, never bought
-// the CASK CARD (2×3, double-sided): the buy/age face and the brewed face (act = the drawn cask bonus {ai,act}).
+// the CASK TILE faces (act = the drawn cask bonus {ai,act}).
 // ---- the background ART slot ----
 // ART_ON=false paints a faint hatch instead of the image. Filenames: casks → art/cask-<beer>.png;
 // ships → art/ship-<hull>.png (cog/hulk). Prompts: art/PROMPTS.md.
@@ -257,8 +251,7 @@ function shipBack(hull){return '<div class="stile ship-back" style="background:#
 function tok(d){const art={wheat:'grain',sprout:'hops'}[d.ic];   // the big .7in goods tokens carry the grain/hops art
   return '<div class="tok" style="--c:'+d.c+'">'+(art?'<img class="ai" src="art/icons/'+art+'.png" alt="">':LU(d.ic))+'</div>';}
 function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle')+'</div>';}
-// the UNLOCK COVER tile — a player-colour blank (not in the v8 kit)
-function coverTile(c,w){return '<div class="cover" style="--c:'+c+';width:'+w+'in;height:'+w+'in">'+LU('lock')+'<span>locked —<br>a new distinct brew<br>(or the Coppersmith)<br>opens this slot</span></div>';}
+
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 
@@ -277,13 +270,13 @@ function playerBoard(d,live){const L=live||{};
     +'<span class="sn">Specialist seat '+i+'</span>'
     +((L.seats&&L.seats[i-1])||'<span class="si">'+LU('wrench')+'</span>')+'</div>';
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:3,4:6,5:10};
-  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — beers <b>delivered</b></div>'
+  const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — the recipe cards <b>on your right</b></div>'
     +'<div class="fl-row">'+FL.map(n=>'<span class="fl-cell'+(L.flight!=null&&L.flight>=n?' on':'')+'"><b>'+n+'</b><span>'+FP[n]+'★</span></span>').join('')+'</div></div>';
   return '<div class="pbrd" style="--pc:'+(d.c||'#7c2128')+'">'
     +'<div class="pbrd-id">'
       +'<span class="pbrd-crest">'+LU('beer')+'</span>'
       +'<span class="pbrd-name">'+d.nm+'</span>'
-      +'<span class="pbrd-score" title="the house\u2019s score">'+LU('star')+seatBox(L.score)+'</span>'
+      +'<span class="pbrd-score" title="the score">'+LU('star')+seatBox(L.score)+'</span>'
       +'<span class="pbrd-supply"><span class="pbrd-sup" title="the personal supply \u2014 dice unspent">'+LU('dices')+seatBox(L.dice)+'</span>'
         +'<span class="pbrd-sup pbg" title="grain">'+LU('wheat')+seatBox(L.grain)+'</span>'
         +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
@@ -297,9 +290,8 @@ function playerBoard(d,live){const L=live||{};
     +'</div>'
   +'</div>';}
 
-function recipeCard(r,brewed){return '<div class="card" style="--cc:'+r.cc+'">'
+function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +artLayer('cask-'+r.nm.toLowerCase()+'.png')
-  +(brewed?'<div class="c-brewed">'+LU('check')+'</div>':'')
   +'<div class="c-costpanel">'+(r.start
     ? '<span class="clab">starting recipe</span>'
     : '<span class="clab">fee</span><span class="cbig">'+(((r.buy||{}).g||(r.buy||{}).h)?cost(r.buy.g,r.buy.h):'free')+'</span>')+'</div>'
@@ -482,7 +474,7 @@ var HC_CSS='/* Merchant Brewer of the Hanse — the shared CARD component styles
   .card .c-costpanel .cbig .gc{gap:.03in}\n\
   .card .c-costpanel .cbig svg,.card .c-costpanel .cbig .ic{width:.26in;height:.26in}\n\
   .card .c-costpanel .g{color:#9c7414} .card .c-costpanel .h{color:#5d7d34}   /* the canonical goods colours — the global .g/.h tints are for dark grounds */\n\
-  /* the CHARTER: the vertical cask → ship → kontor column */\n\
+  /* the vertical cask → ship → kontor column */\n\
   .card .c-chart{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.015in;color:#8a6408}\n\
   .card .c-chart .ci svg,.card .c-chart .ci .ic{width:.34in;height:.34in}\n\
   .card .c-chart .ca{font-size:.2in;font-weight:bold;line-height:1}\n\
@@ -513,12 +505,7 @@ var HC_CSS='/* Merchant Brewer of the Hanse — the shared CARD component styles
   .card .c-strip .c-lbl{font-size:.105in;font-style:italic;opacity:.85}\n\
   .card .c-strip .c-gate{display:inline-flex;align-items:center;gap:.02in;font-size:.085in;font-style:italic}\n\
   .card .c-strip .c-gate svg,.card .c-strip .c-gate .ic{width:.12in;height:.12in}\n\
-  /* the BREWED face: a big check stamped on the bottom-right corner, riding above the strip */\n\
-  .card .c-brewed{position:absolute;right:.09in;bottom:.09in;width:.24in;height:.24in;border-radius:50%;z-index:2;\n\
-    background:#4a6b3a;border:2px solid #f7efdc;box-shadow:0 1px 3px rgba(0,0,0,.4);color:#fff;\n\
-    display:flex;align-items:center;justify-content:center}\n\
-  .card .c-brewed svg,.card .c-brewed .ic{width:.15in;height:.15in;stroke-width:3.4}\n\
-  /* ---- UNLOCK COVER tile ---- */\n\
+  /* ---- the cover tile ---- */\n\
   .cover{background:var(--c);border-radius:.1in;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.05in;color:#fff;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}\n\
   .cover svg,.cover .ic{width:.42in;height:.42in;opacity:.9}\n\
   .cover span{font-variant:small-caps;font-weight:bold;font-size:.12in;text-align:center;line-height:1.25;opacity:.92}\n\
@@ -530,7 +517,7 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .bt-eff.bt-act{display:inline-flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.16in}'
 +'.btile .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}'
 +'.btile .ac svg,.btile .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}'
-/* LADING order strip: kontor colour, three rows — where · what→★ · the claim reminder */
+
 /* ILLUSTRATED ICONS — the art <img> tracks the .ic sizing everywhere the CSS pairs "svg,.ic";
    these cover the few svg-only spots + give any unsized site a 1em fallback */
 +'img.ai{width:1em;height:1em;object-fit:contain;vertical-align:-.13em}'
@@ -640,17 +627,14 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.fl-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.4px dashed var(--pc);border-radius:.05in;padding:.025in 0;line-height:1.05}'
 +'.fl-cell b{font-size:.13in}.fl-cell span{font-size:.09in;color:var(--ink2,#5b4a37)}'
 +'.fl-cell.on{border-style:solid;background:var(--pc);color:#fff}.fl-cell.on span{color:rgba(255,255,255,.85)}'
-+'.pbrd-lads{position:relative;flex:1;min-height:.75in;border:1.7px dashed var(--pc);border-radius:.07in;background:rgba(255,255,255,.3);display:flex;flex-wrap:wrap;gap:.04in;align-items:flex-start;align-content:flex-start;padding:.17in .06in .05in}'
-+'.pbrd-lads .sn{position:absolute;top:.045in;left:0;right:0;text-align:center}'
-+'.pbrd-lads .si{opacity:.3;margin:auto}.pbrd-lads .si svg,.pbrd-lads .si .ic,.pbrd-lads .si img.ai{width:.26in;height:.26in}'
-+'.pbrd-lad{display:inline-flex;align-items:center;gap:.03in;font-size:.1in;font-weight:bold;background:var(--pc);color:#fff;border-radius:.09in;padding:.02in .06in;z-index:1}'
+
 +'.pbrd-supwell{position:relative;flex:1;min-height:.9in;border:1.7px dashed var(--pc);border-radius:.07in;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;padding:.16in .06in .05in}'
 +'.pbrd-supwell .sn{position:absolute;top:.04in;left:0;right:0;text-align:center;display:flex;align-items:center;justify-content:center;gap:.03in}'
 +'.pbrd-supwell .sn img.ai,.pbrd-supwell .sn .ic{width:.14in;height:.14in}'
 +'.pbrd-supwell .si{display:flex;gap:.08in;opacity:.3}.pbrd-supwell .si img.ai,.pbrd-supwell .si .ic{width:.32in;height:.32in}'
-+'.pbrd-lad img.ai,.pbrd-lad .ic,.pbrd-lad svg{width:.13in;height:.13in;flex:0 0 auto}';   // a claimed Order wears its Kontor's crest
+;
 var HC_CSS4=''
-/* the ⚜ CONTRACT card — a tri-folded letter under the Guild's wax seal (unused) */
+/* a tri-folded letter under a wax seal (unused) */
 +'.invcard{width:1.85in;height:2.55in;box-sizing:border-box;position:relative;background:#f7efdc;color:#5b4a37;border:1px solid #b8a87f;display:flex;flex-direction:column;align-items:center;overflow:hidden}'
 +'.invcard .iv-frame{position:absolute;inset:.08in;border:1.5px solid rgba(138,100,8,.45)}'
 +'.invcard .iv-crease{position:absolute;left:.03in;right:.03in;height:0;border-top:1.5px solid rgba(91,74,55,.15)}'
@@ -672,7 +656,7 @@ var HC_CSS4=''
 +'.invcard .iv-verb svg,.invcard .iv-verb .ic,.invcard .iv-verb img.ai{width:.14in;height:.14in;flex:0 0 auto}'
 +'.invcard.cvb .iv-sealw{margin-top:.62in}'
 +'.invcard.cvb .iv-nm{margin-top:.16in}'
-/* the DEMAND card (unused) — the hall-well tile: parchment, the requirement big, the two die seats */
+/* a parchment tile with two die seats (unused) */
 +'.dmtile{width:2.5in;height:1.32in;box-sizing:border-box;position:relative;border:2.5px solid var(--c,#8a6408);border-radius:.08in;background:#f3ecdd;color:#2b2018;display:flex;flex-direction:column;justify-content:space-between;padding:.08in .11in .09in}'
 +'.dmtile .dm-hd{display:flex;flex-direction:column;gap:.01in}'
 +'.dmtile .dm-lbl{font-variant:small-caps;font-weight:900;font-size:.095in;color:var(--c);letter-spacing:.5px}'
@@ -691,7 +675,7 @@ var HC_CSS4=''
 +'.dmtile.dmb{align-items:center;justify-content:center;background:#efe2c4}'
 +'.dmtile.dmb .dm-bknm{font-size:.5in;line-height:1;color:#8a6408}'
 +'.dmtile.dmb .dm-bksub{font-variant:small-caps;font-weight:900;font-size:.13in;color:#5b4a37}'
-/* the LADDER marker (unused) (.55in chit, kontor colour) + the PRIVATE FLAG (1in chit, house colour) */
+/* a .55in chit in a Kontor colour and a 1in chit in a player colour (unused) */
 +'.ladmk{width:.55in;height:.55in;box-sizing:border-box;border-radius:.08in;background:var(--c,#8a6408);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:inset 0 0 0 2px rgba(255,255,255,.4)}'
 +'.ladmk img.ai,.ladmk .ic,.ladmk svg{width:.26in;height:.26in}'
 +'.ladmk span{font-size:.14in;margin-top:.01in}'
@@ -709,5 +693,5 @@ var HC_CSS4=''
 +'.kchit img.ai,.kchit .ic{width:.42in;height:.42in;margin-bottom:-.03in}.kchit span{font-variant:small-caps;font-weight:bold;font-size:.09in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken,kontorChit,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,buildingBack,improveTile,tok,disc,coverTile,wtok,recipeCard,playerBoard,KONTOR_C};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken,kontorChit,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,improveTile,tok,disc,wtok,recipeCard,playerBoard,KONTOR_C};
 })();

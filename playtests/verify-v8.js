@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80h). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80i). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80h',function(){eq(KEY,'hanse-v80h');});
+t('KEY is hanse-v80i',function(){eq(KEY,'hanse-v80i');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -371,11 +371,11 @@ t('the private stop fires for its OWNER only, at the station its slot flanks: Gr
   visit(p,'A');ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s8';}),'the Cold Store fires at the Market it flanks');
   UI={sub:'stops',stops:[],usedStops:[]};enterPact('s8','end');eq(UI.sub,'age');eq(UI.age.pool,2,'Age 2');ageSkip();
   clearSlot('s6');S.buildings.s6={p:'C',tier:2,owner:0};enterPact('s6','end');eq(UI.sub,'raise','the Shipping Office raises');raisePick(0);eq(UI.sub,'post','then posts once more');postSkip();
-  clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};visit(p,'B');
+  clearSlot('s2');S.buildings.s2={p:'B',tier:2,owner:0};eq(guildhallGrant(p).length,S.exports.length,'the Flip hands over every dealt recipe');eq(p.recipes.length,2+S.exports.length,'the cards are in hand');visit(p,'B');
   eq(UI.stops.filter(function(x){return x.kind==='cell'&&x.cell==='B'&&!x.alt;}).length,1,'one Brew cell stop');
   ok(UI.stops.some(function(x){return x.kind==='pact'&&x.slot==='s2';}),'the Guildhall\\'s stop');
   UI={sub:'stops',stops:[],usedStops:[]};enterPact('s2','end');eq(UI.sub,'brew','the Guildhall opens a full brew');
-  ok(S.exports.every(function(st){return hasRecipe(p,st);}),'every dealt recipe');eq(recipeGainable(p).length,0,'nothing to gain');
+  ok(S.exports.every(function(st){return hasRecipe(p,st);}),'every dealt recipe held');eq(recipeGainable(p).length,0,'nothing to gain');
   S.buildings.s2={p:'B',tier:1,owner:0};ok(!pactKind(privAt('s2')),'the Scriptorium is passive');});
 t('the cart carries 2 with a Kaufhaus OR the Carter — they do not stack',function(){fresh(2);var p=cur();
   eq(cartN(p),1);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),2,'the Kaufhaus');
@@ -401,11 +401,11 @@ t('the private tiles score their printed ★ (2 / 4) while they stand; the tide 
   ok(privAt('s1'),'the tile stands after the sail');});
 
 // ---------- 12 · the end and the score ----------
-t('gameOver: a die aboard a docked Ship scores its pips only — no landing, no ⚜, no Flight; vessels score nothing',function(){fresh(2);var p=S.players[0];
+t('gameOver: a die aboard a docked Ship scores its pips only — no landing, no ⚜; its recipe card crossed as it boarded, so the Flight counts the beer; vessels score nothing',function(){fresh(2);var p=S.players[0];
   clearSlot('s1');putShip('s1','hulk','bergen',[{owner:0,style:'hopped',q:2,die:3,act:'source'}]);
   p.vessels[0]=mkCask('bock',5);
   var sc=scorePlayer(p);eq(sc.docked,3,'the docked die');eq(p.delivered.length,0,'never landed');eq(p.invites,0,'no ⚜');
-  eq(flightBeers(p),0,'the Flight does not count it');
+  eq(flightBeers(p),1,'the Flight counts it — the card crossed as it boarded');eq(flightScore(p),0,'under the ladder');
   p.vessels[0]=null;eq(scorePlayer(p).total,sc.total,'the vessel was worth nothing');});
 t('every post and building die scores its pips; the majorities pay the printed pairs by parked dice, the presence gate, ties split',function(){fresh(2);var p=S.players[0],q=S.players[1];
   putPost('w1',0,4);putKB('bergen',0,5,'warehouse');eq(scorePlayer(p).sea,1+4+5,'the starter + the post + the building');
@@ -414,9 +414,11 @@ t('every post and building die scores its pips; the majorities pay the printed p
   var a=majorityAwards('london');eq(a[0],5);eq(a[1],2,'two places at 2p');
   q.delivered.push({style:'hopped',q:2,dest:'london',val:2,face:2,bdie:0});a=majorityAwards('london');eq(a[0],3);eq(a[1],3,'ties split');
   eq(majorityAwards('bergen')[0],undefined,'no dice, no share');});
-t('the Flight counts distinct beers LANDED (field, yard, hall): 3/6/10; the buckets sum; the tiebreak is the count, then goods',function(){fresh(2);var p=S.players[0];
+t('the Flight counts the recipe cards crossed — beers delivered (field, yard, hall) or aboard a docked Ship: 3/6/10; the buckets sum; the tiebreak is the count, then goods',function(){fresh(2);var p=S.players[0];
   p.delivered.push({style:'gruit',q:1,dest:'bruges',val:0,face:1,yard:1});p.delivered.push({style:'hopped',q:2,dest:'bruges',val:4,face:2,hall:1});p.delivered.push({style:S.exports[0],q:3,dest:'london',val:3,face:3,bdie:0});
   eq(flightBeers(p),3);eq(flightScore(p),3);eq(FLIGHT_PTS[4],6);eq(FLIGHT_PTS[5],10);
+  clearSlot('s1');putShip('s1','hulk','london',[{owner:0,style:S.exports[1],q:STYLES[S.exports[1]].q,die:3,act:'source'}]);eq(flightBeers(p),4,'a cask aboard a docked Ship crossed its card');eq(flightScore(p),6);
+  UI={sub:'move'};p.vessels[0]=mkCask(S.exports[2],STYLES[S.exports[2]].q);putPost('e1',0,1);S.slots.s1.load=[];UI.load={ships:['s1'],returnTo:'end',loadsLeft:1,cask:0,count:0};if(canTake('s1',0)){loadCommit('s1',0);eq(flightBeers(p),4,'the same beer twice is one card');}clearSlot('s1');p.vessels[0]=null;eq(flightBeers(p),3,'cleared');
   var sc=scorePlayer(p);eq(sc.total,sc.deliv+sc.hall+sc.bank+sc.maj+sc.flight+sc.guild+sc.sea+sc.docked+sc.wharf,'the buckets');
   var q=S.players[1];q.delivered=p.delivered.slice();putPost('w1',0,1);var fr=finalRows();eq(fr.rows[0].p.id,0,'the count breaks the tie');});
 t('the Chronicler +1★ per cask landed; the Guildmaster +2★ per present; the Alderman +2★ per Kontor with 3+ parked (Bruges by hall places)',function(){fresh(2);var p=S.players[0];

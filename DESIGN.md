@@ -19,7 +19,7 @@
 |**Genre**      |Medium euro · engine building · a shared action grid (the Wharf) + a private brewery + a sea board |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, Hamburg, c. 1350                  |
-|**Status**     |**v8.0h “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80h`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
+|**Status**     |**v8.0i “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80i`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
 
 ---
 
@@ -100,7 +100,7 @@ deliveries. The wharf's private buildings are a Great Western Trail engine: four
 player on any vacant slot, firing on visit, tier 2 by the Flip, printed points, no die; the
 buildings sell actions at a price and never hand out goods. No kettle, no market track, no
 bands. The end: pips at sea + docked dice + standing tiles + the fixed majority pairs + the
-Flight on beers delivered.
+Flight on the recipe cards crossed to the right of the board.
 
 **The shape, system by system:**
 
@@ -112,8 +112,8 @@ Flight on beers delivered.
   Ready at the quality; a Raise die at the wharf may push it to quality + 1; read as it boards
   against the port's die floor (London 2 · Bergen 3 · Novgorod 4); parked at delivery, never
   scoring again.
-- **The sea** — five segments in a tree from Hamburg (W1 · W2 → London; E1 → Bergen; E1 · E2 →
-  Novgorod), one post seat per colour on each; a segment is unlocked while any post stands on
+- **The sea** — four segments in a tree from Hamburg (W1 · W2 → London; E1 → Bergen; E1 · E2 →
+  Novgorod; E1 shared), one post seat per colour on each; a segment is unlocked while any post stands on
   it; a lane is open to everyone while its branch is unlocked; your own chain opens a Kontor's
   building slots (1 on side A · 2 on side B).
 - **The Kontore** — a delivery = cask die + building die; the die parks in the field (presence,
@@ -205,6 +205,64 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### v8.0i — Four segments, the recipe card crosses the board, one aid sheet, the Bonded post after the climb (2026-09-13, designer-ruled — `KEY hanse-v80i`)
+
+*"1. Fix the segments to be consistent. 2. Recipe cards no longer need a back side, when loaded
+for the first time, that recipe card moves from the left side of the player board to the right
+side. 3. Every player gets a player aid. I print the single page twice rather than having a
+separate file with one on it. Keeping things simple. 4. Pick the most consistent and intuitive
+path and bake it into the rules and play."* The four rulings that closed the full read of
+2026-09-12: the rulebook, the kit and the registry swept against the rules master.
+
+**Four segments.** The sea board has four segments (W1 · W2 → London; E1 → Bergen; E1 · E2 →
+Novgorod; E1 shared) and always did: the board, the engine and the rulebook printed four while
+the rules master, the manifest, the registry, this file and the kit's checklist said "five", the
+plan's lane-step count. Every surface now says four.
+
+**The recipe card is the Flight record.** The card is single-faced; the brewed face retires from
+the kit with its "flip on your first brew" label, a rule no document held. Your recipe cards stand
+to the left of your player board; the first time a cask of a beer boards a Ship or is carted, its
+card crosses to the right, and the cards on your right are your Flight (3 / 4 / 5 → 3 / 6 / 10★).
+The designer's "loaded" is read as the moment a cask leaves the brewery, boards or is carted:
+Gruit only ever carts and the Flight's fifth beer needs it, and it is the moment the cask bonus
+already fires, so the table learns one trigger. The read moves at one margin only: a cask aboard a
+docked Ship at the end now counts (its card crossed), where the tile-under-die read did not. The
+engine reads the Flight off the components (the beers delivered plus the beers aboard docked
+Ships), no new state; the app splays the crossed cards to the right of the board. One consequence
+ruled with it: the Brewers' Guildhall's "you hold every dealt recipe" left no card to cross, so
+the Flip now hands over every dealt recipe you lack, free (`guildhallGrant`); the cards are literal
+on the table.
+
+**One aid sheet.** The kit's tri-fold sheet cuts into three aids; the manifest counted four. The
+sheet stays one file, printed twice for four players; the checklist and the manifest say so.
+
+**The Bonded post stands after the climb.** `RULES.md` §7 listed the Bonded Store's offer before
+the lane's posts climb; the engine climbed first, so the new post stood at 1. The engine's order
+is the ruling: every post enters at face 1, the Store's printed face stays true, and the sail
+reads tide · the posts climb · the Store's offer · the casks deliver. The rules master, the
+rulebook and the app's log now say it in that order.
+
+**Closed in the same pass, from the full read.** The rulebook's gaps against the rules master
+(London's prize names its kinds; the cart's "they do not stack"; side A's yard zones; the
+commission's "when it can" and the displaced Ship's return to the deck; the wild and held-whole
+Post cases; the cap of 6 on every Raise die and building die; the Ropewalk's once per load; the
+Cooperage's full berth; the private tile's "no die"; the Cellarman's "never past Ready"; the
+Alderman's Bruges rider; the Chronicler's "far"; the majorities' two leaders; the hall's size;
+the empty stack; the Ship deck's mix; "about 15 turns" on the cover); the specialist display's
+end-of-turn refill written into `RULES.md` §1; the registry drift in player copy: *port* for
+Kontor (ten sites), *Build at a Kontor* for the printed *Build a Kontor* (seven), *neutral
+Ships*, *hires*, *grade*, *house* for player, the app's *Gruit Ale* and *Hopped Beer*; and the
+code's version-tagged comments, three never-called generators (the overland board, the building
+back, the cover tile) and the dead brewed-face CSS. Surfaces: `RULES.md`
+§1/§3/§4/§7/§8/§9/§10/§11/§12/§15 · `COMPONENTS.md` (the sea board, the player boards, the cask
+tiles, the recipe cards, the aids) · `STYLE.md` §1/§2 · `rulebook.html` (§4–§14, fit-checked
+headless) · `print.html` (the recipe sheets, the aid, the checklist) · `components.js`
+(`recipeCard`, the player board's Flight ladder) · `play.html` (`flightStyles` · `inFlight` ·
+`flightCross` · `guildhallGrant` · the sail log order · the tableau's Flight splay) · the battery
+(59; the Flight and Guildhall checks re-cut) · the sim's header. Gates: verify 59/59; the sim clean
+at 2–4p (0 crashes / 0 deadlocks, the twelve-dice identity; 9 of 9 greedy games ended on the
+dice); the app driven headless to a game's end without an error.
 
 ### v8.0h — The building die's start face per Kontor (2026-09-12, designer-ruled — `KEY hanse-v80h`)
 
@@ -528,16 +586,18 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 
 ## 10. The state of play and the open watches
 
-**Where the build stands (2026-09-12).** v8.0h on every surface: `RULES.md`, the manifest, the
-registry, `play.html` (KEY `hanse-v80h`), `components.js`, `print.html` (the v8 kit: the sea
-board with each building slot's start face, the re-faced tiles, the ⚜ tokens and chits, the
-tri-fold aid) and `rulebook.html`, all re-derived on 2026-09-06/07, re-read whole on 2026-09-08
-and re-gated on 2026-09-12. Gates (2026-09-08): verify 59/59; the
-sim clean at 2–4p (0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 16 / 14 / 15
-rounds, 100% in the 13–18 band — but the round-18 backstop, which the pre-floor build never
-reached, fired in a third of the 2p games and a sixth of the 3p games with dice unspent (the sea
-tempo watch, below). The kit renders clean headless: every referenced art file is on disk. The art
-the new faces still lack is queued in `art/PROMPTS.md`.
+**Where the build stands (2026-09-13).** v8.0i on every surface: `RULES.md`, the manifest, the
+registry, `play.html` (KEY `hanse-v80i`), `components.js`, `print.html` (the v8 kit: the sea
+board with each building slot's start face, the single-faced recipe cards, the re-faced tiles,
+the ⚜ tokens and chits, the tri-fold aid printed twice) and `rulebook.html`, all re-derived on
+2026-09-06/07, re-read whole on 2026-09-08 and again on 2026-09-12 (three sweeps against the
+rules master), re-gated on 2026-09-13. Gates (2026-09-13): verify 59/59; the sim clean at 2–4p
+(0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 16 / 14 / 14 rounds, 100% in
+the 13–18 band, every game of the 3-game smoke on the dice — the 2026-09-08 read, where the
+round-18 backstop fired in a third of the 2p games with dice unspent, stands as the sea tempo
+watch below until a larger run. The kit and the rulebook render clean headless and fit-checked;
+every referenced art file is on disk. The art the new faces still lack is queued in
+`art/PROMPTS.md`.
 
 **Next.** The designer's own table. Then the oracle read: re-derive the probe fleet from
 `archive/v5/playtests/` when called. **Never a corpus before a human table.**
@@ -551,7 +611,7 @@ fees) · the majority pairs · the Flight ladder 3 / 6 / 10 · the private point
 
 **Ruled defaults, confirmed by the designer's rule of silence** (v8.0g): anyone may load an
 unlocked lane; the building die climbs +1 on any delivery there, plus Raise die; private
-buildings take no die; five segments with E1 shared; 1 ⚜ per far delivery, none from Bruges,
+buildings take no die; four segments, E1 shared; 1 ⚜ per far delivery, none from Bruges,
 start at 0; the Hulk has no gate; every Kontor prize is free; the Carter's +1 at the yard; the
 hall as framed.
 
@@ -621,7 +681,7 @@ hall as framed.
 - **Ship** — a shared tile bound for a far Kontor or wild: Cog 2 berths · Hulk 3; sails when
   full. **Berth** — one cask space. **Wild Ship** — named by the first load with a **Kontor
   chit**. **The berth race** — topping off a shared Ship sails everyone's cargo on your clock.
-- **The sea board** — Hamburg, the cart road, the five segments, the four Kontor panels; side
+- **The sea board** — Hamburg, the cart road, the four segments (E1 shared), the four Kontor panels; side
   A (2p) / side B (3–4p). **Lane** — the branch of segments from Hamburg to a Kontor.
   **Segment** — one step of a lane, with a post seat per colour. **Post** — a die of yours at
   face 1 on a segment; +1 per Ship through. **Unlocked / open** — a segment with any post; a
@@ -650,5 +710,6 @@ hall as framed.
   building; three doors (the Brewhouse's alternate, the Build bonus, London's prize).
 - **Raise die** — turn a die +1: at sea (cap 6) or a boarding cask at the wharf (cap quality +
   1). **Specialist** — a purple tile, earned free, never two of a kind; 2 seats. **Recipe** —
-  permission to brew; the exports print a fee. **The Flight** — distinct beers delivered, 3 / 4
-  / 5 → 3 / 6 / 10★. **Goods** — grain and hops, the only currency. **★** — the scoring unit.
+  a single-faced card, permission to brew; the exports print a fee; it crosses your board into
+  the Flight. **The Flight** — the recipe cards to the right of your board, one per beer that
+  has boarded or been carted, 3 / 4 / 5 → 3 / 6 / 10★. **Goods** — grain and hops, the only currency. **★** — the scoring unit.

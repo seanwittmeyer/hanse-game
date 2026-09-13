@@ -16,7 +16,7 @@
    complete rules.
 
    Copy is governed by STYLE.md (rank 1): the locked term registry, and §7.
-   The rulebook is a snapshot (STYLE rule 17): no version tags, no changelog.
+   The rulebook is a snapshot (STYLE §4 rule 6): no version tags, no changelog.
    ========================================================================= */
 
 :root{
@@ -289,7 +289,7 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
     <div class="hd">
       <div><b>2&ndash;4</b> players</div>
       <div><b>45&ndash;90</b> minutes</div>
-      <div><b>10&ndash;15</b> turns each</div>
+      <div><b>about 15</b> turns each</div>
       <div>Brew the beer, stand your dice at sea, and deliver it where your buildings pay.</div>
     </div>
   </div>
@@ -358,7 +358,8 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
         <ul class="tight">
           <li><b>3 grain <span class="cube g"></span> and 2 hops <span class="cube h"></span></b>. Your storage cap is <b>8 of each good</b> for
           the whole game.</li>
-          <li>The <b>Gruit</b> and <b>Hopped</b> recipe cards, beside your board.</li>
+          <li>The <b>Gruit</b> and <b>Hopped</b> recipe cards, to the <b>left of your board</b> (a card
+          crosses to the right as its beer joins your Flight, §10).</li>
           <li><b>12 quality dice</b>: 10 in your personal supply; one set at 1 on a <b>Ready Gruit</b> in
           your first vessel, the top Gruit tile beneath; and the starter post (below).</li>
           <li>Your <b>4 private building tiles</b> as a hand, your <b>3 Kontor building tiles</b>,
@@ -375,8 +376,10 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           <li><b>Deal 3 of the 4 export beers</b> for this game, 4 recipe cards each. Return the
           undealt export&rsquo;s cards and cask tiles to the box.</li>
           <li>Stack the cask tiles in <b>face-up stacks, one per beer</b>. Every Brew of a Q2+
-          beer <b>searches</b> its stack and picks a tile; Gruit takes the top tile.</li>
-          <li>Shuffle the <b>Ship deck</b>: display of <b>3</b>. Shuffle the <b>Specialist deck</b>:
+          beer <b>searches</b> its stack and picks a tile; Gruit takes the top tile. An empty stack:
+          that beer cannot brew now.</li>
+          <li>Shuffle the <b>Ship deck</b> (per far Kontor 3 Cogs, 2 Hulks; wild 2 Cogs, 1 Hulk):
+          display of <b>3</b>. Shuffle the <b>Specialist deck</b>:
           display of <b>4</b>. <b>The two wild Cogs dock at setup</b> on two random slots. Set out the <b>invitation tokens</b> and
           the 3 <b>Kontor chits</b>; everyone starts with no invitation.</li>
           <li><b>The starter post:</b> in reverse turn order, each player stands their eleventh die
@@ -403,15 +406,16 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
             <td><b>Brew.</b> Pay the brew cost of a recipe you hold, stand a supply die in an
               open vessel at the beer&rsquo;s <b>printed start value</b>, and <b>search its stack
               for the tile you want</b>. <b>Alternate &middot; Build:</b>
-              place a private building from your hand onto <b>any vacant slot</b>, or
-              <b>flip</b> your standing one to its second face, at the printed fee (&sect;8).</td></tr>
+              a private building from your hand onto <b>any vacant slot</b>, or
+              <b>Flip</b> your standing one, at the printed fee (&sect;8).</td></tr>
           <tr><td><img class="ic" src="art/icons/station-harbor.png" alt=""> <b>Harbor</b></td>
-            <td><b>Commission &mdash; you must, when you can.</b> Take a Ship from the display at
+            <td><b>Commission &mdash; you must, when you can</b> (a Ship you can pay, on display, and a
+              slot or an empty Ship for it; else it lapses). Take a Ship from the display at
               its fee, <b>Cog free &middot; Hulk 1<span class="cube g"></span></b>, and dock it on a shipless slot or over
-              an empty docked Ship. <b>Then post:</b> stand a supply die showing 1 on the lowest
-              segment of that Ship&rsquo;s lane where you hold no post, and you may load 1 Ready cask
-              onto it at once. <b>Alternate &middot; Build a Kontor</b>: a Kontor building where your posts
-              run the whole lane (&sect;9), <b>or Raise die</b>: one die of yours at sea +1.</td></tr>
+              an empty docked Ship (back to the deck). <b>Then Post:</b> a supply die showing 1 on the lowest
+              segment of that Ship&rsquo;s lane where you hold no post (a wild Ship: any lane), and you may
+              load 1 Ready cask onto it at once. <b>Alternate &middot; Build a Kontor</b>: a Kontor building where your posts
+              run the whole lane (&sect;9), <b>or Raise die</b>: one die of yours at sea +1, cap 6.</td></tr>
           <tr><td><img class="ic" src="art/icons/station-age.png" alt=""> <b>Cellar</b></td>
             <td><b>Age 3.</b> Turn your aging dice up 3 steps in total, split freely.
               <b>Alternate &middot; Cart 1:</b> send 1 Ready cask to <b>Bruges</b> by road, to the
@@ -510,7 +514,7 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
       value, its presence, and a beat of the game clock. Follow one Bock through its life:</p>
       <div class="film">
         <div class="fr"><span class="fk">Brew</span><img class="fd" src="art/icons/die-2.png" alt="">
-          <span class="fx">Set the die to the tile&rsquo;s <b>printed start</b>. A Bock starts at <span class="fnum">2</span>.</span></div>
+          <span class="fx">Set the die to the beer&rsquo;s <b>printed start</b>. A Bock starts at <span class="fnum">2</span>.</span></div>
         <div class="fr"><span class="fk">Age</span><img class="fd" src="art/icons/die-4.png" alt="">
           <span class="fx">Each step turns it <b>+1</b>. Never past the beer&rsquo;s quality.</span></div>
         <div class="fr rdy"><span class="fk">Ready</span><img class="fd" src="art/icons/die-5.png" alt="">
@@ -567,7 +571,7 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           <div class="exs"><b>Harbor, primary.</b> A slot is free and a Cog is on display, so you
             <b>must commission</b>. You take a <b>Cog bound for Bergen</b>, free, and dock it at
             <b>s6</b>, over the Malt Kiln there. Bergen&rsquo;s lane is one segment, E1, with no post of
-            yours yet: you <b>post</b> a supply die showing 1 on E1. Your count is now 2.</div>
+            yours yet: you <b>Post</b> a supply die showing 1 on E1. Your count is now 2.</div>
           <div class="exs"><b>The maiden load.</b> Your Hopped is Ready and Q2: the count admits
             it, E1 holds a post, and the Malt Kiln raises its die 2 to Bergen&rsquo;s floor of 3. You
             load it onto the new Cog, free; its tile&rsquo;s bonus, <b>Gain 2 goods</b>, fires.</div>
@@ -603,30 +607,29 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
         <div>
           <h3 class="sub" style="margin-top:0">Public Works &mdash; brown, the wharf itself</h3>
           <p><b>Nobody builds them, and none of them lasts.</b> Setup deals 4 of them onto
-          random slots &mdash; die-less <b>furniture</b>, passive on its own slot&rsquo;s traffic,
-          whoever&rsquo;s traffic it is. <b>Malt Kiln</b> (&times;2): a loading die +1, cap
-          quality + 1 &middot; <b>Customs House</b>: your quality count reads +1 for the Ship
-          docked here &middot; <b>Ropewalk</b>: a load here may also load 1 cask onto a
-          <b>different</b> Ship &middot; <b>Cooperage</b>: +1 berth &middot; <b>Bonded Store</b>:
-          a loading die +1; at the sail each shipper may pay 1 G to post on the lane &middot; <b>Victualling
-          Yard</b>: the cask bonus fires &times;2.</p>
-          <p><b>The tide.</b> A sailing Ship takes its slot&rsquo;s Public Work with it, boxed,
-          for good. <b>Nothing refills the ground</b>: the wharf strips into the ground your
-          private buildings take.</p>
+          random slots: die-less <b>furniture</b>, passive on their slot&rsquo;s traffic, whoever&rsquo;s it
+          is. <b>Malt Kiln</b> (&times;2): a loading die +1, cap Q + 1 &middot; <b>Customs House</b>: your
+          count reads +1 for the Ship docked here &middot; <b>Ropewalk</b>: a load here may also load 1
+          cask onto a <b>different</b> Ship, once &middot; <b>Cooperage</b>: +1 berth (it sails when that
+          berth is full too) &middot; <b>Bonded Store</b>: a loading die +1; at the sail, once the lane&rsquo;s
+          posts climb, each shipper may pay 1 G: Post on the lane &middot; <b>Victualling Yard</b>: the
+          cask bonus fires &times;2.</p>
+          <p><b>The tide.</b> A sailing Ship takes its slot&rsquo;s Public Work with it, boxed.
+          <b>Nothing refills</b>: the wharf strips into the ground your private buildings take.</p>
           <table class="vt2" style="margin-top:4pt">
             <tr><th>Design</th><th>Tier 1 &middot; on visit</th><th>Tier 2, the flip</th></tr>
             <tr><td><b>Granary</b> <span class="vn">/ Kaufhaus</span></td>
-              <td>pay 1 G: <b>Brew</b>, a full brew at its cost</td>
-              <td>pay 1 G: <b>Brew</b>, <b>and</b> your Cart carries 2 casks</td></tr>
+              <td>pay 1 G: <b>Brew</b>, a full brew</td>
+              <td>pay 1 G: <b>Brew</b>, <b>and</b> Cart 2</td></tr>
             <tr><td><b>Scriptorium</b> <span class="vn">/ Brewers&rsquo; Guildhall</span></td>
               <td>recipes cost you <b>no fee</b>, at every door</td>
-              <td>you hold <b>every dealt recipe</b>, <b>and</b> <b>Brew</b> on visit, a full brew</td></tr>
+              <td>flipped: take <b>every dealt recipe</b> you lack, free; <b>and</b> <b>Brew</b> on visit</td></tr>
             <tr><td><b>Cold Store</b> <span class="vn">/ Lagering Cellar</span></td>
               <td><b>Age 2</b></td>
-              <td><b>Age 2</b> <b>and</b> <b>Raise die</b>: one Ready cask of yours +1, cap quality + 1</td></tr>
+              <td><b>Age 2</b> <b>and</b> <b>Raise die</b>: a Ready cask +1, cap Q + 1</td></tr>
             <tr><td><b>Counting House</b> <span class="vn">/ Shipping Office</span></td>
-              <td><b>Raise die</b>: one die of yours at sea +1</td>
-              <td><b>Raise die</b> <b>and Post once more</b>, no second commission</td></tr>
+              <td><b>Raise die</b>: a die of yours at sea +1, cap 6</td>
+              <td><b>Raise die</b> <b>and Post once more</b></td></tr>
           </table>
         </div>
         <div>
@@ -636,10 +639,11 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           each time <b>you</b> work the station that slot flanks &mdash; the slot picks the station,
           not the tile&rsquo;s name. Rivals never use it, the tide never takes it, two of yours may
           flank one station. Each prints its ★, scored while it stands: <b>2 on tier 1, 4 on tier 2</b>.
-          Three doors, one verb, <b>Build</b>: the Brewhouse&rsquo;s alternate, a Build bonus, London&rsquo;s prize.</p>
+          Three doors, one verb, <b>Build</b>: the Brewhouse&rsquo;s alternate, a Build bonus, London&rsquo;s prize
+          (there, a Build of any kind: a post, a Kontor building, a private tile or Flip, the fee waived).</p>
           <ul class="tight">
             <li><b>Place a tier 1</b> onto a <b>vacant</b> slot (1<span class="cube g"></span>1<span class="cube h"></span>) &mdash; no building
-            on it; a docked Ship above is fine. <b>Never onto a Public Work</b>, never onto a
+            on it; a docked Ship above is fine; no die stands on it. <b>Never onto a Public Work</b>, never onto a
             rival&rsquo;s tile: a full wharf has no ground until the tide clears a slot.</li>
             <li><b>Flip</b> your standing tier 1 over in place to its tier 2 (2<span class="cube g"></span>1<span class="cube h"></span>). It
             needs the tier 1 and nothing else; every tier 2 contains its tier 1.</li>
@@ -667,19 +671,17 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           <p><b>A Kontor building</b> is one of your three tiles set in a slot at a far Kontor
           marked with a supply die at the slot&rsquo;s printed face (London 1 &middot; Bergen 1 &middot;
           Novgorod 2), built only where <b>your own post stands on every segment of that
-          Kontor&rsquo;s lane</b>; one slot at 2 players, two at 3–4, one per player. <b>The die is
-          your delivery modifier</b>: every cask of yours delivered there scores its die plus this
-          die, and it turns <b>+1 on each delivery there</b> or by Raise die.</p>
-          <p>The tile&rsquo;s line: <b>Warehouse</b> &mdash; your quality count reads +1 for a Ship
-          bound here, a standing read like the Customs House &middot; <b>Kontorhaus</b> &mdash; on each
-          delivery of yours here, gain 1 more invitation &middot; <b>Guildhouse</b> &mdash; on each
-          delivery of yours here, Raise die: one die of yours at sea +1.</p>
+          Kontor&rsquo;s lane</b>; one slot at 2 players, two at 3–4, one builder each; one per player
+          per Kontor. <b>The die is your delivery modifier</b>: your deliveries there score cask die +
+          this die, and it turns <b>+1 on each delivery there</b> or by Raise die, cap 6.</p>
+          <p>The tile&rsquo;s line: <b>Warehouse</b> &mdash; your count reads +1 for a Ship bound here &middot;
+          <b>Kontorhaus</b> &mdash; 1 more invitation on each delivery of yours here &middot; <b>Guildhouse</b>
+          &mdash; Raise die at sea, cap 6, on each delivery of yours here.</p>
           <div class="panel plain" style="margin-top:3pt">
             <div class="pl"><img class="ic" src="art/icons/quality-die.png" alt="">The quality count</div>
-            <div style="font-size:7.9pt; line-height:1.3"><b>Count your dice standing at sea</b>
-            &mdash; posts and building dice, the starter included. <b>That number is the quality
-            of beer you may deliver anywhere.</b> One carts a Gruit; two ships a Hopped; five
-            ships a Bock. The Customs House, the Lodesman and your Warehouse at the Ship&rsquo;s
+            <div style="font-size:7.9pt; line-height:1.3"><b>Count your dice standing at sea</b>, posts
+            and building dice, the starter included: <b>the quality of beer you may deliver anywhere.</b>
+            The Customs House, the Lodesman and your Warehouse at the Ship&rsquo;s
             Kontor read +1.</div>
           </div>
         </div>
@@ -694,54 +696,49 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           or <b>wild</b>: <b>Cog, 2 berths, free &middot; Hulk, 3 berths, 1<span class="cube g"></span></b>. Nobody
           owns a Ship; anyone may load any docked Ship. No Ship goes to Bruges.</p>
           <h3 class="sub">To load</h3>
-          <p>Take <b>1 Ready cask from your own vessels</b> whose <b>die, as it boards, meets the
-          Kontor&rsquo;s printed floor</b> &mdash; London 2, Bergen 3, Novgorod 4 (a Malt Kiln or Bonded
-          Store at the slot raises it first) &mdash; whose <b>Q is at most your quality count</b>, and
-          whose Ship&rsquo;s lane is <b>open</b>. Gruit never boards. Seat it in the lowest empty berth;
-          its <b>bonus</b> fires after any sail it completes. A <b>wild Ship</b> is named by the
-          <b>first cask loaded</b>: its owner chooses any open far Kontor whose floor that die meets
-          and sets that Kontor&rsquo;s chit on the Ship.</p>
+          <p>Take <b>1 Ready cask from your vessels</b> whose <b>die, as it boards, meets the
+          Kontor&rsquo;s printed floor</b> &mdash; London 2, Bergen 3, Novgorod 4 (a Kiln or Bonded Store
+          there raises it first) &mdash; whose <b>Q is at most your quality count</b>, and
+          whose Ship&rsquo;s lane is <b>open</b>. Gruit never boards. The first cask of a beer to board or
+          be carted moves its <b>recipe card to the right of your board</b>: your Flight (&sect;14). A
+          <b>wild Ship</b> is named by the <b>first cask
+          loaded</b> (any open far Kontor whose floor that die meets): its chit goes on the Ship.</p>
           <h3 class="sub">To sail</h3>
-          <p>A Ship <b>sails the moment it is full</b>, and never before (the Shipmaster excepted).
-          The slot&rsquo;s Public Work departs with it. <b>Every post on its lane turns +1.</b>
-          Then each cask <b>delivers in boarding order</b>. The Ship returns to the deck; the
-          display refills at once.</p>
+          <p>A Ship <b>sails the moment it is full</b>, never before (the Shipmaster excepted): topping
+          off a shared Ship sails <b>everyone&rsquo;s</b> cargo on your clock. The slot&rsquo;s Public Work departs
+          with it &middot; <b>every post on its lane turns +1</b>, cap 6 &middot; a Bonded Store there then offers
+          its post (&sect;8) &middot; each cask <b>delivers in boarding order</b> &middot; the Ship returns to the deck.</p>
         </div>
         <div>
           <h3 class="sub">The delivery</h3>
           <ol class="steps" style="gap:3.5pt; margin-bottom:4pt">
             <li><span>Score <b>the cask die + your building die at that Kontor</b>. No building:
               the die alone. Nothing else.</span></li>
-            <li><span><b>Park the die</b> in the Kontor&rsquo;s field, its tile under it. It never
-              scores again.</span></li>
-            <li><span><b>Every building die there turns +1.</b> If it is yours, its tile&rsquo;s
-              line fires.</span></li>
+            <li><span><b>Park the die</b> in the Kontor&rsquo;s field, tile under it: it never scores again.</span></li>
+            <li><span><b>Every building die there turns +1</b>, cap 6. Yours fires its tile&rsquo;s line.</span></li>
             <li><span>Take <b>1 invitation</b>, and the Kontor&rsquo;s <b>prize</b>.</span></li>
           </ol>
           <div class="kgrid" style="grid-template-columns:repeat(3,1fr)">
             <div class="kp london">
               <div class="kh"><img class="ki" src="art/icons/kontor-london.png" alt="">London</div>
               <div class="kb"><div class="kmin">die 2+<span class="klane">W1 &middot; W2 <img class="ks" src="art/icons/kontorhaus.png" alt="building"><img class="ks" src="art/icons/die-1.png" alt="starts 1"></span></div>
-                <div class="kpr"><b>One build of any kind</b>, its goods fee waived.</div>
+                <div class="kpr"><b>Any Build</b>, fee waived (&sect;8).</div>
                 <div class="kmaj">Majority <b>5 / 2</b></div></div>
             </div>
             <div class="kp bergen">
               <div class="kh"><img class="ki" src="art/icons/kontor-bergen.png" alt="">Bergen</div>
               <div class="kb"><div class="kmin">die 3+<span class="klane">E1 <img class="ks" src="art/icons/kontorhaus.png" alt="building"><img class="ks" src="art/icons/die-1.png" alt="starts 1"></span></div>
-                <div class="kpr"><b>Seat a Specialist</b> from the display, free.</div>
+                <div class="kpr"><b>A specialist</b>, free.</div>
                 <div class="kmaj">Majority <b>5 / 2</b></div></div>
             </div>
             <div class="kp novgorod">
               <div class="kh"><img class="ki" src="art/icons/kontor-novgorod.png" alt="">Novgorod</div>
               <div class="kb"><div class="kmin">die 4+<span class="klane">E1 &middot; E2 <img class="ks" src="art/icons/kontorhaus.png" alt="building"><img class="ks" src="art/icons/die-2.png" alt="starts 2"></span></div>
-                <div class="kpr"><b>Raise die</b>: one die of yours at sea +1.</div>
+                <div class="kpr"><b>Raise die</b> at sea, cap 6.</div>
                 <div class="kmaj">Majority <b>7 / 3</b></div></div>
             </div>
           </div>
-          <div class="note">
-            <span class="nl">The berth race</span>Casks are private until they board; topping off a
-            shared Ship sails <b>everyone&rsquo;s</b> cargo on your clock.
-          </div>
+
         </div>
       </div>
     </div>
@@ -762,7 +759,7 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
     <div class="block">
       <h2 class="sec"><span class="num">11</span>Bruges &mdash; the Cart, the Yard and the Hall</h2>
       <p>Bruges is reached by <b>cart only</b>: the Cellar&rsquo;s alternate sends one Ready cask
-      by road (two with a Kaufhaus or the Carter), count permitting (a Gruit needs 1). No Ship, no lane, no invitation earned. <b>The
+      by road (two with a Kaufhaus or the Carter; they do not stack), count permitting (a Gruit needs 1). No Ship, no lane, no invitation earned. <b>The
       cask&rsquo;s bonus fires as it is carted.</b> It resolves at once at one of two doors:</p>
       <div class="duo" style="font-size:7.7pt; grid-template-columns:1fr 1fr">
         <div class="dp del">
@@ -771,8 +768,8 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           <b>next open place</b>, tile under it, and take the zone&rsquo;s prize. <b>Best</b>
           (places 1&ndash;3): a recipe from the display, <b>its fee waived</b>, or 2 goods.
           <b>Good</b> (4&ndash;6): a recipe at its fee, or 1 good. <b>OK</b> (7 and beyond): 1
-          good. On side A the zones are two places each. A yard die is presence and a Flight beer;
-          it carries no majority weight.
+          good. On side A: Best 1&ndash;2, Good 3&ndash;4, OK 5 and beyond. A yard die is presence
+          only; it carries no majority weight.
         </div>
         <div class="dp pre">
           <div class="dh">B &middot; The hall &mdash; the guild of brewmasters</div>
@@ -780,7 +777,7 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           hall die</b>. Park your die on the hall&rsquo;s next open place, tile under it, and take
           the place&rsquo;s printed prize if any (the first three pay <b>2 &middot; 2 &middot; 1
           goods</b>). <b>Then the hall die turns +1</b>, cap 6: each present raises the price of
-          the next. No recipe. Gruit never. Hall full: the yard.
+          the next. No recipe. Gruit never. Hall full (6 places on side A, 8 on side B): the yard.
         </div>
       </div>
       <p style="margin:3pt 0 0; font-size:7.9pt"><b>Invitations</b> are tokens, face up, with no
@@ -799,13 +796,13 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
           <b>free</b>, and the <b>Gain 1 Specialist</b> cask bonus does the same. Never two of a
           kind. The display refills at end of turn; the Ship display at once.</p>
           <p style="font-size:7.8pt"><b>Braumeister</b>: turn start, age one cask +1 &middot;
-          <b>Shipmaster</b>: at the Harbor, sail one docked Ship carrying your cask, unfull (a wild one: you name its port) &middot;
-          <b>Cellarman</b>: your brews start +1 &middot; <b>Stevedore</b>: each load, up to 2
+          <b>Shipmaster</b>: at the Harbor, sail one docked Ship carrying your cask, unfull (a wild one: you name its Kontor) &middot;
+          <b>Cellarman</b>: your brews start +1, never past Ready &middot; <b>Stevedore</b>: each load, up to 2
           casks &middot; <b>Agent</b>: a rival delivers where you hold a building, that die +1 more
           &middot; <b>Lodesman</b>: your count reads +1 &middot; <b>Carter</b>: your cart carries 2;
           the yard&rsquo;s goods pay you +1 &middot; <b>Guildmaster</b>: each present +2★ &middot;
-          <b>Chronicler</b>: each cask you deliver, at a Kontor, the yard or the hall, +1★ &middot; <b>Alderman</b>: end, +2★ per Kontor with
-          3+ of your dice parked.</p>
+          <b>Chronicler</b>: each cask you deliver, at a far Kontor, the yard or the hall, +1★ &middot; <b>Alderman</b>: end, +2★ per Kontor with
+          3+ of your dice parked (Bruges: hall places).</p>
           <p>Grain <span class="cube g"></span> and hops <span class="cube h"></span> are the only currency, and your <b>storage cap is 8 of
           each</b> &mdash; anything gained past a cap is lost.</p>
         </div>
@@ -857,12 +854,12 @@ table.vt2 th,table.vt2 td{padding:1.4pt 3pt}
             4 on tier 2.</div>
             <div class="lv">printed</div>
             <img class="li" src="art/icons/kontor.png" alt="">
-            <div><b>Majorities.</b> Each far Kontor pays its pair by dice in the field; Bruges by
-            dice on hall places. None there, no share. Ties split the summed places.</div>
+            <div><b>Majorities.</b> Each far Kontor pays its pair to its two leaders by dice in the field; Bruges by
+            dice on hall places. None there, no share. Ties split the summed places; third pays nothing.</div>
             <div class="lv">pair</div>
             <img class="li" src="art/icons/recipe.png" alt="">
-            <div><b>The Flight.</b> Distinct beers you have delivered &mdash; the tiles under your
-            dice at the Kontore, the yard and the hall.</div><div class="lv">ladder</div>
+            <div><b>The Flight.</b> The recipe cards to the right of your board &mdash; one per beer
+            that has boarded a Ship or been carted.</div><div class="lv">ladder</div>
             <img class="li" src="art/icons/specialist.png" alt="">
             <div><b>Specialists</b> printing an end line (the Alderman).</div><div class="lv">printed</div>
           </div>

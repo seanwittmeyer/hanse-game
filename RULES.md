@@ -1,6 +1,6 @@
 # Merchant Brewer of the Hanse — The Rules
 
-*The rules of the live build (`play.html`, KEY `hanse-v80h`). This document is the rules and
+*The rules of the live build (`play.html`, KEY `hanse-v80i`). This document is the rules and
 nothing else.*
 
 **2–4 players · c. 1350 · Hamburg. You run a merchant brewing house of the Hanseatic League.**
@@ -15,7 +15,8 @@ the most ★ when the dice run out.
 Each player starts with:
 
 - **3 `G` (grain), 2 `H` (hops)**; storage cap **8 of each good**.
-- The **Gruit** and **Hopped** recipe cards. More recipes are earned (§11).
+- The **Gruit** and **Hopped** recipe cards, to the **left of your player board**. More recipes
+  are earned (§11); a card crosses to the right as its beer joins your Flight (§11).
 - **A Ready Gruit in vessel 1**, its own die set at **1** on it, the top Gruit tile under it. It
   carts like any cask (§10) and its bonus fires then.
 - A **player board**: 3 vessels · 2 specialist seats · the space for the **personal supply**.
@@ -33,8 +34,9 @@ Shared board:
 - **The Wharf**: 4 stations ringed by 8 slots (§3). **Public Works: shuffle the roster and
   deal 4 onto random slots** at every player count; four slots stand open from the start;
   the rest go to the box. Nothing refills a slot.
-- **The sea board**, side A (2p) / side B (3–4p): Hamburg, the cart road to Bruges, the five
-  **segments** (§8), each printing one **post seat per colour**; the three far **Kontor
+- **The sea board**, side A (2p) / side B (3–4p): Hamburg, the cart road to Bruges, the four
+  **segments** (§8; E1 is shared by the Bergen and Novgorod branches), each printing one
+  **post seat per colour**; the three far **Kontor
   panels** (London · Bergen · Novgorod), each printing its **building slots** (1 on side A ·
   2 on side B) and each slot's **building die start face** (London 1 · Bergen 1 · Novgorod 2 ⚙),
   its **minimum** (a die floor: London 2 · Bergen 3 · Novgorod 4), its **majority pair**, its **field** and its **prize**; and the **Bruges panel**, printing **the
@@ -47,7 +49,7 @@ Shared board:
 - The **Ship deck** (18): per far Kontor Cog ×3 (2 berths, free) · Hulk ×2 (3 berths, 1 `G`);
   **wild** Cog ×2 · Hulk ×1. **The two wild Cogs dock at setup** on two random slots (a Ship
   may stand over a Public Work); the rest is shuffled, display of **3**.
-- The **Specialist deck** (10 singles), display of **4**.
+- The **Specialist deck** (10 singles), display of **4**, refilled at the end of each turn.
 - **16 ⚜ invitation tokens**, **3 Kontor chits** (for wild Ships), score discs on the ring.
 
 **The starter post.** In reverse turn order each player stands their eleventh die at **face 1
@@ -108,8 +110,9 @@ traffic it is):
   full).
 - **Bonded Store**: *On load here:* the boarding die **+1** (cap quality + 1) · *On sail from
   this slot:* each player with a cask aboard **may pay 1 `G`: Post** on the Ship's lane — a
-  supply die at face 1 on the lowest segment of that lane they do not hold, in boarding order
-  (a lane held whole, an empty supply or no grain: nothing).
+  supply die at face 1 on the lowest segment of that lane they do not hold, in boarding order,
+  after the lane's posts have climbed (§7) (a lane held whole, an empty supply or no grain:
+  nothing).
 - **Victualling Yard**: *On load here:* the boarding cask's bonus fires **×2**.
 
 **The tide: every Public Work departs with the Ship that sails from its slot** (boxed, gone
@@ -140,7 +143,9 @@ Gain 1 recipe (from the display, at its fee) · Gain 1 specialist (from the disp
 open seat) · Build (one build you are eligible for: a private building at its fee, a Flip at
 its fee, or a Kontor building with a supply die) · Post (a supply die at face 1 on the next
 segment of any lane; no commission needed)*. **A bonus fires once, as its cask boards a Ship
-or is carted** (after any sail it completes). Each export's six tiles print six different
+or is carted** (after any sail it completes). **The first time a cask of a beer boards or is
+carted, its recipe card crosses to the right of your player board: the beer joins your Flight**
+(§11). Each export's six tiles print six different
 bonuses; Hopped's twelve print the eight, four of them twice; **Gruit's sixteen all print
 *Gain 2 goods***, so a Gruit brew takes the top tile without a search. A delivered tile stays
 under its die. An empty stack means that beer cannot brew now.
@@ -188,10 +193,10 @@ load any docked Ship.
 - Casks are private until they board: the interaction is the **berth race** — topping off a
   shared Ship sails everyone's cargo on your clock.
 - **A full Ship sails at once.** No station verb sails a Ship unfull (the Shipmaster, §13,
-  excepted). On sailing: the slot's Public Work departs with it (the tide) · the Bonded Store
-  offers its post (§3) · **every post on every segment of its lane turns +1** (cap 6) · each
-  cask aboard **delivers in boarding order** (§9) · the Ship returns to the deck; the display
-  refills.
+  excepted). On sailing: the slot's Public Work departs with it (the tide) · **every post on
+  every segment of its lane turns +1** (cap 6) · the Bonded Store offers its post (§3; it
+  stands at 1, after the climb) · each cask aboard **delivers in boarding order** (§9) · the
+  Ship returns to the deck; the display refills.
 
 ---
 
@@ -210,7 +215,7 @@ every segment.
 
 - **A Post is a die of yours at face 1 in your seat on a segment.** It costs an action and the
   die, never goods. It enters by the commission's Post (§3), the *Post* cask bonus, the
-  Shipping Office (§12) or London's prize (§9). **Your posts grow from Hamburg**: a new post
+  Bonded Store's offer (§3), the Shipping Office (§12) or London's prize (§9). **Your posts grow from Hamburg**: a new post
   always takes the lowest segment of its lane you do not yet hold.
 - **A post turns +1 each time any Ship sails through its segment** (cap 6), whoever loaded it.
 - **A segment is unlocked while any post stands on it; a lane is open while every segment of
@@ -242,8 +247,8 @@ When your cask **delivers** at a far Kontor, in boarding order:
 
 1. **Score cask die + your building die at that Kontor** (no building: the cask die alone).
    Nothing else: no market, no premium, no demand.
-2. **Park the die in the Kontor's field, its tile under it** (presence, the majority, the
-   Flight). A parked cask die never scores again.
+2. **Park the die in the Kontor's field, its tile under it** (presence, the majority). A parked
+   cask die never scores again.
 3. **Every building die at that Kontor turns +1** (cap 6). If the building is yours, its
    tile's line fires (§8).
 4. **Take 1 ⚜.**
@@ -269,7 +274,7 @@ two doors:
   place**, tile under it, and take the zone's prize: **Best** (places 1–3; side A 1–2) — **a
   recipe from the display, its fee waived, or 2 goods** · **Good** (4–6; side A 3–4) — **a
   recipe at its fee, or 1 good** · **OK** (7 and beyond) — **1 good**. A yard die is presence
-  and a Flight beer; it carries no majority weight.
+  only; it carries no majority weight.
 - **The hall** (the guild of brewmasters) — **a Q2+ cask and 1 ⚜.** Spend the ⚜; **score cask
   die + the hall die**; park your die on the hall's next open place, tile under it, and take
   the place's printed prize if any (places 1–3 print **2 · 2 · 1 goods**); **then the hall die
@@ -286,8 +291,13 @@ hall's places are the Bruges majority (§15).
 Start with Gruit and Hopped. Exports are **earned, never bought at a station**: **the yard**
 (§10) or the ***Gain 1 recipe* bonus** (§4), at the card's printed fee — **Broyhan 1 `H` ·
 Keut 1 `G` · Mumme 1 `G` 1 `H` · Bock 1 `G` 2 `H`** (the yard's Best zone waives it). Nothing
-else prints on a card. The **Scriptorium** waives every fee; the **Brewers' Guildhall** grants
-every dealt recipe (§12). Holding every recipe, a bonus recipe simply pays nothing.
+else prints on a card; **a card has one face**. The **Scriptorium** waives every fee; the
+**Brewers' Guildhall** hands you every dealt recipe you lack, free, as it is flipped (§12).
+Holding every recipe, a bonus recipe simply pays nothing.
+
+**Your recipe cards stand to the left of your player board. The first time a cask of a beer
+boards a Ship or is carted, move its card to the right of the board: the beer joins your
+Flight** (§15). A card crosses once and never returns; it still permits brewing.
 
 ---
 
@@ -314,7 +324,7 @@ and nothing else. Every tier 2 contains its tier 1.
 | Tier 1 (fires on visit) | Tier 2, the Flip |
 |---|---|
 | **Granary** — pay 1 `G`: Brew (a full brew at its recipe cost plus the grain, with its search) | **Kaufhaus** — pay 1 `G`: Brew, and your Cart carries 2 casks |
-| **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — you hold every dealt recipe, and on visit: Brew (a full brew, with its search) |
+| **Scriptorium** — recipes cost you no fee, at every door | **Brewers' Guildhall** — as it is flipped, take every dealt recipe you lack, free; and on visit: Brew (a full brew, with its search) |
 | **Cold Store** — Age 2 | **Lagering Cellar** — Age 2 and Raise die: one Ready cask of yours +1 (cap quality + 1) |
 | **Counting House** — Raise die: one die of yours at sea +1 (cap 6) | **Shipping Office** — Raise die and Post once more (no second commission) |
 
@@ -357,8 +367,8 @@ die aboard a docked Ship scores its pips only; brews in vessels score nothing.
 5. **Majorities** — at each far Kontor by dice in the field, at Bruges by dice on hall places:
    the printed pair to the two leading players; no dice there, no share; ties split the summed
    places; third place pays nothing.
-6. **The Flight** — distinct beers delivered (tiles under your dice at the Kontore, the yard
-   and the hall): **3 → 3★ · 4 → 6★ · 5 → 10★**.
+6. **The Flight** — the recipe cards to the right of your player board, one per distinct beer
+   that has boarded a Ship or been carted (§11): **3 → 3★ · 4 → 6★ · 5 → 10★**.
 7. **The Guild** — the Alderman's printed line.
 8. Tiebreak: the quality count, then goods.
 
