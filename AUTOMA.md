@@ -96,6 +96,14 @@ recommendation to cut a part must cite the committed lane's result, never the gr
   cask bonuses fired, the Works fired, the count at the end, stranded casks, the sea pips'
   share of the score, docked pips, deliveries by Kontor); `PERSONAS=1` prints the lane report
   after the usage.
+- **`playtests/oracle.js`** — the TURN ORACLE: the same harness writing a per-turn trace of
+  every game (what each work turn handed its seat, the dice and goods it spent, the ★ it
+  moved, what befell the other seats on that clock) as JSON lines, sharded by `SEED=` /
+  `GOFF=` / `OUT=`; `PLAY=` traces another build on the same metrics.
+  **`playtests/oracle-study.js <dir>`** reads the shards (partial corpora welcome) and prints
+  the turn study: little wins, the ★ silence, the phases, the passive read, the goal arcs,
+  the ⚜ economy, the score by part, the paths to victory, the lanes; `--timeline=label:n:game`
+  prints one game turn by turn. USAGE first, as the law asks; the designer calls it.
 - **Standing rule:** the greedy tiers gate **robustness and pace**, never strategy or balance —
   they under-pilot deep lines by construction. Strategy reads = the MC tiers, the committed
   lanes, and the human table.
@@ -110,8 +118,13 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Open (AI-only; none gates a rules read)
 
-- The sea tempo: the greedy seats still fill Ships slowly (Hulks of three wait); two wild Cogs
-  stand docked from setup — re-read the fill rate; the load and commission values want
-  a read at a human table before any tuning corpus.
+- **The brewer persona is a harness defect:** as coded it farms Gruit (5 of 6 brews at 2p in
+  the turn oracle, 0.2 deliveries, 6% wins) — a yard farmer, not a brewer. Recode it as the
+  lane the design means (brew the high beers, present them at the hall or deliver them at
+  Novgorod) before its result is read again; until then its win share is not a balance read.
+- The 2p sea: two greedy seats load different hulls for different Kontors (4.9 Ships dock, one
+  sails a game); the load and commission values want a read at a human table before any
+  tuning corpus. The Guildmaster loiters at 2p (17% empty turns, 27% of games to the
+  round-18 backstop): deferral reads as free with one rival.
 - The GM's rollouts at 4p; sub-Guildmaster MC budget tiers; a blind-AI option — optional ideas.
 - The physical automa deck (a card-driven tabletop bot) waits until the ⚙ numbers settle.

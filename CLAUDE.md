@@ -163,6 +163,12 @@ Kontore* (Bruges · London · Bergen · Novgorod).
   `PTIER=` (the lanes at any tier) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · `GUILD_MS` /
   `CELLAR_MS` / `GM_ROLLS`. A hook overrides
   only when set; a ruled default is never silently forced off.
+- **`node playtests/oracle.js [N]`** + **`node playtests/oracle-study.js <dir>`** — the turn
+  oracle: the same harness writing a per-turn trace of every game (env as `sim.js` plus
+  `COUNTS=` · `SEED=` / `GOFF=` for shards · `OUT=` · `PLAY=` another build), and the study that
+  reads a directory of shards: little wins, the ★ silence, the phases, the arcs, the ⚜, the
+  paths to victory, the lanes; `--timeline=label:n:game` prints one game turn by turn. The
+  designer calls it; its outputs never enter the repo.
 - **The bar:** 0 crashes and 0 deadlocks across 2–4p; the twelve-dice identity at every end;
   pace in the band; the trigger split; the usage counters.
 - **Light by default:** after an engine change, verify plus 5–10 sim games in total. The

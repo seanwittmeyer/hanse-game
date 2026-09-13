@@ -152,6 +152,16 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
   at every end, pace in the band. Prints USAGE before VALUE. Env hooks: `TIER=` · `PERSONAS=1`
   (the committed lanes) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · the MC budgets (override-only-if-set
   — a ruled default is never silently forced off).
+- **`playtests/oracle.js [N]`** — the TURN ORACLE: the same harness, writing a per-turn trace
+  of every game (what each work turn handed its seat, the dice and goods it spent, the ★ it
+  moved, what befell the other seats on that clock) as JSON lines; env as `sim.js` plus
+  `COUNTS=` · `SEED=` / `GOFF=` (shards) · `OUT=` · `PLAY=` (another build on the same metrics).
+  **`playtests/oracle-study.js <dir>`** reads the shards, tolerant of partial corpora, and prints
+  the turn study: little wins (each turn classed by its best event — big · small · petty ·
+  empty), the ★ silence, the phases, the passive read (a rival's clock), the goal arcs
+  (first-time milestones, the arcs completed a seat, the dead ends), the ⚜ economy, the score
+  by part, the paths to victory, the lanes; `--timeline=label:n:game` prints one game turn by
+  turn. The designer calls it; its outputs stay out of the repo.
 - **The v5-era probe fleet** (`strategy-probe.js` · `flow-probe.js` · the prize probes ·
   `ai-ladder.js` · `ai-render-smoke.js` · `aid-overflow.js`) lives at
   `archive/v5/playtests/`; the v8 equivalents re-derive when the designer calls the full
@@ -669,8 +679,44 @@ a count, 100% in the 10–18 band, every game on the dice, the round-18 backstop
 referenced art file is on disk. The art the new faces still lack (the gain-grain and gain-hops
 icon sets) is queued in `art/PROMPTS.md`.
 
-**Next.** The designer's own table. Then the oracle read: re-derive the probe fleet from
-`archive/v5/playtests/` when called. **Never a corpus before a human table.**
+**The full oracle (2026-09-13, designer-called).** The turn oracle (§7) traced 500 games a
+count at the greedy tiers, 500 a count on the committed lanes, 250 mixed, 160 at the noisy
+Apprentice, 15 a count at the Guildmaster, and the v8.0i build on the same metrics. **Little
+wins:** a work turn hands its seat 4.2–4.7 events; 53–59% of turns end in a ★ or a lasting
+piece, 30–34% in progress (a brew, aging, a load, a commission), 11–13% in goods alone (the
+Market's rest turn), none empty; ★ move on half the turns; a seat's longest run of own turns
+without ★ is 2–3 and only 3% of seats sit five dry (the Apprentice: 6–7% empty turns, 9–12%
+five dry). Rounds 1–4 hand out lasting pieces (61–83% of turns: a tile, a post, a building, a
+recipe, a card crossing) but little ★ (0.7–1.6 a turn); rounds 9+ hand out ★ (3+ a turn).
+Against v8.0i the turns are denser (+1 event and +25–50% ★ a turn), the Market's share of turns
+fell from 23% to 17%, the game runs three rounds shorter. **Goal arcs:** the first export brew,
+the first tile and the yard's fee-waived recipe land by round 2 for everyone; the commission,
+the post and a Kontor building by round 3–5 for 81–96% of seats (the E1 starter's chain hands
+Bergen's building over at once); the Flight's third beer for 81–90% by round 8–9. The
+differentiating arcs come late and to a minority: the Flip 48 / 63 / 84% (2 / 3 / 4p), a
+specialist 55–78%, the hall 19–42%, Flight 4 31–52%, Flight 5 1–7%, the trade 3–6%. Seats
+complete 3.8–4.8 of six arcs; winners' arc sets are diverse (11–22 distinct a count; at 4p the
+winner tends to hold all six). **The sea is the late act:** first load round 6, first delivery
+round 10 / 8 / 7 in games of 13.5 / 12.3 / 11.6 rounds; 38–45% of 2p seats (21–24% at 3p, 10–19%
+at 4p) never deliver far; the first ⚜ arrives with 3–5 rounds left, so 70–80% of the ⚜ earned
+die unspent and the hall and the trade barely fire. At 2p the wharf is a parking lot: 4.9 Ships
+commissioned a game, 1.0 sails, 3.9★ of docked dice a seat at the end; the must is not the
+cause (optional: 0.8 sails, 52% never deliver) nor the Hulk's third berth (Hulk at 2: +0.1
+sails) — two seats load different hulls for different Kontors. Half the seats end with a Ready
+cask in a vessel (v8.0i: a third). **The Guildmaster** (flat MC) delivers more (1.7–1.8 a seat,
+8★), presents more (0.5–0.7), commissions 9–13 Ships a game, saves its big plays for the final
+round (62–73% big turns; the lead changes in 20–33% of final rounds), and at 2p loiters — 17%
+empty turns, 40% die turns, 27% of games to the round-18 backstop: with one rival the clock is
+soft. **The lanes** (Trader): merchant 85 / 50 / 47% wins · specialist 65 / 41 / 29 · breadth
+68 / 44 / 31 · majority 59 / 32 / 16 · hall 42 / 36 / 27 · builder 25 / 23 / 18 · brewer 6 / 7
+/ 7; the brewer persona as coded farms Gruit (5 of 6 brews at 2p) and is a harness defect to
+recode before it is read again; the builder's ladder tops at ~7★ of 30, a support lane. **The
+score:** sea pips are the largest slice (31–33%), deliveries 16–19%, majorities 11%, the wharf
+11–14%, the Flight 10–11%, the hall 3–8%.
+
+**Next.** The designer's own table, carrying the 2p sea and the ⚜ runway as its questions. The
+probe fleet re-derives from `archive/v5/playtests/` when called. **Never a corpus before a
+human table.**
 
 **Every number is a placeholder until the table.** The levers live in the engine's dials block
 (`play.html`): `SUPPLY_DICE` 10 (THE pace dial) · `MAX_ROUND` 18 · `KONTOR_MIN` 2 / 3 / 4 ·
@@ -720,14 +766,26 @@ hall as framed.
   first commission; the Public Work under a setup Cog leaving on the first tide.
 - **The warm Gruit.** The first-round feel: turn one carts a Gruit to the yard without a Brew.
 - **The private ladder.** The Granary → Kaufhaus step is *Cart 2 + 2★* for 3 `G`; does
-  the Flip still earn its fee?
-- **The sea tempo.** The greedy seats fill Ships slowly (Hulks of three wait): under the goods
-  split 0.8 / 2.0 / 4.2 sails a game at 2 / 3 / 4p, the round-18 backstop silent, the game
-  ending on the dice at 12–13 rounds; 2p is the thin count, one sail a game. The load and
-  commission values want a human read before any tuning corpus. Two lines the greedy seats
-  never fire — the Granary's pay-to-Brew, the Bonded Store's post — are read from the committed
-  lanes and the table, never from the greedy average; the hall now fires at 3–4p (1.4 / 2.4
-  presents a game).
+  the Flip still earn its fee? The oracle: the Flip lands for 48% of 2p seats (63 / 84% at 3 /
+  4p) under the 3-grain fee, and the committed builder tops at ~7★ of 30 — a support lane. The
+  lever, if the table agrees, is `FLIP_FEE` 3 → 2 `G`, never the tile's points.
+- **The 2p sea.** The oracle's first question for the table: two seats load different hulls for
+  different Kontors, so 4.9 Ships dock and one sails a game, 38–45% of seats never deliver far,
+  and the ⚜ economy (the hall, the trade) is stillborn. Neither the must (optional is worse)
+  nor the Hulk's third berth is the cause. The structure levers, in the order to try: a paid
+  sail at the Harbor (a docked Ship carrying your cask sails now, 1 grain an empty berth — the
+  same verb at a price, the berth race kept, a grain sink, no round upkeep) · fewer docked
+  hulls at 2p (the display of 3 → 2, or side A with fewer slots) · the Cog sailing at one cask
+  at 2p only (the berth race lost). At 3–4p the sea fills (1.8 / 2.8 sails a game). Two lines
+  the greedy seats never fire — the Granary's pay-to-Brew, the Bonded Store's post — are read
+  from the committed lanes and the table, never from the greedy average.
+- **The ⚜ runway.** The first ⚜ lands with 3–5 rounds left at every count; 70–80% of the ⚜
+  earned die unspent and the trade fires for 3–6% of seats. The lever is the sea's tempo, never
+  the ⚜ prices: read after the 2p sea.
+- **The 2p clock.** The Guildmaster loiters at 2p (17% empty turns, 27% of games to the
+  round-18 backstop): with one rival, deferral reads as free — the v7 finding, alive at 2p.
+  Read whether a human pair stalls; the lever is what an idle turn costs (the tide, the rival's
+  sail), never the backstop.
 - **Is there more than one engine tile, and do the dice end the game?** The v7 read's two
   structural findings (one Venture face was the engine; 21 of 30 search-tier 2p games ended on
   the ceiling because deferral read as free). v8's answer is the supply clock and the ladder;
@@ -739,7 +797,12 @@ hall as framed.
   a second name for a standing action.
 - **Legible goals and strategic arcs** — the designer's standing question (*"without legible
   goals or strategic arcs in the game, it can feel repetitive"*): the arc carriers now are the
-  chain toward a Kontor building, the private ladder, the Flight and the hall.
+  chain toward a Kontor building, the private ladder, the Flight and the hall. The oracle's
+  read: the universal arcs (the first tile, the yard's recipe, Bergen's building, a two-segment
+  chain) land by round 5 for nearly everyone and read as the game's grammar; the
+  differentiating arcs (the Flip, a specialist, the hall, Flight 4, Novgorod) land late and for
+  a minority; winners' arc sets are diverse. The table decides whether the late arcs read as
+  goals a player steers toward or as afterthoughts the clock cuts off.
 
 ---
 
