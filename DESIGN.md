@@ -681,7 +681,8 @@ icon sets) is queued in `art/PROMPTS.md`.
 
 **The full oracle (2026-09-13, designer-called).** The turn oracle (§7) traced 500 games a
 count at the greedy tiers, 500 a count on the committed lanes, 250 mixed, 160 at the noisy
-Apprentice, 15 a count at the Guildmaster, and the v8.0i build on the same metrics. **Little
+Apprentice, 15 a count at the Guildmaster, 6 at the Cellarmaster, and the v8.0i build on the
+same metrics. **Little
 wins:** a work turn hands its seat 4.2–4.7 events; 53–59% of turns end in a ★ or a lasting
 piece, 30–34% in progress (a brew, aging, a load, a commission), 11–13% in goods alone (the
 Market's rest turn), none empty; ★ move on half the turns; a seat's longest run of own turns
@@ -707,7 +708,10 @@ cask in a vessel (v8.0i: a third). **The Guildmaster** (flat MC) delivers more (
 8★), presents more (0.5–0.7), commissions 9–13 Ships a game, saves its big plays for the final
 round (62–73% big turns; the lead changes in 20–33% of final rounds), and at 2p loiters — 17%
 empty turns, 40% die turns, 27% of games to the round-18 backstop: with one rival the clock is
-soft. **The lanes** (Trader): merchant 85 / 50 / 47% wins · specialist 65 / 41 / 29 · breadth
+soft. The Cellarmaster (deep MC, a glance of six games a count) reads the same: 16 rounds at 2p
+with a third of games on the backstop, 12–17% empty turns, 1.2 / 1.7 / 2.2 deliveries a seat,
+9–12 Ships commissioned a game, the ⚜ held at the end 1.4–2.3, the final round its biggest
+(54–67% big turns). **The lanes** (Trader): merchant 85 / 50 / 47% wins · specialist 65 / 41 / 29 · breadth
 68 / 44 / 31 · majority 59 / 32 / 16 · hall 42 / 36 / 27 · builder 25 / 23 / 18 · brewer 6 / 7
 / 7; the brewer persona as coded farms Gruit (5 of 6 brews at 2p) and is a harness defect to
 recode before it is read again; the builder's ladder tops at ~7★ of 30, a support lane. **The
