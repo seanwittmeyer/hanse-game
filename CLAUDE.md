@@ -153,15 +153,15 @@ Kontore* (Bruges · London · Bergen · Novgorod).
 
 ## 8 · Simulating the engine — the harness
 
-- **`node playtests/verify-v8.js`** — the rule battery (59 checks in 15 groups); seconds;
+- **`node playtests/verify-v8.js`** — the rule battery (61 checks in 16 groups); seconds;
   always after an engine change.
 - **`node playtests/sim.js [N]`** — drives the engine's OWN in-page AI headlessly: the harness
   extracts `play.html`'s `<script>`, appends a bot in the same lexical scope (the engine's
   `S`/`UI` are `let`-declared) and runs the whole in a Node `vm` with a stubbed DOM;
   render/log/save are no-ops. It prints USAGE before VALUE. Env hooks: `TIER=` (apprentice ·
   journeyman · trader · guildmaster · cellarmaster) · `PERSONAS=1` (the committed lanes) ·
-  `PTIER=` (the lanes at any tier) · `MIX=1` · `SUPPLY=` · `SRCN=` · `GUILD_MS` / `CELLAR_MS` /
-  `GM_ROLLS`. A hook overrides
+  `PTIER=` (the lanes at any tier) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · `GUILD_MS` /
+  `CELLAR_MS` / `GM_ROLLS`. A hook overrides
   only when set; a ruled default is never silently forced off.
 - **The bar:** 0 crashes and 0 deadlocks across 2–4p; the twelve-dice identity at every end;
   pace in the band; the trigger split; the usage counters.

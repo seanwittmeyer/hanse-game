@@ -193,6 +193,20 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
 - If a beer's color clashes with its card tint, lean the art toward the card's color (the card's `--c`
   shows through the scrim at the edges).
 
+## Queued (2026-09-13 — the goods split: Gain N grain · Gain N hops)
+- **icons/grain-1.png · grain-2.png · grain-3.png** and **icons/hops-1.png · hops-2.png ·
+  hops-3.png** — the goods gains now name their good (v8.0j): the Market's primary prints **Gain
+  2 grain**, every cask tile's bonus **Gain 2 grain**, the yard's and the hall's prizes **1 or 2
+  grain**, and the Market's hop trade **Gain 3 hops**. Brief: the `goods-N` numeral recipe on
+  the two single-good subjects — the sheaf of barley from `icons/grain.png` and the hop cone
+  from `icons/hops.png` — the numeral riding the object at the corrected AGE-icon size (.42H,
+  stroke .028H, drop shadow), the same c.1350 sticker treatment, one object, warm palette,
+  transparent margin, readable at .3 in. Until they land the faces print the plain `grain` /
+  `hops` glyph with the count in the printed words; when a file lands, add its `ICON_ART` entry
+  (`'grain-2':'grain-2'` …) and switch the faces' glyph names.
+- **icons/dividend.png** (optional) — a hop cone above a ship's open hold, for the Ship tiles'
+  berth chip and the Cellar face (today the plain `hops` glyph with "+1").
+
 ## Queued (2026-08-09 — designer, off the v4.12 review)
 - **icons/bonus-load.png REPLACEMENT** — the *Load 1 more* load-bonus wants its **own,
   distinct icon**: today `bonus-load.png` reads too close to the generic load/package

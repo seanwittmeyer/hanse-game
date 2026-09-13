@@ -11,7 +11,7 @@
 'use strict';
 // ICON_ART maps a lucide name (or a virtual name) to art/icons/<file>.png; LU emits the art
 // <img> when mapped, else the lucide <i>; LUX forces raw lucide. The icon accounting: art/ICONS.md.
-const ICON_ART={coins:'goods',dices:'quality-die',
+const ICON_ART={coins:'goods',grain:'grain',hops:'hops',dices:'quality-die',
   'dice-1':'die-1','dice-2':'die-2','dice-3':'die-3','dice-4':'die-4','dice-5':'die-5','dice-6':'die-6',
   star:'star',check:'ready',beer:'cask',sailboat:'ship',landmark:'kontor','building-2':'building',
   wrench:'specialist','scroll-text':'recipe','map-pin':'presence',search:'build','package-plus':'bonus-load',
@@ -34,9 +34,9 @@ const cost=(g,h)=>{let a=[];if(g)a.push('<span class="gc g">'+LU('wheat','g')+g+
 const QI='beer', VP='star';  // quality icon (a beer = its quality/level) · victory-point icon
 
 // THE CASK BONUSES — the eight-verb pool ⚙ printed on the cask tiles: the printed mix IS the stack a
-// Q2+ brew searches; Gruit is PINNED to Gain 2 goods (no search). Icons/texts mirror play.html CASK_ACT.
+// Q2+ brew searches; Gruit is PINNED to Gain 2 grain (no search). Icons/texts mirror play.html CASK_ACT.
 const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or is carted
-  {k:'source',  ai:'goods-2',       act:'Gain 2 goods',             q:1},
+  {k:'source',  ai:'grain',         act:'Gain 2 grain',             q:1},
   {k:'age',     ai:'age-2',         act:'Age 2',                    q:2},
   {k:'load',    ai:'package-plus',  act:'Load 1',                   q:2},
   {k:'brew',    ai:'flask-conical', act:'Brew',                     q:2},
@@ -46,10 +46,10 @@ const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or i
   {k:'post',    ai:'post',          act:'Post · a supply die',      q:2},
 ];
 const poolFor=q=>CASK_POOL.filter(a=>q>=a.q);   // the printed mix per quality tier
-// cask supply — fixed global counts (COMPONENTS.md; the scarce high-Q exports are intentional). Gruit PINNED to Gain 2 goods; a Q2+ brew searches.
+// cask supply — fixed global counts (COMPONENTS.md; the scarce high-Q exports are intentional). Gruit PINNED to Gain 2 grain; a Q2+ brew searches.
 // ready = maturation steps (Hopped & Broyhan 1 · Keut 2 · Mumme/Bock 3).
 const CASKS=[
-  {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:0, pin:CASK_POOL[0]},   // Ready at brew (die 1); every tile prints Gain 2 goods; the cart is its road
+  {nm:'Gruit',   c:'#8a949c', q:1, g:1,h:0, n:16, ready:0, pin:CASK_POOL[0]},   // Ready at brew (die 1); every tile prints Gain 2 grain; the cart is its road
   {nm:'Hopped',  c:'#c2922f', q:2, g:1,h:1, n:12, ready:1},
   {nm:'Broyhan', c:'#b06a34', q:3, g:1,h:2, n:6,  ready:1, off:0},   // each export's six tiles = a 6-window over the 8-verb pool
   {nm:'Keut',    c:'#9c5f2e', q:3, g:2,h:1, n:6,  ready:2, off:2},
@@ -89,7 +89,7 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the 
   {ic:'package-plus',nm:'Stevedore',   act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
   {ic:'landmark',    nm:'Agent',       act:'a rival delivers at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
   {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1},
-  {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s goods +1', c:'#5b3a8e', n:1},
+  {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s grain +1', c:'#5b3a8e', n:1},
   {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
   {ic:'book-open',   nm:'Chronicler',  act:'deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
   {ic:'gavel',       nm:'Alderman',    act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
@@ -101,10 +101,10 @@ const STARTERS=[   // the starting recipes are CARDS — one each per player, de
   {nm:'Gruit', cc:'#8a949c', L:1, g:1,h:0, start:1},
   {nm:'Hopped',cc:'#c2922f', L:2, g:1,h:1, start:1}];
 const RECIPES=[  // EXPORT recipe cards — buy = the printed fee ⚙ (paid at the yard's GOOD zone and by the bonus; the BEST zone and the Scriptorium waive it) · g/h = the BREW cost on the tucked edge
-  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{h:1},     reach:'Q3 · ready 1 — the fast export'},
+  {nm:'Broyhan', cc:'#946d09', L:3, g:1,h:2, buy:{g:1},     reach:'Q3 · ready 1 — the fast export'},
   {nm:'Keut',    cc:'#9c7209', L:3, g:2,h:1, buy:{g:1},     reach:'Q3 · ready 2'},
-  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{g:1,h:1}, reach:'Q4 — needs a count of 4'},
-  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:1,h:2}, reach:'Q5 — needs a count of 5'},
+  {nm:'Mumme',   cc:'#9a5526', L:4, g:1,h:3, buy:{g:2},     reach:'Q4 — needs a count of 4'},
+  {nm:'Bock',    cc:'#7c2128', L:5, g:2,h:3, buy:{g:3},     reach:'Q5 — needs a count of 5'},
 ];
 
 //==================================================================
@@ -114,7 +114,7 @@ const RECIPES=[  // EXPORT recipe cards — buy = the printed fee ⚙ (paid at t
 const PRIV_FOOT='rgba(31,86,122,.74)';const WORK_FOOT='rgba(97,63,32,.78)';   // PUBLIC WORKS brown (green is a player colour) · private buildings the owner-only blue · SPECIALISTS purple
 const BLD_FOOT='rgba(58,51,66,.7)';   // the neutral foot — dark purple-grey at 70% so the illustration bleeds through
 // the 2.5×1.32 tile anatomy: icon+name header · art window · the colour foot (the effect big, then the cost).
-const STD_ACT={source:{ai:'goods-2',t:'Gain 2 goods'},age:{ai:'age-2',t:'Age 2'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'}};
+const STD_ACT={source:{ai:'grain',t:'Gain 2 grain'},age:{ai:'age-2',t:'Age 2'},recipe:{ai:'scroll-text',t:'Gain 1 recipe'}};
 function buildingCard(d){const foot=(d.verb==='value'?PRIV_FOOT:WORK_FOOT);
   // the Public Works print no start face and no fee chip (nobody builds or buys them)
   const msChip='';
@@ -160,7 +160,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   +artLayer(f.art||('venture-'+({A:'brew',B:'brew',C:'points',D:'age'})[d.k]+'-l'+tier+'.png'))
   +'<div class="bt-top vt-top">'+tcol
     +'<span class="bt-ms" title="tier '+tier+' — '+(tier===2?'the Flip of tier 1':'from the hand')+'">T'+tier+'</span>'
-    +'<span class="bt-cost">'+cost(tier===2?2:1,1)+'</span></div>'
+    +'<span class="bt-cost">'+cost(tier===2?3:2,0)+'</span></div>'
   +'<div class="bt-foot vt2"><span class="vt-own" title="the line — fires when its owner works this station">'+(f.own||'')
     +(f.txt?'<span class="vt-txt">'+f.txt+'</span>':'')+'</span>'
     +'<span class="vt-pub vt-pts" title="the printed points — scored at the end while the tile stands">'+LU('star-'+f.pts,'starmark')+'</span></div>'
@@ -229,15 +229,16 @@ function caskCardBack(d,act){const start=Math.max(1,d.q-(d.ready||0));
   +'</div>';}
 // the SHIP TILE — the port's wharf art (wharf-<dest>.png) under a kontor-colour wash; the identity head
 // (hull · fee · the Kontor or the wild seat) then one full-width 1in berth per cap; a cask tile seats on a berth.
+const ST_HOP='<span class="st-hop" title="the dividend — 1 hop as a cask boards">+1'+LU('hops')+'</span>';   // every berth prints it
 const SHIP_H=hull=>3;   // EVERY hull prints the SAME 2.5×3in tile (the Hulk footprint); the TOP berth is the trigger — covering it with the last cask IS the sail; below the berths the port art shows
 function shipCard(hull,destNm){const cap=HULL[hull].cap;const d=SHIP_DEST[destNm]||SHIP_DEST.Wild;
   const fee=HULL[hull].fee;
   let rows='<div class="st-trig">'
     +'<div class="st-toprow"><span class="st-k">'+(d.wild?'<span class="st-chit" title="the chit seat — the first cask loaded names this Ship\'s Kontor and sets its chit here">'+LU('landmark')+' Wild</span>':destNm)+'</span>'
       +'<span class="st-meta">'+(fee?'<span class="st-cost">'+cost(fee,0)+'</span>':'')+'</span></div>'
-    +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span></div>'
+    +'<div class="st-seat st-tseat" title="the trigger berth — the last cask loads here and the ship sails at once"><span class="st-num">'+cap+'</span><span class="st-go">'+LU(QI)+'<b class="amp">&amp;</b>'+LU('sail')+'</span>'+ST_HOP+'</div>'
   +'</div>';
-  for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span></div></div>';
+  for(let i=cap-1;i>=1;i--)rows+='<div class="st-berth"><div class="st-seat"><span class="st-num">'+i+'</span><span class="st-ghost">'+LU(QI)+'</span>'+ST_HOP+'</div></div>';
   rows+='<div class="st-hold"></div>';
   return '<div class="stile" style="--c:'+d.kc+';height:'+SHIP_H(hull)+'in">'
     +artLayer(d.wild?'ship-back.png':('wharf-'+destNm.toLowerCase()+'.png'))+'<div class="st-wash"></div>'
@@ -690,7 +691,9 @@ var HC_CSS4=''
 +'.stile .st-chit{display:inline-flex;align-items:center;gap:.04in;border:2px dashed rgba(255,255,255,.8);border-radius:.05in;padding:.01in .05in}'
 +'.invtok{width:.75in;height:.75in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.42in;line-height:1;box-shadow:inset 0 0 0 .04in #571a20;text-shadow:0 1px 2px rgba(0,0,0,.5)}'
 +'.kchit{width:.75in;height:.75in;border-radius:50%;background:var(--c,#6f6253);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1;box-shadow:inset 0 0 0 .04in rgba(0,0,0,.35);text-shadow:0 1px 2px rgba(0,0,0,.5)}'
-+'.kchit img.ai,.kchit .ic{width:.42in;height:.42in;margin-bottom:-.03in}.kchit span{font-variant:small-caps;font-weight:bold;font-size:.09in}';
++'.kchit img.ai,.kchit .ic{width:.42in;height:.42in;margin-bottom:-.03in}.kchit span{font-variant:small-caps;font-weight:bold;font-size:.09in}'
++'.stile .st-hop{position:absolute;right:.05in;bottom:.05in;display:inline-flex;align-items:center;gap:.01in;height:.2in;padding:0 .04in;border-radius:.04in;background:rgba(0,0,0,.5);font-size:.12in;font-weight:900}'
++'.stile .st-hop img.ai,.stile .st-hop .ic{width:.15in;height:.15in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
 window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken,kontorChit,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,improveTile,tok,disc,wtok,recipeCard,playerBoard,KONTOR_C};

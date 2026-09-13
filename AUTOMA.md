@@ -30,7 +30,10 @@ as two loops that need each other:
 
 - **The quality count as a target.** A seat never brews a die its count cannot ship (one post
   away is a bet); a held recipe one above the count makes the next post worth more
-  (`aiCountGap`). A Gruit is brewed for the yard's goods, never for the sea.
+  (`aiCountGap`). A Gruit is brewed for the yard's grain and the cart's dividend, never for the
+  sea: `aiGruitBrewValue` prices a Gruit brew as its cart (the yard's next zone, the tile's
+  grain, the dividend's hop when hops are short, the Flight), never as a delivery — the die is
+  the clock, and a seat short of hops posts or builds sooner than it farms Gruit.
 - **When to post vs brew.** `aiPostValue` prices a post as its pips to come (any Ship through
   the segment ticks it), the count it unlocks, the chain it completes toward an open building
   slot, and the lane it opens for the table — against the same die as a cask. The last dice of
@@ -46,6 +49,12 @@ as two loops that need each other:
   (`aiPactValue`); the Bonded Store's post offer as a post against the same die as a cask,
   minus the fee, under the last-dice rule (`aiBondPost`); the Warehouse is the seat's Kontor building
   when its count trails its recipes (`aiKTile`).
+- **The goods split.** Grain is a flow the seat tops up at the Market when a wanted recipe or
+  fee is short of it (every fee is grain); hops arrive as the dividend and price only beer, so a
+  load and a cart are each priced a hop higher
+  (`aiLoadValue` · `aiCartValue`). **The hop trade** (`aiTradeValue` · `aiWantTrade`) is taken at
+  the Market when a brewable recipe is short of hops and the seat holds an ⚜ it is not saving for
+  the hall; a hall-lane seat keeps its last invitation.
 - **The cart's door** (`aiCartDoor`): the hall when cask die + the hall die (+ the
   Guildmaster) beats the yard's zone; a shippable export yields to the sea (two dice, an ⚜, a
   prize) unless the game is ending. **The yard's prize**: a recipe in the BEST/GOOD zones
@@ -74,11 +83,11 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (59 checks in 15 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (61 checks in 16 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · delivery = two dice ·
   Bruges · invitations · the prizes · the private ladder · the end and the score · Gruit,
-  aging, no kettle · the AI never stalls. Seconds, always.
+  aging, no kettle · the AI never stalls · the goods split. Seconds, always.
 - **`playtests/sim.js`** — the robustness/pace gate riding the engine's own `aiStep`: 0 crashes
   / 0 deadlocks across 2–4p, the twelve-dice identity at every end, the pace band, the trigger
   split, and the v8 usage counters (posts, Kontor builds, RAISEs, sails and wild ports,

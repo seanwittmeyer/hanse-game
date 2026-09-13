@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80i). Seconds, always.
+// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80j). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,7 +35,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80i',function(){eq(KEY,'hanse-v80i');});
+t('KEY is hanse-v80j',function(){eq(KEY,'hanse-v80j');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -72,7 +72,7 @@ t('the starter: the eleventh die stands at face 1 on W1 or E1 and never touches 
   S.players.forEach(function(q){eq(twelve(q),SUPPLY_DICE+2,'twelve dice');});});
 t('setup: Gruit is READY at brew and its stack is uniform (no search); the exports print six different bonuses',function(){fresh(2);
   eq(startDieFor(S.players[0],'gruit'),1);eq(STYLES.gruit.q,1);eq(STYLES.gruit.ready,0);
-  eq(Object.keys(pileVerbs('gruit')),['source'],'all Gain 2 goods');
+  eq(Object.keys(pileVerbs('gruit')),['source'],'all Gain 2 grain');
   eq(pileList('gruit').length,16-S.players.length,'16 Gruit tiles, one under each warm Gruit');
   S.exports.forEach(function(st){eq(Object.keys(pileVerbs(st)).length,6,st+' six different');});
   eq(Object.keys(pileVerbs('hopped')).length,8,'Hopped prints the eight');
@@ -278,25 +278,25 @@ t('the cart offers the yard always and the hall only with an ⚜, Q2+ and an ope
   eq(cartCasks(p).length,2);ok(!canHall(p,p.vessels[0]),'Gruit never');ok(!canHall(p,p.vessels[1]),'no ⚜');
   p.invites=1;ok(canHall(p,p.vessels[1]));ok(!canHall(p,p.vessels[0]),'still not Gruit');
   S.hall.places=S.hall.places.map(function(){return {pid:1,style:'hopped',q:2,face:2};});ok(!canHall(p,p.vessels[1]),'the hall full → the yard');});
-t('the yard: the die parks on the next place, tile under it; the zone prize BEST (recipe fee waived or 2 goods) · GOOD (at its fee or 1) · OK (1); the bonus fires',function(){fresh(2);var p=cur();
+t('the yard: the die parks on the next place, tile under it; the zone prize BEST (recipe fee waived or 2 grain) · GOOD (at its fee or 1) · OK (1); the dividend; the bonus fires',function(){fresh(2);var p=cur();
   p.vessels[0]=mkCask('gruit',1,'source');UI={sub:'move'};UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';
   cartPickCask(0);eq(UI.sub,'yardprize','the zone prize prompt');eq(S.yard.length,1);eq(p.delivered[0].yard,1);eq(p.delivered[0].val,0,'no ★');
   var b=UI.pendingYard[0];eq(b.zone,'best');
-  var r0=p.recipes.length;yardPick('recipe',S.exports[0]);eq(p.recipes.length,r0+1,'a recipe');eq(p.hops,2,'the fee waived');
-  eq(UI.sub,'source','then the tile\\'s Gain 2 goods fires');eq(UI.src.n,2);srcTake(2,0);eq(p.grain,5);
+  var r0=p.recipes.length;yardPick('recipe',S.exports[0]);eq(p.recipes.length,r0+1,'a recipe');eq(p.hops,START_GOODS.h+1,'the fee waived; the dividend paid 1 hop');
+  eq(p.grain,5,'then the tile\\'s Gain 2 grain fires, no prompt');eq(UI.sub,'end','no Market prompt');
   eq(yardZone(0),'best');eq(yardZone(2),'good');eq(yardZone(4),'ok','2p zones 2/2');
   fresh(3);eq(yardZone(2),'best');eq(yardZone(5),'good');eq(yardZone(6),'ok','3p zones 3/3');
   p=cur();p.vessels[0]=mkCask('hopped',2);putPost('w1',0,1);S.yard=[{},{},{},{},{},{}];
   UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';cartPickCask(0);eq(UI.pendingYard[0].zone,'ok');
-  var g0=p.grain;yardPick('goods');eq(UI.sub,'source');eq(UI.src.n,1,'OK pays 1 good');
+  var g0=p.grain;yardPick('goods');eq(p.grain,g0+1+2,'OK pays 1 grain, no prompt, then the tile\\'s 2');
   p.upgrades=['carter'];eq(yardGoodsN(p,'ok'),2,'the Carter +1');});
-t('the hall: 1 ⚜ spent, cask die + the hall die, the die parks, the place\\'s goods, then the hall die climbs (cap 6); no recipe; the Bruges pair by hall places',function(){fresh(2);var p=cur();
+t('the hall: 1 ⚜ spent, cask die + the hall die, the die parks, the place\\'s grain, the dividend, then the hall die climbs (cap 6); no recipe; the Bruges pair by hall places',function(){fresh(2);var p=cur();
   p.invites=1;p.vessels[0]=mkCask('hopped',3);putPost('w1',0,1);
   UI={sub:'move'};UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';cartPickCask(0);eq(UI.sub,'cartdoor');
   cartDoor('hall');
   eq(p.invites,0,'the ⚜ spent');var d=p.delivered[0];eq(d.hall,1);eq(d.val,3+HALL_DIE_START,'die + the hall die');
   eq(S.hall.die,HALL_DIE_START+1,'the hall die climbed');eq(S.hall.places[0].pid,0,'parked on place 1');
-  ok(UI.sub==='source'&&UI.src&&UI.src.n===HALL_PRIZES[0],'the place\\'s goods (the source prompt)');srcTake(HALL_PRIZES[0],0);
+  eq(p.grain,START_GOODS.g+HALL_PRIZES[0]+2,'the place\\'s grain and the tile\\'s 2, no prompt');eq(p.hops,START_GOODS.h+1,'the dividend');
   ok(!(UI.pendingYard||[]).length,'no recipe');
   eq(parkedAt(p,'bruges'),1,'Bruges weighs hall places');eq(fieldAt(p,'bruges'),0);
   S.hall.die=6;p.invites=1;p.vessels[1]=mkCask('hopped',2);UI.cart={returnTo:'end',n:1,count:0,vi:1};UI.sub='cart';cartPickCask(1);cartDoor('hall');eq(S.hall.die,6,'cap 6');
@@ -331,32 +331,32 @@ t('Novgorod: a RAISE — one die of yours at sea +1 (cap 6); the prompt spans po
   var ts=raiseTargets(p);eq(ts.length,1,'the starter post only (the building is at 6)');
   UI={sub:'move'};UI.afterRt='end';enterRaise('benefitcont',{pid:0});eq(UI.sub,'raise');raisePick(0);eq(S.sea.posts.e1[0],2,'raised');
   UI={sub:'move'};UI.pendingRaise=[{pid:0,why:'Novgorod\\'s prize'}];afterSail('end');eq(UI.sub,'raise','the prize opens the same prompt');});
-t('the recipe bonus grants at its printed fee: Broyhan 1H · Keut 1G · Mumme 1G1H · Bock 1G2H; the Scriptorium waives',function(){fresh(2);var p=cur();
-  eq(RECIPE_FEE.broyhan,{h:1});eq(RECIPE_FEE.keut,{g:1});eq(RECIPE_FEE.mumme,{g:1,h:1});eq(RECIPE_FEE.bock,{g:1,h:2});
+t('the recipe bonus grants at its printed fee, grain only: Broyhan 1G · Keut 1G · Mumme 2G · Bock 3G; the Scriptorium waives',function(){fresh(2);var p=cur();
+  eq(RECIPE_FEE.broyhan,{g:1});eq(RECIPE_FEE.keut,{g:1});eq(RECIPE_FEE.mumme,{g:2});eq(RECIPE_FEE.bock,{g:3});
   var st=S.exports[0];var f=recipeFeeFor(p,st);p.grain=9;p.hops=9;
   UI={sub:'move'};enterRecipeGain('end',false);recipeGainPick(st);ok(p.recipes.indexOf(st)>=0);eq(9-p.grain,f.g||0);eq(9-p.hops,f.h||0,'the fee paid');
   clearSlot('s2');S.buildings.s2={p:'B',tier:1,owner:0};eq(recipeFeeFor(p,S.exports[1]),{},'the Scriptorium waives');});
 
 // ---------- 11 · the private ladder ----------
-t('a tier 1 builds on ANY vacant slot (1G1H) — a docked Ship above is fine; never on a Public Work, never on a rival\\'s tile; the hand tile leaves',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
+t('a tier 1 builds on ANY vacant slot (2G) — a docked Ship above is fine; never on a Public Work, never on a rival\\'s tile; the hand tile leaves',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
   clearWharf();S.buildings.s4={b:'maltkiln'};S.buildings.s5={p:'A',tier:1,owner:1};putShip('s6','cog','bergen',[]);
   var o=pbuildOptions(p,false).find(function(x){return x.k==='place'&&x.station==='D';});
   eq(o&&o.slots.slice().sort(),['s1','s2','s3','s6','s7','s8'],'every vacant slot, flank or not; the Ship\\'s slot too');
   eq(privFee('s6',false),T1_FEE);eq(privFee('s3',false),T1_FEE,'one fee everywhere');
   UI.pb={returnTo:'end',free:false,pid:0,station:'D'};UI.sub='placepriv';placePrivOn('s3');
-  var b=privAt('s3');ok(b&&b.p==='D'&&b.tier===1&&b.owner===0,'the Cold Store stands on a Brewhouse flank');eq(p.grain,4);eq(p.hops,4,'1G1H paid');
+  var b=privAt('s3');ok(b&&b.p==='D'&&b.tier===1&&b.owner===0,'the Cold Store stands on a Brewhouse flank');eq(p.grain,3);eq(p.hops,5,'2G paid, no hop');
   ok(p.hand.indexOf('D')<0,'the hand tile left');
   UI.pb={returnTo:'end',free:false,pid:0,station:'C'};UI.sub='placepriv';placePrivOn('s4');eq(bKeyAt('s4'),'maltkiln','never over a Work');
   UI.pb={returnTo:'end',free:false,pid:0,station:'C'};UI.sub='placepriv';placePrivOn('s5');eq(privAt('s5').owner,1,'never over a rival');
   eq(privSlots(S.players[1],'D').slice().sort(),['s1','s2','s6','s7','s8'],'a rival reads the same ground');
   SLOTS.forEach(function(sx){if(!bAt(sx.id))S.buildings[sx.id]={b:'maltkiln'};});
   ok(!pbuildOptions(p,false).some(function(x){return x.k==='place';}),'a full wharf: nothing to place');});
-t('tier 2 is the FLIP of your own tier 1 (2G1H), in place; no per-station cap — two of your tiles may flank one station; no die',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
+t('tier 2 is the FLIP of your own tier 1 (3G), in place; no per-station cap — two of your tiles may flank one station; no die',function(){fresh(2);var p=cur();p.grain=5;p.hops=5;
   clearWharf();S.buildings.s1={p:'A',tier:1,owner:0};p.hand=['B','C','D'];
   ok(pbuildOptions(p,false).some(function(x){return x.k==='place'&&x.station==='B'&&x.slots.indexOf('s8')>=0;}),'the Market\\'s other flank is open ground');
-  UI.pb={returnTo:'end',free:false,pid:0,station:'B'};UI.sub='placepriv';placePrivOn('s8');ok(privAt('s8')&&privAt('s8').p==='B','two tiles flank the Market');eq(p.grain,4);eq(p.hops,4);
+  UI.pb={returnTo:'end',free:false,pid:0,station:'B'};UI.sub='placepriv';placePrivOn('s8');ok(privAt('s8')&&privAt('s8').p==='B','two tiles flank the Market');eq(p.grain,3);eq(p.hops,5);
   UI.pb={returnTo:'end',free:false,pid:0,station:null};UI.sub='pbuild';pbuildPick('flip','A');
-  eq(privAt('s1').tier,2,'flipped');eq(p.grain,2);eq(p.hops,3,'2G1H');eq(p.supply,SUPPLY_DICE,'no die');
+  eq(privAt('s1').tier,2,'flipped');eq(p.grain,0);eq(p.hops,5,'3G, no hop');eq(p.supply,SUPPLY_DICE,'no die');
   ok(!pbuildOptions(p,true).some(function(x){return x.k==='flip'&&x.station==='A';}),'no second flip');});
 t('the private stop fires for its OWNER only, at the station its slot flanks: Granary pay 1 G: Brew · Cold Store Age 2 · Shipping Office Raise + Post; the Guildhall brews once on the visit and grants every recipe; the Scriptorium is passive',function(){fresh(2);var p=cur(),q=S.players[1];p.grain=5;p.hops=5;
   clearSlot('s1');S.buildings.s1={p:'A',tier:1,owner:0};
@@ -428,7 +428,7 @@ t('the Chronicler +1★ per cask landed; the Guildmaster +2★ per present; the 
   p.upgrades=['alderman'];for(var i=0;i<3;i++)S.hall.places[i]={pid:0,style:'hopped',q:2,face:2};eq(scorePlayer(p).guild,2,'Bruges by hall places');});
 
 // ---------- 13 · Gruit, aging, no kettle ----------
-t('Gruit: 1G, Ready at brew, the top tile (Gain 2 goods) without a search, never boards, the cart is its road',function(){fresh(2);var p=cur();p.grain=3;p.vessels[0]=null;
+t('Gruit: 1G, Ready at brew, the top tile (Gain 2 grain) without a search, never boards, the cart is its road',function(){fresh(2);var p=cur();p.grain=3;p.vessels[0]=null;
   UI={sub:'move'};UI.brew={returnTo:'end',free:false};UI.sub='brew';brewPick('gruit');
   eq(UI.sub,'end','no search picker');var c=p.vessels.filter(function(x){return x;})[0];eq(c.style,'gruit');eq(c.die,1);ok(caskReady(c));eq(c.act,'source');eq(p.grain,2);
   clearSlot('s1');putShip('s1','cog','bergen');ok(!canTake('s1',p.vessels.indexOf(c)),'never boards');ok(cartCasks(p).length===1,'carts');});
@@ -454,6 +454,32 @@ t('the human-gate heads name their owner: yardprize · bspec · buildmenu · pos
   UI={sub:'raise',raise:{targets:[],returnTo:'end',ctx:{},pid:1}};eq(actorSeat(),1);
   UI={sub:'pbuild',pb:{returnTo:'end',free:true,pid:1}};eq(actorSeat(),1);
   UI={sub:'move'};eq(actorSeat(),0,'otherwise the active seat');ok(!humanGate());});
+
+// ---------- 15 · the goods split: grain taken, hops earned ----------
+t('the dividend: 1 hop as a cask boards (a second cask under the Stevedore pays a second); 1 hop as the warm Gruit is carted; the Victualling Yard doubles the bonus, not the dividend',function(){fresh(2);var p=cur();
+  eq(DIVIDEND_H,1);p.grain=0;p.hops=0;clearWharf();putShip('s1','hulk','london');putPost('w1',0,1);putPost('w2',0,1);
+  p.vessels[0]=mkCask('hopped',2,'source');loadInto(p,'s1',0);
+  eq(p.hops,1,'the dividend paid 1 hop');eq(p.grain,2,'the tile bonus paid 2 grain, no prompt');eq(UI.sub,'end');
+  p.upgrades=['crane'];p.vessels[0]=mkCask('hopped',2,'source');p.vessels[1]=mkCask('hopped',2,'source');
+  UI={sub:'move'};enterLoad(['s1'],'end',1);eq(UI.load.loadsLeft,2,'the Stevedore: 2 loads');UI.load.cask=0;loadOnto('s1');
+  eq(p.hops,2,'a second cask, a second hop');
+  fresh(2);p=cur();p.grain=0;p.hops=0;eq(p.vessels[0].style,'gruit','the warm Gruit');
+  UI={sub:'move'};UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';cartPickCask(0);eq(UI.sub,'yardprize');
+  eq(p.hops,1,'the cart pays the dividend');yardPick('goods');eq(p.grain,2+2,'the Best prize 2 grain and the tile\\'s 2');
+  fresh(2);p=cur();p.grain=0;p.hops=0;clearWharf();putShip('s1','cog','london');S.buildings.s1={b:'victual'};putPost('w1',0,1);putPost('w2',0,1);
+  p.vessels[0]=mkCask('hopped',2,'source');loadInto(p,'s1',0);
+  ok(p.hops===1||bKeyAt('s1')!=='victual','the Yard doubles the bonus, never the dividend');});
+t('the hop trade: no ⚜ → no trade; pay 1 ⚜: 3 hops in place of the grain; Gain 2 grain otherwise; the tile bonus and the prizes pay grain without a prompt; every Gruit tile is Gain 2 grain',function(){fresh(2);var p=cur();
+  eq(TRADE_INV,1);eq(TRADE_H,3);p.invites=0;p.grain=0;p.hops=0;
+  UI={sub:'move'};enterSource(SRC_PRIMARY,'end');eq(UI.sub,'source');ok(!canTrade(p),'no ⚜ → no trade');
+  srcTrade();eq(p.hops,0,'refused');eq(UI.sub,'source','still at the Market');
+  p.invites=1;ok(canTrade(p));srcTrade();eq(p.invites,0,'the ⚜ spent');eq(p.hops,TRADE_H,'3 hops');eq(p.grain,0,'no grain — one or the other');eq(UI.sub,'end');
+  UI={sub:'move'};enterSource(SRC_PRIMARY,'end');srcTake();eq(p.grain,SRC_PRIMARY,'Gain 2 grain');eq(UI.sub,'end');
+  UI={sub:'move'};UI.pendingActs=[{pid:0,act:'source',style:'gruit',slot:null}];afterSail('end');eq(p.grain,SRC_PRIMARY+2,'the tile bonus pays 2 grain, no prompt');eq(UI.sub,'end');
+  UI={sub:'move'};UI.pendingGoods=[{pid:0,n:2,why:'the hall'}];afterSail('end');eq(p.grain,SRC_PRIMARY+4,'a prize pays grain, no prompt');
+  ok(typeof aiGoodsSplit==='undefined','no goods split left in the AI');
+  eq(pileVerbs('gruit').source,14,'every Gruit tile is Gain 2 grain (16 less the two warm)');
+  eq(RECIPE_FEE.bock.h,undefined,'no fee asks hops');eq(T1_FEE.h,undefined,'no fee asks hops: tier 1 '+costStr(T1_FEE));eq(FLIP_FEE.h,undefined,'the Flip '+costStr(FLIP_FEE));});
 
 // ---------- report ----------
 var fails=0;

@@ -1,11 +1,12 @@
 # Merchant Brewer of the Hanse — The Rules
 
-*The rules of the live build (`play.html`, KEY `hanse-v80i`). This document is the rules and
+*The rules of the live build (`play.html`, KEY `hanse-v80j`). This document is the rules and
 nothing else.*
 
 **2–4 players · c. 1350 · Hamburg. You run a merchant brewing house of the Hanseatic League.**
-Goods are the only currency: no money, no spendable prestige. The work runs **Gain goods →
-Brew → Age → Ship**, and nothing sails without your dice at sea. The winner is the player with
+Goods are the only currency: no money, no spendable prestige. **Grain is taken; hops are
+earned.** The work runs **Gain goods → Brew → Age → Ship**, and nothing sails without your dice
+at sea. The winner is the player with
 the most ★ when the dice run out.
 
 ---
@@ -14,7 +15,7 @@ the most ★ when the dice run out.
 
 Each player starts with:
 
-- **3 `G` (grain), 2 `H` (hops)**; storage cap **8 of each good**.
+- **3 `G` (grain), 3 `H` (hops)**; storage cap **8 of each good**.
 - The **Gruit** and **Hopped** recipe cards, to the **left of your player board**. More recipes
   are earned (§11); a card crosses to the right as its beer joins your Flight (§11).
 - **A Ready Gruit in vessel 1**, its own die set at **1** on it, the top Gruit tile under it. It
@@ -59,6 +60,11 @@ one die at sea and a quality count of 1.
 Workers start off the board; each seat's first turn places its worker on any station. First
 player fixed.
 
+**Goods.** Grain is taken: the Market's **Gain 2 grain**, every cask tile's **Gain 2 grain**, the
+yard's and the hall's grain prizes. Hops are earned: **the dividend**, 1 hop as each cask of
+yours boards a Ship or is carted (§7, §10), and **the hop trade** at the Market, **pay 1 ⚜: Gain
+3 hops** (§3). Every fee is paid in grain.
+
 ---
 
 ## 2. The turn — Move · work the station
@@ -87,7 +93,7 @@ slot's load if it has not been used.
 
 | Station | Primary | Alternate (the same visit) |
 |---|---|---|
-| **A · Market** | **Gain 2 goods**, any mix | **Load 1** Ready cask onto **any** docked Ship (§7) |
+| **A · Market** | **Gain 2 grain** — or **the hop trade: pay 1 ⚜: Gain 3 hops** (one or the other) | **Load 1** Ready cask onto **any** docked Ship (§7) |
 | **B · Brewhouse** | **Brew** — pay a recipe's goods; a supply die into an open vessel at the beer's printed start value; **a Q2+ Brew searches the beer's stack and chooses the tile** (§5) | **Build, the wharf** — place a private building from your hand onto any vacant slot, or Flip your standing tier 1, at its fee (§12) |
 | **C · Harbor** | **Commission — *must*, when it can** — take a Ship from the display at its fee (**Cog free · Hulk 1 `G`**), dock it on a shipless slot or over an empty docked Ship (which returns to the deck); the display refills at once. **Then Post**: stand a supply die at face 1 on **the lowest segment of that Ship's lane where you hold no post** (a wild Ship: any lane; a lane you hold whole: no post). If you hold a Ready cask you may load it onto the new Ship now, free — **the maiden load, a Load in every respect** (§7), taken after the post. | **Build, a Kontor** — at a far Kontor where **your own post stands on every segment of its branch**, place one of your Kontor building tiles in an open slot and stand a supply die on it at the slot's printed face (§8) — **or Raise die**: turn one die of yours at sea +1 (cap 6) |
 | **D · Cellar** | **Age 3** — turn your aging dice up three steps, split freely | **Cart 1** — send one Ready cask of yours to Bruges by road, resolved at once at the yard or the hall (§10) |
@@ -130,14 +136,14 @@ boards; it parks at delivery and **never scores again**.
 
 | Beer | Q | Brew | Start · steps | Tiles |
 |---|---|---|---|---|
-| Gruit | 1 | `G` | 1 · 0 (Ready at brew) | 16, all *Gain 2 goods* |
+| Gruit | 1 | `G` | 1 · 0 (Ready at brew) | 16, all *Gain 2 grain* |
 | Hopped | 2 | `G H` | 1 · 1 | 12 |
 | Broyhan | 3 | `G H H` | 2 · 1 | 6 |
 | Keut | 3 | `G G H` | 1 · 2 | 6 |
 | Mumme | 4 | `G H H H` | 1 · 3 | 6 |
 | Bock | 5 | `G G H H H` | 2 · 3 | 6 |
 
-**The eight cask bonuses:** *Gain 2 goods · Age 2 · Load 1 (onto any eligible docked Ship —
+**The eight cask bonuses:** *Gain 2 grain · Age 2 · Load 1 (onto any eligible docked Ship —
 a normal load; its cask's bonus fires too) · Brew (a full brew at its cost, with its search) ·
 Gain 1 recipe (from the display, at its fee) · Gain 1 specialist (from the display, into an
 open seat) · Build (one build you are eligible for: a private building at its fee, a Flip at
@@ -147,7 +153,7 @@ or is carted** (after any sail it completes). **The first time a cask of a beer 
 carted, its recipe card crosses to the right of your player board: the beer joins your Flight**
 (§11). Each export's six tiles print six different
 bonuses; Hopped's twelve print the eight, four of them twice; **Gruit's sixteen all print
-*Gain 2 goods***, so a Gruit brew takes the top tile without a search. A delivered tile stays
+*Gain 2 grain***, so a Gruit brew takes the top tile without a search. A delivered tile stays
 under its die. An empty stack means that beer cannot brew now.
 
 ---
@@ -190,6 +196,8 @@ load any docked Ship.
 - **A wild Ship**: the player whose cask is **the first loaded** names its Kontor at once —
   any far Kontor whose lane is open and whose minimum that die meets — and sets that Kontor's
   chit on the Ship. Every later load reads the chit like a printed Kontor.
+- **The dividend:** as your cask boards, take **1 hop** (a second cask under the Stevedore pays
+  a second; the Victualling Yard doubles the bonus, not the dividend).
 - Casks are private until they board: the interaction is the **berth race** — topping off a
   shared Ship sails everyone's cargo on your clock.
 - **A full Ship sails at once.** No station verb sails a Ship unfull (the Shipmaster, §13,
@@ -256,7 +264,7 @@ When your cask **delivers** at a far Kontor, in boarding order:
 
 | Kontor | Minimum | Branch | Prize | Majority pair |
 |---|---|---|---|---|
-| **London** | die 2 | W1 · W2 | **one Build of any kind**, the goods fee waived, the die still spent (a post · a Kontor building · a private building or Flip) — or nothing | 5 / 2 |
+| **London** | die 2 | W1 · W2 | **one Build of any kind**, the fee waived, the die still spent (a post · a Kontor building · a private building or Flip) — or nothing | 5 / 2 |
 | **Bergen** | die 3 | E1 | **a specialist** from the display into an open seat, free — or nothing | 5 / 2 |
 | **Novgorod** | die 4 | E1 · E2 | **Raise die** — one die of yours at sea +1 (cap 6) | 7 / 3 |
 | **Bruges** (the cart) | — | the road | the yard track's zone prize (§10); the hall: none | 4 / 2 by hall places |
@@ -267,30 +275,30 @@ When your cask **delivers** at a far Kontor, in boarding order:
 
 **The Cart** (the Cellar's alternate; with a Kaufhaus or the Carter it carries 2 — they do not
 stack) sends one Ready cask of yours to Bruges, count permitting (a Gruit needs 1). No Ship,
-no lane, no ⚜ earned. **Its cask bonus fires as it is carted.** It resolves at once at one of
-two doors:
+no lane, no ⚜ earned. **Its cask bonus fires as it is carted, and the dividend pays 1 hop.** It
+resolves at once at one of two doors:
 
 - **The yard** — any beer; **Gruit's only door.** Park the die on the yard track's **next open
   place**, tile under it, and take the zone's prize: **Best** (places 1–3; side A 1–2) — **a
-  recipe from the display, its fee waived, or 2 goods** · **Good** (4–6; side A 3–4) — **a
-  recipe at its fee, or 1 good** · **OK** (7 and beyond) — **1 good**. A yard die is presence
+  recipe from the display, its fee waived, or 2 grain** · **Good** (4–6; side A 3–4) — **a
+  recipe at its fee, or 1 grain** · **OK** (7 and beyond) — **1 grain**. A yard die is presence
   only; it carries no majority weight.
 - **The hall** (the guild of brewmasters) — **a Q2+ cask and 1 ⚜.** Spend the ⚜; **score cask
   die + the hall die**; park your die on the hall's next open place, tile under it, and take
-  the place's printed prize if any (places 1–3 print **2 · 2 · 1 goods**); **then the hall die
+  the place's printed prize if any (places 1–3 print **2 · 2 · 1 grain**); **then the hall die
   turns +1** (cap 6). No recipe. Gruit never. Hall full: the yard.
 
 **Invitations ⚜:** tokens, face-up, **no cap**. **The only faucet: 1 ⚜ per cask of yours
-delivered at a far Kontor** (the Kontorhaus pays a second). **The only sink: the hall.** The
-hall's places are the Bruges majority (§15).
+delivered at a far Kontor** (the Kontorhaus pays a second). **Two sinks: the hall, and the hop
+trade at the Market (§3).** The hall's places are the Bruges majority (§15).
 
 ---
 
 ## 11. Recipes
 
 Start with Gruit and Hopped. Exports are **earned, never bought at a station**: **the yard**
-(§10) or the ***Gain 1 recipe* bonus** (§4), at the card's printed fee — **Broyhan 1 `H` ·
-Keut 1 `G` · Mumme 1 `G` 1 `H` · Bock 1 `G` 2 `H`** (the yard's Best zone waives it). Nothing
+(§10) or the ***Gain 1 recipe* bonus** (§4), at the card's printed fee, in grain — **Broyhan 1 `G` ·
+Keut 1 `G` · Mumme 2 `G` · Bock 3 `G`** (the yard's Best zone waives it). Nothing
 else prints on a card; **a card has one face**. The **Scriptorium** waives every fee; the
 **Brewers' Guildhall** hands you every dealt recipe you lack, free, as it is flipped (§12).
 Holding every recipe, a bonus recipe simply pays nothing.
@@ -314,9 +322,9 @@ station.
 
 **Three doors, one verb — Build:** the Brewhouse's alternate · a cask's *Build* bonus ·
 London's prize. **Tier 1** is placed from hand onto a **vacant slot** (no building on it; a
-docked Ship above is fine) for **1 `G` 1 `H`**; **never onto a Public Work, never onto a
+docked Ship above is fine) for **2 `G`**; **never onto a Public Work, never onto a
 rival's tile** (a full wharf has no ground until the tide clears a slot). **Tier 2 is the
-Flip**: your standing tier 1 turns over in place for **2 `G` 1 `H`**; it requires the tier 1
+Flip**: your standing tier 1 turns over in place for **3 `G`**; it requires the tier 1
 and nothing else. Every tier 2 contains its tier 1.
 
 **Each tile prints its points: tier 1 = 2★, tier 2 = 4★**, scored at the end while it stands.
@@ -342,7 +350,7 @@ bonus), never bought; never two of a kind. The roster of ten singles:
 - **Stevedore** — each time you load, load up to 2 casks.
 - **Agent** — a rival's cask delivers where you hold a building: that building die +1 more.
 - **Lodesman** — your quality count reads +1.
-- **Carter** — your Cart carries 2 casks; the yard's goods prizes pay you +1.
+- **Carter** — your Cart carries 2 casks; the yard's grain prizes pay you +1.
 - **Guildmaster** — each present of yours at the hall: +2★.
 - **Chronicler** — each cask you deliver, at a far Kontor, the yard or the hall: +1★.
 - **Alderman** — game end: +2★ per Kontor with 3+ dice of yours parked (Bruges: hall places).

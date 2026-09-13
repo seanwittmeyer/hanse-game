@@ -50,7 +50,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | presence | your parked dice at a Kontor | presence | — · no | bump |
 | majority pair | the two ★ values a Kontor pays its two leading players (London 5 / 2 · Bergen 5 / 2 · Novgorod 7 / 3 · Bruges 4 / 2 by hall places) | — | pairs · no | ladder |
 | prize | what a far Kontor pays the cask's owner on delivery, free: London one Build with the fee waived · Bergen a specialist · Novgorod Raise die | — | prizes · no | benefit, reward, fallback |
-| Invitation ⚜ | a token, earned 1 per cask of yours delivered at a far Kontor (+1 with a Kontorhaus), spent to present; no cap | mail | ⚜ · yes | contract, letter |
+| Invitation ⚜ | a token, earned 1 per cask of yours delivered at a far Kontor (+1 with a Kontorhaus), spent to present or traded at the Market for 3 hops; no cap | mail | ⚜ · yes | contract, letter |
 | the cart | the Cellar's alternate: one Ready cask of yours to Bruges by road (Cart 2 with a Kaufhaus or the Carter; they do not stack) | cart | — · no | the road, overland |
 | the yard | Bruges' goods door: a track of places in three zones (Best · Good · OK); Gruit's only door | — | — · no | the market |
 | the hall | Bruges' guild of brewmasters: a Q2+ cask and 1 ⚜; cask die + the hall die | hall | — · no | Tastings, guildhall (a private tile) |
@@ -70,9 +70,11 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | recipe | a single-faced card granting permission to brew a beer; the exports print a fee; it stands to the left of your player board and crosses to the right as its beer joins the Flight | recipe | recipes · no | licence, the brewed face |
 | exports | the four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — · no | — |
 | stack | a beer's face-up cask-tile supply; a Q2+ Brew searches it and chooses; a delivered tile stays under its die | — | stacks · no | pile |
-| cask bonus | the line a cask tile prints, fired once as the cask boards or is carted: Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post | goods-2, station-age-2, bonus-load, station-brew, recipe, specialist, build, post | bonuses · no | perk, action |
+| cask bonus | the line a cask tile prints, fired once as the cask boards or is carted: Gain 2 grain · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post | grain, station-age-2, bonus-load, station-brew, recipe, specialist, build, post | bonuses · no | perk, action |
 | the Flight | the recipe cards to the right of your player board, one per distinct beer that has boarded a Ship or been carted: 3 / 4 / 5 → 3 / 6 / 10★ | — | — · yes | beers delivered (as its definition) |
-| goods | grain + hops, collectively | goods, grain, hops | — · no | resources, money |
+| goods | grain + hops, collectively; grain is taken (the Market's Gain 2 grain, every cask tile's Gain 2 grain, the yard's and the hall's prizes) and hops are earned (the dividend, the hop trade); every fee is grain | goods, grain, hops | — · no | resources, money |
+| the dividend | the 1 hop you take as a cask of yours boards a Ship or is carted; a Ship's berths print it | hops | — · no | return cargo, bounty |
+| the hop trade | the Market's primary as a choice: pay 1 ⚜: Gain 3 hops | mail, hops | — · no | exchange, rate |
 | fee | the printed price of a Ship, a recipe or a build | — | fees · no | cost, price |
 | display | a face-up row components are taken from (Ships 3 · specialists 4) | — | displays · no | pool, market |
 | score ring | the 50-cell ring; your disc records ★ | star | — · no | the bank |
@@ -83,7 +85,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 
 | Verb | Means | Banned |
 |---|---|---|
-| **gain / spend / pay** | goods in and out. **Gain N goods** is the ONE name for taking goods: the Market's primary, the cask bonus, the yard and the hall print the same words on the same `goods-N` glyph | source, collect, buy |
+| **gain / spend / pay** | goods in and out. **Gain N grain** and **Gain N hops** are the names for taking goods, one good per gain: the Market's primary, the cask bonus, the yard and the hall print Gain N grain on the `grain` glyph; the hop trade prints Gain 3 hops on the `hops` glyph | source, collect, buy, Gain N goods, any mix |
 | **brew** | pay a recipe; a supply die into an open vessel at the start value; a Q2+ brew searches the stack. Prints **Brew** | Brew 1, Brew once |
 | **age** | turn an aging die up, stopping at Ready; the Cellar prints **Age 3**, the bonus and the Cold Store **Age 2** | mature (v), Age +2 |
 | **load** | put 1 Ready cask from your vessels onto a docked Ship. Prints **Load 1** | embark, Load 1 more |
@@ -116,7 +118,7 @@ Manifest · Order · lading · line (the row or column) · warp · Coper · Hera
 Guild Scholar · Town Crier · Supercargo · Innkeeper · Assay Loft · Rack House · Staple Rights ·
 Weigh House (until the roster pass) · Skute · the bag · the first-delivery letter · INVEST ·
 OPEN · leg · factor · establishment · bench · Source · lift · land / landing · hull (in player
-copy) · stop (n) · the brewed face · port (for a Kontor).
+copy) · stop (n) · the brewed face · port (for a Kontor) · Gain N goods · any mix.
 
 ## §3. Canonical orders (every surface, no exceptions)
 
@@ -127,7 +129,7 @@ copy) · stop (n) · the brewed face · port (for a Kontor).
 | Kontore | Bruges · London · Bergen · Novgorod |
 | Beers | Gruit · Hopped · Broyhan · Keut · Mumme · Bock (by quality; Broyhan before Keut) |
 | Ships | Cog · Hulk |
-| The cask bonuses | Gain 2 goods · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post |
+| The cask bonuses | Gain 2 grain · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post |
 | A turn | Move · work the station |
 | Scoring | deliveries and presents · pips at sea · docked dice · private buildings · majorities · the Flight · the Guild |
 

@@ -19,7 +19,7 @@
 |**Genre**      |Medium euro · engine building · a shared action grid (the Wharf) + a private brewery + a sea board |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, Hamburg, c. 1350                  |
-|**Status**     |**v8.0i “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80i`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
+|**Status**     |**v8.0j “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80j`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
 
 ---
 
@@ -43,7 +43,7 @@
 - **No cards-as-hand** — all cardlike content is tiles on the table (the one exception, the
   hand of private building tiles, is public and identical for every player).
 - **No money** — pre-modern barter: **goods (grain `G`, hops `H`) are the only currency;**
-  ★ is earned, unspendable score.
+  grain is taken and hops are earned (§6); ★ is earned, unspendable score.
 - **The component-state constitution:** every value and state is tracked with components on
   the board; players never remember states or values and never do complex calculations — the
   arithmetic ceiling is one die plus one printed marker; no rule may require memory, a ledger
@@ -94,7 +94,7 @@ number of your dice at sea. **A delivery scores two dice**: the cask's and your 
 there; nothing else. Ships are shared, 2/3 berths, bound for a far Kontor or wild (named by
 the first load); nobody owns one; a full Ship sails at once. The Harbor must commission, and
 the commission lets you post on that Ship's lane; its alternate builds or raises at a Kontor.
-Bruges by cart only: the yard (goods or a recipe, shrinking as it fills; Gruit's only door) or
+Bruges by cart only: the yard (grain or a recipe, shrinking as it fills; Gruit's only door) or
 the hall (an ⚜ and a Q2+ cask: cask die + the hall die, which climbs). ⚜ come only from far
 deliveries. The wharf's private buildings are a Great Western Trail engine: four tiles per
 player on any vacant slot, firing on visit, tier 2 by the Flip, printed points, no die; the
@@ -107,6 +107,12 @@ Flight on the recipe cards crossed to the right of the board.
 - **The turn** — Move to an adjacent station, then work its whole counter: the primary, the
   alternate, a Load at each flanking slot, your own private building there; any order, all
   optional except the Harbor's commission.
+- **The goods** — grain is taken: the Market's Gain 2 grain, every Gruit tile's Gain 2 grain,
+  the yard's and the hall's grain prizes; every fee is grain, so grain builds the engine. Hops
+  are earned and price only beer: **the dividend**, 1 hop as each cask of yours boards a Ship
+  or is carted, and **the hop trade** at the Market, pay 1 ⚜: Gain 3 hops. A 1-hop beer pays
+  for itself as it leaves; a 2- or 3-hop beer wants a trade, so the first far delivery is the
+  door to Mumme and Bock. 3 grain and 3 hops to start.
 - **The die is the cask** — Brew sets a supply die at the start value; only a hand turns it
   (the Cellar's Age 3, the Age 2 bonus, the Cold Store / Lagering Cellar, the Braumeister);
   Ready at the quality; a Raise die at the wharf may push it to quality + 1; read as it boards
@@ -120,12 +126,12 @@ Flight on the recipe cards crossed to the right of the board.
   the majority pair, the Flight); every building die there +1; 1 ⚜; the prize (London a Build
   with the fee waived · Bergen a specialist · Novgorod Raise die).
 - **Bruges** — the Cart at the Cellar; the yard's three zones (Best: a recipe fee-waived or 2
-  goods · Good: a recipe at its fee or 1 good · OK: 1 good); the hall (1 ⚜ + Q2+: cask die +
-  the hall die; 2 · 2 · 1 goods on the first places).
+  grain · Good: a recipe at its fee or 1 grain · OK: 1 grain); the hall (1 ⚜ + Q2+: cask die +
+  the hall die; 2 · 2 · 1 grain on the first places).
 - **The wharf engine** — Public Works dealt four at setup, washed away by the tide, never
   rebuilt; private buildings on vacant ground (Granary / Kaufhaus · Scriptorium / Brewers'
   Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office), tier 1 for
-  1 `G` 1 `H`, the Flip for 2 `G` 1 `H`, 2 / 4 ★.
+  2 `G`, the Flip for 3 `G`, 2 / 4 ★.
 - **Specialists** — ten singles, two seats, earned only (Bergen's prize, the Gain 1 specialist
   bonus): asymmetric powers.
 - **The clock and the score** — the first empty supply; round 18 backstops; the score is read
@@ -137,14 +143,14 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
 
 ## 7. The tooling (how we verify)
 
-- **`playtests/verify-v8.js`** — the v8 rule battery (59 checks in 15 groups). Runs in
+- **`playtests/verify-v8.js`** — the v8 rule battery (61 checks in 16 groups). Runs in
   seconds; **always** after an engine change. The v5/v6 batteries live with their frozen
   builds under `archive/v5/playtests/` and `archive/v6/playtests/`.
 - **`playtests/sim.js [N]`** — drives the *canonical* `play.html` engine headlessly (extracts
   the script, runs it in a Node `vm`, appends a bot in-scope — the engine's own in-page AI).
   The **robustness/pace gate**: 0 crashes / 0 deadlocks across 2–4p, the twelve-dice identity
   at every end, pace in the band. Prints USAGE before VALUE. Env hooks: `TIER=` · `PERSONAS=1`
-  (the committed lanes) · `MIX=1` · `SUPPLY=` · `SRCN=` · the MC budgets (override-only-if-set
+  (the committed lanes) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · the MC budgets (override-only-if-set
   — a ruled default is never silently forced off).
 - **The v5-era probe fleet** (`strategy-probe.js` · `flow-probe.js` · the prize probes ·
   `ai-ladder.js` · `ai-render-smoke.js` · `aid-overflow.js`) lives at
@@ -205,6 +211,70 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### v8.0j — Grain is taken, hops are earned: the dividend, the hop trade, every fee in grain (2026-09-13, designer-ruled — `KEY hanse-v80j`)
+
+*"I'd like to consider a change where gaining grain is the result of different mechanics/actions
+than hops… I want there to be a functional difference. Look at Lisboa for inspiration."* Then,
+after the options and the pushback: *"Let's proceed with your recommendation. Dividend, market
+trade, 1 [hop] per cask loaded, 3 for an invitation. Gruit to grain only."* — with the goods-and-
+costs rebalance in scope: *"changes are not surgical, they are holistic and reverberate
+throughout the rest of the game."*
+
+**The ruling.** Grain is taken; hops are earned. The Market's primary is a choice: **Gain 2
+grain**, or **the hop trade — pay 1 ⚜: Gain 3 hops**. **The dividend**: as each cask of yours
+boards a Ship or is carted, take 1 hop (a second cask under the Stevedore pays a second; the
+Victualling Yard doubles the tile's bonus, never the dividend). Every Gruit tile prints **Gain 2
+grain**; the yard's zone prizes (2 / 1 / 1) and the hall's place prizes (2 · 2 · 1) pay grain.
+**Every fee is grain**: the recipes Broyhan 1 · Keut 1 · Mumme 2 · Bock 3, a tier 1 2 `G`, the
+Flip 3 `G` (the Hulk, the Bonded post and the Granary's surcharge already were). Hops price only
+beer. Each Ship berth prints a *+1 hop* reminder; the Market board prints the trade, the Cellar
+the dividend. The starting goods are 3 grain and **3 hops**. The retired term *Gain N goods · any
+mix* leaves the registry; *Gain N grain* and *Gain N hops* replace it, with new icon sets queued
+in `art/PROMPTS.md`.
+
+**The four options explored** (the Lisboa read: one good bought, the other earned): (1) the split
+Market — grain as the primary, hops only from the tiles; (2) a hop garden — a shared die that
+climbs each round and pays hops to the posts beside it; (3) the commission pays hops — a Ship's
+berths return hops to the commissioner; (4) the invitation trade. The designer's first call was
+(3), *"1 hop per berth"*, with the must removed. The pushback: a commission paying hops floods
+the merchant — the goods ledger (v8.0i, 3p greedy, per seat) read grain in 8.8 / out 8.5, hops
+in 9.0 / out 7.3, and a commission payout of ~2.4 casks' worth a seat would have put ~5 goods
+more into the hands that already ship; the hall would read the same as the yard once both pay
+the same good; and the must, tied to the commission, was the other half of the same idea. The
+recommendation carried: the dividend (hops follow the cask that leaves, so the merchant and the
+hall brewer both earn them, one per die), the trade (a second use for the ⚜, in tension with
+the hall), Gruit to grain. *"Loaded"* is read as boards-or-carted, the moment the cask bonus
+already fires, so the table learns one trigger; the berth icon is the reminder. The must stays,
+as a dial (`COMM_MUST`, sim hook `MUST=`), for the designer to flip.
+
+**The oracle read, and the rebalance it forced.** Landed as ruled with the old fees, the greedy
+oracle collapsed: 10.4 / 9.2 / 9.6 rounds at 2 / 3 / 4p (v8.0i: 16.8 / 14.4 / 14.6), no sail at
+2p, Gruit brews doubled (8.4 a game at 2p against 3.8). The cause was structural, not the AI's
+values: with hops die-bound before the first ⚜ (the cart dividend the only faucet) and grain
+flooding from the Gruit loop (a die → 2 grain from the tile, 1–2 from the zone, 1 hop), the
+Market's grain had no buyer, the greedy seats' breathing turn vanished, and every turn spent a
+die. Sixteen variants ran, five games a count: the AI's cart bonus removed, start hops 3 and 4,
+the dividend on boarding only, the yard's grain 1 / 1 / 0, a Gain 1 hop choice at the Market,
+the brew grain costs raised. Start hops 3 alone brought the sea back (sails 1.2 / 2.0 / 2.2) but
+not the pace; nothing else moved the rounds. **Every fee in grain** did: tier 1 2 `G`, the Flip
+3 `G` (the surfaces already said "every fee is grain"; the engine and the tile faces had kept
+1 `G` 1 `H` and 2 `G` 1 `H`). With hops pricing only beer and grain paying for the engine, the
+oracle reads 13.2 / 12.8 / 12.0 rounds (100% in band), sails 0.8 / 2.0 / 4.2, Gruit brews 3.0 /
+4.2 / 4.2, Market grain 4.4 a seat (v8.0i: 4.4), Mumme and Bock brewed again (0.3 / 0.7 a
+seat), both goods tight at the end (1.2 `G` 1.4 `H` a seat held). The any-mix faucet is retired.
+
+**Engine.** `DIVIDEND_H` 1 · `TRADE_INV` 1 / `TRADE_H` 3 · `COMM_MUST` 1 · `START_GOODS` 3 / 3 ·
+`T1_FEE` 2 `G` · `FLIP_FEE` 3 `G` · `RECIPE_FEE` 1 / 1 / 2 / 3 `G`; `gainGrain` resolves every
+grain gain without a prompt; the Market prompt offers the grain or the trade; `dividend` fires in
+`loadCommit`, `yardLand` and `hallPresent`; the AI: `aiHopGap` · `aiTradeValue` · `aiGrainValue`
+· `aiWantTrade` · `aiGruitBrewValue` (a Gruit brew priced as its cart, never as a delivery — the
+die is the clock). **Surfaces:** `RULES.md` §1 · §3 · §7 · §10 · §11 · §12 · §13, the manifest,
+the registry, `AUTOMA.md`, `play.html`, `components.js` (the Gruit tile, the recipe fees, the
+berth reminder, the icon map), `print.html` (the Market and Cellar badges, the aid, the legend),
+`rulebook.html`, `art/ICONS.md` and `art/PROMPTS.md` (the queued gain icons), `CLAUDE.md` §8.
+**Gates:** verify 61/61 (a new group: the goods split); the sim clean at 2–4p, the twelve-dice
+identity; the kit and the rulebook render clean, the rulebook fit-checked to the baseline.
 
 ### v8.0i — Four segments, the recipe card crosses the board, one aid sheet, the Bonded post after the climb (2026-09-13, designer-ruled — `KEY hanse-v80i`)
 
@@ -586,27 +656,27 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 
 ## 10. The state of play and the open watches
 
-**Where the build stands (2026-09-13).** v8.0i on every surface: `RULES.md`, the manifest, the
-registry, `play.html` (KEY `hanse-v80i`), `components.js`, `print.html` (the v8 kit: the sea
-board with each building slot's start face, the single-faced recipe cards, the re-faced tiles,
-the ⚜ tokens and chits, the tri-fold aid printed twice) and `rulebook.html`, all re-derived on
-2026-09-06/07, re-read whole on 2026-09-08 and again on 2026-09-12 (three sweeps against the
-rules master), re-gated on 2026-09-13. Gates (2026-09-13): verify 59/59; the sim clean at 2–4p
-(0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 16 / 14 / 14 rounds, 100% in
-the 13–18 band, every game of the 3-game smoke on the dice — the 2026-09-08 read, where the
-round-18 backstop fired in a third of the 2p games with dice unspent, stands as the sea tempo
-watch below until a larger run. The kit and the rulebook render clean headless and fit-checked;
-every referenced art file is on disk. The art the new faces still lack is queued in
-`art/PROMPTS.md`.
+**Where the build stands (2026-09-13).** v8.0j on every surface: `RULES.md`, the manifest, the
+registry, `play.html` (KEY `hanse-v80j`), `components.js`, `print.html` (the v8 kit: the sea
+board with each building slot's start face, the single-faced recipe cards with grain fees, the
+Gruit tiles at Gain 2 grain, the berth reminder, the Market and Cellar badges, the ⚜ tokens and
+chits, the tri-fold aid printed twice) and `rulebook.html`, re-derived on 2026-09-06/07, re-read
+whole on 2026-09-08 and 2026-09-12 (three sweeps against the rules master), re-gated on
+2026-09-13 after the goods split. Gates (2026-09-13): verify 61/61; the sim clean at 2–4p
+(0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 13 / 13 / 12 rounds (five games
+a count, 100% in the 10–18 band, every game on the dice, the round-18 backstop silent), sails
+0.8 / 2.0 / 4.2 a game. The kit and the rulebook render clean headless and fit-checked; every
+referenced art file is on disk. The art the new faces still lack (the gain-grain and gain-hops
+icon sets) is queued in `art/PROMPTS.md`.
 
 **Next.** The designer's own table. Then the oracle read: re-derive the probe fleet from
 `archive/v5/playtests/` when called. **Never a corpus before a human table.**
 
 **Every number is a placeholder until the table.** The levers live in the engine's dials block
 (`play.html`): `SUPPLY_DICE` 10 (THE pace dial) · `MAX_ROUND` 18 · `KONTOR_MIN` 2 / 3 / 4 ·
-`KB_START` 1 / 1 / 2 · `kontorSlotsN` 1 / 2 · `WORKS_DEAL` 4 · `SETUP_WILD` 2 · `HALL_DIE_START` 2 · `HALL_PLACES_N`
+`KB_START` 1 / 1 / 2 · `kontorSlotsN` 1 / 2 · `WORKS_DEAL` 4 · `SETUP_WILD` 2 · `START_GOODS` 3 `G` 3 `H` · `DIVIDEND_H` 1 · `TRADE_INV` 1 / `TRADE_H` 3 · `COMM_MUST` 1 · `HALL_DIE_START` 2 · `HALL_PLACES_N`
 6 / 8 · `HALL_PRIZES` 2 · 2 · 1 · `YARD_ZONES` · `YARD_GOODS` 2 / 1 / 1 · `BREW_SUR` and
-`BOND_FEE` 1 `G` · the fees (Hulk 1 `G`; tier 1 1 `G` 1 `H`; the Flip 2 `G` 1 `H`; the recipe
+`BOND_FEE` 1 `G` · the fees, all grain (Hulk 1 `G`; tier 1 2 `G`; the Flip 3 `G`; the recipe
 fees) · the majority pairs · the Flight ladder 3 / 6 / 10 · the private points 2 / 4.
 
 **Ruled defaults, confirmed by the designer's rule of silence** (v8.0g): anyone may load an
@@ -633,22 +703,31 @@ hall as framed.
 - **Novgorod's building at 2** (the start faces 1 · 1 · 2). Whether the extra pip plus the
   climb makes the Novgorod chain worth its four posts at the table; whether anyone builds there
   at 2p before the supply runs out; whether London and Bergen buildings at 1 still get built.
-- **The at-cost faces.** Goods are scarcer now that Gain 2 goods and the die-paid prizes are
-  the only faucets: do the export brews starve at 3–4p (the lever is `BREW_SUR`, never Gruit)?
-  How often the Bonded post fires, and whether Novgorod's two-segment lane makes the Store a
-  must-load slot. Whether the Warehouse's +1 makes Bergen (one segment) the Q3 dump (the lever
-  is which Kontor tile carries the read, not the read).
+- **The goods split.** Hops are earned — the dividend as a cask leaves, the trade for an ⚜ —
+  and price only beer; grain is taken and pays for everything else. To read at the table: does
+  the opening pinch (3 hops; Hopped 1, Broyhan 2, Mumme and Bock 3) send the first casks to sea
+  or to the Gruit yard loop; how often the trade is taken against the hall (the ⚜ tension);
+  whether the Market's grain is worth a turn once the Gruit tiles pay grain (the greedy oracle
+  says yes at grain fees, no before them); whether a die for a Gruit is ever worth its cart late
+  (the OK zone pays 1 grain and a hop). The levers, in order: the recipe hop costs ·
+  `START_GOODS` · `TRADE_H` · `YARD_GOODS` · a Gain 1 hop choice at the Market (tested: no pace
+  effect). Never the dividend's trigger: boards-or-carts is what the berth icon and the cask
+  bonus already teach.
+- **The at-cost faces.** How often the Bonded post fires, and whether Novgorod's two-segment
+  lane makes the Store a must-load slot. Whether the Warehouse's +1 makes Bergen (one segment)
+  the Q3 dump (the lever is which Kontor tile carries the read, not the read).
 - **The docked Cogs.** The first sail's round; whether the setup Cogs get named before the
   first commission; the Public Work under a setup Cog leaving on the first tide.
 - **The warm Gruit.** The first-round feel: turn one carts a Gruit to the yard without a Brew.
-- **The private ladder.** The Granary → Kaufhaus step is *Cart 2 + 2★* for 2 `G` 1 `H`; does
+- **The private ladder.** The Granary → Kaufhaus step is *Cart 2 + 2★* for 3 `G`; does
   the Flip still earn its fee?
-- **The sea tempo.** The greedy seats fill Ships slowly (Hulks of three wait): 1–1.5 sails a
-  game at 2–3p since the die floors, and the round-18 backstop now fires in a third of 2p greedy
-  games with dice unspent. The load and commission values want a human read before any tuning
-  corpus. Three lines the greedy seats never fire — the Granary's pay-to-Brew, the Bonded
-  Store's post, the hall — are read from the committed lanes and the table, never from the
-  greedy average.
+- **The sea tempo.** The greedy seats fill Ships slowly (Hulks of three wait): under the goods
+  split 0.8 / 2.0 / 4.2 sails a game at 2 / 3 / 4p, the round-18 backstop silent, the game
+  ending on the dice at 12–13 rounds; 2p is the thin count, one sail a game. The load and
+  commission values want a human read before any tuning corpus. Two lines the greedy seats
+  never fire — the Granary's pay-to-Brew, the Bonded Store's post — are read from the committed
+  lanes and the table, never from the greedy average; the hall now fires at 3–4p (1.4 / 2.4
+  presents a game).
 - **Is there more than one engine tile, and do the dice end the game?** The v7 read's two
   structural findings (one Venture face was the engine; 21 of 30 search-tier 2p games ended on
   the ceiling because deferral read as free). v8's answer is the supply clock and the ladder;
@@ -697,11 +776,11 @@ hall as framed.
   majority pair** — the two ★ values paid to the two leaders. **Prize** — London a Build with
   the fee waived · Bergen a specialist · Novgorod Raise die.
 - **The cart** — the Cellar's alternate: one Ready cask to Bruges by road. **The yard** — the
-  goods door: places in three zones (Best · Good · OK); Gruit's only door. **The hall** — the
+  grain door: places in three zones (Best · Good · OK); Gruit's only door. **The hall** — the
   guild of brewmasters: a Q2+ cask and 1 ⚜; cask die + **the hall die** (neutral, starts at 2,
   +1 per present). **Place** — a printed die space on the yard or the hall. **Present** —
   enter the hall. **Invitation ⚜** — earned 1 per far delivery (+1 with a Kontorhaus), spent to
-  present; no cap.
+  present, or traded at the Market for 3 hops; no cap.
 - **Public Work** — the brown, die-less shared family dealt at setup, passive on its slot's
   traffic, washed away by **the tide** (it departs with the Ship that sails from its slot).
   **Private building** — a tile of yours on any vacant slot, owner-only, no die, printed
@@ -712,4 +791,4 @@ hall as framed.
   1). **Specialist** — a purple tile, earned free, never two of a kind; 2 seats. **Recipe** —
   a single-faced card, permission to brew; the exports print a fee; it crosses your board into
   the Flight. **The Flight** — the recipe cards to the right of your board, one per beer that
-  has boarded or been carted, 3 / 4 / 5 → 3 / 6 / 10★. **Goods** — grain and hops, the only currency. **★** — the scoring unit.
+  has boarded or been carted, 3 / 4 / 5 → 3 / 6 / 10★. **Goods** — grain and hops, the only currency: grain is taken, hops are earned. **The dividend** — 1 hop as a cask of yours boards a Ship or is carted. **The hop trade** — the Market's other primary, pay 1 ⚜: Gain 3 hops. **★** — the scoring unit.

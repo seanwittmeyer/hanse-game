@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80i).
+// Headless simulation harness for play.html — v8.0 "Brewer & Merchant" (KEY hanse-v80j).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙
@@ -10,7 +10,7 @@
 // Env:   TIER=apprentice|journeyman|trader|guildmaster|cellarmaster (default journeyman)
 //        PERSONAS=1 — the PATHWAYS oracle (brewer · merchant · hall · majority · builder · specialist · breadth; PTIER= reads at any tier)
 //        MIX=1 — one persona per seat drawn at random per game (with PERSONAS=1)
-//        SUPPLY=n (THE pace dial) · SRCN=n (the Market's Source) · GUILD_MS/CELLAR_MS/GM_ROLLS (MC budgets)
+//        SUPPLY=n (THE pace dial) · SRCN=n (the Market's Gain N grain) · MUST=0|1 (the commission a must) · GUILD_MS/CELLAR_MS/GM_ROLLS (MC budgets)
 // Sim outputs are NOT committed — results live in chat / distill into DESIGN.md.
 'use strict';
 const fs = require('fs');
@@ -28,6 +28,7 @@ const driver = `
 //================= HEADLESS RUNNER (appended in-scope) =================
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__SRCN>0)SRC_PRIMARY=__SRCN;
+if(__MUST>=0)COMM_MUST=__MUST;
 if(__GMR>0)GM_ROLLS=__GMR;
 if(__GMS>0)GUILD_MS=__GMS;
 if(__CMS>0)CELLAR_MS=__CMS;
@@ -145,6 +146,7 @@ const ctx = {
   __N:N, __TIER:TIER,
   __SUPPLY:parseInt(process.env.SUPPLY||'0',10),
   __SRCN:parseInt(process.env.SRCN||'0',10),
+  __MUST:parseInt(process.env.MUST||'-1',10),
   __PERSONAS:PERSONAS, __MIX:MIX,
   __PTIER:process.env.PTIER||'trader',
   __GMR:parseInt(process.env.GM_ROLLS||'0',10),
