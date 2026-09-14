@@ -718,6 +718,21 @@ recode before it is read again; the builder's ladder tops at ~7★ of 30, a supp
 score:** sea pips are the largest slice (31–33%), deliveries 16–19%, majorities 11%, the wharf
 11–14%, the Flight 10–11%, the hall 3–8%.
 
+**Gatekeeper review #5 (2026-09-14, on v8.0j; the review lives in chat).** Verdict: *not yet — a
+conditional yes*: the best chassis the project has had, judged as a medium-heavy euro, and not
+shelf-ready. Against review #4's six must-fixes: the dice clock, the Gruit lock and the one rules
+document landed; the hall as a lane landed in part (a placeholder by the designer's word); the
+invitation drain did not (three quarters of the ⚜ earned die unspent); no v8 build has met a
+human table (the 37 studio playtests are all v0.10–v5.3b). The must-fixes it names, in order:
+the human table at 2p and 4p; two players made to sail (a paid sail at the Harbor first, 1 grain
+an empty berth); the ⚜ drained (after the sea); the seat edge read (greedy mirrors: the first
+seat wins 63–68% at 2p, the second 41% and the first 13% at 4p — a table question, the display
+and the Works its suspects); the weight said honestly (medium-heavy, or two systems folded);
+the dividend given its sentence (the return cargo). Would elevate: the hall with teeth so the
+brewer is a path; Novgorod made somebody's plan (11–13% of deliveries at every tier); the 4p
+"touch every row" watch; the ladder's ceiling. The one change if only one lands: the 2p sail,
+with the table as its gate.
+
 **Next.** The designer's own table, carrying the 2p sea and the ⚜ runway as its questions. The
 probe fleet re-derives from `archive/v5/playtests/` when called. **Never a corpus before a
 human table.**
