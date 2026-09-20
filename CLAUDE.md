@@ -153,7 +153,7 @@ Kontore* (Bruges · London · Bergen · Novgorod).
 
 ## 8 · Simulating the engine — the harness
 
-- **`node playtests/verify-v8.js`** — the rule battery (61 checks in 16 groups); seconds;
+- **`node playtests/verify-v8.js`** — the rule battery (64 checks in 16 groups); seconds;
   always after an engine change.
 - **`node playtests/sim.js [N]`** — drives the engine's OWN in-page AI headlessly: the harness
   extracts `play.html`'s `<script>`, appends a bot in the same lexical scope (the engine's
@@ -166,7 +166,7 @@ Kontore* (Bruges · London · Bergen · Novgorod).
 - **`node playtests/oracle.js [N]`** + **`node playtests/oracle-study.js <dir>`** — the turn
   oracle: the same harness writing a per-turn trace of every game (env as `sim.js` plus
   `COUNTS=` · `SEED=` / `GOFF=` for shards · `OUT=` · `PLAY=` another build), and the study that
-  reads a directory of shards: little wins, the ★ silence, the phases, the arcs, the ⚜, the
+  reads a directory of shards: little wins, the ★ silence, the phases, the arcs, the hall’s shelves, the
   paths to victory, the lanes; `--timeline=label:n:game` prints one game turn by turn. The
   designer calls it; its outputs never enter the repo.
 - **The bar:** 0 crashes and 0 deadlocks across 2–4p; the twelve-dice identity at every end;

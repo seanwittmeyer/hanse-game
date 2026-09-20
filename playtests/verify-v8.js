@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.0 "Brewer & Merchant" rule battery (KEY hanse-v80j). Seconds, always.
+// verify-v8.js — the v8.1 "Brewer & Merchant" rule battery (KEY hanse-v81a). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -35,10 +35,10 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v80j',function(){eq(KEY,'hanse-v80j');});
+t('KEY is hanse-v81a',function(){eq(KEY,'hanse-v81a');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
-  S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.invites,START_INV,'⚜ start');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
+  S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
   eq(S.phase,'starter');eq(S.starterQueue,[2,1,0],'reverse order');eq(S.active,2,'the last seat first');});
 t('the warm Gruit: a Ready Gruit in vessel 1 with the twelfth die at 1 and the top Gruit tile under it; the supply opens at ten; twelve dice stand; it carts on turn one',function(){fresh(3);
   S.players.forEach(function(p){var c=p.vessels[0];ok(c&&c.style==='gruit'&&c.die===1&&caskReady(c)&&c.act==='source',p.name+'\\'s Ready Gruit, its tile under it');eq(p.vessels[1],null);eq(p.supply,SUPPLY_DICE);eq(twelve(p),SUPPLY_DICE+2,'twelve');});
@@ -56,10 +56,17 @@ t('setup: the deck is 18 less the two docked wild Cogs; the wild Hulk stays; no 
   ok(!all.some(function(x){return x.dest==='bruges';}),'no Bruges hull');
   eq(S.shipDisplay.length,SHIP_DISPLAY);
   eq(SHIP_CAP.cog,2);eq(SHIP_CAP.hulk,3);eq(COMMISSION_COST.cog,{});eq(COMMISSION_COST.hulk,{g:1});});
-t('setup: the hall die at 2, places 6 at 2p / 8 at 3p, the yard empty, the sea empty but the starters',function(){fresh(2);
-  eq(S.hall.die,HALL_DIE_START);eq(S.hall.places.length,6);eq(S.yard.length,0);
+t('setup: the hall is three shelves (floors 2 · 3 · 4) dealt 3 at 2p / 4 at 3–4p from six each, the rest boxed, every place empty; the yard empty; the sea empty but the starters',function(){fresh(2);
+  eq(SHELVES.map(function(b){return b.floor;}),[2,3,4],'the floors');eq(SHELVES.length,3);
+  eq(IMPROVEMENT_KEYS.length,18,'eighteen specialists');[0,1,2].forEach(function(b){eq(IMPROVEMENT_KEYS.filter(function(k){return shelfOf(k)===b;}).length,6,'six a shelf');});
+  eq(S.hall.shelves.length,3);S.hall.shelves.forEach(function(bn,b){eq(bn.cards.length,HALL_DEAL[2],'3 dealt at 2p');eq(bn.dice.length,bn.cards.length,'a place per card');
+    ok(bn.dice.every(function(x){return x===null;}),'no die yet');ok(bn.cards.every(function(k){return shelfOf(k)===b;}),'each card from its own shelf deck');});
+  var all=[];S.hall.shelves.forEach(function(bn){all=all.concat(bn.cards);});eq(new Set(all).size,all.length,'no card twice');
+  eq(S.yard.length,0);ok(S.hall.die===undefined&&S.hall.places===undefined,'no hall die, no hall row');
   eq(Object.keys(S.sea.posts.w1).length,0);eq(Object.keys(S.sea.posts.e1).length,2,'both starters on e1');
-  fresh(3);eq(S.hall.places.length,8);});
+  fresh(3);S.hall.shelves.forEach(function(bn){eq(bn.cards.length,HALL_DEAL[3],'4 dealt at 3p');});
+  fresh(4);S.hall.shelves.forEach(function(bn){eq(bn.cards.length,HALL_DEAL[4],'4 dealt at 4p');});
+  var seen={};for(var g=0;g<12;g++){fresh(2);seen[S.hall.shelves[0].cards.slice().sort().join('+')]=1;}ok(Object.keys(seen).length>1,'a shuffled deal');});
 t('setup: no contract/demand/ladder/bourse/flag/venture field on S',function(){fresh(2);
   ['contractDeck','contractDisplay','demandDeck','demand','ladder','bourse','buildDeck','buildDisplay'].forEach(function(k){ok(S[k]===undefined,k+' absent');});});
 t('the starter: the eleventh die stands at face 1 on W1 or E1 and never touches the supply (the twelfth sits on the warm Gruit); count 1',function(){
@@ -249,35 +256,42 @@ t('landDeliver: val = face + your building die there; no building → the face a
   putKB('bergen',0,4,'warehouse');landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
   d=p.delivered[p.delivered.length-1];eq(d.val,2+4,'two dice');eq(d.bdie,4);
   eq(pileList('hopped').length,n0,'no tile returned to the stack');});
-t('every building die there ticks +1 on ANY landing (cap 6); the owner\\'s tile line: Kontorhaus +1 ⚜ · Guildhouse a Raise; the Warehouse hands out nothing at the landing (it vouches at the Load); the Agent +1 more on a rival\\'s landing',function(){fresh(3);var p=S.players[0],q=S.players[1],r=S.players[2];
+t('every building die there ticks +1 on ANY landing (cap 6); the owner\\'s tile line: Kontorhaus the dividend again · Guildhouse a Raise; the Warehouse hands out nothing at the landing (it vouches at the Load); the Agent +1 more on a rival\\'s landing',function(){fresh(3);var p=S.players[0],q=S.players[1],r=S.players[2];
   putKB('bergen',0,1,'warehouse');putKB('bergen',1,6,'kontorhaus');
-  var Lg={dest:'bergen',queue:[]};UI={sub:'move'};var g0=p.grain,h0=p.hops,i1=q.invites;
+  var Lg={dest:'bergen',queue:[]};UI={sub:'move'};var g0=p.grain,h0=p.hops,h1=q.hops;
   landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
   eq(bldgDie(p,'bergen'),2,'own landing ticks');eq(bldgDie(q,'bergen'),6,'cap 6');
-  eq((UI.pendingGoods||[]).length,0,'the Warehouse hands out no goods');eq(p.grain,g0);eq(p.hops,h0,'nothing gained');eq(p.invites,INV_PER_LANDING,'1 ⚜');eq(q.invites,i1,'a rival landing pays no ⚜ to q');
-  landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(q.invites,i1+INV_PER_LANDING+1,'the Kontorhaus +1 more');
+  eq((UI.pendingGoods||[]).length,0,'the Warehouse hands out no goods');eq(p.grain,g0);eq(p.hops,h0,'nothing gained');eq(q.hops,h1,'a rival landing pays q nothing');
+  landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(q.hops,h1+KONTORHAUS_H,'the Kontorhaus: the dividend again');
   fresh(3);p=S.players[0];q=S.players[1];putKB('bergen',0,1,'guildhouse');q.upgrades=[];p.upgrades=['agent'];Lg={dest:'bergen',queue:[]};UI={sub:'move'};
   landDeliver(q,{owner:1,style:'hopped',q:2,die:2,act:'source'},Lg);eq(bldgDie(p,'bergen'),3,'the Agent: +1 more');
   landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);ok((UI.pendingRaise||[]).some(function(x){return x.pid===0;}),'the Guildhouse queues a RAISE');});
 t('no premium, no market, no demand, no ★ arm: the retired symbols are undefined',function(){
-  ['PRIZE_PTS','prizeStars','tracked','bourseShift','LADDERS','ladderAdvance','CONTRACTS7','DEMANDS7','claimContract','landPresent','landCanPresent','FLAG_FEE','flagOut','VENTURES','ledgerTick','vAt','enterVact','addPresence','presenceAt','trayDice','spendPresDisc','enterReach','commitBldg','hallOn','olEnabled','gateNeed','laneGate'].forEach(function(k){
+  ['PRIZE_PTS','prizeStars','tracked','bourseShift','LADDERS','ladderAdvance','CONTRACTS7','DEMANDS7','claimContract','landPresent','landCanPresent','FLAG_FEE','flagOut','VENTURES','ledgerTick','vAt','enterVact','addPresence','presenceAt','trayDice','spendPresDisc','enterReach','commitBldg','hallOn','TRADE_INV','START_INV','INV_PER_LANDING','HALL_DIE_START','HALL_PLACES_N','HALL_PRIZES','IMP_DISPLAY','bspecPick','enterSpecGain','specGainPick','hireable','refillImpDisplay','olEnabled','gateNeed','laneGate'].forEach(function(k){
     ok(typeof (function(){try{return eval(k);}catch(e){return undefined;}})()==='undefined',k+' is gone');});
   ok(DEST.novgorod.vbonus===undefined,'no premium');});
 t('afterSail: casks land in boarding order; the prizes queue; a human head pauses; the AI resolves inline',function(){fresh(2);
   S.players.forEach(function(q){q.ai={tier:'journeyman'};});
   var id='s1';clearSlot(id);putShip(id,'cog','bergen',[{owner:0,style:'hopped',q:2,die:2,act:'source'},{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
   UI={sub:'move'};sailShip(id,0);afterSail('end');
-  eq(S.players[0].delivered.length,1,'seat 0 landed');eq(S.players[1].delivered.length,1,'seat 1 landed');
+  eq(S.players[0].delivered.filter(function(d){return !d.yard&&!d.hall;}).length,1,'seat 0 landed');eq(S.players[1].delivered.filter(function(d){return !d.yard&&!d.hall;}).length,1,'seat 1 landed');
+  eq(S.players[0].delivered.filter(function(d){return d.yard;}).length,1,'Bergen’s Cart carted the warm Gruit inline');eq(S.players[1].delivered.filter(function(d){return d.yard;}).length,1);
   eq(UI.sub,'end','the pipeline drained');
   fresh(2);S.players[1].ai=null;clearSlot(id);putShip(id,'cog','bergen',[{owner:1,style:'hopped',q:2,die:2,act:'source'}]);
-  UI={sub:'move'};sailShip(id,0);afterSail('end');eq(UI.sub,'bspec','a human head: Bergen\\'s seat');ok(humanGate(),'the AI pauses');eq(actorSeat(),1,'the head names its owner');});
+  UI={sub:'move'};sailShip(id,0);afterSail('end');eq(UI.sub,'cart','a human head: Bergen’s Cart');eq(UI.cart.pid,1,'the deliverer carts');ok(humanGate(),'the AI pauses');eq(actorSeat(),1,'the head names its owner');});
 
 // ---------- 8 · Bruges: the cart, the yard, the hall ----------
-t('the cart offers the yard always and the hall only with an ⚜, Q2+ and an open place; Gruit never presents',function(){fresh(2);var p=cur();
+t('the cart offers the yard always and the hall only to a cask whose die meets a shelf’s floor, with an open card there and that seat open; Gruit never presents; the count gates the cart as it gates a load',function(){fresh(2);var p=cur();
   p.vessels[0]=mkCask('gruit',1);p.vessels[1]=mkCask('hopped',2);putPost('w1',0,1);
-  eq(cartCasks(p).length,2);ok(!canHall(p,p.vessels[0]),'Gruit never');ok(!canHall(p,p.vessels[1]),'no ⚜');
-  p.invites=1;ok(canHall(p,p.vessels[1]));ok(!canHall(p,p.vessels[0]),'still not Gruit');
-  S.hall.places=S.hall.places.map(function(){return {pid:1,style:'hopped',q:2,face:2};});ok(!canHall(p,p.vessels[1]),'the hall full → the yard');});
+  eq(cartCasks(p).length,2);ok(!canHall(p,p.vessels[0]),'Gruit never');ok(canHall(p,p.vessels[1]),'a die of 2 reaches the Journeyman shelf');
+  eq(hallCards(p,p.vessels[1]).map(function(o){return o.b;}).filter(function(b,i,a){return a.indexOf(b)===i;}),[0],'only the Journeyman shelf at die 2');
+  p.vessels[1].die=3;eq(hallCards(p,p.vessels[1]).map(function(o){return o.b;}).filter(function(b,i,a){return a.indexOf(b)===i;}),[0,1],'die 3: Journeyman and Master');
+  p.vessels[1].die=4;eq(hallCards(p,p.vessels[1]).map(function(o){return o.b;}).filter(function(b,i,a){return a.indexOf(b)===i;}),[0,1,2],'die 4: all three');
+  p.upgrades=[S.hall.shelves[2].cards[0]];ok(hallCards(p,p.vessels[1]).every(function(o){return o.b!==2;}),'a filled seat closes its shelf');ok(!shelfSeatOpen(p,2));
+  p.upgrades=[];S.hall.shelves[0].dice=S.hall.shelves[0].dice.map(function(){return {pid:1,style:'hopped',q:2,face:2};});
+  ok(hallCards(p,p.vessels[1]).every(function(o){return o.b!==0;}),'a shelf with no card left is closed');
+  p.vessels[1].die=2;ok(!canHall(p,p.vessels[1]),'die 2 with the Journeyman shelf empty: the yard');
+  var q3=S.exports.filter(function(s){return STYLES[s].q===3;})[0];p.vessels[2]=mkCask(q3,3);eq(cartCasks(p).length,2,'a Q3 cask needs count 3 to cart');putPost('w2',0,1);eq(cartCasks(p).length,3,'count 3 admits it');});
 t('the yard: the die parks on the next place, tile under it; the zone prize BEST (recipe fee waived or 2 grain) · GOOD (at its fee or 1) · OK (1); the dividend; the bonus fires',function(){fresh(2);var p=cur();
   p.vessels[0]=mkCask('gruit',1,'source');UI={sub:'move'};UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';
   cartPickCask(0);eq(UI.sub,'yardprize','the zone prize prompt');eq(S.yard.length,1);eq(p.delivered[0].yard,1);eq(p.delivered[0].val,0,'no ★');
@@ -287,39 +301,70 @@ t('the yard: the die parks on the next place, tile under it; the zone prize BEST
   eq(yardZone(0),'best');eq(yardZone(2),'good');eq(yardZone(4),'ok','2p zones 2/2');
   fresh(3);eq(yardZone(2),'best');eq(yardZone(5),'good');eq(yardZone(6),'ok','3p zones 3/3');
   p=cur();p.vessels[0]=mkCask('hopped',2);putPost('w1',0,1);S.yard=[{},{},{},{},{},{}];
-  UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';cartPickCask(0);eq(UI.pendingYard[0].zone,'ok');
+  UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';cartPickCask(0);eq(UI.sub,'cartdoor','a Hopped at 2 may present, so the door is asked');cartDoor('yard');eq(UI.pendingYard[0].zone,'ok');
   var g0=p.grain;yardPick('goods');eq(p.grain,g0+1+2,'OK pays 1 grain, no prompt, then the tile\\'s 2');
   p.upgrades=['carter'];eq(yardGoodsN(p,'ok'),2,'the Carter +1');});
-t('the hall: 1 ⚜ spent, cask die + the hall die, the die parks, the place\\'s grain, the dividend, then the hall die climbs (cap 6); no recipe; the Bruges pair by hall places',function(){fresh(2);var p=cur();
-  p.invites=1;p.vessels[0]=mkCask('hopped',3);putPost('w1',0,1);
+t('the present: the card comes to that shelf’s seat, the die stands on the shelf (no ★ now, its pips at the end), the tile’s bonus and the dividend fire, no recipe, no grain; the seat closes its shelf; the Bruges pair by hall places',function(){fresh(2);var p=cur();
+  p.vessels[0]=mkCask('hopped',3,'source');putPost('w1',0,1);var g0=p.grain,h0=p.hops;
   UI={sub:'move'};UI.cart={returnTo:'end',n:1,count:0,vi:0};UI.sub='cart';cartPickCask(0);eq(UI.sub,'cartdoor');
-  cartDoor('hall');
-  eq(p.invites,0,'the ⚜ spent');var d=p.delivered[0];eq(d.hall,1);eq(d.val,3+HALL_DIE_START,'die + the hall die');
-  eq(S.hall.die,HALL_DIE_START+1,'the hall die climbed');eq(S.hall.places[0].pid,0,'parked on place 1');
-  eq(p.grain,START_GOODS.g+HALL_PRIZES[0]+2,'the place\\'s grain and the tile\\'s 2, no prompt');eq(p.hops,START_GOODS.h+1,'the dividend');
-  ok(!(UI.pendingYard||[]).length,'no recipe');
+  var o=hallCards(p,p.vessels[0]).filter(function(x){return x.b===1;})[0];ok(o,'a Master card in reach at die 3');var key=o.key;
+  cartDoor('hall',o.b,o.j);
+  eq(p.upgrades,[key],'the card is seated');ok(!p.vessels[0],'the vessel cleared');
+  var x=S.hall.shelves[1].dice[o.j];eq(x&&x.pid,0,'the die stands on the shelf');eq(x&&x.face,3,'at its face');
+  var d=p.delivered[0];eq(d.hall,1);eq(d.val,0,'no ★ now');eq(d.shelf,1);eq(d.card,key);
+  eq(hallPips(p),3,'its pips');eq(scorePlayer(p).hall,3,'score at the end');
+  eq(p.grain,g0+2,'the tile’s Gain 2 grain fires, no prompt; no grain from the hall');eq(p.hops,h0+1,'the dividend');
+  ok(!(UI.pendingYard||[]).length,'no recipe, no yard prompt');eq(UI.sub,'end');
   eq(parkedAt(p,'bruges'),1,'Bruges weighs hall places');eq(fieldAt(p,'bruges'),0);
-  S.hall.die=6;p.invites=1;p.vessels[1]=mkCask('hopped',2);UI.cart={returnTo:'end',n:1,count:0,vi:1};UI.sub='cart';cartPickCask(1);cartDoor('hall');eq(S.hall.die,6,'cap 6');
-  var a=majorityAwards('bruges');eq(a[0],DEST.bruges.pair[0],'the Bruges pair');});
-t('the yard carries no majority weight; the Kaufhaus or the Carter carts 2; no ⚜ from Bruges',function(){fresh(2);var p=cur();
+  ok(!shelfSeatOpen(p,1),'the Master seat filled');ok(hallCards(p,mkCask('hopped',3)).every(function(y){return y.b!==1;}),'the Master shelf closed to this house');
+  ok(!S.hall.shelves[1].cards.some(function(k,j){return k===key&&!S.hall.shelves[1].dice[j];}),'the card is no longer open');
+  var a=majorityAwards('bruges');eq(a[0],DEST.bruges.pair[0],'the Bruges pair');
+  ok(!S.hall.die,'no hall die');});
+t('the yard carries no majority weight; the Kaufhaus or the Carter carts 2',function(){fresh(2);var p=cur();
   S.yard.push({pid:0,style:'gruit',q:1,face:1});p.delivered.push({style:'gruit',q:1,dest:'bruges',val:0,face:1,yard:1});
   eq(parkedAt(p,'bruges'),0);eq(majorityAwards('bruges')[0],undefined,'no share from the yard');
-  eq(cartN(p),1);p.upgrades=['carter'];eq(cartN(p),2);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),2,'they do not stack');
-  eq(p.invites,0,'no ⚜ from the yard');});
+  eq(cartN(p),1);p.upgrades=['carter'];eq(cartN(p),2);clearSlot('s1');S.buildings.s1={p:'A',tier:2,owner:0};eq(cartN(p),2,'they do not stack');});
 
-// ---------- 9 · invitations ----------
-t('1 ⚜ per cask landed at a far Kontor; a count with no cap; none from Bruges',function(){fresh(2);var p=S.players[0];
-  var Lg={dest:'london',queue:[]};UI={sub:'move'};
-  for(var i=0;i<9;i++)landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);
-  eq(p.invites,9*INV_PER_LANDING,'no cap');eq(typeof p.invites,'number','a count');});
+// ---------- 9 · the hall’s shelves: the specialists ----------
+t('three seats, one per shelf; a present never seats a second card on a shelf; the Gain 2 hops bonus replaces Gain 1 specialist; no display, no deck on S',function(){fresh(2);var p=S.players[0];
+  eq(SSLOTS,3);ok(specRoom(p));p.upgrades=[S.hall.shelves[0].cards[0],S.hall.shelves[1].cards[0],S.hall.shelves[2].cards[0]];ok(!specRoom(p),'three seats filled');
+  var extra=S.hall.shelves[0].cards[1];grantUpgrade(p,extra);eq(p.upgrades.length,3,'a filled shelf seat refuses a second card');
+  eq(CASK_ACT_POOL.indexOf('spec'),-1,'no Gain 1 specialist');ok(CASK_ACT_POOL.indexOf('hops')>=0,'Gain 2 hops');eq(CASK_ACT_POOL.length,8,'eight bonuses');
+  p.upgrades=[];var h0=p.hops;UI={sub:'move'};UI.pendingActs=[{pid:0,act:'hops',style:'hopped',slot:null}];afterSail('end');eq(p.hops,h0+2,'two hops, no prompt');eq(UI.sub,'end');
+  ok(S.impDisplay===undefined&&S.impDeck===undefined,'no display, no deck');});
+t('the Journeyman shelf: the Maltster’s Market pays 3 grain · the Hop gardener’s dividend pays 2 · the Cooper’s Cellar reads Age 4',function(){fresh(2);var p=cur();
+  eq(srcN(p),SRC_PRIMARY);p.upgrades=['maltster'];eq(srcN(p),SRC_PRIMARY+1);
+  p.grain=0;UI={sub:'move'};enterSource(srcN(p),'end');srcTake();eq(p.grain,3,'3 grain');
+  p.upgrades=[];eq(dividendN(p),DIVIDEND_H);p.upgrades=['hopgardener'];eq(dividendN(p),DIVIDEND_H+1);
+  p.hops=0;clearWharf();putShip('s1','cog','london');putPost('w1',0,1);putPost('w2',0,1);p.vessels[0]=mkCask('hopped',2,'source');loadInto(p,'s1',0);eq(p.hops,2,'the dividend paid 2');
+  p.upgrades=['cooper'];p.vessels[1]=mkCask('mumme',1);p.cell='D';p.placed=true;UI={sub:'stops',stops:[],usedStops:[]};enterCell('D',false);eq(UI.sub,'age');eq(UI.age.pool,CELLAR_POOL+1,'Age 4');
+  p.upgrades=[];UI={sub:'stops',stops:[],usedStops:[]};enterCell('D',false);eq(UI.age.pool,CELLAR_POOL,'Age 3 without him');});
+t('the Master shelf: the Hop merchant sells 3 hops at the Market instead of the grain · the Brewer’s mate brews a second vessel at its cost',function(){fresh(2);var p=cur();
+  eq(TRADE_H,3);p.upgrades=[];p.grain=0;p.hops=0;ok(!canTrade(p),'no merchant, no hops');
+  UI={sub:'move'};enterSource(srcN(p),'end');eq(UI.sub,'source');srcTrade();eq(p.hops,0,'refused');eq(UI.sub,'source','still at the Market');srcTake();eq(p.grain,SRC_PRIMARY);
+  p.upgrades=['hopmerchant'];ok(canTrade(p));p.grain=0;UI={sub:'move'};enterSource(srcN(p),'end');srcTrade();eq(p.hops,TRADE_H,'3 hops');eq(p.grain,0,'no grain — one or the other');eq(UI.sub,'end');
+  p.upgrades=['brewersmate'];p.grain=9;p.hops=9;p.vessels=[null,null,null];var s0=p.supply;
+  UI={sub:'stops',stops:[],usedStops:[]};p.cell='B';p.placed=true;enterCell('B',false);eq(UI.sub,'brew');ok(UI.brew.again,'a second brew rides the first');
+  brewPick('hopped');if(UI.sub==='brewverb')brewVerbPick(Object.keys(pileVerbs('hopped'))[0]);
+  eq(UI.sub,'brew','the second brew is offered');ok(!UI.brew.again,'and no third');brewPick('gruit');
+  eq(p.vessels.filter(function(c){return c;}).length,2,'two vessels filled');eq(p.supply,s0-2,'two dice');eq(p.grain,9-2,'each at its cost');
+  p.upgrades=[];p.vessels=[null,null,null];UI={sub:'stops',stops:[],usedStops:[]};enterCell('B',false);ok(!UI.brew.again,'one brew without him');});
+t('the Alderman shelf’s end lines: the Navigator +2★ per far Kontor whose branch is held whole · the Burgher +1★ per private tile · the Steward’s vessels score their dice',function(){fresh(2);var p=S.players[0];
+  p.upgrades=['navigator'];eq(scorePlayer(p).guild,NAVIGATOR_PTS,'the starter on E1 holds Bergen’s branch');putPost('w1',0,1);putPost('w2',0,1);eq(scorePlayer(p).guild,2*NAVIGATOR_PTS,'London too');putPost('e2',0,1);eq(scorePlayer(p).guild,3*NAVIGATOR_PTS,'all three');
+  p.upgrades=['burgher'];clearWharf();eq(scorePlayer(p).guild,0);S.buildings.s1={p:'A',tier:1,owner:0};S.buildings.s3={p:'B',tier:2,owner:0};S.buildings.s5={p:'C',tier:1,owner:1};eq(scorePlayer(p).guild,2*BURGHER_PTS,'two tiles of yours');
+  p.upgrades=['steward'];p.vessels=[mkCask('hopped',2),mkCask('bock',4),null];eq(scorePlayer(p).guild,6,'2 + 4');p.vessels=[null,null,null];eq(scorePlayer(p).guild,0);});
 
 // ---------- 10 · the prizes ----------
-t('Bergen: a free seat from the display or nothing; the specialist bonus is a second door; never two of a kind',function(){fresh(2);var p=S.players[0];
-  UI={sub:'move'};UI.pendingSpec=[{pid:0,dest:'bergen'}];var k=S.impDisplay[0];UI.sub='bspec';UI.goodsRt='end';bspecPick(k);
-  eq(p.upgrades,[k]);ok(S.impDisplay.indexOf(k)<0,'left the display');
-  ok(!hireable(p).some(function(x){return x===k;}),'never two of a kind');
-  UI={sub:'move'};enterSpecGain('end');eq(UI.sub,'specgain');specGainPick(hireable(p)[0]);eq(p.upgrades.length,2);
-  ok(!specRoom(p),'two seats');});
+t('Bergen: a Cart — one Ready cask under the count, on the deliverer’s clock; nothing when no cask can go; a human deliverer pauses the AI; the Carter never doubles it',function(){fresh(2);var p=S.players[0],q=S.players[1];
+  eq(DEST.bergen.prize,'cart');p.ai={tier:'journeyman'};q.ai=null;
+  q.vessels[1]=mkCask('hopped',2,'source');putPost('w1',1,1);var g0=q.grain,h0=q.hops;
+  UI={sub:'move'};UI.pendingCart=[{pid:1}];afterSail('end');
+  eq(UI.sub,'cart','the cart prompt');eq(UI.cart.pid,1,'the deliverer');eq(UI.cart.n,1,'one cask');ok(humanGate(),'the AI waits');eq(actorSeat(),1);
+  cartPickCask(1);eq(UI.sub,'cartdoor');cartDoor('yard');eq(UI.sub,'yardprize');eq(UI.pendingYard[0].pid,1,'the prize is the deliverer’s');
+  yardPick('goods');eq(q.hops,h0+1,'the dividend');eq(q.grain,g0+2+2,'the Best prize and the tile');eq(UI.sub,'end','the pipeline drained');
+  q.upgrades=['carter'];q.vessels=[null,null,null];UI={sub:'move'};UI.pendingCart=[{pid:1}];afterSail('end');eq(UI.sub,'end','no cask: nothing');
+  q.vessels[0]=mkCask('hopped',2);q.vessels[1]=mkCask('hopped',2);UI={sub:'move'};UI.pendingCart=[{pid:1}];afterSail('end');eq(UI.cart.n,1,'the prize carts one, Carter or not');
+  fresh(2);p=S.players[0];p.ai={tier:'journeyman'};p.vessels[0]=mkCask('hopped',2,'source');putPost('w1',0,1);UI={sub:'move'};UI.pendingCart=[{pid:0}];afterSail('end');eq(p.delivered.length,1,'an AI deliverer carts inline');eq(UI.sub,'end');});
 t('London: any build, the fee waived, the die still spent — a post, a Kontor building, a wharf tile or FLIP',function(){fresh(2);var p=S.players[0];p.grain=0;p.hops=0;
   var opts=buildMenuOptions(p,true,true);ok(opts.indexOf('post')>=0&&opts.indexOf('kbuild')>=0&&opts.indexOf('priv')>=0,'all three arms');
   UI={sub:'move'};UI.afterRt='end';enterBuildMenu('benefitcont',true,0,true);eq(UI.sub,'buildmenu');
@@ -401,10 +446,10 @@ t('the private tiles score their printed ★ (2 / 4) while they stand; the tide 
   ok(privAt('s1'),'the tile stands after the sail');});
 
 // ---------- 12 · the end and the score ----------
-t('gameOver: a die aboard a docked Ship scores its pips only — no landing, no ⚜; its recipe card crossed as it boarded, so the Flight counts the beer; vessels score nothing',function(){fresh(2);var p=S.players[0];
+t('gameOver: a die aboard a docked Ship scores its pips only — no landing; its recipe card crossed as it boarded, so the Flight counts the beer; vessels score nothing',function(){fresh(2);var p=S.players[0];
   clearSlot('s1');putShip('s1','hulk','bergen',[{owner:0,style:'hopped',q:2,die:3,act:'source'}]);
   p.vessels[0]=mkCask('bock',5);
-  var sc=scorePlayer(p);eq(sc.docked,3,'the docked die');eq(p.delivered.length,0,'never landed');eq(p.invites,0,'no ⚜');
+  var sc=scorePlayer(p);eq(sc.docked,3,'the docked die');eq(p.delivered.length,0,'never landed');
   eq(flightBeers(p),1,'the Flight counts it — the card crossed as it boarded');eq(flightScore(p),0,'under the ladder');
   p.vessels[0]=null;eq(scorePlayer(p).total,sc.total,'the vessel was worth nothing');});
 t('every post and building die scores its pips; the majorities pay the printed pairs by parked dice, the presence gate, ties split',function(){fresh(2);var p=S.players[0],q=S.players[1];
@@ -424,8 +469,8 @@ t('the Flight counts the recipe cards crossed — beers delivered (field, yard, 
 t('the Chronicler +1★ per cask landed; the Guildmaster +2★ per present; the Alderman +2★ per Kontor with 3+ parked (Bruges by hall places)',function(){fresh(2);var p=S.players[0];
   p.upgrades=['chronicler','gmaster'];var Lg={dest:'bergen',queue:[]};UI={sub:'move'};
   landDeliver(p,{owner:0,style:'hopped',q:2,die:2,act:'source'},Lg);eq(p.bankL,CHRON_PTS);
-  p.invites=1;p.vessels[0]=mkCask('hopped',2);putPost('w1',0,1);hallPresent(p,0);eq(p.bankH,GMASTER_PTS);eq(p.bankL,2*CHRON_PTS,'the hall is a landing too');
-  p.upgrades=['alderman'];for(var i=0;i<3;i++)S.hall.places[i]={pid:0,style:'hopped',q:2,face:2};eq(scorePlayer(p).guild,2,'Bruges by hall places');});
+  p.vessels[0]=mkCask('hopped',2);putPost('w1',0,1);UI.cart={returnTo:'end',n:1,count:0,vi:0,pick:{b:0,j:0}};hallPresent(p,0);eq(p.bankH,GMASTER_PTS);eq(p.bankL,2*CHRON_PTS,'the hall is a landing too');
+  p.upgrades=['alderman'];S.hall.shelves[0].dice=S.hall.shelves[0].dice.map(function(){return {pid:0,style:'hopped',q:2,face:2};});eq(hallDiceOf(p),3);eq(scorePlayer(p).guild,2,'Bruges by hall places');});
 
 // ---------- 13 · Gruit, aging, no kettle ----------
 t('Gruit: 1G, Ready at brew, the top tile (Gain 2 grain) without a search, never boards, the cart is its road',function(){fresh(2);var p=cur();p.grain=3;p.vessels[0]=null;
@@ -443,13 +488,16 @@ t('brew needs only a recipe, the goods, a vessel and a die — no kettle, no lic
 // ---------- 14 · the AI never stalls ----------
 t('every UI.sub in the roster has an aiStep case; a 2-seat trader game and a 4-seat game run to S.over',function(){
   var src=aiStep.toString();
-  ['starter','move','stops','source','brew','brewverb','age','vlift','load','wilddest','commission','post','kbuild','raise','cart','cartdoor','yardprize','pbuild','placepriv','buildmenu','recipegain','specgain','bspec','sailnow','end'].forEach(function(k){
+  ['starter','move','stops','source','brew','brewverb','age','vlift','load','wilddest','commission','post','kbuild','raise','cart','cartdoor','yardprize','pbuild','placepriv','buildmenu','recipegain','sailnow','end'].forEach(function(k){
     ok(src.indexOf("case '"+k+"'")>=0,'aiStep handles '+k);});
   fresh(2);S.players.forEach(function(p){p.ai={tier:'trader',persona:'merchant'};});var g=0;while(!S.over&&g++<200000)aiStep();ok(S.over,'2p ended');
   fresh(4);S.players.forEach(function(p,i){p.ai={tier:'journeyman'};});g=0;while(!S.over&&g++<250000)aiStep();ok(S.over,'4p ended');});
-t('the human-gate heads name their owner: yardprize · bspec · buildmenu · post · kbuild · raise · pbuild',function(){fresh(2);
+t('the human-gate heads name their owner: yardprize · cart and cartdoor · buildmenu · post · kbuild · raise · pbuild',function(){fresh(2);
   S.players[0].ai={tier:'journeyman'};S.players[1].ai=null;
   UI={sub:'yardprize',pendingYard:[{pid:1,zone:'best'}]};ok(humanGate());eq(actorSeat(),1);
+  UI={sub:'cart',cart:{returnTo:'end',n:1,count:0,vi:null,pid:1}};ok(humanGate());eq(actorSeat(),1);
+  UI={sub:'cartdoor',cart:{returnTo:'end',n:1,count:0,vi:0,pid:1}};ok(humanGate());eq(actorSeat(),1);
+  UI={sub:'cart',cart:{returnTo:'end',n:1,count:0,vi:null,pid:0}};ok(!humanGate(),'an AI seat’s cart');eq(actorSeat(),0);
   UI={sub:'post',post:{segs:['w1'],returnTo:'end',ctx:{pid:1},pid:1}};ok(humanGate());eq(actorSeat(),1);
   UI={sub:'raise',raise:{targets:[],returnTo:'end',ctx:{},pid:1}};eq(actorSeat(),1);
   UI={sub:'pbuild',pb:{returnTo:'end',free:true,pid:1}};eq(actorSeat(),1);
@@ -469,14 +517,11 @@ t('the dividend: 1 hop as a cask boards (a second cask under the Stevedore pays 
   fresh(2);p=cur();p.grain=0;p.hops=0;clearWharf();putShip('s1','cog','london');S.buildings.s1={b:'victual'};putPost('w1',0,1);putPost('w2',0,1);
   p.vessels[0]=mkCask('hopped',2,'source');loadInto(p,'s1',0);
   ok(p.hops===1||bKeyAt('s1')!=='victual','the Yard doubles the bonus, never the dividend');});
-t('the hop trade: no ⚜ → no trade; pay 1 ⚜: 3 hops in place of the grain; Gain 2 grain otherwise; the tile bonus and the prizes pay grain without a prompt; every Gruit tile is Gain 2 grain',function(){fresh(2);var p=cur();
-  eq(TRADE_INV,1);eq(TRADE_H,3);p.invites=0;p.grain=0;p.hops=0;
-  UI={sub:'move'};enterSource(SRC_PRIMARY,'end');eq(UI.sub,'source');ok(!canTrade(p),'no ⚜ → no trade');
-  srcTrade();eq(p.hops,0,'refused');eq(UI.sub,'source','still at the Market');
-  p.invites=1;ok(canTrade(p));srcTrade();eq(p.invites,0,'the ⚜ spent');eq(p.hops,TRADE_H,'3 hops');eq(p.grain,0,'no grain — one or the other');eq(UI.sub,'end');
-  UI={sub:'move'};enterSource(SRC_PRIMARY,'end');srcTake();eq(p.grain,SRC_PRIMARY,'Gain 2 grain');eq(UI.sub,'end');
+t('the Market pays grain: Gain 2 grain; the tile bonus and the prizes pay grain without a prompt; every Gruit tile is Gain 2 grain; no fee asks hops',function(){fresh(2);var p=cur();
+  p.grain=0;p.hops=0;p.upgrades=[];
+  UI={sub:'move'};enterSource(srcN(p),'end');eq(UI.sub,'source');srcTake();eq(p.grain,SRC_PRIMARY,'Gain 2 grain');eq(p.hops,0,'no hops at the Market');eq(UI.sub,'end');
   UI={sub:'move'};UI.pendingActs=[{pid:0,act:'source',style:'gruit',slot:null}];afterSail('end');eq(p.grain,SRC_PRIMARY+2,'the tile bonus pays 2 grain, no prompt');eq(UI.sub,'end');
-  UI={sub:'move'};UI.pendingGoods=[{pid:0,n:2,why:'the hall'}];afterSail('end');eq(p.grain,SRC_PRIMARY+4,'a prize pays grain, no prompt');
+  UI={sub:'move'};UI.pendingGoods=[{pid:0,n:2,why:'the yard'}];afterSail('end');eq(p.grain,SRC_PRIMARY+4,'a prize pays grain, no prompt');
   ok(typeof aiGoodsSplit==='undefined','no goods split left in the AI');
   eq(pileVerbs('gruit').source,14,'every Gruit tile is Gain 2 grain (16 less the two warm)');
   eq(RECIPE_FEE.bock.h,undefined,'no fee asks hops');eq(T1_FEE.h,undefined,'no fee asks hops: tier 1 '+costStr(T1_FEE));eq(FLIP_FEE.h,undefined,'the Flip '+costStr(FLIP_FEE));});

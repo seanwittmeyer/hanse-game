@@ -42,8 +42,8 @@ as two loops that need each other:
   the maiden load), damped once the wharf already holds three Ships; the Harbor's `must` stop
   is always resolved first.
 - **The Kontor building** (`aiKBuildValue`): casks to deliver × the modifier, the pips, the slot's start face (Novgorod's 2), the
-  count; the tile by the seat's lane (the Kontorhaus for the hall lane or an ⚜-poor seat, the
-  Guildhouse once dice stand at sea, else the Warehouse). **RAISE** turns the lowest die,
+  count; the tile by the seat's lane (the Kontorhaus for a hop-short seat, the Guildhouse once
+  dice stand at sea, else the Warehouse). **RAISE** turns the lowest die,
   building dice first.
 - **The priced lines**: the Granary's brew is priced as a brew minus its grain
   (`aiPactValue`); the Bonded Store's post offer as a post against the same die as a cask,
@@ -52,13 +52,13 @@ as two loops that need each other:
 - **The goods split.** Grain is a flow the seat tops up at the Market when a wanted recipe or
   fee is short of it (every fee is grain); hops arrive as the dividend and price only beer, so a
   load and a cart are each priced a hop higher
-  (`aiLoadValue` · `aiCartValue`). **The hop trade** (`aiTradeValue` · `aiWantTrade`) is taken at
-  the Market when a brewable recipe is short of hops and the seat holds an ⚜ it is not saving for
-  the hall; a hall-lane seat keeps its last invitation.
-- **The cart's door** (`aiCartDoor`): the hall when cask die + the hall die (+ the
-  Guildmaster) beats the yard's zone; a shippable export yields to the sea (two dice, an ⚜, a
-  prize) unless the game is ending. **The yard's prize**: a recipe in the BEST/GOOD zones
-  when one is wanted, else the goods.
+  (`aiLoadValue` · `aiCartValue`). **The Hop merchant's Market** (`aiTradeValue`) is taken
+  when a brewable recipe is short of hops.
+- **The cart's door** (`aiCartDoor` · `aiHallPick`): the hall when the best card the cask's
+  die reaches (its prior, `aiSpecVal`, plus the die's pips and the seat's lane) beats the
+  yard's zone; a shippable export yields to the sea (two dice, a prize) unless the game is
+  ending. **The yard's prize**: a recipe in the BEST/GOOD zones when one is wanted, else the
+  goods. **Bergen's Cart** rides the same pick, on the deliverer's clock.
 - **A wild Ship's port** (`aiWildPick`): the seat's own building die there, the majority
   swing, the prize. **The private ladder** (`aiPBuildValue`): the printed ★ plus the verb's
   uplift over the visits left, net of the fee; tier 2 needs the tier 1.
@@ -70,9 +70,9 @@ as two loops that need each other:
 `AI_PERSONAS = brewer · merchant · hall · majority · builder · specialist · breadth` ride the
 Trader (and the GM's rollout seat). Each is a committed lean: the **brewer** casks first and
 posts only when a recipe is stranded; the **merchant** posts and builds at the Kontore before
-the third brew; the **hall** presents every Q2+ cask it holds an ⚜ for; the **majority**
-stacks one Kontor's field; the **builder** climbs the private ladder; the **specialist** takes
-Bergen first and seats both; **breadth** brews for the Flight.
+the third brew; the **hall** carts every cask that reaches a shelf; the **majority**
+stacks one Kontor's field; the **builder** climbs the private ladder; the **specialist** fills
+its three seats, the Alderman shelf first; **breadth** brews for the Flight.
 
 **The law (CLAUDE.md §1):** a simulation or review that recommends simplification must first
 show it is not measuring depth away. The sim seats the personas (`PERSONAS=1`, round-robin;
@@ -83,16 +83,17 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (61 checks in 16 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (64 checks in 16 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · delivery = two dice ·
-  Bruges · invitations · the prizes · the private ladder · the end and the score · Gruit,
-  aging, no kettle · the AI never stalls · the goods split. Seconds, always.
+  Bruges and the yard · the hall's shelves · the prizes · the private ladder · the end and the
+  score · Gruit, aging, no kettle · the AI never stalls · the goods split. Seconds, always.
 - **`playtests/sim.js`** — the robustness/pace gate riding the engine's own `aiStep`: 0 crashes
   / 0 deadlocks across 2–4p, the twelve-dice identity at every end, the pace band, the trigger
   split, and the v8 usage counters (posts, Kontor builds, RAISEs, sails and wild ports,
-  deliveries and the building-die share, ticks, carts by door and zone, the hall die, ⚜,
-  private builds and flips, building stops, specialists seated and their share of wins, the
+  deliveries and the building-die share, ticks, carts by door and zone, the presents by
+  shelf and the hall pips, private builds and flips, building stops, specialists seated and
+  their share of wins, the
   cask bonuses fired, the Works fired, the count at the end, stranded casks, the sea pips'
   share of the score, docked pips, deliveries by Kontor); `PERSONAS=1` prints the lane report
   after the usage.
@@ -102,7 +103,7 @@ recommendation to cut a part must cite the committed lane's result, never the gr
   `GOFF=` / `OUT=`; `PLAY=` traces another build on the same metrics.
   **`playtests/oracle-study.js <dir>`** reads the shards (partial corpora welcome) and prints
   the turn study: little wins, the ★ silence, the phases, the passive read, the goal arcs,
-  the ⚜ economy, the score by part, the paths to victory, the lanes; `--timeline=label:n:game`
+  the hall's shelves, the score by part, the paths to victory, the lanes; `--timeline=label:n:game`
   prints one game turn by turn. USAGE first, as the law asks; the designer calls it.
 - **Standing rule:** the greedy tiers gate **robustness and pace**, never strategy or balance —
   they under-pilot deep lines by construction. Strategy reads = the MC tiers, the committed
@@ -119,12 +120,20 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 ## Open (AI-only; none gates a rules read)
 
 - **The brewer persona is a harness defect:** as coded it farms Gruit (5 of 6 brews at 2p in
-  the turn oracle, 0.2 deliveries, 6% wins) — a yard farmer, not a brewer. Recode it as the
-  lane the design means (brew the high beers, present them at the hall or deliver them at
-  Novgorod) before its result is read again; until then its win share is not a balance read.
+  the turn oracle, 0.2 deliveries, 4% wins on the shelves build) — a yard farmer, not a
+  brewer. Recode it as the lane the design means (brew the high beers, present them at the
+  Alderman shelf or deliver them at Novgorod) before its result is read again; until then its
+  win share is not a balance read.
+- **The Alderman shelf is the bots' blind spot:** the greedy tiers present there for 0.1 seats
+  a game and the Guildmaster for 0.3; Guildmaster · Chronicler · Alderman · Burgher never seat.
+  A committed Alderman lane (hold a die-4 cask for the shelf) is wanted before those cards are
+  read as dead.
 - The 2p sea: two greedy seats load different hulls for different Kontors (4.9 Ships dock, one
   sails a game); the load and commission values want a read at a human table before any
   tuning corpus. The Guildmaster loiters at 2p (17% empty turns, 27% of games to the
   round-18 backstop): deferral reads as free with one rival.
 - The GM's rollouts at 4p; sub-Guildmaster MC budget tiers; a blind-AI option — optional ideas.
 - The physical automa deck (a card-driven tabletop bot) waits until the ⚙ numbers settle.
+- `aiSpecVal`'s priors for the eight new cards (Maltster · Hop gardener · Cooper · Hop
+  merchant · Brewer's mate · Burgher · Navigator · Steward) are first guesses; the Hop
+  merchant's Market is never taken by the greedy tiers.

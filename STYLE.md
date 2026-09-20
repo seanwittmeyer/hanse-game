@@ -21,7 +21,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | the sea board | the board printing Hamburg, the cart road, the four segments (E1 shared) and the four Kontor panels; side A (2p) / side B (3–4p) | — | — · yes | Destinations board, the map |
 | Kontor | one of the four trading posts (Bruges · London · Bergen · Novgorod); London, Bergen and Novgorod are the far Kontore | kontor, kontor-* | Kontore · yes | port, destination |
 | Market & Stores board | the displays ringed by the score ring | — | — · yes | Supply board |
-| player board | 3 vessels · 2 seats · the score seat · the personal supply well · the Flight | — | — · no | — |
+| player board | 3 vessels · 3 seats (one per shelf of the hall) · the score seat · the personal supply well · the Flight | — | — · no | — |
 | quality die | THE component: the die that is the cask, the post and the Kontor building marker; its face is a quality, a modifier, pips | quality-die | quality dice · no | tally die, tray die |
 | personal supply | your unspent quality dice; the first empty supply sets the final round | — | supplies · no | tray, pool |
 | the starter post | the die each player stands at face 1 on W1 or E1 at setup; a post in every respect, counted in the quality count | post | — · no | starting marker |
@@ -49,12 +49,12 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | the field | a far Kontor panel's space for parked cask dice | — | fields · no | — |
 | presence | your parked dice at a Kontor | presence | — · no | bump |
 | majority pair | the two ★ values a Kontor pays its two leading players (London 5 / 2 · Bergen 5 / 2 · Novgorod 7 / 3 · Bruges 4 / 2 by hall places) | — | pairs · no | ladder |
-| prize | what a far Kontor pays the cask's owner on delivery, free: London one Build with the fee waived · Bergen a specialist · Novgorod Raise die | — | prizes · no | benefit, reward, fallback |
-| Invitation ⚜ | a token, earned 1 per cask of yours delivered at a far Kontor (+1 with a Kontorhaus), spent to present or traded at the Market for 3 hops; no cap | mail | ⚜ · yes | contract, letter |
-| the cart | the Cellar's alternate: one Ready cask of yours to Bruges by road (Cart 2 with a Kaufhaus or the Carter; they do not stack) | cart | — · no | the road, overland |
+| prize | what a far Kontor pays the cask's owner on delivery, free: London one Build with the fee waived · Bergen Cart 1 · Novgorod Raise die | — | prizes · no | benefit, reward, fallback |
+| the cart | the Cellar's alternate, and Bergen's prize: one Ready cask of yours to Bruges by road (Cart 2 with a Kaufhaus or the Carter; they do not stack) | cart | — · no | the road, overland |
 | the yard | Bruges' goods door: a track of places in three zones (Best · Good · OK); Gruit's only door | — | — · no | the market |
-| the hall | Bruges' guild of brewmasters: a Q2+ cask and 1 ⚜; cask die + the hall die | hall | — · no | Tastings, guildhall (a private tile) |
-| the hall die | the neutral die on the Bruges panel: starts at 2, +1 per present, cap 6; not in any count | — | — · no | — |
+| the hall | Bruges' guild of brewmasters: three shelves of specialists; a cask presents at a shelf whose floor its die meets, takes a card into that shelf's seat, and its die stands on the shelf's next place | hall | — · no | Tastings, guildhall (a private tile) |
+| shelf | one of the hall's three rows of specialists — Journeyman · Master · Alderman — each with a die floor (2 · 3 · 4), a deck of six, a deal of 3 (side A) · 4 (side B), and its places on the Bruges panel | — | shelves · no | bench, tier, row, rung |
+| floor | the die face a shelf or a far Kontor requires of a cask: Journeyman 2 · Master 3 · Alderman 4; London 2 · Bergen 3 · Novgorod 4 | — | floors · no | minimum (for a shelf), threshold |
 | place | one of the hall's or the yard's printed die spaces | — | places · no | bench |
 | Public Work | the shared brown family: die-less, passive on its slot's traffic, dealt at setup, never built in play; every one departs with the Ship at its slot | building | Public Works · yes | public building |
 | the tide | every Public Work departs with the Ship that sails from its slot; a private building never | — | — · no | — |
@@ -63,20 +63,21 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | On visit | the private building's trigger: its line fires when its owner works the station its slot flanks — the slot picks the station, not the tile's name | — | — · yes (a trigger) | when you work its station |
 | the Flip | your standing tier 1 turned over in place to its tier 2, at the tier 2 fee | — | flips · yes | upgrade |
 | Granary · Kaufhaus · Scriptorium · Brewers' Guildhall · Cold Store · Lagering Cellar · Counting House · Shipping Office | the eight private building faces | — | — · yes | — |
-| Warehouse · Kontorhaus · Guildhouse | the three Kontor building tiles: the Warehouse vouches (your count reads +1 for a Ship bound there); the Kontorhaus and the Guildhouse fire on your delivery | — | — · yes | — |
-| specialist | a private purple tile: earned free, never bought, never two of a kind; 2 seats per player | specialist | specialists · no | improvement, hire (n) |
-| Braumeister · Shipmaster · Cellarman · Stevedore · Agent · Lodesman · Carter · Guildmaster · Chronicler · Alderman | the ten specialists, one of each | — | — · yes | — |
-| seat | a specialist space on your player board; a post seat on a segment | — | seats · no | — |
+| Warehouse · Kontorhaus · Guildhouse | the three Kontor building tiles: the Warehouse vouches (your count reads +1 for a Ship bound there); the Kontorhaus (the dividend pays again) and the Guildhouse (Raise die) fire on your delivery | — | — · yes | — |
+| specialist | a private purple tile: earned at the hall, never bought; one seat per shelf, three per player | specialist | specialists · no | improvement, hire (n), skill |
+| Braumeister · Cellarman · Carter · Maltster · Hop gardener · Cooper | the Journeyman shelf, six singles | — | — · yes | — |
+| Stevedore · Lodesman · Shipmaster · Agent · Hop merchant · Brewer's mate | the Master shelf, six singles | — | — · yes | — |
+| Guildmaster · Chronicler · Alderman · Burgher · Navigator · Steward | the Alderman shelf, six singles | — | — · yes | — |
+| seat | a specialist space on your player board, one per shelf; a post seat on a segment | — | seats · no | — |
 | recipe | a single-faced card granting permission to brew a beer; the exports print a fee; it stands to the left of your player board and crosses to the right as its beer joins the Flight | recipe | recipes · no | licence, the brewed face |
 | exports | the four dealt-3-of-4 beers (Broyhan · Keut · Mumme · Bock) | — | — · no | — |
 | stack | a beer's face-up cask-tile supply; a Q2+ Brew searches it and chooses; a delivered tile stays under its die | — | stacks · no | pile |
-| cask bonus | the line a cask tile prints, fired once as the cask boards or is carted: Gain 2 grain · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post | grain, station-age-2, bonus-load, station-brew, recipe, specialist, build, post | bonuses · no | perk, action |
+| cask bonus | the line a cask tile prints, fired once as the cask boards or is carted: Gain 2 grain · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 2 hops · Build · Post | grain, station-age-2, bonus-load, station-brew, recipe, hops, build, post | bonuses · no | perk, action |
 | the Flight | the recipe cards to the right of your player board, one per distinct beer that has boarded a Ship or been carted: 3 / 4 / 5 → 3 / 6 / 10★ | — | — · yes | beers delivered (as its definition) |
-| goods | grain + hops, collectively; grain is taken (the Market's Gain 2 grain, every cask tile's Gain 2 grain, the yard's and the hall's prizes) and hops are earned (the dividend, the hop trade); every fee is grain | goods, grain, hops | — · no | resources, money |
-| the dividend | the 1 hop you take as a cask of yours boards a Ship or is carted; a Ship's berths print it | hops | — · no | return cargo, bounty |
-| the hop trade | the Market's primary as a choice: pay 1 ⚜: Gain 3 hops | mail, hops | — · no | exchange, rate |
+| goods | grain + hops, collectively; grain is taken (the Market's Gain 2 grain, every cask tile's Gain 2 grain, the yard's prizes) and hops are earned (the dividend, the Kontorhaus, the Gain 2 hops bonus; the Hop merchant sells them); every fee is grain | goods, grain, hops | — · no | resources, money |
+| the dividend | the 1 hop you take as a cask of yours boards a Ship or is carted; a Ship's berths print it; your Kontorhaus pays it again, the Hop gardener doubles it | hops | — · no | return cargo, bounty |
 | fee | the printed price of a Ship, a recipe or a build | — | fees · no | cost, price |
-| display | a face-up row components are taken from (Ships 3 · specialists 4) | — | displays · no | pool, market |
+| display | a face-up row components are taken from (Ships 3); the hall's shelves are dealt, never refilled | — | displays · no | pool, market |
 | score ring | the 50-cell ring; your disc records ★ | star | — · no | the bank |
 | step | +1 on an aging die (Age 3 = 3 steps, split freely) | — | steps · no | age point |
 | ★ | the scoring unit — the glyph, on every surface | star, star-N | — | VP, points, stars (text) |
@@ -85,7 +86,7 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 
 | Verb | Means | Banned |
 |---|---|---|
-| **gain / spend / pay** | goods in and out. **Gain N grain** and **Gain N hops** are the names for taking goods, one good per gain: the Market's primary, the cask bonus, the yard and the hall print Gain N grain on the `grain` glyph; the hop trade prints Gain 3 hops on the `hops` glyph | source, collect, buy, Gain N goods, any mix |
+| **gain / spend / pay** | goods in and out. **Gain N grain** and **Gain N hops** are the names for taking goods, one good per gain: the Market's primary, the cask bonus and the yard print Gain N grain on the `grain` glyph; the Gain 2 hops bonus and the Hop merchant print Gain N hops on the `hops` glyph | source, collect, buy, Gain N goods, any mix |
 | **brew** | pay a recipe; a supply die into an open vessel at the start value; a Q2+ brew searches the stack. Prints **Brew** | Brew 1, Brew once |
 | **age** | turn an aging die up, stopping at Ready; the Cellar prints **Age 3**, the bonus and the Cold Store **Age 2** | mature (v), Age +2 |
 | **load** | put 1 Ready cask from your vessels onto a docked Ship. Prints **Load 1** | embark, Load 1 more |
@@ -95,12 +96,12 @@ pre-v8 entries (the v5 tables, the v6 and v7 families) are archived in
 | **build** | one build you are eligible for: a private building, a Flip, or a Kontor building. Prints **Build**; the Harbor's alternate prints **Build a Kontor** | construct, place (for tiles), raise (as a build) |
 | **Raise die** | turn a die +1: at sea, cap 6 (the Harbor's alternate, Novgorod's prize, the Counting House, the Shipping Office, the Guildhouse); a boarding cask at the wharf, cap quality + 1 (the Malt Kiln, the Bonded Store, the Lagering Cellar). ONE verb on the one `die-plus1` glyph | lift, bump, turn up |
 | **sail** | a full Ship departs; its casks then deliver in boarding order | ship (v), depart |
-| **deliver** | a cask resolves at its Kontor: score cask die + your building die there, park it, take the ⚜ and the prize | land, landing, sell, ship (v) |
+| **deliver** | a cask resolves at its Kontor: score cask die + your building die there, park it, take the prize | land, landing, sell, ship (v) |
 | **park** | set a die on the sea board (a field, a place), pips up | place (for dice) |
 | **cart** | the Cellar's alternate: one Ready cask to Bruges by road. Prints **Cart 1** / **Cart 2** | haul, drive |
-| **present** | enter the hall: 1 ⚜ + a Q2+ cask | taste |
+| **present** | enter the hall: a carted cask whose die meets a shelf's floor takes a card into that shelf's seat; the die stands on the shelf's place | taste |
 | **flip** | turn your standing tier 1 over to its tier 2 | upgrade |
-| **seat** | place a specialist into an open seat | hire |
+| **seat** | place a specialist into the open seat of its shelf | hire |
 | **score** | add ★ on the score ring at once | bank |
 | **resolve** | work through a visit's actions in any order, each once | — |
 | **pay X: Y** | the at-cost line: a printed price, a colon, a verb; paying is optional ("may"), the verb then fires once — the Granary / Kaufhaus *pay 1 G: Brew* · the Bonded Store *On sail: each shipper may pay 1 G: Post*. Cost before effect: on a face the `G` chip, a colon, the verb's icon | buy, for |
@@ -118,7 +119,8 @@ Manifest · Order · lading · line (the row or column) · warp · Coper · Hera
 Guild Scholar · Town Crier · Supercargo · Innkeeper · Assay Loft · Rack House · Staple Rights ·
 Weigh House (until the roster pass) · Skute · the bag · the first-delivery letter · INVEST ·
 OPEN · leg · factor · establishment · bench · Source · lift · land / landing · hull (in player
-copy) · stop (n) · the brewed face · port (for a Kontor) · Gain N goods · any mix.
+copy) · stop (n) · the brewed face · port (for a Kontor) · Gain N goods · any mix · Invitation
+/ ⚜ · the hall die · the hop trade · the specialist display · Gain 1 specialist.
 
 ## §3. Canonical orders (every surface, no exceptions)
 
@@ -129,9 +131,10 @@ copy) · stop (n) · the brewed face · port (for a Kontor) · Gain N goods · a
 | Kontore | Bruges · London · Bergen · Novgorod |
 | Beers | Gruit · Hopped · Broyhan · Keut · Mumme · Bock (by quality; Broyhan before Keut) |
 | Ships | Cog · Hulk |
-| The cask bonuses | Gain 2 grain · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 1 specialist · Build · Post |
+| The cask bonuses | Gain 2 grain · Age 2 · Load 1 · Brew · Gain 1 recipe · Gain 2 hops · Build · Post |
+| The shelves | Journeyman · Master · Alderman (floors 2 · 3 · 4) |
 | A turn | Move · work the station |
-| Scoring | deliveries and presents · pips at sea · docked dice · private buildings · majorities · the Flight · the Guild |
+| Scoring | deliveries · pips at sea and the hall · docked dice · private buildings · majorities · the Flight · the Guild |
 
 ## §4. The golden rule, and the laws that ride with it
 

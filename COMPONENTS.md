@@ -8,10 +8,10 @@ face comes from `STYLE.md`. Counts and fees are placeholders until the designer'
 
 | Component | Count | Size | What it prints |
 |---|---|---|---|
-| **The Wharf board** | 1 | 8.84 in cross (a die-cut plus) | Four station cells (2.5 in) in a 2×2, ringed by eight slots (2.5 × 1.32 in, the building footprint; a docked Ship stands beside its slot). Each station prints its primary / alternate pair: Market *Gain 2 grain · pay 1 ⚜: Gain 3 hops / Load 1* · Brewhouse *Brew / Build* · Harbor *Commission (must) + Post / Build a Kontor · Raise die* · Cellar *Age 3 / Cart 1*. |
-| **The sea board** | 1, double-sided | 12.6 × 10.7 in | Side A (2p) / side B (3–4p), over the chart. Hamburg · the cart road to Bruges · four segments (W1 the Wadden Coast · W2 the Dover Strait → London; E1 the Skagerrak → Bergen; E1 · E2 the Sound → Novgorod; E1 shared), each with one post seat per colour (2 on A · 4 on B) · three far Kontor panels: the die floor (London 2 · Bergen 3 · Novgorod 4), the building slots (each printing its die's start face: 1 · 1 · 2) (1 on A · 2 on B, each a 1.32 in tile seat + a die seat), the field, the majority pair (5/2 · 5/2 · 7/3), the prize line · the Bruges panel: the yard track in three zones (Best 1–3 · Good 4–6 · OK 7+ on B; 1–2 · 3–4 · 5+ on A), the hall's places (6 on A · 8 on B; the first three print 2 · 2 · 1 grain), the hall die's seat, the pair 4/2. |
-| **Market & Stores board** | 1 | 17.45 × 11.2 in | The displays: Ships 3 · Specialists 4 · the six cask stacks (2.4 × 1 in wells) · the four export recipe stacks (1.85 × 2.55 in wells); ringed by the 50-cell score ring (0–49, a lap marker for 50+). |
-| **Player boards** | 4 | 7.65 × 3.85 in | Three vessel wells (2.4 × 1 in) · two specialist seats (2 × 2 in) · the score seat · the personal supply well · the Flight ladder (3 / 4 / 5 → 3 / 6 / 10★). The hand of 4 private tiles and the set of 3 Kontor building tiles lie beside it; the recipe cards stand to its left (held) and cross to its right (the Flight). |
+| **The Wharf board** | 1 | 8.84 in cross (a die-cut plus) | Four station cells (2.5 in) in a 2×2, ringed by eight slots (2.5 × 1.32 in, the building footprint; a docked Ship stands beside its slot). Each station prints its primary / alternate pair: Market *Gain 2 grain / Load 1* · Brewhouse *Brew / Build* · Harbor *Commission (must) + Post / Build a Kontor · Raise die* · Cellar *Age 3 / Cart 1*. |
+| **The sea board** | 1, double-sided | 12.6 × 10.7 in | Side A (2p) / side B (3–4p), over the chart. Hamburg · the cart road to Bruges · four segments (W1 the Wadden Coast · W2 the Dover Strait → London; E1 the Skagerrak → Bergen; E1 · E2 the Sound → Novgorod; E1 shared), each with one post seat per colour (2 on A · 4 on B) · three far Kontor panels: the die floor (London 2 · Bergen 3 · Novgorod 4), the building slots (each printing its die's start face: 1 · 1 · 2) (1 on A · 2 on B, each a 1.32 in tile seat + a die seat), the field, the majority pair (5/2 · 5/2 · 7/3), the prize line · the Bruges panel: the yard track in three zones (Best 1–3 · Good 4–6 · OK 7+ on B; 1–2 · 3–4 · 5+ on A), the hall's three shelves (Journeyman · Master · Alderman), each printing its die floor (2 · 3 · 4) and its places (3 on A · 4 on B), the pair 4/2. |
+| **Market & Stores board** | 1 | 17.45 × 13.2 in | The displays: Ships 3 · the hall's three shelves of specialists (Journeyman · Master · Alderman, 4 wells of 2 × 2 in each; side A deals 3) · the six cask stacks (2.4 × 1 in wells) · the four export recipe stacks (1.85 × 2.55 in wells); ringed by the 50-cell score ring (0–49, a lap marker for 50+). |
+| **Player boards** | 4 | 9.7 × 3.85 in | Three vessel wells (2.4 × 1 in) · three specialist seats (2 × 2 in), one per shelf of the hall · the score seat · the personal supply well · the Flight ladder (3 / 4 / 5 → 3 / 6 / 10★). The hand of 4 private tiles and the set of 3 Kontor building tiles lie beside it; the recipe cards stand to its left (held) and cross to its right (the Flight). |
 
 ## Tiles (chipboard, laser-cut on 22 in plotter sheets; 1.5 mm bleed, .09 in corners)
 
@@ -22,7 +22,7 @@ face comes from `STYLE.md`. Counts and fees are placeholders until the designer'
 | **Public Works** | 7 | 2.5 × 1.32 in, single-faced, brown | Malt Kiln ×2 · Customs House · Ropewalk · Cooperage · Bonded Store · Victualling Yard. Four are dealt at setup; the rest stay in the box. (The Weigh House and the four Staple Houses sit out.) |
 | **Private building tiles** | 16 | 2.5 × 1.32 in, double-sided, ringed per colour | Four designs × four colours, tier 1 front / tier 2 back: Granary / Kaufhaus · Scriptorium / Brewers' Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office. Each face prints its points as the star-2 / star-4 glyph, the trigger *On visit* and its line; no die seat. |
 | **Kontor building tiles** | 12 | 1.32 × 1.32 in, single-faced, ringed per colour | Three designs × four colours: Warehouse · Kontorhaus · Guildhouse; name + trigger + line, and a seat for the builder's die. |
-| **Specialist tiles** | 10 | 2 × 2 in, single-faced, purple | Braumeister · Shipmaster · Cellarman · Stevedore · Agent · Lodesman · Carter · Guildmaster · Chronicler · Alderman; one of each. |
+| **Specialist tiles** | 18 | 2 × 2 in, single-faced, purple | Three shelf decks of six singles, each face printing its shelf and the shelf's die floor. Journeyman (2): Braumeister · Cellarman · Carter · Maltster · Hop gardener · Cooper. Master (3): Stevedore · Lodesman · Shipmaster · Agent · Hop merchant · Brewer's mate. Alderman (4): Guildmaster · Chronicler · Alderman · Burgher · Navigator · Steward. Each game deals 3 (side A) · 4 (side B) of each shelf; the rest go to the box. |
 
 ## Cards (cardstock, not mounted)
 
@@ -36,10 +36,8 @@ face comes from `STYLE.md`. Counts and fees are placeholders until the designer'
 | Component | Count | Size | Notes |
 |---|---|---|---|
 | **Quality dice** | 48 (12 per colour) | 12 mm d6, four colours | THE component: the cask, the post, the Kontor building marker and the clock. Ten in the personal supply · one on the Ready Gruit · one the starter post. |
-| **The hall die** | 1 | 12 mm d6, neutral | Stands on the Bruges panel at 2. |
 | **Grain cubes** | 60 | — | a general supply |
 | **Hops cubes** | 40 | — | a general supply |
-| **⚜ Invitation tokens** | 16 | .75 in disc | a general supply; no cap |
 | **Kontor chits** | 3 | .75 in disc, in the Kontor's colour | one per far Kontor, for the wild Ships |
 | **Worker pawns** | 4 | — | one per colour, on the Wharf's stations |
 | **Score discs** | 4 | .5 in disc | one per colour on the score ring |

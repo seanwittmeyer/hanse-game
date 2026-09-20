@@ -19,7 +19,7 @@
 |**Genre**      |Medium euro · engine building · a shared action grid (the Wharf) + a private brewery + a sea board |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, Hamburg, c. 1350                  |
-|**Status**     |**v8.0j “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v80j`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
+|**Status**     |**v8.1a “Brewer & Merchant”** — live (`play.html`, KEY `hanse-v81a`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
 
 ---
 
@@ -81,7 +81,7 @@ count** that ties the brewery to the sea.
 
 ---
 
-## 6. The current architecture — v8.0 “Brewer & Merchant”
+## 6. The current architecture — v8.1 “Brewer & Merchant”
 
 **In one breath.** Twelve dice per player: ten in the *personal supply*, one on the *warm
 Gruit* in vessel 1, one standing at sea as the *starter post*. A die leaves the supply as a
@@ -95,8 +95,9 @@ there; nothing else. Ships are shared, 2/3 berths, bound for a far Kontor or wil
 the first load); nobody owns one; a full Ship sails at once. The Harbor must commission, and
 the commission lets you post on that Ship's lane; its alternate builds or raises at a Kontor.
 Bruges by cart only: the yard (grain or a recipe, shrinking as it fills; Gruit's only door) or
-the hall (an ⚜ and a Q2+ cask: cask die + the hall die, which climbs). ⚜ come only from far
-deliveries. The wharf's private buildings are a Great Western Trail engine: four tiles per
+the hall (three shelves of specialists with die floors 2 · 3 · 4: the cask's die buys a card
+into that shelf's seat and stands on the shelf, scoring its pips at the end). The wharf's
+private buildings are a Great Western Trail engine: four tiles per
 player on any vacant slot, firing on visit, tier 2 by the Flip, printed points, no die; the
 buildings sell actions at a price and never hand out goods. No kettle, no market track, no
 bands. The end: pips at sea + docked dice + standing tiles + the fixed majority pairs + the
@@ -108,11 +109,12 @@ Flight on the recipe cards crossed to the right of the board.
   alternate, a Load at each flanking slot, your own private building there; any order, all
   optional except the Harbor's commission.
 - **The goods** — grain is taken: the Market's Gain 2 grain, every Gruit tile's Gain 2 grain,
-  the yard's and the hall's grain prizes; every fee is grain, so grain builds the engine. Hops
-  are earned and price only beer: **the dividend**, 1 hop as each cask of yours boards a Ship
-  or is carted, and **the hop trade** at the Market, pay 1 ⚜: Gain 3 hops. A 1-hop beer pays
-  for itself as it leaves; a 2- or 3-hop beer wants a trade, so the first far delivery is the
-  door to Mumme and Bock. 3 grain and 3 hops to start.
+  the yard's grain prizes; every fee is grain, so grain builds the engine. Hops are earned and
+  price only beer: **the dividend**, 1 hop as each cask of yours boards a Ship or is carted
+  (your Kontorhaus pays it again; the Hop gardener doubles it), and the **Gain 2 hops** bonus;
+  only the Hop merchant sells them (Gain 3 hops at the Market). A 1-hop beer pays for itself
+  as it leaves; a 2- or 3-hop beer wants a Kontorhaus, a bonus tile or the merchant, so the sea
+  and the hall are the doors to Mumme and Bock. 3 grain and 3 hops to start.
 - **The die is the cask** — Brew sets a supply die at the start value; only a hand turns it
   (the Cellar's Age 3, the Age 2 bonus, the Cold Store / Lagering Cellar, the Braumeister);
   Ready at the quality; a Raise die at the wharf may push it to quality + 1; read as it boards
@@ -123,17 +125,20 @@ Flight on the recipe cards crossed to the right of the board.
   it; a lane is open to everyone while its branch is unlocked; your own chain opens a Kontor's
   building slots (1 on side A · 2 on side B).
 - **The Kontore** — a delivery = cask die + building die; the die parks in the field (presence,
-  the majority pair, the Flight); every building die there +1; 1 ⚜; the prize (London a Build
-  with the fee waived · Bergen a specialist · Novgorod Raise die).
-- **Bruges** — the Cart at the Cellar; the yard's three zones (Best: a recipe fee-waived or 2
-  grain · Good: a recipe at its fee or 1 grain · OK: 1 grain); the hall (1 ⚜ + Q2+: cask die +
-  the hall die; 2 · 2 · 1 grain on the first places).
+  the majority pair, the Flight); every building die there +1; the prize (London a Build with
+  the fee waived · Bergen Cart 1 · Novgorod Raise die).
+- **Bruges** — the Cart at the Cellar (and Bergen's prize); the yard's three zones (Best: a
+  recipe fee-waived or 2 grain · Good: a recipe at its fee or 1 grain · OK: 1 grain); the
+  hall's three shelves (Journeyman 2 · Master 3 · Alderman 4, on the cask's die): a present
+  takes a specialist into that shelf's seat and stands the die on the shelf's place, pips at
+  the end, the Bruges presence.
 - **The wharf engine** — Public Works dealt four at setup, washed away by the tide, never
   rebuilt; private buildings on vacant ground (Granary / Kaufhaus · Scriptorium / Brewers'
   Guildhall · Cold Store / Lagering Cellar · Counting House / Shipping Office), tier 1 for
   2 `G`, the Flip for 3 `G`, 2 / 4 ★.
-- **Specialists** — ten singles, two seats, earned only (Bergen's prize, the Gain 1 specialist
-  bonus): asymmetric powers.
+- **Specialists** — eighteen singles in three shelf decks, dealt 3 / 4 a shelf each game;
+  three seats, one per shelf; earned only at the hall: asymmetric powers, the engine's tech
+  tree.
 - **The clock and the score** — the first empty supply; round 18 backstops; the score is read
   off standing components.
 
@@ -143,7 +148,7 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
 
 ## 7. The tooling (how we verify)
 
-- **`playtests/verify-v8.js`** — the v8 rule battery (61 checks in 16 groups). Runs in
+- **`playtests/verify-v8.js`** — the v8 rule battery (64 checks in 16 groups). Runs in
   seconds; **always** after an engine change. The v5/v6 batteries live with their frozen
   builds under `archive/v5/playtests/` and `archive/v6/playtests/`.
 - **`playtests/sim.js [N]`** — drives the *canonical* `play.html` engine headlessly (extracts
@@ -159,7 +164,7 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
   **`playtests/oracle-study.js <dir>`** reads the shards, tolerant of partial corpora, and prints
   the turn study: little wins (each turn classed by its best event — big · small · petty ·
   empty), the ★ silence, the phases, the passive read (a rival's clock), the goal arcs
-  (first-time milestones, the arcs completed a seat, the dead ends), the ⚜ economy, the score
+  (first-time milestones, the arcs completed a seat, the dead ends), the hall's shelves, the score
   by part, the paths to victory, the lanes; `--timeline=label:n:game` prints one game turn by
   turn. The designer calls it; its outputs stay out of the repo.
 - **The v5-era probe fleet** (`strategy-probe.js` · `flow-probe.js` · the prize probes ·
@@ -221,6 +226,93 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### v8.1a — The specialists become the hall's shelves: three decks, three floors, three seats (2026-09-20, designer-ruled — `KEY hanse-v81a`)
+
+**The ruling.** The hall is no longer a scoring door priced in invitations; it is where the
+specialists are earned. The Bruges panel prints **three shelves** — **Journeyman · Master ·
+Alderman** — each with a **die floor** (2 · 3 · 4) and its places (3 on side A · 4 on B). The
+eighteen specialists are three shelf decks of six; each game deals 3 (A) · 4 (B) of each shelf
+face up onto the Market & Stores board, the rest to the box; nothing refills a shelf. **A
+present**: a carted cask (count permitting, exactly as the sea reads it) whose die meets a
+shelf's floor takes one of that shelf's cards into the matching seat on the player board
+(three seats, one per shelf) and **stands its die on the shelf's next place**. No ★ now: the
+die scores its pips at the end like a die at sea, and it is the Bruges presence (the 4 / 2
+pair). The player board grows a third seat. Retired: the ⚜ invitation and both its sinks (the
+hall's fee, the hop trade), the neutral hall die and its climb, the 2 · 2 · 1 grain places,
+the specialist display and the *Gain 1 specialist* bonus. **Bergen's prize is Cart 1** (a
+cask to Bruges by road, count permitting, on the deliverer's clock). **The Kontorhaus pays the
+dividend again** (1 hop more on your delivery there). The eighth cask bonus is **Gain 2
+hops**. Hops stay a cube and a currency, the designer's line — *differentiate the two goods
+as currency, not remove one*: they are earned by the dividend, the Kontorhaus, the bonus and
+the Hop gardener, and sold only by the Hop merchant.
+
+**The roster (18).** Journeyman (die 2): Braumeister · Cellarman · Carter · **Maltster** (the
+Market's Gain 2 grain pays 3) · **Hop gardener** (the dividend pays 2) · **Cooper** (the
+Cellar's Age 3 reads Age 4). Master (die 3): Stevedore · Lodesman · Shipmaster · Agent · **Hop
+merchant** (Gain 3 hops instead of 2 grain at the Market) · **Brewer's mate** (the
+Brewhouse's Brew may fill a second open vessel at its cost). Alderman (die 4): Guildmaster
+(+2★ per present, the taking one included) · Chronicler (+1★ per cask delivered anywhere) ·
+Alderman (+2★ per Kontor with 3+ dice of yours) · **Burgher** (+1★ per private tile standing)
+· **Navigator** (+2★ per far Kontor whose branch your posts hold whole) · **Steward** (every
+cask still in your vessels scores its die).
+
+**Why.** Two reads agreed. The oracle's: the ⚜ economy was stillborn — the first invitation
+landed with 3–5 rounds left at every count, 70–80% of the ⚜ earned died unspent, the trade
+fired for 3–6% of seats, and the hall was the last arc anyone completed (presents 0.2 / 0.3 /
+0.5 a seat at 2 / 3 / 4p, the first in round 10 / 10 / 8). The designer's: the specialists
+arrived passively (Bergen's prize, a bonus tile) from a display nobody steered toward, and the
+hall had no reason to exist beside the Kontors. The designer's direction — *take away the
+specialists and bake them into the hall as a tech tree; the skills a deck dealt per shelf by
+player count, so each game evolves with the skills in play; keep the hop tokens* — makes the
+hall the engine's door. The die's face is the key to a shelf and the sea's count gates the
+cart, so a brewer who ages is paid at the hall and a merchant who posts is paid at sea, and
+the same cask can go either way: the brewer-vs-merchant lean, on one component.
+
+**The build (five oracle passes; journeyman 2 / 3 / 4p, 60 games a count; the Guildmaster at
+2 / 3p).** The pass landed here, the cart count-gated as the sea reads it: presents 1.1 / 1.0
+/ 1.3 a seat (from 0.2 / 0.3 / 0.5), 79–89% of seats presenting, the first present in round
+6 / 6 / 4 (from 10 / 10 / 8); shelves taken a seat Journeyman .8 / .7 / .8 · Master .2 / .2 /
+.4 · Alderman .1 / .1 / .1; the sea unmoved — deliveries 1.1 / 1.2 / 1.5 (from 1.1 / 1.4 /
+1.7), seats never delivering far 39 / 26 / 18% (from 39 / 21 / 12), sails 1.1 / 1.8 / 2.7,
+Kontor builds 1.4 / 1.6 / 1.4; hops held at the end 1.8 / 1.9 / 2.5 (from 1.1 / 1.3 / 1.5);
+rounds 13.3 / 12.3 / 11.5. The Guildmaster (2 / 3p): presents 0.8 / 1.0, the Alderman shelf
+.3 / .3, the first present in round 12 / 9. The lanes (Trader): merchant 85 / 57 / 48% wins ·
+specialist 76 / 38 / 28 · hall 44 / 38 / 26 · majority 59 / 36 / 28 · breadth 60 / 47 / 25 ·
+builder 22 / 16 / 15 · brewer 4 / 2 / 5 (a harness defect, `AUTOMA.md`). Three relaxed gates
+were tried and rejected — the die alone (no count), presence only, and count +1 at Bruges each
+drained the sea (39 → 44–55% of seats never delivering far at 2–3p): **the count gate on the
+cart is what sequences sea-before-hall**, and it stays. An Alderman climb (every die on the
+top shelf +1 per present anywhere) was drafted and dropped — a neutral clock by another name,
+untested at a table.
+
+**Components.** The player board 7.65 → 9.7 in (a third seat; two per letter sheet still). The
+Market & Stores board 11.2 → 13.2 in tall (three shelves of four wells replace the display of
+four). The specialist tiles 10 → 18, each printing its shelf and the shelf's floor. Out of the
+box: the hall die and the 16 ⚜ tokens. The Bruges panel: three shelf strips of places replace
+the hall row and the die's seat.
+
+**Surfaces.** `RULES.md` §1 · §3 · §4 · §8 · §9 · §10 · §13 · §15 · `COMPONENTS.md` ·
+`STYLE.md` (shelf and floor enter; the eighteen by shelf; retired: Invitation / ⚜, the hall
+die, the hop trade, the specialist display, Gain 1 specialist) · `AUTOMA.md` ·
+`rulebook.html` (every section the ⚜ touched, and the beers table's export fees corrected to
+grain — a v8.0j drift the re-read caught) · `print.html` (the Bruges panel, the Market &
+Stores board, the player boards, the eighteen tiles, the aid, the checklist; the ⚜ tokens
+gone) · `components.js` (the eighteen faces with shelf and floor, the Kontorhaus line, the Gain
+2 hops bonus, the three-seat board) · `play.html` (engine, AI, render; KEY `hanse-v81a`) ·
+`index.html` · `art/ICONS.md` · `art/PROMPTS.md` (eight portraits queued, stand-ins in use).
+
+**Engine.** `SHELVES` (floors 2 · 3 · 4) · `HALL_DEAL` 3 / 4 · `SSLOTS` 3 · `KONTORHAUS_H` 1 ·
+`TRADE_H` 3 (the Hop merchant) · `BURGHER_PTS` 1 · `NAVIGATOR_PTS` 2 · Bergen's prize `cart` ·
+the `hops` cask bonus; gone: `TRADE_INV`, `HALL_DIE_START`, `HALL_PLACES_N`, `HALL_PRIZES`,
+`START_INV`, `INV_PER_LANDING`, `IMP_DISPLAY`. The AI: `aiHallPick` (the card by its prior,
+the die's pips and the seat's lane), `aiCartDoor` on it, `aiSpecVal` for eighteen, Bergen's
+Cart through the pending pipeline and the human-gate. The battery: a shelves group replaces
+the invitations group.
+
+**Watches (§10).** The Alderman shelf's teeth (four of its six cards never seat in the
+corpus); the Shipmaster and the Stevedore against Bergen's Cart; the Hop merchant's Market;
+hops piling up at the end; the 4p cargo; Bergen's Cart on a rival's clock.
 
 ### v8.0j — Grain is taken, hops are earned: the dividend, the hop trade, every fee in grain (2026-09-13, designer-ruled — `KEY hanse-v80j`)
 
@@ -666,20 +758,20 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 
 ## 10. The state of play and the open watches
 
-**Where the build stands (2026-09-13).** v8.0j on every surface: `RULES.md`, the manifest, the
-registry, `play.html` (KEY `hanse-v80j`), `components.js`, `print.html` (the v8 kit: the sea
-board with each building slot's start face, the single-faced recipe cards with grain fees, the
-Gruit tiles at Gain 2 grain, the berth reminder, the Market and Cellar badges, the ⚜ tokens and
-chits, the tri-fold aid printed twice) and `rulebook.html`, re-derived on 2026-09-06/07, re-read
-whole on 2026-09-08 and 2026-09-12 (three sweeps against the rules master), re-gated on
-2026-09-13 after the goods split. Gates (2026-09-13): verify 61/61; the sim clean at 2–4p
-(0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 13 / 13 / 12 rounds (five games
-a count, 100% in the 10–18 band, every game on the dice, the round-18 backstop silent), sails
-0.8 / 2.0 / 4.2 a game. The kit and the rulebook render clean headless and fit-checked; every
-referenced art file is on disk. The art the new faces still lack (the gain-grain and gain-hops
-icon sets) is queued in `art/PROMPTS.md`.
+**Where the build stands (2026-09-20).** v8.1a on every surface: `RULES.md`, the manifest, the
+registry, `play.html` (KEY `hanse-v81a`), `components.js`, `print.html` (the v8 kit: the sea
+board with the three shelves on the Bruges panel, the Market & Stores board with the shelves'
+wells, the three-seat player boards, the eighteen specialist tiles, the single-faced recipe
+cards with grain fees, the tri-fold aid printed twice) and `rulebook.html`, re-read whole on
+2026-09-20 before the shelves landed. Gates (2026-09-20): verify 64/64; the sim clean
+at 2–4p (0 crashes / 0 deadlocks, the twelve-dice identity); greedy pace 12 / 15 / 12 rounds
+(three games a count, every game in the 10–18 band), sails 0.7 / 3.0 / 2.3 a game, presents
+1.0 / 1.3 / 1.3 a seat. The kit and the rulebook render clean headless and fit-checked; every
+referenced art file is on disk; the eight new specialists wear stand-in portraits, queued in
+`art/PROMPTS.md` with the gain-grain and gain-hops icon sets.
 
-**The full oracle (2026-09-13, designer-called).** The turn oracle (§7) traced 500 games a
+**The full oracle (2026-09-13, designer-called, on v8.0j — the read behind v8.1a's shelves; kept
+as the baseline the shelves are measured against).** The turn oracle (§7) traced 500 games a
 count at the greedy tiers, 500 a count on the committed lanes, 250 mixed, 160 at the noisy
 Apprentice, 15 a count at the Guildmaster, 6 at the Cellarmaster, and the v8.0i build on the
 same metrics. **Little
@@ -733,32 +825,27 @@ brewer is a path; Novgorod made somebody's plan (11–13% of deliveries at every
 "touch every row" watch; the ladder's ceiling. The one change if only one lands: the 2p sail,
 with the table as its gate.
 
-**Next.** The designer's own table, carrying the 2p sea and the ⚜ runway as its questions. The
-probe fleet re-derives from `archive/v5/playtests/` when called. **Never a corpus before a
-human table.**
+**Next.** The designer's own table, carrying the 2p sea and the Alderman shelf as its
+questions. The probe fleet re-derives from `archive/v5/playtests/` when called. **Never a
+corpus before a human table.**
 
 **Every number is a placeholder until the table.** The levers live in the engine's dials block
 (`play.html`): `SUPPLY_DICE` 10 (THE pace dial) · `MAX_ROUND` 18 · `KONTOR_MIN` 2 / 3 / 4 ·
-`KB_START` 1 / 1 / 2 · `kontorSlotsN` 1 / 2 · `WORKS_DEAL` 4 · `SETUP_WILD` 2 · `START_GOODS` 3 `G` 3 `H` · `DIVIDEND_H` 1 · `TRADE_INV` 1 / `TRADE_H` 3 · `COMM_MUST` 1 · `HALL_DIE_START` 2 · `HALL_PLACES_N`
-6 / 8 · `HALL_PRIZES` 2 · 2 · 1 · `YARD_ZONES` · `YARD_GOODS` 2 / 1 / 1 · `BREW_SUR` and
+`KB_START` 1 / 1 / 2 · `kontorSlotsN` 1 / 2 · `WORKS_DEAL` 4 · `SETUP_WILD` 2 · `START_GOODS` 3 `G` 3 `H` · `DIVIDEND_H` 1 · `KONTORHAUS_H` 1 · `TRADE_H` 3 (the Hop merchant) · `COMM_MUST` 1 · `SHELVES` (floors 2 / 3 / 4) · `HALL_DEAL`
+3 / 4 · `SSLOTS` 3 · `GMASTER_PTS` 2 · `CHRON_PTS` 1 · `BURGHER_PTS` 1 · `NAVIGATOR_PTS` 2 · `YARD_ZONES` · `YARD_GOODS` 2 / 1 / 1 · `BREW_SUR` and
 `BOND_FEE` 1 `G` · the fees, all grain (Hulk 1 `G`; tier 1 2 `G`; the Flip 3 `G`; the recipe
 fees) · the majority pairs · the Flight ladder 3 / 6 / 10 · the private points 2 / 4.
 
 **Ruled defaults, confirmed by the designer's rule of silence** (v8.0g): anyone may load an
 unlocked lane; the building die climbs +1 on any delivery there, plus Raise die; private
-buildings take no die; four segments, E1 shared; 1 ⚜ per far delivery, none from Bruges,
-start at 0; the Hulk has no gate; every Kontor prize is free; the Carter's +1 at the yard; the
-hall as framed.
+buildings take no die; four segments, E1 shared; the Hulk has no gate; every Kontor prize is
+free; the Carter's +1 at the yard; the hall's shelves as ruled (v8.1a: the cart count-gated as
+the sea reads it, the die's face the key, no ★ at the present).
 
 **Open rulings, queued by the designer:**
 
-- **The hall's payout** — *each delivery there costs 1 ⚜ and arrives by cart* stands as framed,
-  to be revisited once the core is ironed out; the payout stays cask + die by ruling
-  (2026-09-12). The designer's direction under study: a hall die that reads 4–10 and counts
-  *down*, so an early present pays most and the late game pulls toward the Kontors a player
-  built; the engine's recommended form is numbered places (§9, v8.0h). The v7 read is the
-  warning: priced wrong, the hall goes dead (in v7.0b PRESENT never beat DELIVER in 100+ matched
-  landings).
+- None queued. The hall's payout (open since v8.0h) closed with v8.1a: the hall pays a
+  specialist and the die's pips, never ★ on a neutral die.
 
 **Watches for the designer's table:**
 
@@ -768,10 +855,14 @@ hall as framed.
 - **Novgorod's building at 2** (the start faces 1 · 1 · 2). Whether the extra pip plus the
   climb makes the Novgorod chain worth its four posts at the table; whether anyone builds there
   at 2p before the supply runs out; whether London and Bergen buildings at 1 still get built.
-- **The goods split.** Hops are earned — the dividend as a cask leaves, the trade for an ⚜ —
-  and price only beer; grain is taken and pays for everything else. To read at the table: does
-  the opening pinch (3 hops; Hopped 1, Broyhan 2, Mumme and Bock 3) send the first casks to sea
-  or to the Gruit yard loop; how often the trade is taken against the hall (the ⚜ tension);
+- **The goods split.** Hops are earned — the dividend as a cask leaves, the Kontorhaus, the
+  Gain 2 hops bonus, the Hop gardener, the Hop merchant's Market — and price only beer; grain
+  is taken and pays for everything else. To read at the table: does the opening pinch (3 hops;
+  Hopped 1, Broyhan 2, Mumme and Bock 3) send the first casks to sea or to the Gruit yard
+  loop; whether hops pile up unspent at the end (the oracle holds 1.8 / 1.9 / 2.5 at 2 / 3 /
+  4p, up from 1.1 / 1.3 / 1.5 before the shelves) — the lever is the Kontorhaus line or the
+  bonus's count, never the dividend; whether the Hop merchant's Market is ever worth the turn
+  (the greedy tiers never take it);
   whether the Market's grain is worth a turn once the Gruit tiles pay grain (the greedy oracle
   says yes at grain fees, no before them); whether a die for a Gruit is ever worth its cart late
   (the OK zone pays 1 grain and a hop). The levers, in order: the recipe hop costs ·
@@ -789,8 +880,9 @@ hall as framed.
   4p) under the 3-grain fee, and the committed builder tops at ~7★ of 30 — a support lane. The
   lever, if the table agrees, is `FLIP_FEE` 3 → 2 `G`, never the tile's points.
 - **The 2p sea.** The oracle's first question for the table: two seats load different hulls for
-  different Kontors, so 4.9 Ships dock and one sails a game, 38–45% of seats never deliver far,
-  and the ⚜ economy (the hall, the trade) is stillborn. Neither the must (optional is worse)
+  different Kontors, so 4.9 Ships dock and one sails a game, and 39% of seats never deliver
+  far (unchanged by the shelves: the hall opens in round 6 now, the sea in round 8 still).
+  Neither the must (optional is worse)
   nor the Hulk's third berth is the cause. The structure levers, in the order to try: a paid
   sail at the Harbor (a docked Ship carrying your cask sails now, 1 grain an empty berth — the
   same verb at a price, the berth race kept, a grain sink, no round upkeep) · fewer docked
@@ -798,9 +890,18 @@ hall as framed.
   at 2p only (the berth race lost). At 3–4p the sea fills (1.8 / 2.8 sails a game). Two lines
   the greedy seats never fire — the Granary's pay-to-Brew, the Bonded Store's post — are read
   from the committed lanes and the table, never from the greedy average.
-- **The ⚜ runway.** The first ⚜ lands with 3–5 rounds left at every count; 70–80% of the ⚜
-  earned die unspent and the trade fires for 3–6% of seats. The lever is the sea's tempo, never
-  the ⚜ prices: read after the 2p sea.
+- **The hall's shelves** (v8.1a). The Journeyman shelf is the table's rung (a seat in .7–.8
+  presents a game, 79–89% of seats); the Master shelf .2–.4; **the Alderman shelf .1 (the
+  Guildmaster .3)** — Guildmaster · Chronicler · Alderman · Burgher never seat in the corpus,
+  and the greedy tiers hold no die-4 cask for it. Read at the table whether a human aims a
+  Mumme or an aged Keut at the top shelf; if the four end-scoring cards are dead there too,
+  the candidate lines, in order: Guildmaster +2★ per card held · Chronicler +2★ per Kontor
+  delivered at · Alderman +3★ per majority pair held · Burgher +1★ per tile and +2★ per Flip.
+  Also: the Shipmaster (a Ship sails unfull) and the Stevedore (Load 2) against Bergen's Cart
+  — thin in the corpus, both; whether a shelf dealt 3 at 2p runs out too early; the 4p cargo
+  (presents 1.3 a seat with four cards a shelf); and Bergen's Cart on a rival's clock (a
+  present resolved during another seat's sail — does it read at the table, or wait for the
+  deliverer's next turn?).
 - **The 2p clock.** The Guildmaster loiters at 2p (17% empty turns, 27% of games to the
   round-18 backstop): with one rival, deferral reads as free — the v7 finding, alive at 2p.
   Read whether a human pair stalls; the lever is what an idle turn costs (the tide, the rival's
@@ -816,10 +917,12 @@ hall as framed.
   a second name for a standing action.
 - **Legible goals and strategic arcs** — the designer's standing question (*"without legible
   goals or strategic arcs in the game, it can feel repetitive"*): the arc carriers now are the
-  chain toward a Kontor building, the private ladder, the Flight and the hall. The oracle's
+  chain toward a Kontor building, the private ladder, the Flight and the hall's three shelves.
+  The oracle's
   read: the universal arcs (the first tile, the yard's recipe, Bergen's building, a two-segment
-  chain) land by round 5 for nearly everyone and read as the game's grammar; the
-  differentiating arcs (the Flip, a specialist, the hall, Flight 4, Novgorod) land late and for
+  chain, now the Journeyman shelf) land by round 5–6 for nearly everyone and read as the game's
+  grammar; the
+  differentiating arcs (the Flip, the Master and Alderman shelves, Flight 4, Novgorod) land late and for
   a minority; winners' arc sets are diverse. The table decides whether the late arcs read as
   goals a player steers toward or as afterthoughts the clock cuts off.
 
@@ -853,16 +956,17 @@ hall as framed.
   may deliver.
 - **Kontor** — a trading post: Bruges (by cart), London, Bergen, Novgorod (by Ship). **The
   minimum** — a far Kontor's die floor, read on the die as the cask boards. **Deliver** — a
-  cask resolves at its Kontor: cask die + your building die, park, 1 ⚜, the prize. **The
+  cask resolves at its Kontor: cask die + your building die, park, the prize. **The
   field** — the panel's space for parked dice. **Presence** — your parked dice there. **The
   majority pair** — the two ★ values paid to the two leaders. **Prize** — London a Build with
-  the fee waived · Bergen a specialist · Novgorod Raise die.
-- **The cart** — the Cellar's alternate: one Ready cask to Bruges by road. **The yard** — the
-  grain door: places in three zones (Best · Good · OK); Gruit's only door. **The hall** — the
-  guild of brewmasters: a Q2+ cask and 1 ⚜; cask die + **the hall die** (neutral, starts at 2,
-  +1 per present). **Place** — a printed die space on the yard or the hall. **Present** —
-  enter the hall. **Invitation ⚜** — earned 1 per far delivery (+1 with a Kontorhaus), spent to
-  present, or traded at the Market for 3 hops; no cap.
+  the fee waived · Bergen Cart 1 · Novgorod Raise die.
+- **The cart** — the Cellar's alternate, and Bergen's prize: one Ready cask to Bruges by road.
+  **The yard** — the grain door: places in three zones (Best · Good · OK); Gruit's only door.
+  **The hall** — the guild of brewmasters: three **shelves** of specialists (Journeyman ·
+  Master · Alderman), each with a **floor** (die 2 · 3 · 4), a deck of six dealt 3 / 4, and
+  its places. **Present** — a carted cask whose die meets a shelf's floor takes a card into
+  that shelf's seat; the die stands on the shelf's place and scores its pips at the end.
+  **Place** — a printed die space on the yard or a shelf.
 - **Public Work** — the brown, die-less shared family dealt at setup, passive on its slot's
   traffic, washed away by **the tide** (it departs with the Ship that sails from its slot).
   **Private building** — a tile of yours on any vacant slot, owner-only, no die, printed
@@ -870,7 +974,8 @@ hall as framed.
   its slot flanks. **Build** — the one verb for a private building, a Flip or a Kontor
   building; three doors (the Brewhouse's alternate, the Build bonus, London's prize).
 - **Raise die** — turn a die +1: at sea (cap 6) or a boarding cask at the wharf (cap quality +
-  1). **Specialist** — a purple tile, earned free, never two of a kind; 2 seats. **Recipe** —
+  1). **Specialist** — a purple tile, earned at the hall, never bought; three seats, one per
+  shelf. **Recipe** —
   a single-faced card, permission to brew; the exports print a fee; it crosses your board into
   the Flight. **The Flight** — the recipe cards to the right of your board, one per beer that
-  has boarded or been carted, 3 / 4 / 5 → 3 / 6 / 10★. **Goods** — grain and hops, the only currency: grain is taken, hops are earned. **The dividend** — 1 hop as a cask of yours boards a Ship or is carted. **The hop trade** — the Market's other primary, pay 1 ⚜: Gain 3 hops. **★** — the scoring unit.
+  has boarded or been carted, 3 / 4 / 5 → 3 / 6 / 10★. **Goods** — grain and hops, the only currency: grain is taken, hops are earned. **The dividend** — 1 hop as a cask of yours boards a Ship or is carted; the Kontorhaus pays it again. **Gain 2 hops** — the eighth cask bonus. **The Hop merchant** — the Master-shelf specialist who sells hops at the Market (Gain 3 hops instead of 2 grain). **★** — the scoring unit.

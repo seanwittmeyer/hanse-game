@@ -12,7 +12,7 @@ archived at `archive/records/ICON-ROUNDS.md`.*
 | Slug | `ICON_ART` key | Meaning |
 |---|---|---|
 | `goods` · `goods-1` | `coins` · `goods-1` | goods, collectively (the app's storage chip, the manifest) · the Counting House's button glyph in the app |
-| `grain` · `hops` | `grain` · `hops` | Gain N grain (the Market, the cask tiles, the yard and the hall) · Gain N hops (the hop trade) and the dividend's +1 on the Ship berths and the Cellar face; the goods tokens' art. The numbered `grain-N` / `hops-N` set is queued in `art/PROMPTS.md` |
+| `grain` · `hops` | `grain` · `hops` | Gain N grain (the Market, the cask tiles, the yard) · Gain N hops (the Gain 2 hops bonus, the Hop merchant) and the dividend's +1 on the Ship berths, the Cellar face and the Kontorhaus; the goods tokens' art. The numbered `grain-N` / `hops-N` set is queued in `art/PROMPTS.md` |
 | `quality-die` | `dices` | the quality die |
 | `die-1` … `die-6` | `dice-N` | a die face: a start face; the die floor on the Kontor panels |
 | `die-plus1` | `die-plus1` | Raise die |
@@ -25,8 +25,7 @@ archived at `archive/records/ICON-ROUNDS.md`.*
 | `kontor` · `kontor-bruges` · `kontor-london` · `kontor-bergen` · `kontor-novgorod` | `landmark` · `kontor-*` | the Kontore and the four crests |
 | `kontorhaus` | `kontorhaus` | a Kontor building |
 | `post` | `post` | a post |
-| `mail` | `mail` | the ⚜ invitation |
-| `hall` | `crown` | the hall |
+| `hall` | `crown` | the hall and its three shelves |
 | `cart` | `truck` | the cart |
 | `build` | `search` · `hammer` | Build |
 | `building` | `building-2` | a building / a building slot |
@@ -42,7 +41,7 @@ archived at `archive/records/ICON-ROUNDS.md`.*
 ## On disk and mapped, but no v8 face calls them (free to reuse or retire)
 
 `bourse` · `bourse-plus1` · `bourse-plus2` · `bourse-minus1` · `bourse-pm1` · `bourse-pm2` ·
-`closure` · `contract` · `current` · `factor` · `redeal` · `swap-dice` · `venture-build` ·
+`closure` · `contract` · `current` · `factor` · `mail` (the retired ⚜) · `redeal` · `swap-dice` · `venture-build` ·
 `die-minus1` · `die-plus2` · `die-plus3` · `goods-2` · `goods-3` · `station-age-1` ·
 `station-brew-top` · `star-minus1` · `star-minus2` · `star-minus3` · `star-plus3` · `star-plus4`.
 

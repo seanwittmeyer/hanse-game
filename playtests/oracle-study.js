@@ -33,7 +33,7 @@ function seatStudy(g,sid){
       if(k==='brew'&&p[1]!=='gruit')first('exportBrew',t.r);
       if(k==='ready'&&p[1]!=='gruit')first('exportReady',t.r);
       if(k==='comm')first('comm',t.r);if(k==='post')first('post',t.r);if(k==='load')first('load',t.r);
-      if(k==='sail'||k==='carried')first('atSea',t.r);if(k==='deliver')first('deliver',t.r);if(k==='inv')first('inv',t.r);
+      if(k==='sail'||k==='carried')first('atSea',t.r);if(k==='deliver')first('deliver',t.r);
       if(k==='trade')first('trade',t.r);if(k==='recipe')first('recipe',t.r);if(k==='pbuild')first('pbuild',t.r);if(k==='flip')first('flip',t.r);
       if(k==='kbuild')first('kbuild',t.r);if(k==='chain'&&(p[1]==='london'||p[1]==='novgorod'))first('chain2',t.r);
       if(k==='hall')first('hall',t.r);if(k==='spec')first('spec',t.r);if(k==='yard')first('yard',t.r);
@@ -46,7 +46,7 @@ function seatStudy(g,sid){
   return {ms,own,maxRun,cnt,rounds:g.rounds,arcs:arcs.filter(Boolean).length,arcSet:arcs,S,win:g.win===sid};
 }
 const MS=[['exportBrew','first export brew'],['comm','first commission'],['post','first post (after the starter)'],['load','first load'],['atSea','own cargo sails'],
-  ['deliver','first far delivery'],['inv','first ⚜'],['trade','the hop trade'],['recipe','a recipe gained'],['yard','a cart to the yard'],['pbuild','first private tile'],['flip','the Flip'],
+  ['deliver','first far delivery'],['trade','the Hop merchant’s hops'],['recipe','a recipe gained'],['yard','a cart to the yard'],['pbuild','first private tile'],['flip','the Flip'],
   ['kbuild','a Kontor building'],['chain2','a two-segment chain'],['hall','a hall present'],['spec','a specialist'],['count3','count 3'],['count4','count 4'],['count5','count 5'],['flight3','Flight 3'],['flight4','Flight 4'],['flight5','Flight 5']];
 const ARCN=['Kontor building','2-seg chain','Flight ≥3','hall present','a Flip','a specialist'];
 function groupStudy(games){
@@ -76,7 +76,7 @@ function groupStudy(games){
   R.close=avg(games.map(g=>{const t=g.seats.map(s=>s.sc.total).sort((a,b)=>b-a);return (t[0]-(t[1]||0))<=10?1:0;}));
   R.contested=avg(games.map(g=>{let c=0;for(let k=0;k<4;k++){const v=g.seats.map(s=>s.parked[k]).sort((a,b)=>b-a);if(v[0]>0&&v[0]-(v[1]||0)<=1)c++;}return c;}));
   R.perSeat={deliv:avg(seats.map(s=>s.S.deliv)),hall:avg(seats.map(s=>s.S.hallN)),yard:avg(seats.map(s=>s.S.yardN)),kb:avg(seats.map(s=>s.S.kb)),tiles:avg(seats.map(s=>s.S.tiles)),t2:avg(seats.map(s=>s.S.t2)),
-    recipes:avg(seats.map(s=>s.S.recipes)),specs:avg(seats.map(s=>(s.S.specs||[]).length)),count:avg(seats.map(s=>s.S.count)),flight:avg(seats.map(s=>s.S.flight)),inv:avg(seats.map(s=>s.S.inv)),supply:avg(seats.map(s=>s.S.supply))};
+    recipes:avg(seats.map(s=>s.S.recipes)),specs:avg(seats.map(s=>(s.S.specs||[]).length)),count:avg(seats.map(s=>s.S.count)),flight:avg(seats.map(s=>s.S.flight)),supply:avg(seats.map(s=>s.S.supply))};
   // lanes
   const lanes={};seats.forEach(s=>{const k=s.S.ps;if(!k)return;const L=lanes[k]=lanes[k]||{n:0,w:0,tot:[],arcs:[],deliv:[],hall:[],flight:[],kb:[],t2:[],msD:[],msH:[],msK:[],msF:[],sea:[],maj:[],wharf:[],yard:[],loads:[],brews:[],gruit:[],trade:[]};
     L.n++;if(s.win)L.w++;L.tot.push(s.S.sc.total);L.arcs.push(s.arcs);L.deliv.push(s.S.deliv);L.hall.push(s.S.hallN);L.flight.push(s.S.flight);L.kb.push(s.S.kb);L.t2.push(s.S.t2);
@@ -88,9 +88,10 @@ function groupStudy(games){
   R.winParts={};parts.forEach(k=>R.winParts[k]=avg(winners.map(s=>s.S.sc[k]||0)));
   R.leadChange=avg(games.map(g=>{const sn=g.snaps;if(sn.length<2)return 0;const prev=sn[sn.length-2].seats.map(x=>x.sc);let lead=0;prev.forEach((v,i)=>{if(v>prev[lead])lead=i;});return lead!==g.win?1:0;}));
   R.lanes=lanes;R.seatN=seats.length;
-  const c=k=>avg(seats.map(s=>s.cnt[k]||0));R.ev={brews:c('brew'),gruit:c('gruit'),loads:c('load'),yard:c('yard'),hall:c('hall'),inv:c('inv'),trade:c('trade'),post:c('post'),raise:c('raise'),market:avg(seats.map(s=>s.own.filter(t=>t.c==='A').length))};
+  const c=k=>avg(seats.map(s=>s.cnt[k]||0));R.ev={brews:c('brew'),gruit:c('gruit'),loads:c('load'),yard:c('yard'),hall:c('hall'),trade:c('trade'),post:c('post'),raise:c('raise'),market:avg(seats.map(s=>s.own.filter(t=>t.c==='A').length))};
   R.neverLeft=R.ev.brews-R.ev.loads-R.ev.yard-R.ev.hall;
-  R.invRunway=med(seats.filter(s=>s.ms.inv!=null).map(s=>s.rounds-s.ms.inv));R.invDead=avg(seats.map(s=>s.S.inv));
+  R.shelf=[0,1,2].map(b=>avg(seats.map(s=>(s.S.hallS||[]).filter(h=>h[0]===b).length)));R.hallPips=avg(seats.map(s=>s.S.hallPips||0));R.hopsEnd=avg(seats.map(s=>s.S.h||0));
+  R.openCards=avg(games.map(g=>{const d=(g.deal||[]).reduce((a,b)=>a+b.length,0);const t=g.seats.reduce((a,s)=>a+(s.hallN||0),0);return d?(d-t)/d:0;}));
   return R;}
 const labels=Object.keys(G).sort();
 console.log('=== the turn oracle — '+files.length+' shard files · labels: '+labels.join(', ')+(errs?' · '+errs+' errored games skipped':'')+' ===');
@@ -101,7 +102,7 @@ labels.forEach(L=>{
   console.log('PACE    rounds '+col(R=>f1(R.rounds)+' ['+R.rmin+'–'+R.rmax+']')+' · in band '+col(R=>pc(R.band))+' · ended on the dice '+col(R=>pc(R.dice))+' · turns a seat '+col(R=>f1(R.turnsPerSeat)));
   console.log('TURNS   what a work turn hands its seat (each turn classed by its best event)');
   console.log('  big   '+col(R=>pc(R.big))+'   a ★ or a lasting piece: a delivery · a present · a sail · a post · a building · the Flip · a recipe · a specialist · a card crosses · a chain');
-  console.log('  small '+col(R=>pc(R.small))+'   progress: a brew · aging · Ready · a commission · a load · Raise die · the dividend · the trade · the yard · a bonus · a building stop');
+  console.log('  small '+col(R=>pc(R.small))+'   progress: a brew · aging · Ready · a commission · a load · Raise die · the dividend · the Hop merchant · the yard · a bonus · a building stop');
   console.log('  petty '+col(R=>pc(R.petty))+'   goods only (the Market\'s grain, a prize\'s grain)');
   console.log('  empty '+col(R=>pc(R.empty))+'   moved, nothing');
   console.log('  events a turn '+col(R=>f1(R.evPerTurn))+' · turns that move ★ '+col(R=>pc(R.starTurns))+' · ★ a turn '+col(R=>f1(R.starPerTurn))+' · a die spent '+col(R=>pc(R.dieTurns))+' (two '+col(R=>pc(R.die2))+')');
@@ -115,9 +116,9 @@ labels.forEach(L=>{
   console.log('  arcs completed a seat (of six: '+ARCN.join(' · ')+'): mean '+col(R=>f1(R.arcs))+' · ≥2 '+col(R=>pc(R.arcs2))+' · ≥3 '+col(R=>pc(R.arcs3))+' · none '+col(R=>pc(R.arcs0)));
   console.log('  each arc reached: '+col(R=>R.arcEach.map(pc).join('·')));
   console.log('  dead ends — seats with no far delivery '+col(R=>pc(R.noFar))+' · neither delivery nor present '+col(R=>pc(R.noDoor))+' · never loaded '+col(R=>pc(R.noLoad))+' · a Ready cask stranded at the end '+col(R=>pc(R.stranded))+' · Flight under 3 '+col(R=>pc(R.flightLow)));
-  console.log('  per seat: deliveries '+col(R=>f1(R.perSeat.deliv))+' · presents '+col(R=>f1(R.perSeat.hall))+' · yard carts '+col(R=>f1(R.perSeat.yard))+' · Kontor buildings '+col(R=>f1(R.perSeat.kb))+' · tiles '+col(R=>f1(R.perSeat.tiles))+' (Flips '+col(R=>f1(R.perSeat.t2))+') · recipes '+col(R=>f1(R.perSeat.recipes))+' · specialists '+col(R=>f1(R.perSeat.specs))+' · count '+col(R=>f1(R.perSeat.count))+' · Flight '+col(R=>f1(R.perSeat.flight))+' · ⚜ held '+col(R=>f1(R.perSeat.inv))+' · dice left '+col(R=>f1(R.perSeat.supply)));
+  console.log('  per seat: deliveries '+col(R=>f1(R.perSeat.deliv))+' · presents '+col(R=>f1(R.perSeat.hall))+' · yard carts '+col(R=>f1(R.perSeat.yard))+' · Kontor buildings '+col(R=>f1(R.perSeat.kb))+' · tiles '+col(R=>f1(R.perSeat.tiles))+' (Flips '+col(R=>f1(R.perSeat.t2))+') · recipes '+col(R=>f1(R.perSeat.recipes))+' · specialists '+col(R=>f1(R.perSeat.specs))+' · count '+col(R=>f1(R.perSeat.count))+' · Flight '+col(R=>f1(R.perSeat.flight))+' · dice left '+col(R=>f1(R.perSeat.supply)));
   console.log('  casks a seat: brews '+col(R=>f1(R.ev.brews))+' (Gruit '+col(R=>f1(R.ev.gruit))+') · loads '+col(R=>f1(R.ev.loads))+' · yard carts '+col(R=>f1(R.ev.yard))+' · presents '+col(R=>f1(R.ev.hall))+' · never left the brewery '+col(R=>f1(R.neverLeft))+' · posts '+col(R=>f1(R.ev.post))+' · Raise die '+col(R=>f1(R.ev.raise))+' · Market visits '+col(R=>f1(R.ev.market))+' · Ships commissioned a game '+col(R=>f1(R.comms))+' → sailed '+col(R=>f1(R.sailed)));
-  console.log('  the ⚜: earned a seat '+col(R=>f1(R.ev.inv))+' · traded '+col(R=>f1(R.ev.trade))+' · presented '+col(R=>f1(R.ev.hall))+' · held at the end '+col(R=>f1(R.invDead))+' · rounds left after the first ⚜ (median) '+col(R=>R.invRunway==null?'—':R.invRunway));
+  console.log('  the shelves: presents a seat — Journeyman '+col(R=>f1(R.shelf[0]))+' · Master '+col(R=>f1(R.shelf[1]))+' · Alderman '+col(R=>f1(R.shelf[2]))+' · hall pips '+col(R=>f1(R.hallPips))+' · cards left open '+col(R=>pc(R.openCards))+' · the Hop merchant’s Market '+col(R=>f1(R.ev.trade))+' · hops held at the end '+col(R=>f1(R.hopsEnd)));
   console.log('SCORE   a seat: deliveries '+col(R=>f1(R.parts.deliv))+' · hall '+col(R=>f1(R.parts.hall))+' · sea pips '+col(R=>f1(R.parts.sea))+' · docked '+col(R=>f1(R.parts.docked))+' · wharf '+col(R=>f1(R.parts.wharf))+' · majorities '+col(R=>f1(R.parts.maj))+' · Flight '+col(R=>f1(R.parts.flight))+' · specialists '+col(R=>f1(R.parts.bank+R.parts.guild))+' · total '+col(R=>f1(R.total)));
   console.log('        winner '+col(R=>f1(R.winTotal))+' · margin '+col(R=>f1(R.margin))+' · close (≤10★) '+col(R=>pc(R.close))+' · contested majorities a game (leader ahead by ≤1) '+col(R=>f1(R.contested)));
   console.log('PATHS   the winners\' arc sets (bits: Kontor building · 2-seg chain · Flight ≥3 · hall · Flip · specialist): distinct '+col(R=>R.sigN)+' · top three '+col(R=>R.sigTop.join(' '),'  |  '));

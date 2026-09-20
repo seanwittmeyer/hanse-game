@@ -41,7 +41,7 @@ const CASK_POOL=[   // the cask bonus fires once, as the cask boards a Ship or i
   {k:'load',    ai:'package-plus',  act:'Load 1',                   q:2},
   {k:'brew',    ai:'flask-conical', act:'Brew',                     q:2},
   {k:'recipe',  ai:'scroll-text',   act:'Gain 1 recipe · its fee',  q:2},
-  {k:'spec',    ai:'wrench',        act:'Gain 1 specialist',        q:2},
+  {k:'hops',    ai:'hops',          act:'Gain 2 hops',              q:2},
   {k:'build',   ai:'hammer',        act:'Build · its fee',          q:2},
   {k:'post',    ai:'post',          act:'Post · a supply die',      q:2},
 ];
@@ -81,18 +81,32 @@ const BUILDINGS=[
   {k:'bonded',    nm:'Bonded Store',      verb:'transform', tgt:'cask', ic:'warehouse',    n:1, cond:'On load: '+LU('die-plus1'), eff:'On sail: pay '+cost(1,0)+': '+LU('post')+' its lane'},
   {k:'victual',   nm:'Victualling Yard',  verb:'transform', tgt:'cask', ic:'boxes',        n:1, cond:'On load', eff:'the cask bonus fires ×2'},
 ];
-// ---- THE SPECIALISTS (mirrors play.html IMPROVEMENTS); the art: art/improve-<slug(nm)>.jpg — briefs in art/PROMPTS.md ----
-const IMPROVE=[   // SPECIALISTS = PURPLE · earned free (Bergen's prize · the Gain 1 specialist bonus) · ten singles ⚙ · 2 seats per house
-  {ic:'wrench',      nm:'Braumeister', act:'turn start: age 1 '+LU('beer')+' +1', c:'#5b3a8e', n:1},
-  {ic:'sailboat',    nm:'Shipmaster',  act:LU('ship')+' Harbor: sail 1 '+LU('sailboat')+' with your '+LU('beer')+' unfull', c:'#5b3a8e', n:1},
-  {ic:'wrench',      nm:'Cellarman',   act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', c:'#5b3a8e', n:1},
-  {ic:'package-plus',nm:'Stevedore',   act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
-  {ic:'landmark',    nm:'Agent',       act:'a rival delivers at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
-  {ic:'compass',     nm:'Lodesman',    act:'your quality count reads +1', c:'#5b3a8e', n:1},
-  {ic:'truck',       nm:'Carter',      act:LU('truck')+' Cart 2 · the yard’s grain +1', c:'#5b3a8e', n:1},
-  {ic:'crown',       nm:'Guildmaster', act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
-  {ic:'book-open',   nm:'Chronicler',  act:'deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
-  {ic:'gavel',       nm:'Alderman',    act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
+// ---- THE SPECIALISTS (mirrors play.html IMP) — three shelf decks of six, earned at the hall: a carted cask
+// whose die meets the shelf's floor takes a card into that shelf's seat. The art: art/improve-<slug(nm)>.jpg
+// (a `slug:` row is a stand-in wearing another portrait — briefs in art/PROMPTS.md).
+const SHELVES=[{nm:'Journeyman',floor:2},{nm:'Master',floor:3},{nm:'Alderman',floor:4}];   // the hall's three shelves and their die floors ⚙
+const IMPROVE=[   // SPECIALISTS = PURPLE · eighteen singles ⚙ · one seat per shelf on the player board
+  // the Journeyman shelf — die 2
+  {ic:'wrench',      nm:'Braumeister',  shelf:0, act:'turn start: age 1 '+LU('beer')+' +1', c:'#5b3a8e', n:1},
+  {ic:'wrench',      nm:'Cellarman',    shelf:0, act:LU('flask-conical')+' Brew: your '+LU('dices')+' start +1', c:'#5b3a8e', n:1},
+  {ic:'truck',       nm:'Carter',       shelf:0, act:LU('truck')+' Cart 2 · the yard’s grain +1', c:'#5b3a8e', n:1},
+  {ic:'wheat',       nm:'Maltster',     shelf:0, act:LU('store')+' Market: Gain 3 grain', c:'#5b3a8e', n:1, slug:'grain-factor'},   // PLACEHOLDER portrait
+  {ic:'sprout',      nm:'Hop gardener', shelf:0, act:'the dividend pays you 2 '+LU('hops'), c:'#5b3a8e', n:1},
+  {ic:'hourglass',   nm:'Cooper',       shelf:0, act:LU('age-3')+' Cellar: Age 4', c:'#5b3a8e', n:1, slug:'shipwright'},   // PLACEHOLDER portrait
+  // the Master shelf — die 3
+  {ic:'package-plus',nm:'Stevedore',    shelf:1, act:LU('package-plus')+' Load: up to 2 '+LU('beer'), c:'#5b3a8e', n:1},
+  {ic:'compass',     nm:'Lodesman',     shelf:1, act:'your quality count reads +1', c:'#5b3a8e', n:1},
+  {ic:'sailboat',    nm:'Shipmaster',   shelf:1, act:LU('ship')+' Harbor: sail 1 '+LU('sailboat')+' with your '+LU('beer')+' unfull', c:'#5b3a8e', n:1},
+  {ic:'landmark',    nm:'Agent',        shelf:1, act:'a rival delivers at your '+LU('kontorhaus')+': that die +1 more', c:'#5b3a8e', n:1},
+  {ic:'sprout',      nm:'Hop merchant', shelf:1, act:LU('store')+' Market: Gain 3 '+LU('hops')+' instead of grain', c:'#5b3a8e', n:1, slug:'chandler'},   // PLACEHOLDER portrait
+  {ic:'flask-conical',nm:'Brewer’s mate',shelf:1, act:LU('flask-conical')+' Brewhouse: Brew a second vessel, at its cost', c:'#5b3a8e', n:1, slug:'brewer-s-mate'},
+  // the Alderman shelf — die 4
+  {ic:'crown',       nm:'Guildmaster',  shelf:2, act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
+  {ic:'book-open',   nm:'Chronicler',   shelf:2, act:'deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
+  {ic:'gavel',       nm:'Alderman',     shelf:2, act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
+  {ic:'building-2',  nm:'Burgher',      shelf:2, act:'end: '+LU('star-plus1','starmark')+' per private building of yours', c:'#5b3a8e', n:1, slug:'innkeeper'},   // PLACEHOLDER portrait
+  {ic:'compass',     nm:'Navigator',    shelf:2, act:'end: '+LU('star-plus2','starmark')+' per far '+LU('landmark')+' whose branch you hold whole', c:'#5b3a8e', n:1, slug:'pilot'},   // PLACEHOLDER portrait
+  {ic:'beer',        nm:'Steward',      shelf:2, act:'end: each '+LU('beer')+' in your vessels scores its die', c:'#5b3a8e', n:1, slug:'supercargo'},   // PLACEHOLDER portrait
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 const KONTOR_C={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
@@ -170,7 +184,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
 // delivery of its owner there. 1.32×1.32in, house-ringed.
 const KBUILDINGS=[
   {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('compass'))+' count +1', txt:'a Ship bound here'},
-  {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('mail')), txt:'+1 ⚜ on your delivery'},
+  {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('hops'))+' +1', txt:'the dividend again on your delivery'},
   {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise die on your delivery'},
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
@@ -180,19 +194,18 @@ function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055i
   +'<div class="bt-foot btFC"><span class="bt-cond">'+d.txt+'</span><span class="bt-eff">'+d.line+'</span></div>'
   +'<div class="kb-seat" title="the die seat — a supply die stands here at the slot’s printed face: the delivery modifier; +1 on any delivery here; its pips score at the end">'+LU('dices')+'</div>'
   +'</div>';}
-// ---- the ⚜ INVITATION token — earned one per cask delivered at a far Kontor, spent at the hall
-function inviteToken(){return '<div class="invtok" title="⚜ Invitation — one per cask delivered at a far Kontor; spend it to present at the hall">\u269c</div>';}
 // ---- the KONTOR CHIT — one per far Kontor; the first cask loaded onto a wild Ship sets it on the hull
 function kontorChit(k){return '<div class="kchit" style="--c:'+(KONTOR_C[k]||'#6f6253')+'" title="the Kontor chit — names a wild Ship\u2019s Kontor">'+LU('kontor-'+k)+'<span>'+k.charAt(0).toUpperCase()+k.slice(1)+'</span></div>';}
 
 // SPECIALIST tile — a 2×2in square: full-bleed OBJECT art (improve-<slug>.jpg) + scrim, the name and the effect on a
 // PURPLE foot; the card bg is the foot's purple so any html2canvas foot-edge hairline is purple-on-purple.
 const IMP_FOOT='#4a3a6e';   // the Specialist foot — purple
-function improveTile(d){const k=d.slug||slug(d.nm);
+function improveTile(d){const k=d.slug||slug(d.nm);const sh=SHELVES[d.shelf||0];
   return '<div class="icard" style="--c:'+IMP_FOOT+'">'
   +artLayer('improve-'+k+'.jpg')   // .jpg not .png — a flat-colour-field object shot compresses ~8x smaller as JPEG at no visible quality loss
+  +'<div class="ic-top"><span class="ic-shelf" title="the hall’s '+sh.nm+' shelf — a cask whose die reads '+sh.floor+'+ presents here">'+LU('dice-'+sh.floor)+'<b>'+sh.floor+'+</b><span>'+sh.nm+'</span></span></div>'
   +'<div class="ic-foot"><span class="ic-nm">'+d.nm+'</span><span class="ic-act">'+d.act+'</span></div>'
-  +'</div>';}   // the title sits at the FOOT, above the action (the head stays clear); no fee pill — specialists are earned, never bought
+  +'</div>';}   // the shelf pill sits top-right (the deck sorts by it); the title at the FOOT, above the action; no fee pill — specialists are earned, never bought
 // the CASK TILE faces (act = the drawn cask bonus {ai,act}).
 // ---- the background ART slot ----
 // ART_ON=false paints a faint hatch instead of the image. Filenames: casks → art/cask-<beer>.png;
@@ -256,19 +269,20 @@ function disc(c,ic){return '<div class="disc" style="--c:'+c+'">'+LU(ic||'circle
 function wtok(d){return '<div class="wtok" style="--c:'+d.c+'">'+LU(d.ic)+(d.nm?'<span>'+d.nm+'</span>':'')+'</div>';}
 
 
-// ---- PLAYER BOARD: the physical 7.65×3.85in board, ONE
+// ---- PLAYER BOARD: the physical 9.7×3.85in board, ONE
 // generator for the print sheet AND the live app. Zones: crest+name · the ★ SCORE seat ·
 // the SUPPLY ledge (dice/grain/hops tally seats) · VESSEL 1-3 wells (2.4×1in — the cask
-// tile sits IN the well at true size) · SPECIALIST seats 1-2 (2×2in) · the printed FLIGHT
-// ladder (beers DELIVERED: 3/4/5 → 3/6/10★) · the personal supply well. `live` (app only):
-// {score,dice,grain,hops,v:[html×3],seats:[html×2],flight,supply}.
+// tile sits IN the well at true size) · the printed FLIGHT ladder (beers DELIVERED: 3/4/5 →
+// 3/6/10★) · the three SPECIALIST seats (2×2in), one per shelf of the hall · the personal
+// supply well. `live` (app only): {score,dice,grain,hops,v:[html×3],seats:[html×3],flight,supply}.
+const PBRD_W=9.7, PBRD_H=3.85;   // the board's native size, inches
 function playerBoard(d,live){const L=live||{};
   const seatBox=(v)=>v!=null?'<b class="pbrd-num">'+v+'</b>':'<span class="pbrd-box"></span>';   // live: a bare number · print: the empty well stays
   const vsl=(i)=>'<div class="pbrd-slot pbrd-vsl">'
     +'<span class="sn">Vessel '+i+'</span>'
     +((L.v&&L.v[i-1])||'<span class="si">'+LU('beer')+LU('dices')+'</span>')+'</div>';
   const ssl=(i)=>'<div class="pbrd-slot pbrd-seat">'
-    +'<span class="sn">Specialist seat '+i+'</span>'
+    +'<span class="sn">'+SHELVES[i-1].nm+' seat '+LU('dice-'+SHELVES[i-1].floor)+'</span>'
     +((L.seats&&L.seats[i-1])||'<span class="si">'+LU('wrench')+'</span>')+'</div>';
   const FL=[1,2,3,4,5],FP={1:0,2:0,3:3,4:6,5:10};
   const flight='<div class="pbrd-flight"><div class="fl-t">'+LU('layers')+' The Flight — the recipe cards <b>on your right</b></div>'
@@ -283,11 +297,9 @@ function playerBoard(d,live){const L=live||{};
         +'<span class="pbrd-sup pbh" title="hops">'+LU('sprout')+seatBox(L.hops)+'</span>'
         +'<span class="pbrd-note">start Gruit+Hopped \u00b7 12 dice: 10 in the supply, 1 on the Gruit, 1 the starter post \u00b7 goods max 8 each</span></span>'
     +'</div>'
-    +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+'</div>'
-    +'<div class="pbrd-row">'+ssl(1)+ssl(2)
-      +'<div class="pbrd-right">'+flight
-        +'<div class="pbrd-supwell"><span class="sn">'+LU('dices')+' the personal supply \u2014 10 dice</span>'+(L.supply||'<span class="si">'+LU('dices')+LU('dices')+LU('dices')+'</span>')+'</div>'
-      +'</div>'
+    +'<div class="pbrd-row">'+vsl(1)+vsl(2)+vsl(3)+flight+'</div>'
+    +'<div class="pbrd-row">'+ssl(1)+ssl(2)+ssl(3)
+      +'<div class="pbrd-supwell"><span class="sn">'+LU('dices')+' the personal supply \u2014 10 dice</span>'+(L.supply||'<span class="si">'+LU('dices')+LU('dices')+LU('dices')+'</span>')+'</div>'
     +'</div>'
   +'</div>';}
 
@@ -317,7 +329,10 @@ var HC_CSS='/* Merchant Brewer of the Hanse — the shared CARD component styles
     display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n\
   .icard > *{position:relative;z-index:1}\n\
   .icard > .artbg{z-index:0}\n\
-  .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.12in .14in 0;justify-content:flex-end}\n\
+  .icard .ic-top{display:flex;align-items:center;gap:.06in;padding:.09in .1in 0;justify-content:flex-end}\n\
+  .icard .ic-shelf{display:inline-flex;align-items:center;gap:.03in;background:rgba(0,0,0,.42);border-radius:.14in;padding:.02in .07in .02in .04in;font-variant:small-caps;font-weight:bold;font-size:.11in;line-height:1;white-space:nowrap}\n\
+  .icard .ic-shelf img.ai,.icard .ic-shelf .ic{width:.2in;height:.2in}\n\
+  .icard .ic-shelf b{font-size:.13in}\n\
   .icard .ic-nm{display:block;font-variant:small-caps;font-weight:bold;font-size:.19in;line-height:1.02;margin-bottom:.035in}\n\
   .icard .ic-foot{margin-top:auto;background:linear-gradient(to top,var(--c) 0%,var(--c) 42%,transparent 100%);\n\
     padding:.3in .17in .13in;display:flex;flex-direction:column;align-items:flex-start;gap:0}\n\
@@ -597,8 +612,8 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.btile .btF2 .bt-etext{padding-bottom:0;font-size:.15in;font-weight:600;line-height:1.1}'
 +'.btile .btFC{flex-direction:column;align-items:flex-start;gap:.02in;padding-top:.14in}'
 +'.btile .bt-nm,.btile .bt-cond,.btile .bt-eff,.btile .bt-etext{text-align:left}'   // the face owns its alignment — a centering ancestor (the app's board slot) must never restyle a printed component
-+'\n/* ===== PLAYER BOARD (7.65x3.85in) \u2014 print + live app, one component ===== */'
-+'.pbrd{--pc:#7c2128;width:7.65in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
++'\n/* ===== PLAYER BOARD (9.7x3.85in) \u2014 print + live app, one component ===== */'
++'.pbrd{--pc:#7c2128;width:9.7in;height:3.85in;background:var(--parch,#f3e9d2);color:var(--ink,#2b2018);position:relative;border-radius:.14in;display:flex;flex-direction:column;gap:.07in;padding:.12in .15in;box-sizing:border-box;border:2.5px solid var(--pc);overflow:hidden}'
 +'.pbrd .sn{font-variant:small-caps;font-weight:bold;font-size:.085in;opacity:.62;line-height:1.05}'
 +'.pbrd-id{display:flex;align-items:center;gap:.09in;flex:0 0 .38in}'
 +'.pbrd-crest{width:.32in;height:.32in;border-radius:.05in;background:var(--pc);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}'
@@ -620,11 +635,11 @@ var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;fon
 +'.pbrd-slot .si{display:flex;gap:.06in;opacity:.35}.pbrd-slot .si svg,.pbrd-slot .si .ic,.pbrd-slot .si img.ai{width:.3in;height:.3in}'
 +'.pbrd-vsl{width:2.42in;height:1.06in;flex:0 0 auto}'
 +'.pbrd-seat{width:2.06in;height:2.06in;flex:0 0 auto;border-style:dashed}'
-+'.pbrd-right{flex:1;display:flex;flex-direction:column;gap:.07in;min-width:0}'
-+'.pbrd-flight{border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);padding:.05in .07in}'
-+'.pbrd-flight .fl-t{font-variant:small-caps;font-weight:bold;font-size:.1in;color:var(--pc);display:flex;align-items:center;gap:.04in;margin-bottom:.04in}'
++'.pbrd-seat .sn img.ai,.pbrd-seat .sn .ic{width:.16in;height:.16in;vertical-align:-.04in;margin-left:.02in}'
++'.pbrd-flight{flex:1;min-width:0;border:1.6px solid var(--pc);border-radius:.07in;background:rgba(255,255,255,.45);padding:.05in .07in;display:flex;flex-direction:column;justify-content:center}'
++'.pbrd-flight .fl-t{font-variant:small-caps;font-weight:bold;font-size:.09in;color:var(--pc);display:flex;align-items:center;gap:.04in;margin-bottom:.04in;line-height:1.1}'
 +'.pbrd-flight .fl-t svg,.pbrd-flight .fl-t .ic,.pbrd-flight .fl-t img.ai{width:.13in;height:.13in}'
-+'.fl-row{display:flex;gap:.05in}'
++'.fl-row{display:flex;gap:.035in}'
 +'.fl-cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.4px dashed var(--pc);border-radius:.05in;padding:.025in 0;line-height:1.05}'
 +'.fl-cell b{font-size:.13in}.fl-cell span{font-size:.09in;color:var(--ink2,#5b4a37)}'
 +'.fl-cell.on{border-style:solid;background:var(--pc);color:#fff}.fl-cell.on span{color:rgba(255,255,255,.85)}'
@@ -689,12 +704,12 @@ var HC_CSS4=''
 +'.btile.kbt .kb-seat img.ai,.btile.kbt .kb-seat svg{width:.3in;height:.3in;opacity:.7}'
 +'.btile.kbt .btFC{padding-top:.06in;gap:.02in}.btile.kbt .bt-cond{max-width:.64in;font-size:.12in;white-space:normal;line-height:1.1}.btile.kbt .ac,.btile.kbt .ac svg,.btile.kbt .ac .ic{width:.44in;height:.44in}'   // the condition line wraps in the band left of the die seat; the action icon sits below the seat
 +'.stile .st-chit{display:inline-flex;align-items:center;gap:.04in;border:2px dashed rgba(255,255,255,.8);border-radius:.05in;padding:.01in .05in}'
-+'.invtok{width:.75in;height:.75in;border-radius:50%;background:#7c2128;color:#e8c87a;display:flex;align-items:center;justify-content:center;font-size:.42in;line-height:1;box-shadow:inset 0 0 0 .04in #571a20;text-shadow:0 1px 2px rgba(0,0,0,.5)}'
+
 +'.kchit{width:.75in;height:.75in;border-radius:50%;background:var(--c,#6f6253);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;line-height:1;box-shadow:inset 0 0 0 .04in rgba(0,0,0,.35);text-shadow:0 1px 2px rgba(0,0,0,.5)}'
 +'.kchit img.ai,.kchit .ic{width:.42in;height:.42in;margin-bottom:-.03in}.kchit span{font-variant:small-caps;font-weight:bold;font-size:.09in}'
 +'.stile .st-hop{position:absolute;right:.05in;bottom:.05in;display:inline-flex;align-items:center;gap:.01in;height:.2in;padding:0 .04in;border-radius:.04in;background:rgba(0,0,0,.5);font-size:.12in;font-weight:900}'
 +'.stile .st-hop img.ai,.stile .st-hop .ic{width:.15in;height:.15in}';
 if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,inviteToken,kontorChit,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,improveTile,tok,disc,wtok,recipeCard,playerBoard,KONTOR_C};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,kontorChit,SHELVES,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,improveTile,tok,disc,wtok,recipeCard,playerBoard,PBRD_W,PBRD_H,KONTOR_C};
 })();

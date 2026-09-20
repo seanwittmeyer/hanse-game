@@ -21,7 +21,7 @@ function __close(sid){if(!__T)return;var p=S.players[sid];var sc1=__tot();var T=
     psc:sc1.map(function(v,i){return [i,v-T.sc0[i]];}).filter(function(x){return x[0]!==sid&&x[1]!==0;})});
   __T=null;}
 function __snap(){__G.snaps.push({r:S.turn,seats:S.players.map(function(q){var sc=scorePlayer(q);
-  return {sc:sc.total,sup:q.supply,cnt:qualityCount(q),g:q.grain,h:q.hops,inv:q.invites,vb:q.vessels.filter(function(c){return c;}).length};})});}
+  return {sc:sc.total,sup:q.supply,cnt:qualityCount(q),g:q.grain,h:q.hops,vb:q.vessels.filter(function(c){return c;}).length};})});}
 function __chainCheck(pid){var p=S.players[pid];FAR.forEach(function(k){if(hasChain(p,k)&&!__G.chains[pid][k]){__G.chains[pid][k]=1;__ev(pid,'chain:'+k);}});}
 var __doMove=doMove;doMove=function(c){var p=cur();var r=__doMove(c);if(__on()&&p.placed&&p.cell===c&&!__T)__open(p);return r;};
 var __endTurn=endTurn;endTurn=function(){var a0=S.active,t0=S.turn;var r=__endTurn();
@@ -37,11 +37,11 @@ var __loadCommit=loadCommit;loadCommit=function(sid,vi){var p=cur();var t=S.slot
 var __sailShip=sailShip;sailShip=function(slot,cid){var t=S.slots[slot];var owners=t?(t.load||[]).map(function(L){return L.owner;}):[];var d=t?shipDest(t):'?';var r=__sailShip(slot,cid);
   if(__on()&&!S.slots[slot]){__ev(cid,'sail:'+d);owners.forEach(function(o){if(o!==cid)__ev(o,'carried:'+d);});}return r;};
 var __landDeliver=landDeliver;landDeliver=function(lp,L,Lg){var r=__landDeliver(lp,L,Lg);
-  if(__on()){var dd=lp.delivered[lp.delivered.length-1];__ev(lp.id,'deliver:'+Lg.dest+':'+(dd?dd.val:0));__ev(lp.id,'inv');}return r;};
+  if(__on()){var dd=lp.delivered[lp.delivered.length-1];__ev(lp.id,'deliver:'+Lg.dest+':'+(dd?dd.val:0));}return r;};
 var __yardLand=yardLand;yardLand=function(p,vi){var c=p.vessels[vi];var r=__yardLand(p,vi);
   if(__on())__ev(p.id,'yard:'+yardZone(S.yard.length-1)+':'+(c?c.style:'?'));return r;};
 var __hallPresent=hallPresent;hallPresent=function(p,vi){var n0=p.delivered.length;var r=__hallPresent(p,vi);
-  if(__on()&&p.delivered.length>n0){var dd=p.delivered[p.delivered.length-1];__ev(p.id,'hall:'+dd.val);}return r;};
+  if(__on()&&p.delivered.length>n0){var dd=p.delivered[p.delivered.length-1];__ev(p.id,'hall:'+(dd.shelf!=null?dd.shelf:0)+':'+(dd.card||''));}return r;};
 if(typeof gainGrain==='function'){var __gainGrain=gainGrain;gainGrain=function(p,n,why){var r=__gainGrain(p,n,why);
   if(__on())__ev(p.id,'grain:'+(why?(why.indexOf('yard')>=0?'yard':why.indexOf('hall')>=0?'hall':why.indexOf('bonus')>=0?'bonus':'other'):'market'));return r;};}
 var __yardPick=yardPick;yardPick=function(ch,st){var b=(UI.pendingYard||[])[0];var lp=b?S.players[b.pid]:null;var n0=lp?lp.recipes.length:0;var r=__yardPick(ch,st);
@@ -64,7 +64,7 @@ var __pbuildPick=pbuildPick;pbuildPick=function(kind,st){var B=UI.pb;var pid=B?B
 var __commPlace=commPlace;commPlace=function(slot){var p=cur();var r=__commPlace(slot);var t=S.slots[slot];
   if(__on()&&t&&t.type==='ship')__ev(p.id,'comm:'+t.ship+':'+t.dest);return r;};
 var __raiseApply=raiseApply;raiseApply=function(p,t){var r=__raiseApply(p,t);if(__on())__ev(p.id,'raise:'+t.kind);return r;};
-if(typeof srcTrade==='function'){var __srcTrade=srcTrade;srcTrade=function(){var p=cur();var i0=p.invites;var r=__srcTrade();if(__on()&&p.invites<i0)__ev(p.id,'trade');return r;};}
+if(typeof srcTrade==='function'){var __srcTrade=srcTrade;srcTrade=function(){var p=cur();var h0=p.hops;var r=__srcTrade();if(__on()&&p.hops>h0)__ev(p.id,'trade');return r;};}
 if(typeof dividend==='function'){var __dividend=dividend;dividend=function(p){var r=__dividend(p);if(__on()&&DIVIDEND_H)__ev(p.id,'dividend');return r;};}
 if(typeof flightCross==='function'){var __flightCross=flightCross;flightCross=function(p,st){var r=__flightCross(p,st);if(__on())__ev(p.id,'cross:'+st+':'+flightBeers(p));return r;};}
 var __enterPact=enterPact;enterPact=function(slot,rt){var p=cur();var b=privAt(slot);var r=__enterPact(slot,rt);if(__on())__ev(p.id,'pact:'+(b?pactKind(b):'?'));return r;};
@@ -83,6 +83,7 @@ function __runGame(n,gi){
   var idOK=S.players.every(function(p){return p.supply+diceOnBoard(p)===(SUPPLY_DICE+2)&&p.supply>=0;});
   var rows=finalRows().rows;
   return {n:n,gi:gi,rounds:S.turn,trigger:S.endReason||'?',sailed:S.sailed,idOK:idOK,win:rows[0].p.id,
+    deal:(S.hall&&S.hall.shelves)?S.hall.shelves.map(function(b){return b.cards;}):null,
     seats:S.players.map(function(q){var sc=scorePlayer(q);
       return {id:q.id,ps:(q.ai&&q.ai.persona)||null,tier:q.ai.tier,sc:sc,count:qualityCount(q),
         chains:FAR.filter(function(k){return hasChain(q,k);}).length,kb:bldgsOf(q),flight:flightBeers(q),
@@ -90,7 +91,8 @@ function __runGame(n,gi){
         yardN:q.delivered.filter(function(d){return d.yard;}).length,
         tiles:SLOTS.filter(function(s){var b=privAt(s.id);return b&&b.owner===q.id;}).length,
         t2:SLOTS.filter(function(s){var b=privAt(s.id);return b&&b.owner===q.id&&b.tier===2;}).length,
-        recipes:q.recipes.length,specs:q.upgrades.slice(),supply:q.supply,inv:q.invites,g:q.grain,h:q.hops,
+        recipes:q.recipes.length,specs:q.upgrades.slice(),supply:q.supply,g:q.grain,h:q.hops,
+        hallS:q.delivered.filter(function(d){return d.hall;}).map(function(d){return [d.shelf,d.card,d.face];}),hallPips:(typeof hallPips==='function')?hallPips(q):0,
         parked:KONTORE.map(function(k){return parkedAt(q,k);}),
         stranded:q.vessels.filter(function(c){return c&&caskReady(c);}).length};}),
     turns:__G.turns,snaps:__G.snaps,loose:__G.loose};

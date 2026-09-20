@@ -193,6 +193,26 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
 - If a beer's color clashes with its card tint, lean the art toward the card's color (the card's `--c`
   shows through the scrim at the edges).
 
+## Queued (2026-09-20 — the hall's shelves: eight specialist portraits)
+
+*The specialists are now three shelf decks of six (v8.1a); eight new cards wear stand-in
+portraits (`slug:` rows in `components.js`, each marked PLACEHOLDER). THE SPECIALIST PORTRAIT
+SPEC below governs: half-body, the trade prop, no text. On landing, save under the exact
+filename and drop the `slug:` row; no rules change — no KEY bump.*
+
+| File | Subject (the prop is the trade's signature) | Stand-in in use |
+|---|---|---|
+| `improve-maltster.jpg` | **the Maltster** — a maltster on the kiln floor turning a bed of barley with a wooden shovel, the kiln's louvred cowl behind; the Market pays 3 grain | `improve-grain-factor.jpg` (`slug:'grain-factor'`) |
+| `improve-cooper.jpg` | **the Cooper** — a cooper driving a hoop down a half-made cask with a hammer and driver, staves and shavings about; the Cellar's Age 3 reads Age 4 | `improve-shipwright.jpg` (`slug:'shipwright'`) |
+| `improve-hop-merchant.jpg` | **the Hop merchant** — a merchant at a Market stall weighing a sack of dried hop cones on a hanging balance, sacks stacked behind; Gain 3 hops at the Market | `improve-chandler.jpg` (`slug:'chandler'`) |
+| `improve-burgher.jpg` | **the Burgher** — a burgher of standing in a fur-trimmed gown before a row of gabled brick houses, a ring of keys at the belt; +1★ per private building | `improve-innkeeper.jpg` (`slug:'innkeeper'`) |
+| `improve-navigator.jpg` | **the Navigator** — a navigator at a chart table with dividers and a portolan chart of the Sound, a lodestone compass beside; +2★ per branch held whole | `improve-pilot.jpg` (`slug:'pilot'`) |
+| `improve-steward.jpg` | **the Steward** — the house's steward in the cellar doorway with a tally board and a ring of keys, full vessels behind; each cask left in your vessels scores its die | `improve-supercargo.jpg` (`slug:'supercargo'`) |
+
+Two of the eight already wear their own portrait: **the Hop gardener** (`improve-hop-gardener.jpg`)
+and **the Brewer's mate** (`improve-brewer-s-mate.jpg`). Also wanted, no code waits: a shelf
+badge treatment for the tile's top-right pill (today a die glyph and the shelf's name).
+
 ## Queued (2026-09-13 — the goods split: Gain N grain · Gain N hops)
 - **icons/grain-1.png · grain-2.png · grain-3.png** and **icons/hops-1.png · hops-2.png ·
   hops-3.png** — the goods gains now name their good (v8.0j): the Market's primary prints **Gain
