@@ -72,9 +72,12 @@ const SHIP_DECK=[   // ⚙ 18 hulls — per far Kontor Cog ×3 · Hulk ×2; wild
 const DIE=n=>'<span class="diech">'+LU('dice-'+n)+'</span>';
 const BTGT={cask:{ic:'beer',lbl:'a cask docked here'},ship:{ic:'sailboat',lbl:'a Ship docked here'}};
 const BUILDINGS=[
+  // THE BRUGES ROAD — shared and PERMANENT: the cart's door, dealt to a random slot before the
+  // Works; the tide never takes it and nothing is built over it.
+  {k:'road',      nm:'Bruges Road',       verb:'transform', tgt:'cask', ic:'truck',        n:1, art:'building-ch_bruges.png', cond:'Work this station', effIc:'truck', eff:'Cart 1 → Bruges'},
   // THE PUBLIC WORKS — the filler roster ⚙ (the roster pass comes after the core): shared,
   // die-less, passive on their slot's traffic; the tide takes every one with its Ship.
-  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, cond:'On load', effIc:'die-plus1',  eff:'Raise die (cap Q+1)'},
+  {k:'maltkiln',  nm:'Malt Kiln',         verb:'transform', tgt:'cask', ic:'flame',        n:2, cond:'On load', effIc:'die-plus1',  eff:'the cask +1 (cap Q+1)'},
   {k:'customs',   nm:'Customs House',     verb:'transform', tgt:'ship', ic:'scroll-text',  n:1, eff:'your count reads +1 here'},
   {k:'ropewalk',  nm:'Ropewalk',          verb:'transform', tgt:'cask', ic:'cable',        n:1, art:'building-ropewalk.png', cond:'On load', effIc:'package-plus', eff:'+1 '+LU('beer')+' → other '+LU('sailboat')},
   {k:'cooperage', nm:'Cooperage',         verb:'transform', tgt:'ship', ic:'package',      n:1, eff:'+1 berth'},
@@ -103,10 +106,10 @@ const IMPROVE=[   // SPECIALISTS = PURPLE · eighteen singles ⚙ · one seat pe
   // the Alderman shelf — die 4
   {ic:'crown',       nm:'Guildmaster',  shelf:2, act:'each present at the hall: '+LU('star-plus2','starmark'), c:'#5b3a8e', n:1},
   {ic:'book-open',   nm:'Chronicler',   shelf:2, act:'deliver a '+LU('beer')+': '+LU('star-plus1','starmark'), c:'#5b3a8e', n:1},
-  {ic:'gavel',       nm:'Alderman',     shelf:2, act:'end: '+LU('star-plus2','starmark')+' per '+LU('landmark')+' with 3+ '+LU('dices'), c:'#5b3a8e', n:1},
-  {ic:'building-2',  nm:'Burgher',      shelf:2, act:'end: '+LU('star-plus1','starmark')+' per private building of yours', c:'#5b3a8e', n:1, slug:'innkeeper'},   // PLACEHOLDER portrait
-  {ic:'compass',     nm:'Navigator',    shelf:2, act:'end: '+LU('star-plus2','starmark')+' per far '+LU('landmark')+' whose branch you hold whole', c:'#5b3a8e', n:1, slug:'pilot'},   // PLACEHOLDER portrait
-  {ic:'beer',        nm:'Steward',      shelf:2, act:'end: each '+LU('beer')+' in your vessels scores its die', c:'#5b3a8e', n:1, slug:'supercargo'},   // PLACEHOLDER portrait
+  {ic:'gavel',       nm:'Alderman',     shelf:2, act:'each present at the hall: take a '+LU('contract'), c:'#5b3a8e', n:1},
+  {ic:'building-2',  nm:'Burgher',      shelf:2, act:'your '+LU('hammer')+' builds and Flips cost '+cost(1,0)+' less', c:'#5b3a8e', n:1, slug:'innkeeper'},   // PLACEHOLDER portrait
+  {ic:'compass',     nm:'Navigator',    shelf:2, act:'your '+LU('post')+' may stand on ANY segment of a lane', c:'#5b3a8e', n:1, slug:'pilot'},   // PLACEHOLDER portrait
+  {ic:'beer',        nm:'Steward',      shelf:2, act:'a fourth vessel', c:'#5b3a8e', n:1, slug:'supercargo'},   // PLACEHOLDER portrait
 ];
 const GOODS=[{ic:'wheat',nm:'Grain',c:'#9c7414',n:60},{ic:'sprout',nm:'Hops',c:'#5d7d34',n:40}];
 const KONTOR_C={bruges:'#274b5c',london:'#b8860b',bergen:'#4a6b3a',novgorod:'#7c2128'};
@@ -162,10 +165,10 @@ const PRIVATES=[
                                t2:{nm:'Kaufhaus',           ic:'store',         pts:4, art:'private-kaufhaus.png',  own:cost(1,0)+VSEP(':')+VBIG(LU('flask-conical'))+VSEP('·')+VBIG(LU('truck')), txt:'Brew · Cart 2'}},
   {k:'B', station:'Brewhouse', t1:{nm:'Scriptorium',        ic:'scroll-text',   pts:2, art:'building-scriveners.png',own:VBIG(LU('scroll-text')), txt:'recipes: no fee'},
                                t2:{nm:'Brewers’ Guildhall', ic:'flask-conical', pts:4, art:'private-guildhall.png',    own:VBIG(LU('scroll-text'))+VSEP('·')+VBIG(LU('flask-conical')), txt:'every recipe'}},
-  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'Raise die'},
-                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'Raise die · Post'}},
+  {k:'C', station:'Harbor',    t1:{nm:'Counting House',     ic:'goods-1',       pts:2, art:'venture-counting-l1.png',own:VBIG(LU('die-plus1')), txt:'a die at sea +1'},
+                               t2:{nm:'Shipping Office',    ic:'post',          pts:4, art:'private-shipping.png',  own:VBIG(LU('die-plus1'))+VSEP('·')+VBIG(LU('post')), txt:'a die at sea +1 · Post'}},
   {k:'D', station:'Cellar',    t1:{nm:'Cold Store',         ic:'snowflake',     pts:2, art:'private-coldstore.png',     own:VBIG(LU('age-2'))},
-                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'Raise die, cap Q+1'}},
+                               t2:{nm:'Lagering Cellar',    ic:'snowflake',     pts:4, art:'venture-die-l2.png',     own:VBIG(LU('age-2'))+VSEP('·')+VBIG(LU('die-plus1')), txt:'a Ready cask +1, cap Q+1'}},
 ];
 function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
   const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
@@ -185,7 +188,7 @@ function privateTile(d,tier,col){const f=tier===2?d.t2:d.t1;
 const KBUILDINGS=[
   {k:'warehouse',  nm:'Warehouse',  ic:'warehouse',  line:VBIG(LU('compass'))+' count +1', txt:'a Ship bound here'},
   {k:'kontorhaus', nm:'Kontorhaus', ic:'kontorhaus', line:VBIG(LU('hops'))+' +1', txt:'the dividend again on your delivery'},
-  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'Raise die on your delivery'},
+  {k:'guildhouse', nm:'Guildhouse', ic:'landmark',   line:VBIG(LU('die-plus1')), txt:'a die at sea +1 on your delivery'},
 ];
 function kontorBuildingTile(d,col){const ring=col?';box-shadow:inset 0 0 0 .055in '+col:'';
   return '<div class="btile btW kbt" style="--c:'+(col||PRIV_FOOT)+ring+';width:1.32in;height:1.32in">'
@@ -311,6 +314,48 @@ function recipeCard(r){return '<div class="card" style="--cc:'+r.cc+'">'
   +'<div class="c-strip">'
     +'<div class="c-row"><span class="c-rung">'+LU('quality-'+r.L)+'</span><span class="c-nm">'+r.nm+'</span></div>'
     +'<div class="c-row"><span class="c-lbl">brew</span><span class="c-cost">'+cost(r.g,r.h)+'</span></div>'
+  +'</div>'
+  +'</div>';}
+
+// ---- THE POST TILES — a 1.1in disc per segment, printing ONE bonus action. Four dealt face up
+// at setup, one per segment; whoever stands a post there takes its action, once.
+const POST_TILES=[
+  {k:'source', ic:'grain',          nm:'Gain 2 grain', n:2},
+  {k:'hops',   ic:'sprout',         nm:'Gain 2 hops',  n:1},
+  {k:'age',    ic:'age-2',          nm:'Age 2',        n:1},
+  {k:'brew',   ic:'flask-conical',  nm:'Brew',         n:1},
+  {k:'recipe', ic:'scroll-text',    nm:'Gain 1 recipe',n:1},
+  {k:'load',   ic:'package-plus',   nm:'Load 1',       n:1},
+  {k:'cart',   ic:'truck',          nm:'Cart 1',       n:1},
+];
+function postTile(d){return '<div class="ptdisc"><span class="pt-ic">'+LU(d.ic)+'</span><span class="pt-nm">'+d.nm+'</span></div>';}
+
+// ---- THE CONTRACTS — 1.85×2.55in, single-faced: what · where · the ★. Two face up a player at
+// setup; a matching cask of theirs turns one face down as it lands.
+const CONTRACTS=[
+  {k:'c1', what:'Gruit',   ic:'beer', where:'the yard',          wic:'truck',    pts:3},
+  {k:'c2', what:'Hopped',  ic:'beer', where:'London',            wic:'kontor-london', pts:4},
+  {k:'c3', what:'Hopped',  ic:'beer', where:'the hall',          wic:'crown',    pts:4},
+  {k:'c4', what:'Broyhan', ic:'beer', where:'Bergen',            wic:'kontor-bergen', pts:5},
+  {k:'c5', what:'Keut',    ic:'beer', where:'any far Kontor',    wic:'landmark', pts:5},
+  {k:'c6', what:'Mumme',   ic:'beer', where:'Novgorod',          wic:'kontor-novgorod', pts:9},
+  {k:'c7', what:'Bock',    ic:'beer', where:'any far Kontor',    wic:'landmark', pts:9},
+  {k:'c8', what:'Q2+',     ic:'quality-2', where:'London',       wic:'kontor-london', pts:4},
+  {k:'c9', what:'Q3+',     ic:'quality-3', where:'Bergen',       wic:'kontor-bergen', pts:5},
+  {k:'c10',what:'Q4+',     ic:'quality-4', where:'Novgorod',     wic:'kontor-novgorod', pts:8},
+  {k:'c11',what:'Q2+',     ic:'quality-2', where:'the hall',     wic:'crown',    pts:4},
+  {k:'c12',what:'Q3+',     ic:'quality-3', where:'the hall',     wic:'crown',    pts:6},
+  {k:'c13',what:'Q4+',     ic:'quality-4', where:'any far Kontor',wic:'landmark',pts:7},
+  {k:'c14',what:'a cask',  ic:'beer', where:'two different far Kontore', wic:'landmark', pts:6},
+  {k:'c15',what:'a cask',  ic:'beer', where:'all three far Kontore',     wic:'landmark', pts:10},
+  {k:'c16',what:'a cask',  ic:'beer', where:'one by sea and one by road',wic:'sailboat', pts:5},
+];
+function contractCard(c){return '<div class="card ctrcard" style="--cc:#6b4a2a">'
+  +artLayer('kontor-bruges.png')
+  +'<div class="c-costpanel"><span class="clab">fulfilled</span><span class="cbig">'+LU('star-'+(c.pts>6?6:c.pts),'starmark')+'<b>'+c.pts+'</b></span></div>'
+  +'<div class="c-strip">'
+    +'<div class="c-row"><span class="c-rung">'+LU(c.ic)+'</span><span class="c-nm">'+c.what+'</span></div>'
+    +'<div class="c-row"><span class="c-lbl">to</span><span class="c-cost">'+LU(c.wic)+' '+c.where+'</span></div>'
   +'</div>'
   +'</div>';}
 
@@ -527,6 +572,16 @@ var HC_CSS='/* Merchant Brewer of the Hanse — the shared CARD component styles
   .cover span{font-variant:small-caps;font-weight:bold;font-size:.12in;text-align:center;line-height:1.25;opacity:.92}\n\
   /* ---- the one-read die chip on Privilege tiles ---- */\n\
   .diech svg,.diech .ic{width:.14in;height:.14in;vertical-align:-.025in}';
+var HC_CSS5="\n/* ===== THE POST TILE DISC (1.1in) and the CONTRACT CARD ===== */\n\
+.ptdisc{width:1.1in;height:1.1in;border-radius:50%;background:#2f4858;color:#f3e9d2;position:relative;\n\
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.02in;text-align:center;\n\
+  box-shadow:inset 0 0 0 .035in rgba(243,233,210,.55);padding:.06in}\n\
+.ptdisc .pt-ic svg,.ptdisc .pt-ic .ic{width:.32in;height:.32in;stroke-width:2}\n\
+.ptdisc .pt-nm{font-variant:small-caps;font-weight:bold;font-size:.105in;line-height:1.05}\n\
+.ctrcard .c-strip .c-cost{font-size:.13in;font-weight:700;display:inline-flex;align-items:center;gap:.04in}\n\
+.ctrcard .c-strip .c-cost svg,.ctrcard .c-strip .c-cost .ic{width:.15in;height:.15in}\n\
+.ctrcard .c-costpanel .cbig{display:inline-flex;align-items:center;gap:.04in}\n\
+";
 var HC_CSS2="\n/* ===== THE COMPONENT REFIT \u2014 cask TILES (2.5x1) \u00b7 buildings (2x1.32) \u00b7 carrier SHIPS ===== */\n/* CASK TILE: the beer art anchors the LEFT and fades into the beer's colour (a masked img over the\n   solid ground); the info rides the colour side. */\n.ctile{width:2.4in;height:1in;position:relative;overflow:hidden;color:#fff;background:var(--c,#777);border-radius:.09in;\n  display:flex;align-items:center;gap:.08in;padding:.09in .11in;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n.ctile>*{position:relative;z-index:1}\n.ctile>.ct-art{position:absolute;left:0;top:0;bottom:0;width:1.2in;z-index:0;overflow:hidden;\n  -webkit-mask-image:linear-gradient(90deg,#000 24%,transparent 94%);mask-image:linear-gradient(90deg,#000 24%,transparent 94%)}\n.ctile>.ct-art img{position:relative;width:112%;height:152%;left:-6%;top:-26%;object-fit:cover;display:block}\n/* AGING side: two rows on the colour \u2014 Q\u00b7name\u00b7cost up top, perk + the track + the action below\n   (the track keeps right, past the art fade) */\n.ctA{flex-direction:column;justify-content:space-between;align-items:stretch;padding:.04in .09in .05in}\n.ctA .ct-hd{display:flex;align-items:center;gap:.06in;min-width:0}\n.ctA .ct-act2{justify-content:flex-end}\n.ctA .ct-act2 .ac{width:.26in;height:.26in}\n.ctA .ct-q{display:inline-flex;align-items:center;gap:.03in;font-weight:900;font-size:.24in;line-height:1;flex:0 0 auto}\n.ctA .ct-q svg,.ctA .ct-q .ic{width:.19in;height:.19in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctA .ct-nm{font-variant:small-caps;font-weight:bold;font-size:.17in;line-height:1;white-space:nowrap;overflow:hidden;flex:0 1 auto}\n.ctA .ct-cost{margin-left:auto;display:inline-flex;gap:.05in;font-weight:bold;font-size:.14in;align-items:center;flex:0 0 auto;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.ctA .ct-cost .gc{gap:.02in;font-size:.14in}.ctA .ct-cost .gc svg,.ctA .ct-cost .gc .ic{width:.16in;height:.16in}\n.ctA .ct-bot{display:flex;align-items:center;justify-content:flex-end;gap:.06in;min-width:0}\n.ctA .ct-perk{position:absolute;left:.08in;bottom:.05in;z-index:1;max-width:.92in;font-size:.078in;font-style:italic;line-height:1.1;opacity:.95}\n.ctA .ct-perk b{font-size:.105in;font-style:normal}\n.ctA .ct-perk .ic,.ctA .ct-perk svg{width:.1in;height:.1in}\n.ctA .ct-step{width:.36in;height:.25in;border:1.9px solid rgba(255,255,255,.92);border-radius:.05in;\n  display:flex;align-items:center;justify-content:center;font-size:.15in;font-weight:bold;flex:0 0 auto;background:rgba(0,0,0,.14)}\n.ctA .ct-step.rdy{border-color:#4a6b3a;background:#4a6b3a;box-shadow:0 1px 2px rgba(0,0,0,.4)}\n.ctA .ct-step.rdy svg,.ctA .ct-step.rdy .ic{width:.19in;height:.19in;stroke-width:2.4}\n.ctA .ct-step.start{border-style:dashed}\n.ctA .ct-step.start svg,.ctA .ct-step.start .ic{width:.18in;height:.18in}\n/* WHARF side: the die seat LEFT (the Q prints IN it; the parked die covers it), name over action mid,\n   the art on the RIGHT fading leftward into the colour */\n.ctB{padding-right:.15in}\n.ctB>.ct-art{left:auto;right:0;-webkit-mask-image:linear-gradient(270deg,#000 24%,transparent 94%);mask-image:linear-gradient(270deg,#000 24%,transparent 94%)}\n.ctB .ct-seat{flex:0 0 auto;width:.56in;height:.56in;border:2px dashed rgba(255,255,255,.88);border-radius:.07in;\n  display:flex;align-items:center;justify-content:center;gap:.025in;font-weight:900;font-size:.24in;background:rgba(0,0,0,.18);position:relative}\n.ctB .ct-seat svg,.ctB .ct-seat .ic{width:.19in;height:.19in;stroke-width:2.2;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.6))}\n.ctB .ct-main{flex:1;display:flex;flex-direction:column;gap:.05in;min-width:0;max-width:1.54in}\n.ctB .ct-nm2{font-variant:small-caps;font-weight:bold;font-size:.18in;line-height:1;white-space:nowrap;overflow:hidden;text-align:left}\n.ctile .ct-act2{display:flex;align-items:center;gap:.05in;font-size:.13in;line-height:1.05;font-weight:600;min-width:0}\n.ctile .ct-act2 .ac{display:inline-flex;align-items:center;justify-content:center;width:.28in;height:.28in;border-radius:50%;background:rgba(255,255,255,.92);flex:0 0 auto}\n.ctile .ct-act2 .ac svg,.ctile .ct-act2 .ac .ic{width:.16in;height:.16in;color:#23201c;stroke-width:2.1}\n.seatdie{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}\n/* BUILDING 2x1.32 \u2014 art-forward (the reference look): big serif name over the art, ONE foot row:\n   the effect left, the cost BIG at right, in the verb colour fading up from the bottom. */\n.btile{width:2.5in;height:1.32in;position:relative;overflow:hidden;color:#fff;background:var(--c,#3a3342);\n  display:flex;flex-direction:column;justify-content:space-between;text-shadow:0 1px 2px rgba(0,0,0,.6);border-radius:.09in}\n.btile>*{position:relative;z-index:1}.btile>.artbg{position:absolute;inset:0;z-index:0}\n.btile .artbg.scrim::after{background:linear-gradient(180deg,rgba(0,0,0,.44),rgba(0,0,0,.04) 40%,rgba(0,0,0,.04) 62%,rgba(0,0,0,.35))}\n.btile .bt-top{display:flex;align-items:center;gap:.06in;padding:.08in .1in 0}\n.btile .bt-ic{flex:0 0 auto;display:inline-flex}.btile .bt-ic svg,.btile .bt-ic .ic{width:.21in;height:.21in;stroke-width:1.9;filter:drop-shadow(0 1px 2px rgba(0,0,0,.7))}\n.btile .bt-nm{font-variant:small-caps;font-weight:bold;font-size:.185in;line-height:1;flex:1;white-space:nowrap;overflow:hidden}\n.btile .bt-nm.long{font-size:.148in}\n.btile .bt-nm.xlong{font-size:.128in}\n.btile .bt-foot{position:relative;z-index:1;background:none;\n  padding:.12in .1in .07in;display:flex;align-items:center;gap:.07in}\n.btile .bt-foot::before{content:\"\";position:absolute;inset:0;z-index:-1;opacity:.7;\n  background:linear-gradient(to top,var(--c) 0%,var(--c) 70%,transparent 100%)}\n.btile .bt-eff{font-size:.15in;font-weight:600;line-height:1.1;flex:1;min-width:0}\n.btile .bt-eff::first-letter{text-transform:uppercase}\n.btile .bt-eff .ic,.btile .bt-eff svg{width:.15in;height:.15in;vertical-align:-.02in}\n.btile .bt-eff .g{color:#ffe08a}.btile .bt-eff .h{color:#c4e69c}\n.btile .bt-cost{flex:0 0 auto;display:inline-flex;align-items:center;font-weight:bold;font-size:.14in;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.btile .bt-cost .gc{gap:.02in;font-size:.14in}.btile .bt-cost .gc svg,.btile .bt-cost .gc .ic{width:.16in;height:.16in}\n.btile .g,.stile .g,.ctile .g{color:#ffe08a}.btile .h,.stile .h,.ctile .h{color:#c4e69c}\n.btile .diech svg,.btile .diech .ic{width:.14in;height:.14in;vertical-align:-.025in}\n/* BUILDING \u2014 floor side: WILD, nothing else */\n.btF .artbg{filter:grayscale(.55) brightness(.72)}\n.btF .bt-wild{flex:1;display:flex;align-items:center;justify-content:center;gap:.08in;font-size:.24in;font-weight:900;letter-spacing:1px}\n.btF .bt-circ{display:inline-flex;align-items:center;justify-content:center;width:.34in;height:.34in;border-radius:50%;background:rgba(255,255,255,.92)}\n.btF .bt-circ svg,.btF .bt-circ .ic{width:.2in;height:.2in;color:#23201c;stroke-width:2.1}\n.btF .bt-sub{text-align:center;font-variant:small-caps;font-weight:bold;font-size:.095in;opacity:.9;padding-bottom:.07in}\n.stile{width:2.5in;flex:0 0 auto;position:relative;overflow:hidden;color:#fff;background:var(--c,#33445a);border-radius:.09in;\n  display:flex;flex-direction:column;text-shadow:0 1px 1.5px rgba(0,0,0,.55)}\n/* the hold: full-height port art under a kontor-colour wash + faint planking \u2014 the tile reads\n   as a ship of ITS port, never as blank board */\n.stile>.artbg{position:absolute;inset:0;z-index:0}\n.stile>.artbg.scrim::after{content:none}\n.stile>.artbg img{filter:saturate(1.12) contrast(1.06)}\n/* the wharf paintings carry flat cream mats top+bottom (the letterbox gotcha) — ride the art 125% tall, shifted up, so BOTH mats crop off and the dock scene reaches the tile foot (the ship back keeps the plain fill; bakeArt mirrors this window for the PNG export) */\n.stile:not(.ship-back)>.artbg img.artbg-img{height:125%;top:-13%;bottom:auto}\n.stile .st-wash{position:absolute;inset:0;z-index:0;\n  background:var(--c);\n  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 .3in,rgba(0,0,0,.3) .95in,rgba(0,0,0,.3) 100%);\n  mask-image:linear-gradient(180deg,#000 0,#000 .3in,rgba(0,0,0,.3) .95in,rgba(0,0,0,.3) 100%)}\n.stile>.st-trig,.stile>.st-berth{position:relative;z-index:1}\n/* the TRIGGER berth (top 1in): identity above, its own marked seat below \u2014 the last cask covers it and sails */\n.stile .st-trig{flex:0 0 1in;display:flex;flex-direction:column}\n.stile .st-toprow{display:flex;justify-content:space-between;align-items:center;gap:.08in;padding:.06in .1in 0;flex:0 0 auto}\n.stile .st-k{display:inline-flex;align-items:center;gap:.06in;font-variant:small-caps;font-weight:bold;font-size:.185in;min-width:0;white-space:nowrap;overflow:hidden}\n.stile .st-k svg,.stile .st-k .ic{width:.2in;height:.2in;flex:0 0 auto;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.5))}\n.stile .st-meta{display:inline-flex;align-items:center;gap:.09in;flex:0 0 auto}\n.stile .st-gate{font-weight:900;font-size:.16in;display:inline-flex;align-items:center;gap:.02in}\n.stile .st-cost{font-weight:bold;font-size:.14in;display:inline-flex;align-items:center;background:rgba(0,0,0,.34);border-radius:.14in;padding:.025in .07in}\n.stile .st-gate svg,.stile .st-gate .ic{width:.17in;height:.17in}\n.stile .gc{display:inline-flex;align-items:center;gap:.02in;font-weight:bold}\n.stile .gc svg,.stile .gc .ic{width:.16in;height:.16in;flex:0 0 auto}\n/* the SEAT \u2014 one grammar with the die seat: dashed outline = a component parks on this footprint */\n.stile .st-seat{position:relative;flex:1;margin:.055in .07in .06in;border:2px dashed rgba(255,255,255,.72);border-radius:.07in;\n  display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.12)}\n.stile .st-berth{flex:0 0 1in;display:flex;flex-direction:column}\n.stile .st-hold{flex:1 1 auto;position:relative;z-index:0}\n.stile .st-num{position:absolute;left:.05in;top:.05in;min-width:.2in;height:.2in;padding:0 .03in;border-radius:.04in;\n  background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:.13in;font-weight:900}\n.stile .st-ghost{opacity:.38}.stile .st-ghost svg,.stile .st-ghost .ic{width:.3in;height:.3in}\n.stile .st-go{display:inline-flex;align-items:center;gap:.06in}\n.stile .st-go svg,.stile .st-go .ic{width:.26in;height:.26in;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))}\n.stile .st-go .amp{font-family:Georgia,serif;font-weight:bold;font-size:.19in;line-height:1}\n";
 var HC_CSS3='.ctB .ct-start{display:inline-flex;align-items:center;gap:.03in;font-size:.105in;font-weight:600;opacity:.95;background:rgba(0,0,0,.28);border-radius:.1in;padding:.015in .05in;align-self:flex-start}.ctB .ct-start b{font-size:.13in}.ctB .ct-start svg,.ctB .ct-start .ic{width:.12in;height:.12in}'
 /* BUILDING standard-verb chip — the cask tiles' .ac circle, same size, same grammar */
@@ -709,7 +764,7 @@ var HC_CSS4=''
 +'.kchit img.ai,.kchit .ic{width:.42in;height:.42in;margin-bottom:-.03in}.kchit span{font-variant:small-caps;font-weight:bold;font-size:.09in}'
 +'.stile .st-hop{position:absolute;right:.05in;bottom:.05in;display:inline-flex;align-items:center;gap:.01in;height:.2in;padding:0 .04in;border-radius:.04in;background:rgba(0,0,0,.5);font-size:.12in;font-weight:900}'
 +'.stile .st-hop img.ai,.stile .st-hop .ic{width:.15in;height:.15in}';
-if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4;
+if(typeof document!=='undefined'&&document.createElement){var st=document.createElement('style');st.id='hc-cards';st.textContent=HC_CSS+HC_CSS2+HC_CSS3+HC_CSS4+HC_CSS5;
   var hst=document.head||document.documentElement;if(hst&&typeof hst.appendChild==='function')hst.appendChild(st);}   // headless harness stubs skip the injection
-window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,kontorChit,SHELVES,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,improveTile,tok,disc,wtok,recipeCard,playerBoard,PBRD_W,PBRD_H,KONTOR_C};
+window.HC={LU,LUX,ICON_ART,cost,ART_ON,SHIP_H,QI,VP,DIE,slug,artLayer,ART_DIR,CASK_POOL,poolFor,CASKS,HULL,SHIP_DISPLAY,SHIP_DEST,SHIP_DECK,BTGT,BUILDINGS,PRIVATES,privateTile,KBUILDINGS,kontorBuildingTile,kontorChit,SHELVES,IMPROVE,GOODS,STARTERS,RECIPES,caskCardFront,caskCardBack,shipCard,shipBack,buildingCard,improveTile,tok,disc,wtok,recipeCard,POST_TILES,postTile,CONTRACTS,contractCard,playerBoard,PBRD_W,PBRD_H,KONTOR_C};
 })();

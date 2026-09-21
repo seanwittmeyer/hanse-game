@@ -1,4 +1,4 @@
-// Headless simulation harness for play.html — v8.1 "Brewer & Merchant" (KEY hanse-v81a).
+// Headless simulation harness for play.html — v8.2 "The Simple Core" (KEY hanse-v82a).
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙
@@ -37,6 +37,7 @@ var __V=null;
 function __vReset(){__V={work:0,comm:0,commMust:0,commLapse:0,posts:0,postsFree:0,kbuilds:0,raises:0,
   sails:0,sailsUnfull:0,wildSails:0,land:0,landBdie:0,ticksPost:0,ticksBldg:0,
   carts:0,yard:0,yardGruit:0,yardRecipe:0,hall:0,hallPips:0,shelf:{},recipesTile:0,specs:0,
+  contracts:0,contractPts:0,contractDrawn:0,
   pbuilds:0,flips:0,pacts:0,verbs:{},works:{},wildPort:{},yardZone:{},kbTile:{},prizeLondon:{},
   stranded:0,brews:0,brewsGruit:0,bondOffers:0,bondPosts:0,payBrews:0};}
 var __on=function(){return __V&&!aiSimulating;};
@@ -66,6 +67,8 @@ var __yardPick=yardPick;yardPick=function(ch,st){var n0=(function(){var b=(UI.pe
   var r=__yardPick(ch,st);if(__on()&&b&&S.players[b.pid].recipes.length>n0)__V.yardRecipe++;return r;};
 var __recipeGainPick=recipeGainPick;recipeGainPick=function(st){var p=cur();var n0=p.recipes.length;var r=__recipeGainPick(st);if(__on()&&p.recipes.length>n0)__V.recipesTile++;return r;};
 var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var n0=p.upgrades.length;var r=__grantUpgrade(p,k);if(__on()&&p.upgrades.length>n0)__V.specs++;return r;};
+var __checkContracts=checkContracts;checkContracts=function(p,rec){var n=__checkContracts(p,rec);if(__on()&&n){__V.contracts++;__V.contractPts+=n;}return n;};
+var __drawContract=drawContract;drawContract=function(p,why){var r=__drawContract(p,why);if(__on()&&r)__V.contractDrawn++;return r;};
 var __placePrivOn=placePrivOn;placePrivOn=function(slot){var b0=privAt(slot);var r=__placePrivOn(slot);if(__on()&&!b0&&privAt(slot))__V.pbuilds++;return r;};
 var __pbuildPick=pbuildPick;pbuildPick=function(kind,st){var r=__pbuildPick(kind,st);if(__on()&&kind==='flip')__V.flips++;return r;};
 var __enterPact=enterPact;enterPact=function(slot,rt){if(__on())__V.pacts++;return __enterPact(slot,rt);};
@@ -166,7 +169,7 @@ try {
 const R = ctx.__RESULTS;
 const fmt=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>fmt(100*a/Math.max(1,b),1)+'%';
-console.log('=== hanse v8.1 sim — '+N+' games/count · '+(PERSONAS?('PATHWAYS ('+(MIX?'mixed':'round-robin')+' personas, '+(process.env.PTIER||'trader')+')'):('tier '+TIER))+' ===');
+console.log('=== hanse v8.2 sim — '+N+' games/count · '+(PERSONAS?('PATHWAYS ('+(MIX?'mixed':'round-robin')+' personas, '+(process.env.PTIER||'trader')+')'):('tier '+TIER))+' ===');
 let anyErr=0,anyId=0;
 [2,3,4].forEach(n=>{
   const arr=R[n]; const errs=arr.filter(r=>r.error); const ok=arr.filter(r=>!r.error);
@@ -195,7 +198,7 @@ let anyErr=0,anyId=0;
   console.log(`USAGE/game — WORK ${fmt(us.work)} · brews ${fmt(us.brews)} (Gruit ${fmt(us.brewsGruit)}) · commissions ${fmt(us.comm)} (must ${fmt(us.commMust)}) · posts ${fmt(us.posts)} (by bonus/prize ${fmt(us.postsFree)}) · Kontor builds ${fmt(us.kbuilds)} [${Object.entries(sumObj('kbTile')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')}] · RAISEs ${fmt(us.raises)}`);
   console.log(`  sails ${fmt(us.sails)} (unfull ${fmt(us.sailsUnfull)} · wild ${fmt(us.wildSails)}: ${Object.entries(sumObj('wildPort')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · deliveries ${fmt(us.land)} (building die share ${fmt(us.landBdie)}★) · post ticks ${fmt(us.ticksPost)} · building ticks ${fmt(us.ticksBldg)}`);
   console.log(`  carts ${fmt(us.carts)}: the yard ${fmt(us.yard)} (Gruit ${fmt(us.yardGruit)} · recipes ${fmt(us.yardRecipe)} · zones ${Object.entries(sumObj('yardZone')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · the hall ${fmt(us.hall)} (by shelf ${['Journeyman','Master','Alderman'].map((k,b)=>k+' '+fmt((sumObj('shelf')[b]||0)/ok.length)).join(' · ')} · pips ${fmt(us.hallPips)} · cards left open ${fmt(avg(ok.map(r=>r.hallOpen)))}) · hops held at end ${fmt(avg(ok.map(r=>r.hopsHeld)))}`);
-  console.log(`  private builds ${fmt(us.pbuilds)} · flips ${fmt(us.flips)} · building stops fired ${fmt(us.pacts)} (priced brews ${fmt(us.payBrews)}) · Bonded Store offers ${fmt(us.bondOffers)} → posts ${fmt(us.bondPosts)} · specialists seated ${fmt(us.specs)} · recipes by bonus ${fmt(us.recipesTile)} · London's prize: ${Object.entries(sumObj('prizeLondon')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
+  console.log(`  private builds ${fmt(us.pbuilds)} · flips ${fmt(us.flips)} · building stops fired ${fmt(us.pacts)} (priced brews ${fmt(us.payBrews)}) · Bonded Store offers ${fmt(us.bondOffers)} → posts ${fmt(us.bondPosts)} · specialists seated ${fmt(us.specs)} · contracts filled ${fmt(us.contracts)} (${fmt(us.contractPts)}★ · drawn ${fmt(us.contractDrawn)}) · recipes by bonus ${fmt(us.recipesTile)} · London's prize: ${Object.entries(sumObj('prizeLondon')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  cask bonuses fired: ${Object.entries(sumObj('verbs')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'} · Works on a load: ${Object.entries(sumObj('works')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  the count at end avg ${fmt(avg(ok.map(r=>avg(r.counts))))} (max ${Math.max(...ok.map(r=>Math.max(...r.counts)))}) · chains held ${fmt(avg(ok.map(r=>r.chains)))} · Ready casks stranded ${fmt(us.stranded)} · sea pips' share of the score ${pct(avg(ok.map(r=>r.seaShare)),1)} · docked pips ${fmt(avg(ok.map(r=>r.docked)))}`);
   const dd={london:0,bergen:0,novgorod:0};ok.forEach(r=>Object.keys(dd).forEach(k=>dd[k]+=r.byDest[k]||0));

@@ -193,6 +193,17 @@ mission chapel on the quay, a lantern over its door, nets and a moored skiff bes
 - If a beer's color clashes with its card tint, lean the art toward the card's color (the card's `--c`
   shows through the scrim at the edges).
 
+## Queued (2026-09-21 — v8.2: the Bruges Road, the post tiles, the contracts)
+
+*Three new faces landed with the simple core. Each wears a stand-in; on landing, save under the
+exact filename and drop the stand-in. No rules change — no KEY bump.*
+
+| File | Subject | Stand-in in use |
+|---|---|---|
+| `building-road.png` | **the Bruges Road** — the cart road out of Hamburg at dawn: a laden ox-cart on a rutted track past the town gate, the spires behind, casks roped under canvas. The one PERMANENT wharf tile: read as a road, never a building | `building-ch_bruges.png` |
+| `contract-back.png` (optional) | **the contract card ground** — a merchant's table: a sealed letter, a wax seal, a tally stick, a quill. Used under the card's scrim if the Bruges panel art reads too busy | `kontor-bruges.png` (the card's artLayer) |
+| post-tile discs | the eight **post tiles** carry the existing action icons only (`grain` · `hops` · `age-2` · `flask-conical` · `scroll-text` · `package-plus` · `truck`) — **no new art needed**; the disc is the colour field | — |
+
 ## Queued (2026-09-20 — the hall's shelves: eight specialist portraits)
 
 *The specialists are now three shelf decks of six (v8.1a); eight new cards wear stand-in

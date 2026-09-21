@@ -54,6 +54,14 @@ as two loops that need each other:
   load and a cart are each priced a hop higher
   (`aiLoadValue` · `aiCartValue`). **The Hop merchant's Market** (`aiTradeValue`) is taken
   when a brewable recipe is short of hops.
+- **The station map** (v8.2): one action a station — the Market's `source` plus its `build`
+  (the one verb, four doors: a post · a Kontor building · a private tile · the Flip, valued as
+  the best of them), the Brewhouse's `brew`, the Harbor's `comm` (the must, then the maiden
+  load), the Cellar's `age`. **The cart and the load are SLOT stops**: `aiStationScore` prices a
+  flanking hull's load and the **Bruges Road**'s cart into the move.
+- **Contracts** (`aiContractValue`): a landing is worth its contract's ★ at 0.55 weight, read
+  into `aiLoadValue` (per destination) and `aiCartValue` (the yard and the hall doors), so a
+  seat steers its casks at the cards it holds.
 - **The cart's door** (`aiCartDoor` · `aiHallPick`): the hall when the best card the cask's
   die reaches (its prior, `aiSpecVal`, plus the die's pips and the seat's lane) beats the
   yard's zone; a shippable export yields to the sea (two dice, a prize) unless the game is
