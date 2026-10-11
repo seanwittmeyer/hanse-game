@@ -989,11 +989,16 @@ const NET=(typeof location!=='undefined'&&/[?&]net=1(?:&|$)/.test(location.searc
 const KEY='hanse-v82a';  // bump on any rules change (clears in-progress saves)
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
-// game_id is HARD-CODED per build (never user-editable); the per-game API key lives in
-// localStorage under playtest_api_key (pasted once in the Send dialog).
-const STUDIO_URL='https://scjledpxurrvncxlebue.supabase.co/functions/v1/ingest-playtest';
-const STUDIO_GAME_ID='effd0941-ebce-4053-959d-2fc6ed68ba3c';
+// One payload per finished game, POSTed to Studio. game_id is HARD-CODED per build (never
+// user-editable); the game's ingest key lives in localStorage under playtest_api_key, pasted
+// once by the playtester — never in the code, the build, a log or a commit.
+const STUDIO_URL='https://v2.waterworks.studio/api/ingest/playtests';
+const STUDIO_GAME_ID='484cd122-1a7b-4e2c-b78d-cad0f34357a0';
 const STUDIO_KEY_LS='playtest_api_key';
+const STUDIO_KEY_STALE=/^pt_/;   // the previous Studio's keys: they do not open this endpoint, so a stored one is replaced
+function studioKey(){let k='';try{k=localStorage.getItem(STUDIO_KEY_LS)||'';}catch(e){}return String(k).trim();}
+function studioKeyUsable(k){return !!k&&!STUDIO_KEY_STALE.test(k);}
+function studioForgetKey(){try{localStorage.removeItem(STUDIO_KEY_LS);}catch(e){}}
 const APP_VERSION='v8.2 “The Simple Core” · '+KEY;
 // a stable per-session id, minted at game START, so studio retries are idempotent (dedupe)
 function newSessionId(){try{if(typeof crypto!=='undefined'&&crypto.randomUUID)return crypto.randomUUID();}catch(e){}
@@ -2324,21 +2329,45 @@ function gameOver(){
 //==================================================================
 function openStudio(){
   if(!S||!S.over)return;
-  let k='';try{k=localStorage.getItem(STUDIO_KEY_LS)||'';}catch(e){}
-  const ta='width:100%;padding:6px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:.85rem;box-sizing:border-box';
-  let h='<h2>⇪ Send to Studio</h2>'
-    +'<p class="note">Records this playtest — players, scores, and the full log — to <b>Waterworks Studio</b>.'
-    +(S.studioSent?' <b>This session is already recorded'+(S.studioSent.playtest_number!=null?' (playtest #'+S.studioSent.playtest_number+')':'')+'</b> — sending again is safe (the studio dedupes by session).':'')+'</p>'
-    +'<p style="margin:8px 0 4px"><span class="note">API key '+(k?'(saved on this device)':'— paste it once; it is saved on this device')+'</span><br>'
-    +'<input id="stKey" type="text" value="'+attr(k)+'" placeholder="pt_…" autocomplete="off" spellcheck="false" style="'+ta+';font-family:monospace"></p>'
-    +'<p style="margin:8px 0 4px"><span class="note">Session notes (optional)</span><br><textarea id="stNotes" rows="2" style="'+ta+'"></textarea></p>'
-    +'<p style="margin:8px 0 4px"><span class="note">What was new this session (optional)</span><br><textarea id="stNew" rows="2" style="'+ta+'"></textarea></p>'
-    +'<p style="margin:8px 0 4px"><span class="note">Changes to make (optional)</span><br><textarea id="stTodo" rows="2" style="'+ta+'"></textarea></p>'
+  const k=studioKey();
+  if(!studioKeyUsable(k))return studioKeyScreen(k?'stale':'missing');
+  studioSendScreen();
+}
+const STUDIO_TA='width:100%;padding:6px;border:1px solid var(--line);border-radius:6px;font-family:inherit;font-size:.85rem;box-sizing:border-box';
+function studioShow(h){document.getElementById('studiocard').innerHTML=h;document.getElementById('studio').classList.remove('hidden');}
+// THE ONE-TIME SCREEN — the playtester pastes the ingest key Studio made for this game's playtests
+function studioKeyScreen(why){
+  const lead=why==='stale'
+    ?'<b>The old Studio’s key no longer works.</b> Studio has moved: paste the <b>new ingest key</b>, made in Studio for this game’s playtests.'
+    :why==='invalid'?'<b>Studio refused the saved key.</b> Paste the ingest key made in Studio for this game’s playtests.'
+    :why==='change'?'Paste a different ingest key.'
+    :'Paste the <b>ingest key</b> once — made in Studio for this game’s playtests. It is saved on this device only.';
+  studioShow('<h2>⇪ Send to Studio</h2>'
+    +'<p class="note">Records this playtest — players, scores and the full log — to <b>Waterworks Studio</b>.</p>'
+    +'<p style="margin:8px 0 4px">'+lead+'</p>'
+    +'<input id="stKey" type="text" value="" placeholder="the ingest key from Studio" autocomplete="off" spellcheck="false" style="'+STUDIO_TA+';font-family:monospace">'
     +'<div id="stStatus" class="note" style="min-height:1.2em;margin-top:6px"></div>'
-    +'<div style="display:flex;gap:8px;margin-top:10px"><button class="primary" id="stSend" onclick="studioSend()">⇪ Send playtest</button><button onclick="closeStudio()">Close</button></div>';
-  document.getElementById('studiocard').innerHTML=h;
-  document.getElementById('studio').classList.remove('hidden');
-  if(!k)document.getElementById('stKey').focus();
+    +'<div style="display:flex;gap:8px;margin-top:10px"><button class="primary" id="stSaveKey" onclick="studioSaveKey()">Save key</button><button onclick="closeStudio()">Close</button></div>');
+  document.getElementById('stKey').focus();
+}
+function studioSaveKey(){
+  const k=String(document.getElementById('stKey').value||'').trim();const st=document.getElementById('stStatus');
+  if(!k){st.innerHTML='<b style="color:var(--red)">Paste the key first.</b>';return;}
+  if(STUDIO_KEY_STALE.test(k)){st.innerHTML='<b style="color:var(--red)">That is the old Studio’s key</b> — it does not work here. Make a new one in Studio for this game’s playtests.';return;}
+  try{localStorage.setItem(STUDIO_KEY_LS,k);}catch(e){}
+  studioSendScreen();
+}
+// THE SEND FORM — the notes ride the payload; the key stays where it was saved
+function studioSendScreen(){
+  studioShow('<h2>⇪ Send to Studio</h2>'
+    +'<p class="note">Records this playtest — players, scores and the full log — to <b>Waterworks Studio</b>.'
+    +(S.studioSent?' <b>This session is already recorded'+(S.studioSent.playtest_number!=null?' (playtest #'+S.studioSent.playtest_number+')':'')+'</b> — sending again is safe (Studio knows it by its session id).':'')+'</p>'
+    +'<p class="note" style="margin:6px 0 2px">Ingest key saved on this device · <a href="#" onclick="studioKeyScreen(\'change\');return false">change it</a></p>'
+    +'<p style="margin:8px 0 4px"><span class="note">Session notes (optional)</span><br><textarea id="stNotes" rows="2" style="'+STUDIO_TA+'"></textarea></p>'
+    +'<p style="margin:8px 0 4px"><span class="note">What was new this session (optional)</span><br><textarea id="stNew" rows="2" style="'+STUDIO_TA+'"></textarea></p>'
+    +'<p style="margin:8px 0 4px"><span class="note">Changes to make (optional)</span><br><textarea id="stTodo" rows="2" style="'+STUDIO_TA+'"></textarea></p>'
+    +'<div id="stStatus" class="note" style="min-height:1.2em;margin-top:6px"></div>'
+    +'<div style="display:flex;gap:8px;margin-top:10px"><button class="primary" id="stSend" onclick="studioSend()">⇪ Send playtest</button><button onclick="closeStudio()">Close</button></div>');
 }
 function closeStudio(){document.getElementById('studio').classList.add('hidden');}
 function studioPlainLog(){return S.log.slice().reverse()
@@ -2432,12 +2461,14 @@ function studioPayload(){
     total_turns:S.turn,
     game_log_text:lines.join('\n'),
     rich_log:lines.map((t,i)=>({seq:i+1,text:t})),
-    players:rows.map(r=>({
-      name:r.p.name,
-      is_winner:cmp(r,win)===0,
-      notes:r.p.ai?(aiLabel(r.p)+' AI'):'human',
-      scores:{'Deliveries':r.sc.deliv,'The hall':r.sc.hall,'Pips':r.sc.sea+r.sc.docked,'Wharf':r.sc.wharf,'Majorities':r.sc.maj,'Flight':r.sc.flight,'Specialists':r.sc.bank+r.sc.guild},
-    })),
+    players:rows.map(r=>{const p=r.p,sc=r.sc;const goal=p.bankK||0;
+      // a flat {category: number}, Studio's names where they apply; the nine keys stay stable game to game and sum to the total
+      const seat={name:p.name,is_winner:cmp(r,win)===0,
+        scores:{'Deliveries':sc.deliv,'Majorities':sc.maj,'Goal Cards':goal,'Flight':sc.flight,'Wharfage':sc.wharf,
+                'Scored in play':sc.bank-goal+sc.guild,'Pips at sea':sc.sea,'Hall':sc.hall,'Docked':sc.docked}};
+      if(p.ai){seat.is_ai=true;seat.ai_model=String(p.ai.tier||'journeyman').toLowerCase();   // the tier is the model, a lower-case word
+        seat.notes=aiLabel(p)+' AI'+(p.ai.persona?' · '+p.ai.persona+' lane':'');}
+      return seat;}),
   };
   const notes=v('stNotes'),wasNew=v('stNew'),todo=v('stTodo');
   if(notes)body.notes=notes;
@@ -2445,17 +2476,34 @@ function studioPayload(){
   if(todo)body.changes_to_make=todo;
   return body;
 }
+function studioPost(key,body){return fetch(STUDIO_URL,{method:'POST',
+  headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+  body:JSON.stringify(body)});}
+// what Studio said, in the playtester's words — every branch ends with a way to retry
+function studioErrorHtml(res,data){
+  const code=(data&&data.code)||'';const msg=(data&&data.error)?data.error:('HTTP '+res.status);
+  const again=' Press <b>Send</b> to retry — nothing was lost.';
+  const paste=' <button onclick="studioKeyScreen(\'invalid\')">Paste a key</button>';
+  if(res.status===401)return '<b style="color:var(--red)">✗ Studio refused the ingest key</b>'+(code?' ('+attr(code)+')':'')+' — the saved key has been cleared; paste the key made in Studio for this game’s playtests.'+paste;
+  if(res.status===403)return '<b style="color:var(--red)">✗ This key is not for this game’s playtests</b> — '+attr(msg)+'. Make one in Studio for Brewhouses of the Hanse and paste it.'+paste;
+  if(res.status===400)return '<b style="color:var(--red)">✗ Studio refused the payload</b>'+(code?' ('+attr(code)+')':'')+': '+attr(msg)+'.'+again+' If it repeats, copy the diagnostics for the designer.';
+  if(res.status===413)return '<b style="color:var(--red)">✗ The log is over Studio’s 2 MB limit</b>, even without the event log.'+again;
+  if(res.status===429){const ra=res.headers&&res.headers.get&&res.headers.get('Retry-After');return '<b style="color:var(--red)">✗ Studio is refusing this address for now</b> (too many bad keys) — wait'+(ra?' '+attr(ra)+' seconds':'')+', then press <b>Send</b> again. Nothing was lost.';}
+  if(res.status>=500)return '<b style="color:var(--red)">✗ Studio could not record it right now</b> ('+attr(msg)+').'+again;
+  return '<b style="color:var(--red)">✗ '+attr(msg)+'</b>.'+again;
+}
 async function studioSend(){
-  const key=String(document.getElementById('stKey').value||'').trim();
-  const st=document.getElementById('stStatus');
-  if(!key){st.innerHTML='<b style="color:var(--red)">Paste the API key first.</b>';return;}
-  try{localStorage.setItem(STUDIO_KEY_LS,key);}catch(e){}
-  const sendBtn=document.getElementById('stSend');sendBtn.disabled=true;
+  const key=studioKey();
+  if(!studioKeyUsable(key))return studioKeyScreen(key?'stale':'missing');
+  const st=document.getElementById('stStatus');const sendBtn=document.getElementById('stSend');
+  if(sendBtn)sendBtn.disabled=true;
   st.textContent='Sending…';
+  const body=studioPayload();
   try{
-    const res=await fetch(STUDIO_URL,{method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key},
-      body:JSON.stringify(studioPayload())});
+    let res=await studioPost(key,body);
+    if(res.status===413&&body.rich_log){   // over the 2 MB limit: the text log carries every line, so send again without the event log
+      st.textContent='The log is over Studio’s 2 MB limit — sending the text log alone…';
+      delete body.rich_log;res=await studioPost(key,body);}
     let data=null;try{data=await res.json();}catch(e){}
     if(res.ok&&data&&(data.status==='created'||data.status==='duplicate')){
       S.studioSent={playtest_id:data.playtest_id||null,playtest_number:(data.playtest_number!=null?data.playtest_number:null),status:data.status};
@@ -2463,14 +2511,14 @@ async function studioSend(){
       st.innerHTML='<b style="color:var(--green)">✓ '+(data.status==='created'
         ?('Recorded'+(S.studioSent.playtest_number!=null?' as playtest #'+S.studioSent.playtest_number:''))
         :'Already recorded for this session (duplicate)')+'</b>';
+      render();
     }else{
-      const msg=(data&&data.error)?data.error:('HTTP '+res.status);
-      st.innerHTML='<b style="color:var(--red)">✗ '+attr(msg)+'</b> — '
-        +((res.status===401||res.status===403)?'check the API key, then ':'')+'press Send to retry. Nothing was lost.';
+      if(res.status===401)studioForgetKey();
+      st.innerHTML=studioErrorHtml(res,data);
     }
   }catch(e){
-    st.innerHTML='<b style="color:var(--red)">✗ Network error</b> ('+attr((e&&e.message)||e)+') — press Send to retry. Nothing was lost.';
-  }finally{sendBtn.disabled=false;}
+    st.innerHTML='<b style="color:var(--red)">✗ Network error</b> ('+attr((e&&e.message)||e)+') — press <b>Send</b> to retry. Nothing was lost.';
+  }finally{if(sendBtn)sendBtn.disabled=false;}
 }
 
 //==================================================================

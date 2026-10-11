@@ -239,6 +239,26 @@ Hard-won across v0.9 → v7; they constrain every future change:
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
 
+### The Studio move — playtests record to the new Waterworks Studio (2026-10-11, designer-asked; no rules change, no `KEY` bump)
+
+Waterworks Studio is being replaced, and the app's **Send to Studio** now posts to the new one:
+`https://v2.waterworks.studio/api/ingest/playtests`, as a bearer token, under the game's new
+Studio id (`484cd122-1a7b-4e2c-b78d-cad0f34357a0`, hard-coded in the build and never editable;
+Studio still files the game as *Brewhouses of the Hanse*). The old Studio's `pt_…` keys do not
+open the new endpoint, so a stored one is recognised as stale and the playtester is shown the
+**one-time paste screen** for the new ingest key (made in Studio for this game's playtests; held
+in `localStorage` only — never in the code, a log or a commit; a 401 clears it and asks again).
+The payload keeps its shape and session id (a resend is the same playtest); its scores now use
+Studio's category names where they apply and nine stable keys that sum to the seat's total —
+*Deliveries · Majorities · Goal Cards (the contracts) · Flight · Wharfage · Scored in play ·
+Pips at sea · Hall · Docked*; AI seats carry `is_ai` and `ai_model` (the tier, a lower-case
+word). Every answer the endpoint can give is shown to the player with a retry — a 413 resends
+without the event log first — and nothing is ever dropped silently. The 37 playtests of
+v0.10–v5.3b stay in the old Studio; the new one starts empty, with v8.2 as its first build.
+Surfaces: `play.html` only (the ingest block, the dialog, the payload) · this file. Gates:
+verify 70/70; the pages render clean headless; the flow driven headless against a stubbed
+endpoint through every response code.
+
 ### v8.2 — The simple core: one action a station, the Bruges Road, post tiles, contracts (2026-09-21, designer-ruled — `KEY hanse-v82a`)
 
 *"I struggle with the number of actions a player takes… I'd like to get back to 1 verb per
@@ -846,7 +866,10 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 
 ## 10. The state of play and the open watches
 
-**Where the build stands (2026-09-21).** v8.2 on every surface: `RULES.md` (rewritten whole),
+**Where the build stands (2026-10-11).** The app records playtests to the **new Waterworks Studio**
+(the Studio move, §9); the new Studio holds no playtest yet — the 37 of v0.10–v5.3b stay in the
+old one — so **no v8 build has met a recorded human table**: the designer's weekend on v8.1a is
+the one human read, and it produced v8.2. v8.2 on every surface: `RULES.md` (rewritten whole),
 the manifest, the registry, `play.html` (KEY `hanse-v82a`), `components.js`, `print.html` (the
 Bruges Road on the Works sheet, the eight post-tile discs, the sixteen contract cards, the
 wharf board's four one-action stations, the aid) and `rulebook.html` (§5 the stations, §6 the
