@@ -38,9 +38,9 @@ as two loops that need each other:
   the segment ticks it), the count it unlocks, the chain it completes toward an open building
   slot, and the lane it opens for the table — against the same die as a cask. The last dice of
   the supply are casks unless the post is worth more.
-- **The mandatory commission** is priced whole (`aiCommValue`: the berths, the post it grants,
-  the maiden load), damped once the wharf already holds three Ships; the Harbor's `must` stop
-  is always resolved first.
+- **The mandatory commission** is priced whole (`aiCommValue`: the berths against the fee, the
+  maiden load), damped once the wharf already holds three Ships; the Harbor's `must` stop is
+  always resolved first. (The commission grants no post since v8.2 — a post is a Build.)
 - **The Kontor building** (`aiKBuildValue`): casks to deliver × the modifier, the pips, the slot's start face (Novgorod's 2), the
   count; the tile by the seat's lane (the Kontorhaus for a hop-short seat, the Guildhouse once
   dice stand at sea, else the Warehouse). **The +1** (`aiRaisePick`) turns the lowest die,
@@ -107,7 +107,7 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (70 checks in 19 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (73 checks in 19 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · delivery = two dice ·
   Bruges and the yard · the hall's shelves · the prizes · the private ladder · the end and the

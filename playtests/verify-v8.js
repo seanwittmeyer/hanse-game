@@ -1,4 +1,4 @@
-// verify-v8.js — the v8.2 "The Simple Core" rule battery (KEY hanse-v82a). Seconds, always.
+// verify-v8.js — the v8.2 "The Simple Core" rule battery (KEY hanse-v82b). Seconds, always.
 // Drives the CANONICAL engine: extracts play.html's <script>, appends this driver in the
 // SAME lexical scope (S/UI are lets), runs in a Node vm with a stubbed DOM.
 // Usage: node playtests/verify-v8.js
@@ -22,7 +22,10 @@ function ok(x,msg){if(!x)__cur.fails.push(msg||'expected truthy');}
 // a fresh game in PLAY phase: every seat's starter post on e1 (the queue resolved), workers off the board
 function fresh(n,seg){S=freshState(n||3,['P1','P2','P3','P4'].slice(0,n||3));UI={sub:'starter'};undoStack=[];
   S.players.forEach(function(p){p.ai=null;});
+  // the starters stand on BARE segments — a starter post pays its tile like any post, and these fixtures want the die alone; the dealt tiles return after
+  var dealt={};Object.keys(S.sea.tiles).forEach(function(k){dealt[k]=S.sea.tiles[k];S.sea.tiles[k]=null;});
   while(S.phase==='starter')starterPick(seg||'e1');
+  Object.keys(dealt).forEach(function(k){S.sea.tiles[k]=dealt[k];});
   return S;}
 function clearSlot(id){S.slots[id]=null;S.buildings[id]=null;}
 function clearWharf(){SLOTS.forEach(function(s){clearSlot(s.id);});}
@@ -35,7 +38,7 @@ function loadInto(p,slot,vi){UI.load={ships:[slot],returnTo:'end',loadsLeft:1,ca
 function visit(p,cell){p.placed=true;p.cell=cell;beginStops();}
 
 // ---------- 0 · identity & setup ----------
-t('KEY is hanse-v82a',function(){eq(KEY,'hanse-v82a');});
+t('KEY is hanse-v82b',function(){eq(KEY,'hanse-v82b');});
 t('setup: supply 10 per seat, the starter phase in REVERSE turn order, phase starter',function(){
   S=freshState(3,['P1','P2','P3']);
   S.players.forEach(function(p){eq(p.supply,SUPPLY_DICE,'supply: the warm Gruit\\'s die is the twelfth');eq(p.hand.slice().sort(),['A','B','C','D'],'the hand');eq(p.ktiles.slice().sort(),['guildhouse','kontorhaus','warehouse'],'the set');});
@@ -72,12 +75,35 @@ t('setup: no contract/demand/ladder/bourse/flag/venture field on S',function(){f
   ['contractDisplay','demandDeck','demand','ladder','bourse','buildDeck','buildDisplay'].forEach(function(k){ok(S[k]===undefined,k+' absent');});});
 t('the starter: the eleventh die stands at face 1 on W1 or E1 and never touches the supply (the twelfth sits on the warm Gruit); count 1',function(){
   S=freshState(2,['P1','P2']);UI={sub:'starter'};S.players.forEach(function(p){p.ai=null;});
+  Object.keys(S.sea.tiles).forEach(function(k){S.sea.tiles[k]=null;});   // bare segments: this check is about the die (the tile's pay is the next check)
   var p=cur();eq(p.id,1,'the last seat stands first');
   starterPick('w2');ok(S.phase==='starter'&&S.sea.posts.w2[1]==null,'W2 refused');
   starterPick('w1');eq(S.sea.posts.w1[1],1,'a die at 1');eq(S.players[1].supply,SUPPLY_DICE,'the supply untouched');
   eq(qualityCount(S.players[1]),1,'count 1');
   starterPick('e1');eq(S.phase,'play');eq(S.active,S.first);eq(UI.sub,'move');
   S.players.forEach(function(q){eq(twelve(q),SUPPLY_DICE+2,'twelve dice');});});
+t('the starter post PAYS its segment\\'s post tile at once (Gain 2 grain · Gain 2 hops) to the seat that stood there, and the queue moves on',function(){
+  S=freshState(2,['P1','P2']);UI={sub:'starter'};S.players.forEach(function(p){p.ai=null;});
+  S.sea.tiles.w1='source';S.sea.tiles.e1='hops';
+  var a=cur();var g0=a.grain,h0=a.hops;starterPick('w1');eq(a.grain,g0+2,'W1 paid Gain 2 grain');eq(a.hops,h0,'no hops');
+  eq(S.phase,'starter');ok(cur().id!==a.id,'the next seat stands');
+  var b=cur();var hb=b.hops,gb=b.grain;starterPick('e1');eq(b.hops,hb+2,'E1 paid Gain 2 hops');eq(b.grain,gb,'no grain');
+  eq(S.phase,'play');eq(S.active,S.first);eq(UI.sub,'move');
+  S.players.forEach(function(q){eq(twelve(q),SUPPLY_DICE+2,'twelve dice');});});
+t('a starter Brew tile opens the brew for the standing seat (the phase still starter); the queue resumes once it resolves',function(){
+  S=freshState(2,['P1','P2']);UI={sub:'starter'};S.players.forEach(function(p){p.ai=null;});
+  S.sea.tiles.w1='brew';S.sea.tiles.e1=null;
+  var a=cur();var s0=a.supply;starterPick('w1');
+  eq(S.phase,'starter','the queue waits');eq(UI.sub,'brew','the brew is open');eq(S.active,a.id,'for the standing seat');
+  brewPick('hopped');if(UI.sub==='brewverb')brewVerbPick(Object.keys(pileVerbs('hopped'))[0]);
+  eq(a.supply,s0-1,'a die brewed');ok(a.vessels.some(function(c){return c&&c.style==='hopped';}),'a Hopped in a vessel');
+  eq(S.phase,'starter');eq(UI.sub,'starter','the next seat stands');ok(cur().id!==a.id,'the queue moved on');
+  starterPick('e1');eq(S.phase,'play');eq(UI.sub,'move');
+  S.players.forEach(function(q){eq(twelve(q),SUPPLY_DICE+2,'twelve dice — the brewed die sits in a vessel');});});
+t('the cask Build bonus offers every door the Market\\'s Build does — a post included (RULES §3/§4)',function(){fresh(2);var p=S.players[0];S.active=0;
+  UI={sub:'stops',stops:[]};fireCaskAct('build','end');
+  eq(UI.sub,'buildmenu','the menu opens');ok(UI.bm.opts.indexOf('post')>=0,'a post is offered');ok(UI.bm.opts.indexOf('priv')>=0,'a private tile too');
+  bmPick('post');eq(UI.sub,'post','the post flow opens');postSkip();});
 t('setup: Gruit is READY at brew and its stack is uniform (no search); the exports print six different bonuses',function(){fresh(2);
   eq(startDieFor(S.players[0],'gruit'),1);eq(STYLES.gruit.q,1);eq(STYLES.gruit.ready,0);
   eq(Object.keys(pileVerbs('gruit')),['source'],'all Gain 2 grain');

@@ -19,7 +19,7 @@
 |**Genre**      |Medium euro · engine building · a shared action grid (the Wharf) + a private brewery + a sea board |
 |**Weight**     |*Great Western Trail / Distilled* — not Lacerda                                     |
 |**Theme**      |A merchant brewing house in the Hanseatic League, Hamburg, c. 1350                  |
-|**Status**     |**v8.2 “The Simple Core”** — live (`play.html`, KEY `hanse-v82a`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
+|**Status**     |**v8.2 “The Simple Core”** — live (`play.html`, KEY `hanse-v82b`). The shape: §6. The log: §9. The state of play and what comes next: §10 — the designer's own table first, then the oracle read; never a corpus before a human table. |
 
 ---
 
@@ -161,7 +161,7 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
 
 ## 7. The tooling (how we verify)
 
-- **`playtests/verify-v8.js`** — the v8 rule battery (70 checks in 19 groups). Runs in
+- **`playtests/verify-v8.js`** — the v8 rule battery (73 checks in 19 groups). Runs in
   seconds; **always** after an engine change. The v5/v6 batteries live with their frozen
   builds under `archive/v5/playtests/` and `archive/v6/playtests/`.
 - **`playtests/sim.js [N]`** — drives the *canonical* `play.html` engine headlessly (extracts
@@ -245,6 +245,38 @@ Hard-won across v0.9 → v7; they constrain every future change:
 
 *Newest first. The v8 line in full; everything before v8.0 is in
 `archive/records/DESIGN-HISTORY-pre-v8.md`.*
+
+### v8.2b — The mirror plays the rules: the starter post pays its tile, the cask's Build offers a post (2026-10-11, an engine correctness fix off gatekeeper review #6 — `KEY hanse-v82b`)
+
+**What was wrong.** Two places where `play.html` disagreed with `RULES.md`, both found by review #6
+(§10) and confirmed by headless probe. (1) **The starter post never paid its post tile**: `starterPick`
+queued the bonus and the next line replaced the whole `UI` object, and nothing drained that queue in
+the starter phase anyway — so "W1 or E1?" was never the choice §1 and §8 describe, in any game the
+harness or a player has played; the battery did not assert it, and `sim.js` counted the starter tile as
+taken. (2) **A cask's *Build* bonus opened the menu without the post door** (`enterBuildMenu` called
+without `withPost`), where §3 and §4 say the bonus is one build you are eligible for, a post included.
+
+**The fix.** The starter post fires its tile like any post (`fireCaskAct(tile,'starternext')`) and the
+queue moves on from `resume` once the bonus has resolved (`starterAdvance`); a tile that opens a flow
+(Brew · Gain 1 recipe · Cart 1 · Load 1 · Age 2) runs for the standing seat with the phase still
+`starter`. The cask's Build passes `withPost`. The AI prices the post door in a Build bonus
+(`aiVerbValue`) and no longer prices a post on the commission (`aiCommValue` — the v8.2 ruling folded
+that post into Build and the AI was not told); the Harbor's code comment says what the code does. Two
+battery checks join: the starter tile pays (Gain 2 grain at once; a Brew tile opens the brew and the
+queue waits), and the cask Build offers a post.
+
+**Consequence for the record.** Every number read before this entry — the 2026-09-13 oracle, the
+2026-09-21 smoke and the 2026-10-11 pre-table read — was taken with the starter tile never firing: the
+opening was one action short for every seat, and "post tiles taken" over-counted by one a seat. The
+direction of the reads stands; the figures are re-read when the designer calls it, after the table.
+
+**Surfaces.** `play.html` (engine · AI · a comment; the `KEY`) · `playtests/verify-v8.js` ·
+`RULES.md` header · `AUTOMA.md` (the commission line) · this file (§1, §7, §9, §10). No rule changed; no
+component changed. **Gates:** verify **73/73**; `sim.js 3` clean at 2–4p (0 crashes / 0 deadlocks, the
+twelve-dice identity); the starter tiles now appear in the smoke's *post tiles taken* and the Build
+bonus's post door is used. A 3-game smoke is not a read, but note the direction: the opening gained an
+action for every seat, so pace may sit a touch lower (4p ran 9–12 rounds in the smoke); `SUPPLY_DICE`
+stays THE pace dial, untouched until the table.
 
 ### The Studio move — playtests record to the new Waterworks Studio (2026-10-11, designer-asked; no rules change, no `KEY` bump)
 
@@ -877,7 +909,7 @@ build; its record is git history, `archive/records/V7-PLAN.md` and
 (the Studio move, §9); the new Studio holds no playtest yet — the 37 of v0.10–v5.3b stay in the
 old one — so **no v8 build has met a recorded human table**: the designer's weekend on v8.1a is
 the one human read, and it produced v8.2. v8.2 on every surface: `RULES.md` (rewritten whole),
-the manifest, the registry, `play.html` (KEY `hanse-v82a`), `components.js`, `print.html` (the
+the manifest, the registry, `play.html` (KEY `hanse-v82b`), `components.js`, `print.html` (the
 Bruges Road on the Works sheet, the eight post-tile discs, the sixteen contract cards, the
 wharf board's four one-action stations, the aid) and `rulebook.html` (§5 the stations, §6 the
 turn, §8 the Build's four doors, §9 the post tiles, §11 the Road and the contracts, §12 the
@@ -987,6 +1019,28 @@ the dividend given its sentence (the return cargo). Would elevate: the hall with
 brewer is a path; Novgorod made somebody's plan (11–13% of deliveries at every tier); the 4p
 "touch every row" watch; the ladder's ceiling. The one change if only one lands: the 2p sail,
 with the table as its gate.
+
+**Gatekeeper review #6 (2026-10-11, on v8.2; the review lives in chat).** Verdict: *not yet* — the
+cleanest chassis the project has had, carrying three open structural questions and no table. (1) **The
+end rule rewards speed over value**: the first-to-empty seat wins 81 / 50–63 / 63% at N=16 and
+`ENDRULE=last` erases it — the rule, not skill; every die the thesis wants made valuable is one the
+clock wants spent. (2) **The merchant→brewer coupling is one-way**: the count gates brewing; pips
+(31–33% of a v8.0j score) need no beer; a post climbs on anyone's sail, so a merchant-only seat
+free-rides on rivals' cargo. (3) **The 2p sea is dead and worse than v8.0j.** Against review #5's
+must-fixes: the human table did not happen (neither Studio holds a v8 playtest; the v8.1a weekend has
+no record); the 2p sail did not land; the ⚜ drain is moot; the seat read is underpowered at N=16
+(a 63–68% edge sits inside its interval); the weight label stands. New findings: the mirror did not
+play the rules at the opening (fixed in v8.2b, §9); the kit cannot be cut as printed (post discs
+clipped in a 0.70 in cut, three die seats under 12 mm, no round track for the backstop, no post-tile
+seat on the segments); the rulebook's worked example does not add up (a "count of 2" with one die at
+sea, a contract not in the deck) and deals 4 Works in one paragraph and 3 in another. Must-fixes, in
+order: the recorded table at 2p and 4p · the end rule, with a structural candidate prepared for the
+table (*the muster*: when a supply empties, finish the round, then every remaining supply die stands
+at face 1 on a segment its owner does not hold) · a 2p identity for the sea (a convoy sail at 2p, or
+the paid sail priced as a choice) · a post that climbs only on a sail carrying *your* cask · the mirror,
+the kit and the surfaces. Would elevate: a brewing moment at the hall; Novgorod as somebody's plan;
+contracts vs the Flight decided at the table; a search-tier corpus on v8.2 after the table. The one
+change if only one lands: the end rule. The one thing: play it.
 
 **Next.** The designer's table on v8.2 — 2p and 4p first — recorded to the new Studio (**Send
 to Studio** wants an ingest key minted in the new Studio for this game's playtests, pasted once

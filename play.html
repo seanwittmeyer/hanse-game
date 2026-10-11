@@ -986,7 +986,7 @@ let activeTab=0;
 // boot then WAITS for an INIT over postMessage, local save/load are bypassed, and net.js (the
 // bridge script below — fully inert without the flag) drives seats/authority.
 const NET=(typeof location!=='undefined'&&/[?&]net=1(?:&|$)/.test(location.search||''));
-const KEY='hanse-v82a';  // bump on any rules change (clears in-progress saves)
+const KEY='hanse-v82b';  // bump on any rules change (clears in-progress saves)
 
 // ---- Waterworks Studio — playtest ingest ("Send to Studio") ----
 // One payload per finished game, POSTed to Studio. game_id is HARD-CODED per build (never
@@ -1499,9 +1499,14 @@ function starterPick(seg){if(!S||S.phase!=='starter')return;const p=cur();
   snapshot();
   S.sea.posts[seg][p.id]=1;   // the eleventh die — not from the supply
   log(p.name+' stands the '+LU('post')+' <b>starter post</b> on <b>'+SEGMENTS[seg].nm+'</b> (face 1) — a quality count of 1.',true);
-  {const tile=postTileAt(seg);
-   if(tile){log('↳ the '+LU(CASK_ACT_ICON[tile]||'')+' <b>'+(P_ACT_TXT[tile]||tile)+'</b> on '+SEGMENTS[seg].nm+' — the post tile pays '+p.name+'.');
-     (UI.pendingActs=UI.pendingActs||[]).push({pid:p.id,act:tile,style:null,slot:null});}}
+  // THE POST TILE: the segment's printed bonus action, taken by the seat that stands a post there — the starter post included;
+  // the queue moves on (resume 'starternext') once the bonus has resolved, so a Brew or a Cart runs for this seat first
+  const tile=postTileAt(seg);
+  if(tile){log('↳ the '+LU(CASK_ACT_ICON[tile]||'')+' <b>'+(P_ACT_TXT[tile]||tile)+'</b> on '+SEGMENTS[seg].nm+' — the post tile pays '+p.name+'.');
+    return fireCaskAct(tile,'starternext');}
+  starterAdvance();}
+// the starter queue moves on: the next seat in reverse turn order stands its post, or play begins
+function starterAdvance(){
   S.starterQueue.shift();
   if(S.starterQueue.length){S.active=S.starterQueue[0];UI={sub:'starter'};}
   else{S.phase='play';S.active=S.first;UI={sub:'move'};log('The starter posts stand — the first turn places a worker on any station.');}
@@ -1589,6 +1594,7 @@ function resume(rt){
   UI.cell=null;UI.stage=null;UI.tmp=null;
   UI.age=UI.brew=UI.bverb=UI.src=UI.load=UI.comm=UI.rgain=UI.sgain=UI.lift=UI.sailn=UI.post=UI.kb=UI.raise=UI.cart=UI.pb=UI.bm=UI.wild=UI.bond=null;
   if(rt==='benefitcont'||rt==='actscont'){const r=UI.afterRt;UI.afterRt=null;afterSail(r||'stops');return;}
+  if(rt==='starternext'){starterAdvance();return;}   // a starter post's tile bonus has resolved
   if(rt==='move'){UI.sub=(S.phase==='starter')?'starter':'move';render();return;}
   if(rt==='end'){UI.sub='end';render();return;}
   UI.sub=(UI.stops&&UI.stops.length)?'stops':'end';
@@ -1696,7 +1702,7 @@ function fireCaskAct(act,rt){const p=cur();
   else if(act==='brew')enterBrew(rt,false);
   else if(act==='recipe')enterRecipeGain(rt,false);
   else if(act==='hops'){log('↳ the cask bonus — '+p.name+' takes <b>2 hops</b>.');gain(p,0,2);resume(rt);}
-  else if(act==='build')enterBuildMenu(rt,false,p.id);
+  else if(act==='build')enterBuildMenu(rt,false,p.id,true);   // one build you are eligible for — every door the Market's Build has, the post included
   else if(act==='post')enterPost(FAR,rt,true,{pid:p.id});
   else if(act==='cart')enterCart(rt);
   else resume(rt);
@@ -1799,8 +1805,7 @@ function loadSkip(){const L=UI.load;if(!L){resume('stops');return;}
   UI.load=null;afterSail(rt);}
 
 //==================================================================
-// THE HARBOR — COMMISSION (a must when it can) → POST on that Ship's lane → the maiden
-// load · BUILD at a Kontor, or RAISE · the Shipmaster's unfull sail
+// THE HARBOR — COMMISSION (a must when it can) → the maiden load · the Shipmaster's unfull sail
 //==================================================================
 function commEligible(p){return (S.shipDisplay||[]).map((sn,i)=>({sn,i})).filter(o=>canPay(p,commCostFor(p,o.sn.ship)));}
 function enterCommission(rt,must){const p=cur();
@@ -2651,7 +2656,7 @@ function aiVerbValue(p,act){
     const base=aiIsTrader(p)?(1.2+0.35*aiFlightMarg(p)):2.2;
     return Math.max(0.4,base*aiPW(p,'breadth')-c)*(aiLateGame(p)?0.3:1);}
   if(act==='hops')return 0.6+0.6*Math.min(2,aiHopGap(p))+(p.hops<2?0.4:0);
-  if(act==='build'){const bp=aiBestPBuild(p,false).v;let kb=0;kbuildTargets(p).forEach(k=>kb=Math.max(kb,aiKBuildValue(p,k,false)));return Math.max(0,bp,kb)*0.8;}
+  if(act==='build'){const bp=aiBestPBuild(p,false).v;let kb=0;kbuildTargets(p).forEach(k=>kb=Math.max(kb,aiKBuildValue(p,k,false)));const bpo=aiBestPost(p,FAR,true);const pv=bpo.seg?bpo.v*0.9:0;return Math.max(0,bp,kb,pv)*0.8;}
   if(act==='post'){const b=aiBestPost(p,FAR,true);return b.seg?b.v*0.9:0;}
   if(act==='brew'){if(openVessel(p)<0)return 0;
     if(brewable(p).some(r=>r!=='gruit'&&canBrew(p,r)))return 3+0.15*p.supply+(vesselCasks(p).length===0?1.0:0);
@@ -2703,8 +2708,6 @@ function aiCommValue(p){const disp=S.shipDisplay||[];
   const best=readyInVessels(p).filter(o=>o.c.style!=='gruit').sort((a,b)=>b.c.die-a.c.die)[0];
   const aff=commEligible(p).map(o=>o.sn);
   let v=0.4+Math.max.apply(null,aff.map(sn=>SHIP_CAP[sn.ship]*0.25-aiFeeCost(commCostFor(p,sn.ship))));
-  let pv=0;aff.forEach(sn=>{const b=aiBestPost(p,lanesOf(sn.dest),true);if(b.seg)pv=Math.max(pv,b.v);});   // the commission's POST
-  v+=pv*(p.supply>=4?0.6:0.3);
   if(wharfShips().length>=3)v*=0.5;   // the wharf already holds Ships — a fourth is tempo nobody needs
   if(best&&aff.some(sn=>canShipQ(p,best.c.q,null)))v+=1.6;
   if(aiLateGame(p))v*=(best?1.2:0.7);

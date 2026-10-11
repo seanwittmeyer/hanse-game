@@ -1,6 +1,6 @@
 # Merchant Brewer of the Hanse — The Rules
 
-*The rules of the live build (`play.html`, KEY `hanse-v82a`). This document is the rules and
+*The rules of the live build (`play.html`, KEY `hanse-v82b`). This document is the rules and
 nothing else.*
 
 **2–4 players · c. 1350 · Hamburg. You run a merchant brewing house of the Hanseatic League.**

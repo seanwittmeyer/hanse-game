@@ -154,7 +154,7 @@ Kontore* (Bruges · London · Bergen · Novgorod).
 
 ## 8 · Simulating the engine — the harness
 
-- **`node playtests/verify-v8.js`** — the rule battery (70 checks in 19 groups); seconds;
+- **`node playtests/verify-v8.js`** — the rule battery (73 checks in 19 groups); seconds;
   always after an engine change.
 - **`node playtests/sim.js [N]`** — drives the engine's OWN in-page AI headlessly: the harness
   extracts `play.html`'s `<script>`, appends a bot in the same lexical scope (the engine's
