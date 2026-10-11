@@ -54,6 +54,22 @@ as two loops that need each other:
   load and a cart are each priced a hop higher
   (`aiLoadValue` · `aiCartValue`). **The Hop merchant's Market** (`aiTradeValue`) is taken
   when a brewable recipe is short of hops.
+- **The brewer lane, recut** (2026-10-11): the committed brewer no longer farms Gruit (its Gruit tilt
+  is gone; it brews UP, weighting a brew by its quality and taking the one-post-away bet), ages
+  (the Cellar's Age and the Cold Store carry its tilt), posts when — and only when — its beers want
+  the count, aims a high die at the hall's upper shelves (`aiHallPick`), wants the high recipes and
+  the brewer's cards (Cellarman · Braumeister · Cooper · Steward). Read its lane only from
+  `PERSONAS=1` at the trader tier, as every lane is read.
+- **The post tiles** (2026-10-11): `aiPostValue` reads the segment's tile — the bonus action it
+  pays rides the die's worth (0.6–2.5), so the seat chooses between segments by their tiles and
+  the Bonded Store's priced post is weighed with its tile.
+- **The harness hooks** (`playtests/sim.js`, override-only-if-set): `SUPPLY=` · `WORKS=` (the
+  Public Works dealt) · `FLIGHT=0` (the ladder off) · `CPTS=` (the contracts' ★ scaled) ·
+  `ENDRULE=first|second|last|lastcall` (the final-round rule) · `COG1=1` and `DISPLAY=n` (2p
+  only: a one-cask Cog · a smaller display) · `PAYSAIL=1` (a paid sail after the maiden load, the
+  seat paying whenever it can). The reads: posts by door (the Market · the *Post* bonus ·
+  London · the Shipping Office · the Bonded Store), the Market's Build by option, the post tiles
+  taken, dice spent a game, and **the racer** — whether the first supply to empty won.
 - **The station map** (v8.2): one action a station — the Market's `source` plus its `build`
   (the one verb, four doors: a post · a Kontor building · a private tile · the Flip, valued as
   the best of them), the Brewhouse's `brew`, the Harbor's `comm` (the must, then the maiden

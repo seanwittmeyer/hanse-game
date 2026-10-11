@@ -161,8 +161,11 @@ Kontore* (Bruges · London · Bergen · Novgorod).
   render/log/save are no-ops. It prints USAGE before VALUE. Env hooks: `TIER=` (apprentice ·
   journeyman · trader · guildmaster · cellarmaster) · `PERSONAS=1` (the committed lanes) ·
   `PTIER=` (the lanes at any tier) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · `GUILD_MS` /
-  `CELLAR_MS` / `GM_ROLLS`. A hook overrides
-  only when set; a ruled default is never silently forced off.
+  `CELLAR_MS` / `GM_ROLLS` · the A/B hooks `WORKS=` · `FLIGHT=0` · `CPTS=` ·
+  `ENDRULE=first|second|last|lastcall` · `COG1=1` · `DISPLAY=n` · `PAYSAIL=1`. A hook overrides
+  only when set; a ruled default is never silently forced off. The USAGE block reads posts by
+  door, the Market's Build by option, the post tiles taken, the dice spent and **the racer**
+  (did the first supply to empty win).
 - **`node playtests/oracle.js [N]`** + **`node playtests/oracle-study.js <dir>`** — the turn
   oracle: the same harness writing a per-turn trace of every game (env as `sim.js` plus
   `COUNTS=` · `SEED=` / `GOFF=` for shards · `OUT=` · `PLAY=` another build), and the study that

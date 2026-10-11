@@ -2580,8 +2580,9 @@ function aiPostValue(p,seg,free){
   FAR.forEach(k=>{if(LANES[k].includes(seg)){
     if(nextPostSeg(p,k)===seg&&LANES[k].every(s=>s===seg||S.sea.posts[s][p.id]!=null))v+=(bldgAt(p,k)?0:2.2);   // completes the chain toward an open slot
     if(!laneOpenFor(p,k)&&LANES[k].every(s=>s===seg||segUnlocked(s)))v+=1.5;}});   // opens the lane for the table
+  {const tile=postTileAt(seg);if(tile)v+=Math.min(2.5,Math.max(0.6,(aiVerbValue(p,tile)||0)*0.6));}   // the post tile's bonus action rides the die
   v*=Math.max(1,aiPW(p,'merchant'));
-  if(aiPersona(p)==='brewer')v*=0.6;
+  if(aiPersona(p)==='brewer'&&aiCountGap(p)<=0)v*=0.6;   // the brewer posts for the count its beers need, and otherwise keeps its dice for casks
   if(aiLateGame(p))v*=0.7;
   if(!free)v-=aiVerbValue(p,'brew')*0.35;   // the same die as a cask
   return v;}
@@ -2609,7 +2610,7 @@ function aiPBuildValue(p,o,free){const st=o.station;const d=PRIVATES[PRIV_TILES[
   let v=d.pts*0.9+0.5*Math.min(6,aiRunway());
   if(st==='A')v+=(brewable(p).length>1?0.8:0.3)+(aiPersona(p)==='brewer'?0.8:0);   // the Granary sells the brewer a second brew
   if(st==='B')v+=recipeGainable(p).length*0.6;
-  if(st==='D')v+=maturingInVessels(p).length*0.5;
+  if(st==='D')v+=maturingInVessels(p).length*0.5+(aiPersona(p)==='brewer'?0.8:0);   // the Cold Store is the brewer's tile
   if(st==='C')v+=(qualityCount(p)>=2?1:0);
   v*=Math.max(1,aiPW(p,'builder'));
   if(aiLateGame(p))v*=0.7;
@@ -2620,7 +2621,7 @@ function aiBestPBuild(p,free){let bo=null,bv=-1e9;pbuildOptions(p,free).forEach(
 function aiHallPick(p,c){let best=null,bv=-1e9;hallCards(p,c).forEach(o=>{const v=aiSpecVal(p,o.key);if(v>bv){bv=v;best=o;}});
   if(!best)return null;
   const face=Math.max(1,Math.min(6,c.die));
-  const v=bv+0.8*face+0.5*DIVIDEND_H+0.4+(hasUpgrade(p,'gmaster')?GMASTER_PTS*0.8:0)+1.2*aiPW(p,'hall')+(hallDiceOf(p)===2?0.8:0);   // the die's pips, the dividend and the bonus ride the present as they ride a load
+  const v=bv+0.8*face+0.5*DIVIDEND_H+0.4+(hasUpgrade(p,'gmaster')?GMASTER_PTS*0.8:0)+1.2*aiPW(p,'hall')+(hallDiceOf(p)===2?0.8:0)+(aiPersona(p)==='brewer'?0.6*face:0);   // the die's pips, the dividend and the bonus ride the present as they ride a load; the brewer's high die is for the upper shelves
   return {b:best.b,j:best.j,key:best.key,v};}
 function aiCartDoor(p,c){const pk=aiHallPick(p,c);if(!pk)return null;   // the hall when the card and the die beat the yard's goods
   const zone=yardZone(S.yard.length);const yv=(zone==='best'?3.2:zone==='good'?1.8:1.0)+(recipeGainable(p).length&&zone!=='ok'?1.2:0);
@@ -2660,13 +2661,13 @@ function aiVerbValue(p,act){
 function aiGruitBrewValue(p){if(!canBrew(p,'gruit'))return 0;
   const zone=yardZone(S.yard.length);
   let v=(zone==='best'?2.0:zone==='good'?1.0:0.3)+(recipeGainable(p).length&&zone!=='ok'?0.9:0)+(aiHopGap(p)>0?1.1*DIVIDEND_H:0)
-    +(inFlight(p,'gruit')?0:0.45*aiFlightMarg(p)*aiPW(p,'breadth'))+(aiPersona(p)==='brewer'?0.4:0);
+    +(inFlight(p,'gruit')?0:0.45*aiFlightMarg(p)*aiPW(p,'breadth'))-(aiPersona(p)==='brewer'?0.8:0);   // the brewer brews up, not Gruit
   if(aiLateGame(p))v*=0.5;
   return v;}
 function aiRecipeVal(p,st){if(!st||!STYLES[st])return 0;
   if(hasRecipe(p,st))return 0;
-  let v=1.4+STYLES[st].q*0.5;
-  if(STYLES[st].q>qualityCount(p)+1)v*=0.7;   // a recipe the count cannot ship yet
+  let v=1.4+STYLES[st].q*0.5+(aiPersona(p)==='brewer'?STYLES[st].q*0.4:0);   // the brewer wants the high recipes
+  if(STYLES[st].q>qualityCount(p)+1)v*=(aiPersona(p)==='brewer'?0.9:0.7);   // a recipe the count cannot ship yet
   if(aiLateGame(p))v*=0.4;
   return v-aiFeeCost(recipeFeeFor(p,st));}
 function aiSpecVal(p,k){
@@ -2675,7 +2676,8 @@ function aiSpecVal(p,k){
   let v=R[k]||2;
   if(k==='hopgardener'||k==='hopmerchant')v+=(aiHopGap(p)>0?1.0:0)+(aiPersona(p)==='brewer'?0.6:0);
   if(k==='maltster')v+=(p.grain<3?0.6:0);
-  if(k==='cooper')v+=0.4*maturingInVessels(p).length;
+  if(k==='cooper')v+=0.4*maturingInVessels(p).length+(aiPersona(p)==='brewer'?0.8:0);
+  if(k==='cellar'||k==='braumeister'||k==='steward')v+=(aiPersona(p)==='brewer'?0.8:0);   // the brewer's cards: faster dice, a fourth vessel
   if(k==='brewersmate')v+=(brewable(p).length>2?0.6:0)+(aiPersona(p)==='brewer'?0.8:0);
   if(k==='burgher')v+=0.7*SLOTS.filter(s=>{const b=privAt(s.id);return b&&b.owner===p.id;}).length+(aiPersona(p)==='builder'?0.8:0);
   if(k==='navigator')v+=1.0*FAR.filter(x=>hasChain(p,x)).length+(aiPersona(p)==='merchant'?0.6:0);
@@ -2732,7 +2734,7 @@ function aiStationActValue(p,c,a){
     if(aiLateGame(p)&&!brewable(p).some(r=>canBrew(p,r)&&startDieFor(p,r)>=STYLES[r].q))v*=0.4;
     return v;}
   if(a==='age'){const m=maturingInVessels(p);if(!m.length)return 0;
-    let steps=CELLAR_POOL,v=0.8;m.slice().sort((x,y)=>(x.c.q-x.c.die)-(y.c.q-y.c.die)).forEach(o=>{const need=o.c.q-o.c.die;   // casks that become READY this visit are worth their load
+    let steps=CELLAR_POOL,v=0.8+(aiPersona(p)==='brewer'?0.6:0);m.slice().sort((x,y)=>(x.c.q-x.c.die)-(y.c.q-y.c.die)).forEach(o=>{const need=o.c.q-o.c.die;   // casks that become READY this visit are worth their load
       if(need<=steps){steps-=need;v+=2.4+0.3*o.c.q+(o.c.style!=='gruit'&&canShipQ(p,o.c.q,null)?0.8:0);}else v+=0.6;});
     if(S.ending)v*=0.7;return v;}
   if(a==='comm')return aiCommValue(p);
@@ -2795,8 +2797,9 @@ function aiStep(){
         if(aiNoisy(p))return brewPick(aiRandOf(aff));
         {const nb=aiIsTrader(p)?0.7*aiFlightMarg(p):0.8;const late=aiLateGame(p);const cnt=countAt(p,null);
          const key=r=>{const q=STYLES[r].q;let v=((p.delivered||[]).some(d=>d.style===r)?0:nb*aiPW(p,'breadth'))+q;
-           if(r!=='gruit'){if(q>cnt+1)v-=4;else if(q>cnt)v-=(aiPersona(p)==='merchant'?0.3:1.2);}   // the count cannot ship it yet (one post away is a bet)
-           if(r==='gruit')v+=(p.grain+p.hops<4?1.5:0)+(aiPersona(p)==='brewer'?0.6:0)-(late?0:0.6);
+           if(r!=='gruit'){if(q>cnt+1)v-=(aiPersona(p)==='brewer'?2.5:4);else if(q>cnt)v-=(aiPersona(p)==='merchant'||aiPersona(p)==='brewer'?0.3:1.2);   // the count cannot ship it yet (one post away is a bet; the brewer takes it)
+             if(aiPersona(p)==='brewer')v+=0.9*q;}   // the brewer brews up
+           if(r==='gruit')v+=(p.grain+p.hops<4?1.5:0)-(aiPersona(p)==='brewer'?1.0:0)-(late?0:0.6);
            if(late)v-=(q-startDieFor(p,r))*1.2;
            return v;};
          aff.sort((a,b)=>key(b)-key(a));}

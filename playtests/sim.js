@@ -28,6 +28,37 @@ const driver = `
 //================= HEADLESS RUNNER (appended in-scope) =================
 render=function(){};save=function(){};log=function(){};snapshot=function(){};
 if(__SRCN>0)SRC_PRIMARY=__SRCN;
+// A/B: ENDRULE=lastcall — the first empty supply ends the game after ONE MORE full round (the last call)
+if(__ENDRULE==='lastcall'){
+  checkDiceEnd=function(){if(!S||S.ending||S.lastCall!=null)return;
+    if(S.players.some(function(p){return p.supply<=0;})){S.lastCall=S.turn;S.endReason='dice';}};
+  checkTriggers=function(){if(S.ending)return;checkDiceEnd();
+    if(S.lastCall!=null&&S.turn>S.lastCall){S.ending=true;S.endReason='dice';return;}
+    if(S.turn>=MAX_ROUND){S.ending=true;S.endReason='ceiling';}};}
+// A/B: PAYSAIL=1 — after the maiden load the commissioner may pay 1 G an empty berth to sail the new hull now
+// (a prototype: the seat pays whenever it can afford up to two empty berths)
+if(__PAYSAIL){
+  var __enterLoadPS=enterLoad;enterLoad=function(ships,rt,loadsLeft){var r=__enterLoadPS(ships,rt,loadsLeft);
+    if(UI.load&&ships&&ships.length===1&&loadsLeft===MAIDEN_LOAD&&UI.sub==='load')UI.load.maiden=ships[0];return r;};
+  var __loadCommitPS=loadCommit;loadCommit=function(shipSlot,vi){var L=UI.load;var maiden=!!(L&&L.maiden===shipSlot);var p=cur();
+    var r=__loadCommitPS(shipSlot,vi);
+    var t=S.slots[shipSlot];
+    if(maiden&&t&&t.type==='ship'&&(t.load||[]).length&&t.load.length<sailCap(t)&&shipDest(t)&&shipDest(t)!=='wild'&&t.load.some(function(x){return x.owner===p.id;})){
+      var empties=sailCap(t)-t.load.length;
+      if(empties<=2&&p.grain>=empties){pay(p,{g:empties});if(__on())__V.paySails=(__V.paySails||0)+1;sailShip(shipSlot,p.id);afterSail('stops');}}
+    return r;};}
+// A/B, 2p only: COG1=1 — the Cog sails at ONE cask · DISPLAY=n — a Ship display of n (the hulls at the wharf)
+var __twoP=function(n){
+  if(n===2&&__COG1)SHIP_CAP.cog=1;else SHIP_CAP.cog=2;
+  if(n===2&&__DISPLAY>0){while(S.shipDisplay.length>__DISPLAY)S.shipDeck.push(S.shipDisplay.pop());
+    refillShipDisplay=function(){while(S.shipDisplay.length<__DISPLAY&&S.shipDeck.length)S.shipDisplay.push(S.shipDeck.shift());};}};
+if(__ENDRULE==='last'||__ENDRULE==='second'){   // A/B: the final round is set by the LAST (or the SECOND) supply to empty, not the first
+  checkDiceEnd=function(){if(!S||S.ending)return;var need=(__ENDRULE==='last')?S.players.length:Math.min(2,S.players.length);
+    var empt=S.players.filter(function(p){return p.supply<=0;}).length;
+    if(empt>=need){S.ending=true;S.endReason='dice';}};}
+if(__WORKS>0)Object.keys(WORKS_DEAL).forEach(function(k){WORKS_DEAL[k]=__WORKS;});   // A/B: the Public Works dealt
+if(__FLIGHT===0)FLIGHT_PTS={1:0,2:0,3:0,4:0,5:0};                                    // A/B: the Flight ladder off
+if(__CPTS>0&&__CPTS!==1)CONTRACTS.forEach(function(c){c.pts=Math.round(c.pts*__CPTS);});   // A/B: the contracts' ★ scaled
 if(__MUST>=0)COMM_MUST=__MUST;
 if(__GMR>0)GM_ROLLS=__GMR;
 if(__GMS>0)GUILD_MS=__GMS;
@@ -35,6 +66,7 @@ if(__CMS>0)CELLAR_MS=__CMS;
 // ---- v8 USAGE COUNTERS — ground truth via wrapped engine functions, reset per game.
 var __V=null;
 function __vReset(){__V={work:0,comm:0,commMust:0,commLapse:0,posts:0,postsFree:0,kbuilds:0,raises:0,
+  postDoor:{},tiles:{},marketBuild:{},bonusBuild:{},firstEmpty:null,firstEmptyRound:null,_postVia:null,
   sails:0,sailsUnfull:0,wildSails:0,land:0,landBdie:0,ticksPost:0,ticksBldg:0,
   carts:0,yard:0,yardGruit:0,yardRecipe:0,hall:0,hallPips:0,shelf:{},recipesTile:0,specs:0,
   contracts:0,contractPts:0,contractDrawn:0,
@@ -44,7 +76,16 @@ var __on=function(){return __V&&!aiSimulating;};
 var __doMove=doMove;doMove=function(c){if(__on())__V.work++;return __doMove(c);};
 var __enterCommission=enterCommission;enterCommission=function(rt,must){if(__on()){__V.comm++;if(must)__V.commMust++;}return __enterCommission(rt,must);};
 var __commPlace=commPlace;commPlace=function(slot){var r=__commPlace(slot);return r;};
-var __postPick=postPick;postPick=function(seg){var P=UI.post;var free=P&&P.ctx&&!(P.ctx.thenMaiden);var r=__postPick(seg);if(__on()){__V.posts++;if(free)__V.postsFree++;}return r;};
+var __postPick=postPick;postPick=function(seg){var P=UI.post;var pid=P?P.pid:null;var stood0=(pid!=null)&&S.sea.posts[seg][pid]!=null;var tile=postTileAt(seg);
+  var r=__postPick(seg);
+  if(__on()&&pid!=null&&!stood0&&S.sea.posts[seg][pid]!=null){__V.posts++;var via=__V._postVia||'market';__V.postDoor[via]=(__V.postDoor[via]||0)+1;if(via!=='market')__V.postsFree++;
+    if(tile)__V.tiles[tile]=(__V.tiles[tile]||0)+1;}
+  __V._postVia=null;return r;};
+var __starterPickV2=starterPick;starterPick=function(seg){var tile=postTileAt(seg);var r=__starterPickV2(seg);if(__on()&&tile)__V.tiles[tile]=(__V.tiles[tile]||0)+1;return r;};
+var __fireCaskActV2=fireCaskAct;fireCaskAct=function(act,rt){if(__on()&&act==='post')__V._postVia='caskBonus';return __fireCaskActV2(act,rt);};
+var __enterPact2=enterPact;enterPact=function(slot,rt){var b=privAt(slot);if(__on()&&b&&pactKind(b)==='praisepost')__V._postVia='shippingOffice';return __enterPact2(slot,rt);};
+// THE DICE RACER: the first supply to empty sets the final round — does that seat win?
+var __spendDieV2=spendDie;spendDie=function(p){var r=__spendDieV2(p);if(__on()&&p.supply<=0&&__V.firstEmpty==null){__V.firstEmpty=p.id;__V.firstEmptyRound=S.turn;}return r;};
 var __kbuildPick=kbuildPick;kbuildPick=function(k,t){var was=S.sea.kontor[k].slots.filter(function(x){return x;}).length;var r=__kbuildPick(k,t);
   if(__on()&&S.sea.kontor[k].slots.filter(function(x){return x;}).length>was){__V.kbuilds++;__V.kbTile[t]=(__V.kbTile[t]||0)+1;}return r;};
 var __raiseApply=raiseApply;raiseApply=function(p,t){if(__on())__V.raises++;return __raiseApply(p,t);};
@@ -69,15 +110,21 @@ var __recipeGainPick=recipeGainPick;recipeGainPick=function(st){var p=cur();var 
 var __grantUpgrade=grantUpgrade;grantUpgrade=function(p,k){var n0=p.upgrades.length;var r=__grantUpgrade(p,k);if(__on()&&p.upgrades.length>n0)__V.specs++;return r;};
 var __checkContracts=checkContracts;checkContracts=function(p,rec){var n=__checkContracts(p,rec);if(__on()&&n){__V.contracts++;__V.contractPts+=n;}return n;};
 var __drawContract=drawContract;drawContract=function(p,why){var r=__drawContract(p,why);if(__on()&&r)__V.contractDrawn++;return r;};
-var __placePrivOn=placePrivOn;placePrivOn=function(slot){var b0=privAt(slot);var r=__placePrivOn(slot);if(__on()&&!b0&&privAt(slot))__V.pbuilds++;return r;};
-var __pbuildPick=pbuildPick;pbuildPick=function(kind,st){var r=__pbuildPick(kind,st);if(__on()&&kind==='flip')__V.flips++;return r;};
+var __placePrivOn=placePrivOn;placePrivOn=function(slot){var b0=privAt(slot);var B=UI.pb;var mk=B&&B.returnTo==='stops'&&!B.free;var r=__placePrivOn(slot);if(__on()&&!b0&&privAt(slot)){__V.pbuilds++;if(mk){__V.marketBuild.tile=(__V.marketBuild.tile||0)+1;__V.marketBuild.priv=(__V.marketBuild.priv||0)-1;}}return r;};
+var __pbuildPick=pbuildPick;pbuildPick=function(kind,st){var B=UI.pb;var mk=B&&B.returnTo==='stops'&&!B.free;var r=__pbuildPick(kind,st);if(__on()&&kind==='flip'){__V.flips++;if(mk){__V.marketBuild.flip=(__V.marketBuild.flip||0)+1;__V.marketBuild.priv=(__V.marketBuild.priv||0)-1;}}return r;};
 var __enterPact=enterPact;enterPact=function(slot,rt){if(__on())__V.pacts++;return __enterPact(slot,rt);};
 var __bondStand=bondStand;bondStand=function(p,seg){if(__on())__V.bondPosts++;return __bondStand(p,seg);};
 var __sailShipBond=sailShip;sailShip=function(slot,cid){var was=(UI.pendingBond||[]).length;var r=__sailShipBond(slot,cid);if(__on())__V.bondOffers+=((UI.pendingBond||[]).length-was);return r;};
 var __brewCommitSur=brewCommit;brewCommit=function(style,verb){var B=UI.brew||UI.bverb||{};var sur=!!(B.sur&&!B.free);var r=__brewCommitSur(style,verb);if(__on()&&sur)__V.payBrews++;return r;};
 var __fireCaskAct=fireCaskAct;fireCaskAct=function(act,rt){if(__on())__V.verbs[act]=(__V.verbs[act]||0)+1;return __fireCaskAct(act,rt);};
 var __brewCommit=brewCommit;brewCommit=function(st,v){var p=cur();var n0=p._brews||0;var r=__brewCommit(st,v);if(__on()&&(p._brews||0)>n0){__V.brews++;if(st==='gruit')__V.brewsGruit++;}return r;};
-var __bmGo=bmGo;bmGo=function(k,rt,free,pid){if(__on()&&free&&rt==='benefitcont')__V.prizeLondon[k]=(__V.prizeLondon[k]||0)+1;return __bmGo(k,rt,free,pid);};
+var __bmGo=bmGo;bmGo=function(k,rt,free,pid){
+  if(__on()){var door=(free&&rt==='benefitcont')?'london':(rt==='actscont'?'caskBonus':'market');
+    if(door==='london')__V.prizeLondon[k]=(__V.prizeLondon[k]||0)+1;
+    else if(door==='caskBonus')__V.bonusBuild[k]=(__V.bonusBuild[k]||0)+1;
+    else __V.marketBuild[k]=(__V.marketBuild[k]||0)+1;
+    if(k==='post')__V._postVia=door;}
+  return __bmGo(k,rt,free,pid);};
 var __loadCommit=loadCommit;loadCommit=function(sid,vi){var bk=bKeyAt(sid);var r=__loadCommit(sid,vi);if(__on()&&bk)__V.works[bk]=(__V.works[bk]||0)+1;return r;};
 function __runGame(n,__POFF){
   __POFF=__POFF||0;
@@ -87,20 +134,21 @@ function __runGame(n,__POFF){
     var ps=null;if(__PERSONAS)ps=__MIX?AI_PERSONAS[Math.floor(Math.random()*AI_PERSONAS.length)]:AI_PERSONAS[(i+__POFF)%AI_PERSONAS.length];
     p.ai=__PERSONAS?{tier:__PTIER,persona:ps}:{tier:__TIER};
     if(__SUPPLY>0)p.supply=__SUPPLY;});
+  __twoP(n);
   var guard=0;
   while(!S.over){
     aiStep();
     if(++guard>250000)return {error:'runaway (guard tripped)',round:S.turn,sub:UI.sub};
   }
   // the twelve-dice identity at the end (ten in the supply + the starter post + the warm Gruit's die)
-  var idOK=S.players.every(function(p){return p.supply+diceOnBoard(p)===(SUPPLY_DICE+2)&&p.supply>=0;});
+  var idOK=S.players.every(function(p){return p.supply+diceOnBoard(p)===((__SUPPLY>0?__SUPPLY:SUPPLY_DICE)+2)&&p.supply>=0;});   // the identity reads the supply in force (the SUPPLY hook)
   S.players.forEach(function(p){p.vessels.forEach(function(c){if(c&&caskReady(c))__V.stranded++;});});
   var fr=finalRows();var rows=fr.rows;
   var byDest={london:0,bergen:0,novgorod:0};
   S.players.forEach(function(p){p.delivered.forEach(function(d){if(!d.yard&&!d.hall)byDest[d.dest]=(byDest[d.dest]||0)+1;});});
   var specHeld={};S.players.forEach(function(p){p.upgrades.forEach(function(k){specHeld[k]=(specHeld[k]||0)+1;});});
   var specWin={};rows[0].p.upgrades.forEach(function(k){specWin[k]=1;});
-  return {round:S.turn,trigger:S.endReason||'?',sailed:S.sailed,idOK:idOK,
+  return {round:S.turn,trigger:S.endReason||'?',sailed:S.sailed,idOK:idOK,firstEmpty:__V.firstEmpty,firstEmptyRound:__V.firstEmptyRound,racerWon:(__V.firstEmpty!=null&&__V.firstEmpty===rows[0].p.id),
     winSeat:rows[0].p.id,
     laneSeats:S.players.map(function(q){var sc=scorePlayer(q);
       return {ps:(q.ai&&q.ai.persona)||null,total:sc.total,flight:flightBeers(q),land:(q.delivered||[]).length,count:qualityCount(q),sea:sc.sea,hall:sc.hall,maj:sc.maj,wharf:sc.wharf};}),
@@ -148,6 +196,13 @@ const ctx = {
   lucide:{ createIcons:noop },
   __N:N, __TIER:TIER,
   __SUPPLY:parseInt(process.env.SUPPLY||'0',10),
+  __PAYSAIL:process.env.PAYSAIL==='1',
+  __COG1:process.env.COG1==='1',
+  __DISPLAY:parseInt(process.env.DISPLAY||'0',10),
+  __ENDRULE:String(process.env.ENDRULE||'first'),
+  __WORKS:parseInt(process.env.WORKS||'0',10),
+  __FLIGHT:parseInt(process.env.FLIGHT||'-1',10),
+  __CPTS:parseFloat(process.env.CPTS||'1'),
   __SRCN:parseInt(process.env.SRCN||'0',10),
   __MUST:parseInt(process.env.MUST||'-1',10),
   __PERSONAS:PERSONAS, __MIX:MIX,
@@ -169,7 +224,8 @@ try {
 const R = ctx.__RESULTS;
 const fmt=(x,d=1)=>Number(x).toFixed(d);
 const pct=(a,b)=>fmt(100*a/Math.max(1,b),1)+'%';
-console.log('=== hanse v8.2 sim — '+N+' games/count · '+(PERSONAS?('PATHWAYS ('+(MIX?'mixed':'round-robin')+' personas, '+(process.env.PTIER||'trader')+')'):('tier '+TIER))+' ===');
+const HOOKS=['SUPPLY','WORKS','FLIGHT','CPTS','SRCN','MUST','ENDRULE','COG1','DISPLAY','PAYSAIL'].filter(k=>process.env[k]!=null).map(k=>k+'='+process.env[k]).join(' ');
+console.log('=== hanse v8.2 sim — '+N+' games/count · '+(PERSONAS?('PATHWAYS ('+(MIX?'mixed':'round-robin')+' personas, '+(process.env.PTIER||'trader')+')'):('tier '+TIER))+(HOOKS?' · A/B '+HOOKS:'')+' ===');
 let anyErr=0,anyId=0;
 [2,3,4].forEach(n=>{
   const arr=R[n]; const errs=arr.filter(r=>r.error); const ok=arr.filter(r=>!r.error);
@@ -195,8 +251,12 @@ let anyErr=0,anyId=0;
   const us={};ok.forEach(r=>Object.keys(r.V).forEach(k=>{if(typeof r.V[k]==='number')us[k]=(us[k]||0)+r.V[k];}));
   Object.keys(us).forEach(k=>us[k]/=ok.length);
   const sumObj=(key)=>{const o={};ok.forEach(r=>Object.keys(r.V[key]||{}).forEach(k=>o[k]=(o[k]||0)+r.V[key][k]));return o;};
-  console.log(`USAGE/game — WORK ${fmt(us.work)} · brews ${fmt(us.brews)} (Gruit ${fmt(us.brewsGruit)}) · commissions ${fmt(us.comm)} (must ${fmt(us.commMust)}) · posts ${fmt(us.posts)} (by bonus/prize ${fmt(us.postsFree)}) · Kontor builds ${fmt(us.kbuilds)} [${Object.entries(sumObj('kbTile')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')}] · RAISEs ${fmt(us.raises)}`);
-  console.log(`  sails ${fmt(us.sails)} (unfull ${fmt(us.sailsUnfull)} · wild ${fmt(us.wildSails)}: ${Object.entries(sumObj('wildPort')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · deliveries ${fmt(us.land)} (building die share ${fmt(us.landBdie)}★) · post ticks ${fmt(us.ticksPost)} · building ticks ${fmt(us.ticksBldg)}`);
+  console.log(`USAGE/game — WORK ${fmt(us.work)} (${fmt(us.work/n)} turns a seat) · brews ${fmt(us.brews)} (Gruit ${fmt(us.brewsGruit)}) · commissions ${fmt(us.comm)} (must ${fmt(us.commMust)}) · posts ${fmt(us.posts)} [${Object.entries(sumObj('postDoor')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}] · Kontor builds ${fmt(us.kbuilds)} [${Object.entries(sumObj('kbTile')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')}] · +1s ${fmt(us.raises)}`);
+  { const dice=us.brews+us.posts+us.kbuilds+(us.bondPosts||0);
+    const racer=ok.filter(r=>r.racerWon).length;const withRacer=ok.filter(r=>r.firstEmpty!=null).length;
+    console.log(`  dice a game: ${fmt(dice)} of ${n*(parseInt(process.env.SUPPLY||'10',10))} (brews ${fmt(us.brews)} · posts ${fmt(us.posts)} · Kontor builds ${fmt(us.kbuilds)}) · the first empty supply in round ${fmt(avg(ok.filter(r=>r.firstEmptyRound).map(r=>r.firstEmptyRound)))} · THE RACER (first to empty) won ${pct(racer,withRacer)} (chance ${pct(1,n)})`);
+    console.log(`  the Market's Build: ${Object.entries(sumObj('marketBuild')).filter(([k])=>k!=='priv').map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'} · the Build bonus: ${Object.entries(sumObj('bonusBuild')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'} · post tiles taken: ${Object.entries(sumObj('tiles')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);}
+  console.log(`  sails ${fmt(us.sails)} (paid ${fmt(us.paySails||0)} · unfull ${fmt(us.sailsUnfull)} · wild ${fmt(us.wildSails)}: ${Object.entries(sumObj('wildPort')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · deliveries ${fmt(us.land)} (building die share ${fmt(us.landBdie)}★) · post ticks ${fmt(us.ticksPost)} · building ticks ${fmt(us.ticksBldg)}`);
   console.log(`  carts ${fmt(us.carts)}: the yard ${fmt(us.yard)} (Gruit ${fmt(us.yardGruit)} · recipes ${fmt(us.yardRecipe)} · zones ${Object.entries(sumObj('yardZone')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}) · the hall ${fmt(us.hall)} (by shelf ${['Journeyman','Master','Alderman'].map((k,b)=>k+' '+fmt((sumObj('shelf')[b]||0)/ok.length)).join(' · ')} · pips ${fmt(us.hallPips)} · cards left open ${fmt(avg(ok.map(r=>r.hallOpen)))}) · hops held at end ${fmt(avg(ok.map(r=>r.hopsHeld)))}`);
   console.log(`  private builds ${fmt(us.pbuilds)} · flips ${fmt(us.flips)} · building stops fired ${fmt(us.pacts)} (priced brews ${fmt(us.payBrews)}) · Bonded Store offers ${fmt(us.bondOffers)} → posts ${fmt(us.bondPosts)} · specialists seated ${fmt(us.specs)} · contracts filled ${fmt(us.contracts)} (${fmt(us.contractPts)}★ · drawn ${fmt(us.contractDrawn)}) · recipes by bonus ${fmt(us.recipesTile)} · London's prize: ${Object.entries(sumObj('prizeLondon')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);
   console.log(`  cask bonuses fired: ${Object.entries(sumObj('verbs')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'} · Works on a load: ${Object.entries(sumObj('works')).map(([k,v])=>k+' '+fmt(v/ok.length)).join(' · ')||'—'}`);

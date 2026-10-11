@@ -884,6 +884,48 @@ cheap in actions, as designed); presents 2.3–3.7; the hall's Journeyman shelf 
 all of them. The AI draws no contract from the Alderman yet (the card seats rarely at these
 tiers).
 
+**The pre-table read (2026-10-11, designer-called, on v8.2 — the harness and the AI only; no
+rule moved).** Two instruments were lying (every post read as "by bonus/prize"; post tiles were
+not counted) and the brewer lane was coded to farm Gruit; both fixed, with new reads — posts by
+door, the Market's Build by option, the post tiles taken, dice spent a game, and **the racer**:
+whether the seat whose supply empties first wins. Then 16 games a count on the committed lanes,
+the greedy floor beside them, six A/Bs through new hooks, and a 30-game turn-oracle trace. The
+findings, in the order they matter for the table:
+
+- **The turn grows.** 3.7 events a turn in rounds 1–4 → 4.7–5.1 in rounds 5–8 → 5.7–6.5 in rounds
+  9+; ★ silence 1.6–2.5 turns at most; empty turns 0–1%; the Market's goods-only turn has
+  vanished (petty 0–1%). The ruling's bet — a small base turn the layers make big — reads true at
+  the greedy floor. The Market is the most-visited station (35–37%), the Cellar the least (14–18%).
+- **The clock is a weapon.** The seat whose supply empties first wins **81 / 50–63 / 63%** at
+  2 / 3 / 4p against chance of 50 / 33 / 25. Ending the game on the *last* supply instead drops
+  it to 56 / 38 / 38% — near chance — so most of the edge is the rule, not the better player
+  spending faster: rivals finish holding 1.4–2.0 dice they never spend. "Last" is not printable
+  (12–19% of games stall to the round-24 ceiling on one hoarded die); "second" leaves 3p at 56%;
+  **"the last call" (one more full round after the first empty) does not dampen it** (69 / 75 /
+  50%). The lever is open; the table says whether it reads as a race to the bottom.
+- **The 2p sea is unchanged and the display is not the cause.** 50–65% of 2p seats never
+  deliver far; 7 Ships commissioned a game, 0.6–0.9 sail. A display of 2: sails 0.9 (no change).
+  A Cog that sails at one cask at 2p: sails 2.6, the berth race lost. **A paid sail after the
+  maiden load** (1 `G` an empty berth; the prototype pays whenever it can): sails 3.3 / 4.9 / 6.3,
+  deliveries 3.6 / 5.1 / 6.9, the winner's total 50–54 — the sea wakes at every count, and as
+  prototyped nearly every sail is a paid, unfull one, so the berth race goes with it. The real
+  rule would price it as a choice; the direction is clear, the ruling is the designer's.
+- **Pace sits on the band's floor.** Rounds 11–12 at every count (the lanes 10–11 at 3–4p, 15–25%
+  under band). `SUPPLY` 11: +1–1.5 rounds, 94% in band. Dice spent 17–18 of 20 · 24–26 of 30 ·
+  32–35 of 40.
+- **The lanes.** No lane is dead; the recut brewer wins 11–40% (★20–36) and 100% of its 2p games
+  in one run (small N); the builder is the weak lane (★17–24, 0–25%); the pure merchant is weak
+  at 4p (★28, pips only). Novgorod takes 5–18% of deliveries (0% in one 3p run). The Alderman
+  shelf still never seats in the sim (0.0–0.1 presents a seat; the Master 0.1–0.2).
+- **Contracts** fill 1.3 / 1.8 / 2.2–3.1 of the 4 / 6 / 8 dealt, for 6–16★ a game — 7–9% of a
+  seat's score; at 1.5× the ★ the fill rate does not move (the AI plans no further than the
+  landing), so the steering question is the table's. The post tiles all fire (0.6–2.7 each a
+  game); the Market's Build splits post 3.7–6.3 · Kontor building 2.2–4.3 · tile 1.3–2.2 · Flip
+  0.6–1.4 — all four doors in use. Four Public Works instead of three, and the Flight switched
+  off, changed nothing the sim can see.
+- **Seat order is flat** at N=16 (2p P1 37–58%); the gatekeeper's 63–68% first-seat edge is not
+  in this build's reads.
+
 **The full oracle (2026-09-13, designer-called, on v8.0j — the read behind v8.1a's shelves; kept
 as the baseline the shelves are measured against).** The turn oracle (§7) traced 500 games a
 count at the greedy tiers, 500 a count on the committed lanes, 250 mixed, 160 at the noisy
@@ -919,8 +961,8 @@ with a third of games on the backstop, 12–17% empty turns, 1.2 / 1.7 / 2.2 del
 9–12 Ships commissioned a game, the ⚜ held at the end 1.4–2.3, the final round its biggest
 (54–67% big turns). **The lanes** (Trader): merchant 85 / 50 / 47% wins · specialist 65 / 41 / 29 · breadth
 68 / 44 / 31 · majority 59 / 32 / 16 · hall 42 / 36 / 27 · builder 25 / 23 / 18 · brewer 6 / 7
-/ 7; the brewer persona as coded farms Gruit (5 of 6 brews at 2p) and is a harness defect to
-recode before it is read again; the builder's ladder tops at ~7★ of 30, a support lane. **The
+/ 7; the brewer persona as coded then farmed Gruit (5 of 6 brews at 2p) — a harness defect, recut
+on 2026-10-11 (`AUTOMA.md`) before the v8.2 pre-table read; the builder's ladder tops at ~7★ of 30, a support lane. **The
 score:** sea pips are the largest slice (31–33%), deliveries 16–19%, majorities 11%, the wharf
 11–14%, the Flight 10–11%, the hall 3–8%.
 
@@ -965,6 +1007,11 @@ is never refilled and never expires, one cask fills one contract (the higher whe
 
 **Watches for the designer's table (v8.2 first):**
 
+- **The racer.** Does the table feel the first-to-empty seat winning (the sim: 1.5–2.5× chance)?
+  Read whether the clock reads as a race to the bottom or as the game's tension. The levers are
+  structural and open: the end rule itself (first · second · last · the last call — all tested,
+  none clean), or what an unspent die is worth at the end (untested; a value lever).
+
 - **Does the turn feel light enough — and does the engine still grow?** The whole ruling rests
   on one bet: a base turn of one action plus its slots leaves room for the layers (the Works,
   the private ladder, the specialists, the post tiles, the prizes) to make a turn big again. Read
@@ -991,9 +1038,11 @@ is never refilled and never expires, one cask fills one contract (the higher whe
 - **The Alderman shelf's new powers** (a contract a present · builds 1 `G` less · a post on any
   segment · a fourth vessel). Four cards that never seated in the whole v8.1 corpus. Read whether
   a human now aims a die-4 cask at that shelf.
-- **The 2p sea.** The oracle's first question for the table: two seats load different hulls for
-  different Kontors, so 4.9 Ships dock and one sails a game, and 39% of seats never deliver
-  far (unchanged by the shelves: the hall opens in round 6 now, the sea in round 8 still).
+- **The 2p sea.** The oracle's first question for the table, and the pre-table read says it is
+  worse under v8.2 (50–65% of 2p seats never deliver far, 7 Ships commissioned for 0.6–0.9
+  sails): two seats load different hulls for different Kontors. The display is not the cause
+  (a display of 2: no change). **A paid sail after the maiden load** wakes the sea at every count
+  (×3–4 sails) and, as prototyped, dissolves the berth race — the pricing is the ruling.
   Neither the must (optional is worse)
   nor the Hulk's third berth is the cause. The structure levers, in the order to try: a paid
   sail at the Harbor (a docked Ship carrying your cask sails now, 1 grain an empty berth — the
