@@ -44,7 +44,7 @@ face comes from `STYLE.md`. Counts and fees are placeholders until the designer'
 | **Kontor chits** | 3 | .75 in disc, in the Kontor's colour | one per far Kontor, for the wild Ships |
 | **Worker pawns** | 4 | — | one per colour, on the Wharf's stations |
 | **Score discs** | 4 | .5 in disc | one per colour on the score ring |
-| **First-player and round markers** | 2 | — | turn order fixed; round 18 backstops |
+| **First-player and round markers** | 2 | — | turn order fixed; round 24 backstops |
 
 **Player colours:** Crimson · Azure · Forest · Amber (a fifth, purple, for the untuned 5p mode).
 

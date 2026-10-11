@@ -83,7 +83,8 @@ every surface, never just one side.
    multi-file edit. A card face edits in `components.js` only.
 4. **Land the whole set in one pass** — the docs, then the pages, then the engine.
 5. **Gates:** `node playtests/verify-v8.js` always; `node playtests/sim.js 3` if the engine
-   changed (crash-free is the bar); bump the save `KEY` on any rules change, never on
+   changed (crash-free is the bar); `node playtests/render-check.js` if a page or
+   `components.js` changed; bump the save `KEY` on any rules change, never on
    doc-only work.
 6. **Publish to `main` the same turn** (§6).
 
@@ -153,7 +154,7 @@ Kontore* (Bruges · London · Bergen · Novgorod).
 
 ## 8 · Simulating the engine — the harness
 
-- **`node playtests/verify-v8.js`** — the rule battery (64 checks in 16 groups); seconds;
+- **`node playtests/verify-v8.js`** — the rule battery (70 checks in 19 groups); seconds;
   always after an engine change.
 - **`node playtests/sim.js [N]`** — drives the engine's OWN in-page AI headlessly: the harness
   extracts `play.html`'s `<script>`, appends a bot in the same lexical scope (the engine's
@@ -172,6 +173,11 @@ Kontore* (Bruges · London · Bergen · Novgorod).
   reads a directory of shards: little wins, the ★ silence, the phases, the arcs, the hall’s shelves, the
   paths to victory, the lanes; `--timeline=label:n:game` prints one game turn by turn. The
   designer calls it; its outputs never enter the repo.
+- **`node playtests/render-check.js`** — the three pages loaded headless, failing on any page
+  error; **`node playtests/ui-game.js`** — one whole AI game through the real UI. Both need
+  `playwright-core` and a Chromium (`playtests/_browser.js` finds them; its header says how).
+  Run the render check after any edit to `print.html`, `rulebook.html` or `components.js` —
+  the battery never loads the kit or the rulebook.
 - **The bar:** 0 crashes and 0 deadlocks across 2–4p; the twelve-dice identity at every end;
   pace in the band; the trigger split; the usage counters.
 - **Light by default:** after an engine change, verify plus 5–10 sim games in total. The

@@ -120,7 +120,8 @@ Flight on the recipe cards crossed to the right of the board.
   and the hall are the doors to Mumme and Bock. 3 grain and 3 hops to start.
 - **The die is the cask** — Brew sets a supply die at the start value; only a hand turns it
   (the Cellar's Age 3, the Age 2 bonus, the Cold Store / Lagering Cellar, the Braumeister);
-  Ready at the quality; a Raise die at the wharf may push it to quality + 1; read as it boards
+  Ready at the quality; a **+1** at the wharf (the Malt Kiln, the Bonded Store, the Lagering
+  Cellar) may push it to quality + 1; read as it boards
   against the port's die floor (London 2 · Bergen 3 · Novgorod 4); parked at delivery, never
   scoring again.
 - **The sea** — four segments in a tree from Hamburg (W1 · W2 → London; E1 → Bergen; E1 · E2 →
@@ -131,7 +132,7 @@ Flight on the recipe cards crossed to the right of the board.
   building slots (1 on side A · 2 on side B).
 - **The Kontore** — a delivery = cask die + building die; the die parks in the field (presence,
   the majority pair, the Flight); every building die there +1; the prize (London a Build with
-  the fee waived · Bergen Cart 1 · Novgorod Raise die).
+  the fee waived · Bergen Cart 1 · Novgorod a die at sea +1).
 - **Bruges** — the Cart at the Cellar (and Bergen's prize); the yard's three zones (Best: a
   recipe fee-waived or 2 grain · Good: a recipe at its fee or 1 grain · OK: 1 grain); the
   hall's three shelves (Journeyman 2 · Master 3 · Alderman 4, on the cask's die): a present
@@ -160,15 +161,17 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
 
 ## 7. The tooling (how we verify)
 
-- **`playtests/verify-v8.js`** — the v8 rule battery (64 checks in 16 groups). Runs in
+- **`playtests/verify-v8.js`** — the v8 rule battery (70 checks in 19 groups). Runs in
   seconds; **always** after an engine change. The v5/v6 batteries live with their frozen
   builds under `archive/v5/playtests/` and `archive/v6/playtests/`.
 - **`playtests/sim.js [N]`** — drives the *canonical* `play.html` engine headlessly (extracts
   the script, runs it in a Node `vm`, appends a bot in-scope — the engine's own in-page AI).
   The **robustness/pace gate**: 0 crashes / 0 deadlocks across 2–4p, the twelve-dice identity
   at every end, pace in the band. Prints USAGE before VALUE. Env hooks: `TIER=` · `PERSONAS=1`
-  (the committed lanes) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · the MC budgets (override-only-if-set
-  — a ruled default is never silently forced off).
+  (the committed lanes) · `MIX=1` · `SUPPLY=` · `SRCN=` · `MUST=` · the MC budgets · the A/B hooks `WORKS=` · `FLIGHT=0` · `CPTS=` ·
+  `ENDRULE=first|second|last|lastcall` · `COG1=1` · `DISPLAY=n` · `PAYSAIL=1` (override-only-if-set
+  — a ruled default is never silently forced off). The USAGE block reads posts by door, the
+  Market's Build by option, the post tiles taken, the dice spent a game and the racer.
 - **`playtests/oracle.js [N]`** — the TURN ORACLE: the same harness, writing a per-turn trace
   of every game (what each work turn handed its seat, the dice and goods it spent, the ★ it
   moved, what befell the other seats on that clock) as JSON lines; env as `sim.js` plus
@@ -179,6 +182,10 @@ The derivation, the designer's review and the implementation plan: `plan/V8-PLAN
   (first-time milestones, the arcs completed a seat, the dead ends), the hall's shelves, the score
   by part, the paths to victory, the lanes; `--timeline=label:n:game` prints one game turn by
   turn. The designer calls it; its outputs stay out of the repo.
+- **`playtests/render-check.js`** — the three pages loaded headless, failing on any page error
+  (the battery never loads the kit or the rulebook); **`playtests/ui-game.js`** — one whole AI
+  game through the real UI, render on. `playtests/_browser.js` finds `playwright-core` and a
+  Chromium for both. Run the render check after any edit to a page or `components.js`.
 - **The v5-era probe fleet** (`strategy-probe.js` · `flow-probe.js` · the prize probes ·
   `ai-ladder.js` · `ai-render-smoke.js` · `aid-overflow.js`) lives at
   `archive/v5/playtests/`; the v8 equivalents re-derive when the designer calls the full
@@ -981,12 +988,19 @@ brewer is a path; Novgorod made somebody's plan (11–13% of deliveries at every
 "touch every row" watch; the ladder's ceiling. The one change if only one lands: the 2p sail,
 with the table as its gate.
 
-**Next.** The designer's own table, carrying the 2p sea and the Alderman shelf as its
-questions. The probe fleet re-derives from `archive/v5/playtests/` when called. **Never a
-corpus before a human table.**
+**Next.** The designer's table on v8.2 — 2p and 4p first — recorded to the new Studio (**Send
+to Studio** wants an ingest key minted in the new Studio for this game's playtests, pasted once
+into the app; the stub answered every code, but no real payload has reached the Studio yet, so
+its first answer is the first thing to read). The table carries, in order: the racer · the 2p
+sea · the turn's weight (thin early, earned late?) · the contracts, and the Flight beside them ·
+the Alderman shelf · the Market's Build. The harness is caught up to the build (the lanes
+recut, the reads honest, the A/B hooks in place): nothing more is to be simulated before the
+table. **Never a corpus before a human table.** The probe fleet re-derives from
+`archive/v5/playtests/` when called. A new session starts with the canon read (`CLAUDE.md` §2)
+and then waits for the table's results and the designer's calls below before any ruling.
 
 **Every number is a placeholder until the table.** The levers live in the engine's dials block
-(`play.html`): `SUPPLY_DICE` 10 (THE pace dial) · `MAX_ROUND` 18 · `KONTOR_MIN` 2 / 3 / 4 ·
+(`play.html`): `SUPPLY_DICE` 10 (THE pace dial) · `KONTOR_MIN` 2 / 3 / 4 ·
 `KB_START` 1 / 1 / 2 · `kontorSlotsN` 1 / 2 · `WORKS_DEAL` 3 (the Bruges Road takes a slot first) · `SETUP_WILD` 2 · `START_GOODS` 3 `G` 3 `H` · `DIVIDEND_H` 1 · `KONTORHAUS_H` 1 · `TRADE_H` 3 (the Hop merchant) · `COMM_MUST` 1 · `SHELVES` (floors 2 / 3 / 4) · `HALL_DEAL`
 3 / 4 · `SSLOTS` 3 · `GMASTER_PTS` 2 · `CHRON_PTS` 1 · `BURGHER_CUT` 1 `G` · `CONTRACT_DEAL` 2 · the sixteen contracts' ★ · `POST_TILE_POOL` (eight discs, four dealt) · `MAX_ROUND` 24 · `YARD_ZONES` · `YARD_GOODS` 2 / 1 / 1 · `BREW_SUR` and
 `BOND_FEE` 1 `G` · the fees, all grain (Hulk 1 `G`; tier 1 2 `G`; the Flip 3 `G`; the recipe
@@ -1004,6 +1018,27 @@ is never refilled and never expires, one cask fills one contract (the higher whe
 
 - None queued. The hall's payout (open since v8.0h) closed with v8.1a: the hall pays a
   specialist and the die's pips, never ★ on a neutral die.
+
+**Decisions before the designer (put on 2026-10-11 after the pre-table read; none ruled — the
+table first):**
+
+- **The end rule — the racer.** Keep *the first empty supply sets the final round* (the sim:
+  the racer wins 1.5–2.5× chance) or move it. Tested, none clean: the *last* supply (near
+  chance, but 12–19% of games stall to the ceiling on one hoarded die) · the *second* (3p stays
+  at 56%) · *the last call* (no dampening). Untested: an unspent die worth 1★ at the end — a
+  value lever, on a component already on the board. Touches RULES §14, the rulebook §13, the
+  aid on both pages, `checkDiceEnd` / `checkTriggers`, the AI's endgame sense, verify group 2,
+  the `KEY`.
+- **A paid sail after the maiden load.** The prototype (1 `G` an empty berth, paid whenever it
+  can) wakes the sea at every count and, as prototyped, dissolves the berth race; the ruling is
+  the price and the limit (one berth only? a grain a berth? the maiden load only?). Touches the
+  Harbor's face on the Wharf board (`print.html`), the station table (RULES §3, the rulebook
+  §5), the sail (§9), the aid, the maiden-load flow after `commPlace`, `aiCommValue`, the `KEY`;
+  the registry already holds *sail*.
+- **`SUPPLY_DICE` 10 or 11.** 11 buys +1–1.5 rounds (94% in band) but makes the game thirteen
+  dice: *twelve dice are the whole game* prints on the manifest's dice row, the rulebook,
+  `index.html`, `README.md` and `CLAUDE.md` §7 — the dearest of the three to land. The
+  structural alternative is to let the end rule carry the pace.
 
 **Watches for the designer's table (v8.2 first):**
 
@@ -1026,7 +1061,9 @@ is never refilled and never expires, one cask fills one contract (the higher whe
   cards actually steer a human's beers and destinations from turn one, whether the spreads (two
   Kontore · all three · one by sea and one by road) are read as goals or as accidents, and
   whether the ★ (3–10) sit right beside a delivery's 3–8★. The levers, in order: the ★ values ·
-  the deal of 2 · the mix of the sixteen.
+  the deal of 2 · the mix of the sixteen. Also whether the Flight and the contracts read as one
+  goal paid twice (the sim: the Flight switched off changed nothing it can see); both stand
+  until the table says one is the other's shadow.
 - **The post tiles.** Standing a post now pays a bonus action. Read whether the first post is
   taken for the tile rather than the lane, whether the four dealt discs make the opening
   (W1 or E1?) a real choice, and whether posts now drain the supply too fast (the clock is the
@@ -1064,7 +1101,8 @@ is never refilled and never expires, one cask fills one contract (the higher whe
   present resolved during another seat's sail — does it read at the table, or wait for the
   deliverer's next turn?).
 - **The 2p clock.** The Guildmaster loiters at 2p (17% empty turns, 27% of games to the
-  round-18 backstop): with one rival, deferral reads as free — the v7 finding, alive at 2p.
+  then round-18 ceiling, read on v8.0j): with one rival, deferral reads as free — the v7
+  finding, alive at 2p.
   Read whether a human pair stalls; the lever is what an idle turn costs (the tide, the rival's
   sail), never the backstop.
 - **Is there more than one engine tile, and do the dice end the game?** The v7 read's two
@@ -1120,7 +1158,7 @@ is never refilled and never expires, one cask fills one contract (the higher whe
   cask resolves at its Kontor: cask die + your building die, park, the prize. **The
   field** — the panel's space for parked dice. **Presence** — your parked dice there. **The
   majority pair** — the two ★ values paid to the two leaders. **Prize** — London a Build with
-  the fee waived · Bergen Cart 1 · Novgorod Raise die.
+  the fee waived · Bergen Cart 1 · Novgorod a die at sea +1.
 - **The cart** — the Cellar's alternate, and Bergen's prize: one Ready cask to Bruges by road.
   **The yard** — the grain door: places in three zones (Best · Good · OK); Gruit's only door.
   **The hall** — the guild of brewmasters: three **shelves** of specialists (Journeyman ·
@@ -1134,8 +1172,8 @@ is never refilled and never expires, one cask fills one contract (the higher whe
   points 2 / 4; **tier 1 / tier 2**, tier 2 by **the Flip**; fires **On visit** at the station
   its slot flanks. **Build** — the one verb for a private building, a Flip or a Kontor
   building; three doors (the Brewhouse's alternate, the Build bonus, London's prize).
-- **Raise die** — turn a die +1: at sea (cap 6) or a boarding cask at the wharf (cap quality +
-  1). **Specialist** — a purple tile, earned at the hall, never bought; three seats, one per
+- **+1** — turn a die up one pip: at sea (cap 6) or a boarding cask at the wharf (cap quality +
+  1); printed as the glyph, never a verb name. **Specialist** — a purple tile, earned at the hall, never bought; three seats, one per
   shelf. **Recipe** —
   a single-faced card, permission to brew; the exports print a fee; it crosses your board into
   the Flight. **The Flight** — the recipe cards to the right of your board, one per beer that

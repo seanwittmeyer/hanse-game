@@ -20,8 +20,8 @@ goods, no free dice; tiers differ only in decision quality.
   rule for 3–4p search.
 - **The MC pair samples every v8 prompt as a first-class option** (`AI_MC_SUBS`): the starter
   post, the move, the stops (a `must` commission is the only option while it stands), the
-  brew, the load, the commission and its post, the Kontor build and the RAISE, the private
-  build and its slot, London's build menu, the cart and its door, the Shipmaster's sail.
+  brew, the load (the maiden load too), the commission, the post, the Kontor build, the
+  private build and its slot, the Build's menu, the cart and its door, the Shipmaster's sail.
 
 ## What the seats know — the two loops
 
@@ -43,7 +43,7 @@ as two loops that need each other:
   is always resolved first.
 - **The Kontor building** (`aiKBuildValue`): casks to deliver × the modifier, the pips, the slot's start face (Novgorod's 2), the
   count; the tile by the seat's lane (the Kontorhaus for a hop-short seat, the Guildhouse once
-  dice stand at sea, else the Warehouse). **RAISE** turns the lowest die,
+  dice stand at sea, else the Warehouse). **The +1** (`aiRaisePick`) turns the lowest die,
   building dice first.
 - **The priced lines**: the Granary's brew is priced as a brew minus its grain
   (`aiPactValue`); the Bonded Store's post offer as a post against the same die as a cask,
@@ -107,14 +107,15 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Harnesses & gates
 
-- **`playtests/verify-v8.js`** — the rule battery (64 checks in 16 groups): identity and
+- **`playtests/verify-v8.js`** — the rule battery (70 checks in 19 groups): identity and
   setup · the supply and the end · the quality count · the chain and the buildings · the
   mandatory commission · the post · lanes, loading, wild Ships, sailing · delivery = two dice ·
   Bruges and the yard · the hall's shelves · the prizes · the private ladder · the end and the
-  score · Gruit, aging, no kettle · the AI never stalls · the goods split. Seconds, always.
+  score · Gruit, aging, no kettle · the AI never stalls · the goods split · the Bruges Road · the contracts · one action a
+  station. Seconds, always.
 - **`playtests/sim.js`** — the robustness/pace gate riding the engine's own `aiStep`: 0 crashes
   / 0 deadlocks across 2–4p, the twelve-dice identity at every end, the pace band, the trigger
-  split, and the v8 usage counters (posts, Kontor builds, RAISEs, sails and wild ports,
+  split, and the v8 usage counters (posts, Kontor builds, +1s, sails and wild ports,
   deliveries and the building-die share, ticks, carts by door and zone, the presents by
   shelf and the hall pips, private builds and flips, building stops, specialists seated and
   their share of wins, the
@@ -129,6 +130,17 @@ recommendation to cut a part must cite the committed lane's result, never the gr
   the turn study: little wins, the ★ silence, the phases, the passive read, the goal arcs,
   the hall's shelves, the score by part, the paths to victory, the lanes; `--timeline=label:n:game`
   prints one game turn by turn. USAGE first, as the law asks; the designer calls it.
+- **`playtests/render-check.js [pages]`** — loads `rulebook.html`, `print.html` and `play.html`
+  in a headless Chromium and fails on any page error (the battery never loads the kit or the
+  rulebook, and both have broken on one stray apostrophe). **`playtests/ui-game.js [n] [tier]`**
+  drives one whole AI game through the real UI, render on. Both need `playwright-core` and a
+  Chromium — `playtests/_browser.js` finds them (`PW_CORE=` · `PW_CHROME=`; its header says how
+  to install one).
+- **How the harness instruments the engine:** the drivers wrap engine functions by reassigning
+  them inside the vm (`var __fooV2=foo; foo=function(){…}`); every wrapper saves the original
+  under a name used nowhere else in the driver — a second wrapper saved under the same name
+  calls itself forever. The Node-side report never sees the vm's symbols: a value it needs (the
+  supply, a hook) is read from the env or carried out in the game's result record.
 - **Standing rule:** the greedy tiers gate **robustness and pace**, never strategy or balance —
   they under-pilot deep lines by construction. Strategy reads = the MC tiers, the committed
   lanes, and the human table.
@@ -143,19 +155,24 @@ recommendation to cut a part must cite the committed lane's result, never the gr
 
 ## Open (AI-only; none gates a rules read)
 
-- **The brewer persona is a harness defect:** as coded it farms Gruit (5 of 6 brews at 2p in
-  the turn oracle, 0.2 deliveries, 4% wins on the shelves build) — a yard farmer, not a
-  brewer. Recode it as the lane the design means (brew the high beers, present them at the
-  Alderman shelf or deliver them at Novgorod) before its result is read again; until then its
-  win share is not a balance read.
+- **The brewer persona, recut (2026-10-11):** it brews up now (the Gruit tilt is gone) and wins
+  11–40% on v8.2 at N=16 (100% of one 2p run — small N); its result is a lane read again, from
+  `PERSONAS=1` only. The builder is the weak lane (0–25%, ★17–24) and the pure merchant is weak
+  at 4p; neither is dead, and no value lever moves until the table has read them.
 - **The Alderman shelf is the bots' blind spot:** the greedy tiers present there for 0.1 seats
   a game and the Guildmaster for 0.3; Guildmaster · Chronicler · Alderman · Burgher never seat.
   A committed Alderman lane (hold a die-4 cask for the shelf) is wanted before those cards are
-  read as dead.
-- The 2p sea: two greedy seats load different hulls for different Kontors (4.9 Ships dock, one
-  sails a game); the load and commission values want a read at a human table before any
-  tuning corpus. The Guildmaster loiters at 2p (17% empty turns, 27% of games to the
-  round-18 backstop): deferral reads as free with one rival.
+  read as dead. Unchanged on v8.2 (0.0–0.1 presents a seat), so the AI never draws a contract
+  from the Alderman's power either.
+- Contracts: a seat values a landing by the contract it fills (`aiContractValue`) but plans no
+  further back than the landing — at 1.5× the ★ (`CPTS=1.5`) the fill rate does not move. A
+  look-ahead (brew the style the card names, aim the hull where it points) is wanted before
+  the contracts' ★ are read from the sim.
+- The 2p sea: two greedy seats load different hulls for different Kontors (v8.2: 7 Ships dock a
+  game, 0.6–0.9 sail; 50–65% of seats never deliver far). The `PAYSAIL=1` prototype (a paid sail
+  after the maiden load) wakes it ×3–4 at every count; the load and commission values want a
+  read at a human table before any tuning corpus. The Guildmaster loitered at 2p on v8.0j (17%
+  empty turns, 27% of games to the then round-18 ceiling): deferral reads as free with one rival.
 - The GM's rollouts at 4p; sub-Guildmaster MC budget tiers; a blind-AI option — optional ideas.
 - The physical automa deck (a card-driven tabletop bot) waits until the ⚙ numbers settle.
 - `aiSpecVal`'s priors for the eight new cards (Maltster · Hop gardener · Cooper · Hop

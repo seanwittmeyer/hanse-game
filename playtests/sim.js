@@ -2,7 +2,7 @@
 // Drives the CANONICAL engine (never a reimplementation): extracts play.html's <script>
 // blocks, stubs the DOM, and runs the engine's OWN AI (aiStep) for every seat.
 // The robustness/pace gate: 0 crashes / 0 deadlocks across 2–4p; pace band 10–18 rounds ⚙
-// (the v8 identity: 10–15 turns a seat; the first EMPTY supply ends it; MAX_ROUND 18 backstops).
+// (the v8 identity: 10–15 turns a seat; the first EMPTY supply ends it; MAX_ROUND 24 backstops).
 // THE LAW (CLAUDE.md, the second override): USAGE is printed before VALUE — every verb, tile,
 // specialist, building and prize reports how often it fired before any lane's win rate is
 // read; no part is judged dead unless a persona committed to it ran in the corpus.
@@ -11,6 +11,8 @@
 //        PERSONAS=1 — the PATHWAYS oracle (brewer · merchant · hall · majority · builder · specialist · breadth; PTIER= reads at any tier)
 //        MIX=1 — one persona per seat drawn at random per game (with PERSONAS=1)
 //        SUPPLY=n (THE pace dial) · SRCN=n (the Market's Gain N grain) · MUST=0|1 (the commission a must) · GUILD_MS/CELLAR_MS/GM_ROLLS (MC budgets)
+//        A/B hooks, each overriding only when set: WORKS=n (the Public Works dealt) · FLIGHT=0 (the ladder off) · CPTS=x (the contracts' ★ scaled)
+//        · ENDRULE=first|second|last|lastcall (the end rule) · COG1=1 and DISPLAY=n (2p: a one-cask Cog · a smaller display) · PAYSAIL=1 (a paid sail after the maiden load)
 // Sim outputs are NOT committed — results live in chat / distill into DESIGN.md.
 'use strict';
 const fs = require('fs');

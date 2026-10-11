@@ -15,7 +15,7 @@ archived at `archive/records/ICON-ROUNDS.md`.*
 | `grain` · `hops` | `grain` · `hops` | Gain N grain (the Market, the cask tiles, the yard) · Gain N hops (the Gain 2 hops bonus, the Hop merchant) and the dividend's +1 on the Ship berths, the Cellar face and the Kontorhaus; the goods tokens' art. The numbered `grain-N` / `hops-N` set is queued in `art/PROMPTS.md` |
 | `quality-die` | `dices` | the quality die |
 | `die-1` … `die-6` | `dice-N` | a die face: a start face; the die floor on the Kontor panels |
-| `die-plus1` | `die-plus1` | Raise die |
+| `die-plus1` | `die-plus1` | +1 — a die at sea, or the boarding cask |
 | `die-q` | `die-q` | the minimum's row on the aid legend (the die meets the Kontor's floor) |
 | `quality-1` … `quality-6` | `quality-N` | a cask of quality N |
 | `cask` | `beer` | a cask |
